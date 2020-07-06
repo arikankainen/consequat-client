@@ -1,4 +1,7 @@
 import { User } from '../utils/types';
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { RootState } from '../reducers/rootReducer';
 
 interface SystemState {
   loggedIn: boolean;
@@ -18,6 +21,12 @@ export const updateLogin = (data: SystemState): UpdateLogin => {
     type: UPDATE_LOGIN,
     data: data
   };
+};
+
+export const updateLoginThunk = (
+  data: SystemState
+): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+  dispatch(updateLogin(data));
 };
 
 const initialState: SystemState = {
