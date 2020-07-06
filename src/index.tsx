@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+import { Provider } from 'react-redux';
 import App from './App';
-
-import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, gql } from '@apollo/client';
+import store from './store';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -11,28 +12,11 @@ const client = new ApolloClient({
   })
 });
 
-const query = gql`
-  query {
-    listUsers {
-      username,
-      password,
-      email,
-      fullname,
-      isAdmin,
-      id
-    }
-  }
-`;
-
-client
-  .query({ query })
-  .then(response => {
-    console.log(response.data);
-  });
-
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </Provider>,
   document.getElementById('root')
 );
