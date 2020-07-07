@@ -5,8 +5,8 @@ import { RootState } from '../reducers/rootReducer';
 
 interface SystemState {
   loggedIn: boolean;
-  token: string;
-  user: User | null;
+  loggedToken: string;
+  loggedUser: User | null;
 }
 
 export const UPDATE_LOGIN = 'UPDATE_LOGIN';
@@ -31,8 +31,8 @@ export const updateLoginThunk = (
 
 const initialState: SystemState = {
   loggedIn: false,
-  token: '',
-  user: null
+  loggedToken: '',
+  loggedUser: null
 };
 
 export const systemReducer = (state = initialState, action: UpdateLogin): SystemState => {

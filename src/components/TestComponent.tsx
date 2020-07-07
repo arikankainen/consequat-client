@@ -12,8 +12,8 @@ function TestComponent() {
   const handleClick = () => {
     dispatch(updateLogin({
       loggedIn: true,
-      token: 'ffsdfsafsafsafsdaf',
-      user: {
+      loggedToken: 'ffsdfsafsafsafsdaf',
+      loggedUser: {
         username: 'user',
         password: 'fdfsdfsf',
         email: 'user@mail.com',
@@ -28,8 +28,8 @@ function TestComponent() {
     console.log('handle');
     dispatch(updateLoginThunk({
       loggedIn: true,
-      token: '534k5ljlk4231kj5lk35',
-      user: {
+      loggedToken: '534k5ljlk4231kj5lk35',
+      loggedUser: {
         username: 'admin',
         password: 'fdfsdfsf',
         email: 'admin@mail.com',
