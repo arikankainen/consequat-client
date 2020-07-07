@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  display: flex;
   width: 100%;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
-  background-color: #000;
+  margin-top: 50px;
+  padding: 40px;
+  background-color: var(--navigation-bg-color);
 `;
 
 const LoginPage = () => {
@@ -16,7 +18,6 @@ const LoginPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
   };
   
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,9 +31,9 @@ const LoginPage = () => {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        username<br />
+        Username<br />
         <input onChange={handleUsernameChange}/><br />
-        password<br />
+        Password<br />
         <input onChange={handlePasswordChange} /><br />
         <button type='submit'>Login</button>
       </form>
