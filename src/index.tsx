@@ -4,6 +4,8 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/c
 import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import GlobalStyles from './components/GlobalStyles';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -15,7 +17,10 @@ const client = new ApolloClient({
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <App />
+      <Router>
+        <GlobalStyles />
+        <App />
+      </Router>
     </ApolloProvider>
   </Provider>,
   document.getElementById('root')
