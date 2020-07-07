@@ -4,7 +4,7 @@ import { RootState } from '../reducers/rootReducer';
 
 import TopNavigationContainer from './TopNavigationContainer';
 import Logo from './Logo';
-import Login from './Login';
+import LoginLink from './LoginLink';
 
 const TopNavigation = () => {
   const loginStatus = useSelector((state: RootState) => state.system);
@@ -14,7 +14,7 @@ const TopNavigation = () => {
     <div>
       <TopNavigationContainer>
         <Logo />
-        <Login />
+        <LoginLink />
       </TopNavigationContainer>
     </div>
   );

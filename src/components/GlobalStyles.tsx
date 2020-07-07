@@ -7,7 +7,9 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-2: #007ad9;
     --default-font-family: 'Hind', 'sans-serif';
     --default-font-color: #bbb;
+    --default-font-color-highlight: #fff;
     --default-font-size: 16px;
+    --navigation-bg-color: #202022;
   }
 
   * {
