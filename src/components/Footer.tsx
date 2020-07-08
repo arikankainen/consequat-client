@@ -1,8 +1,13 @@
-import styled from 'styled-components';
+import React from 'react';
 
-const StyledComponent = styled.div`
-  height: 30px;
-  background-color: blue;
-`;
+import FooterContainer from './FooterContainer';
 
-export default StyledComponent;
+const Header = () => {
+  return (
+    <FooterContainer>
+      &copy; 2020 Ari Kankainen
+    </FooterContainer>
+  );
+};
+
+export default Header;

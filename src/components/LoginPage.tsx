@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const OuterContainer = styled.div`
   display: flex;
+  align-items: center;
   height: 100%;
-  background-color: red;
 `;
 
 const Container = styled.div`

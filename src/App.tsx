@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Container from './components/Container';
+import SiteContainer from './components/SiteContainer';
 import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
@@ -11,8 +11,9 @@ import LoginPage from './components/LoginPage';
 
 const App = () => {
   return (
-    <Container>
+    <SiteContainer>
       <Header />
+
       <Main>
         <Switch>
 
@@ -26,8 +27,9 @@ const App = () => {
 
         </Switch>
       </Main>
+      
       <Footer />
-    </Container>
+    </SiteContainer>
   );
 };
 

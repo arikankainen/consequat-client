@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+const SiteContainer = styled.section`
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 `;
 
-export default Container;
+export default SiteContainer;
