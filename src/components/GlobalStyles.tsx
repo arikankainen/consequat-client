@@ -18,6 +18,11 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+
   body {
     background-color: var(--bg-color);
     font-size: var(--default-font-size);

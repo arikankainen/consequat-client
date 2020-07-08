@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const OuterContainer = styled.div`
+  display: flex;
+  height: 100%;
+  background-color: red;
+`;
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -29,15 +35,17 @@ const LoginPage = () => {
   };
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
-        Username<br />
-        <input onChange={handleUsernameChange}/><br />
-        Password<br />
-        <input onChange={handlePasswordChange} /><br />
-        <button type='submit'>Login</button>
-      </form>
-    </Container>
+    <OuterContainer>
+      <Container>
+        <form onSubmit={handleSubmit}>
+          Username<br />
+          <input onChange={handleUsernameChange}/><br />
+          Password<br />
+          <input onChange={handlePasswordChange} /><br />
+          <button type='submit'>Login</button>
+        </form>
+      </Container>
+    </OuterContainer>
   );
 };
 

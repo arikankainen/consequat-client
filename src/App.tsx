@@ -1,25 +1,33 @@
 import React from 'react';
-import MainPage from './components/MainPage';
-import TopNavigation from './components/TopNavigation';
 import { Switch, Route } from 'react-router-dom';
+
+import Container from './components/Container';
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
+
+import MainPage from './components/MainPage';
 import LoginPage from './components/LoginPage';
 
 const App = () => {
   return (
-    <div>
-      <TopNavigation />
-      <Switch>
+    <Container>
+      <Header />
+      <Main>
+        <Switch>
 
-        <Route path='/login'>
-          <LoginPage />
-        </Route>
+          <Route path='/login'>
+            <LoginPage />
+          </Route>
 
-        <Route path='/'>
-          <MainPage />
-        </Route>
+          <Route path='/'>
+            <MainPage />
+          </Route>
 
-      </Switch>
-    </div>
+        </Switch>
+      </Main>
+      <Footer />
+    </Container>
   );
 };
 
