@@ -1,24 +1,32 @@
 import styled from 'styled-components';
+import breakPoints from '../../utils/breakPoints';
 
 export const OuterContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+
+  ${breakPoints.mobileL} {
+    align-items: flex-start;
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 300px;
+  width: 300px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
   padding: 20px;
   background-color: var(--navigation-bg-color);
   border: none;
   border-radius: var(--input-border-radius);
   text-align: center;
+
+  ${breakPoints.mobileL} {
+    width: 100%;
+    margin: 20px;
+  }
 `;
 
 export const Topic = styled.h1`
