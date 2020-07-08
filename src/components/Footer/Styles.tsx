@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const HeaderContainer = styled.div`
+export const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,5 +9,3 @@ const HeaderContainer = styled.div`
   padding-left: 20px;
   padding-right: 20px;
 `;
-
-export default HeaderContainer;

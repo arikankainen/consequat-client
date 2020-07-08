@@ -1,6 +1,5 @@
 import React from 'react';
-
-import FooterContainer from './FooterContainer';
+import { FooterContainer } from './Styles';
 
 const Header = () => {
   return (

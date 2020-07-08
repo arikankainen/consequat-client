@@ -1,12 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import SiteContainer from './components/SiteContainer';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import { SiteContainer, Main } from './components/Styles';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
-import MainPage from './components/MainPage';
+import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 
 const App = () => {
