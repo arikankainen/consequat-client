@@ -24,4 +24,5 @@ export const LoginLink = styled(Link)`
 
 export const LogoImage = styled.img`
   height: 30px;
+  margin-top: 6px;
 `;

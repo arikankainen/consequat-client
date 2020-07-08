@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/queries';
-import Error from './Error';
+
 import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
+import Message, { MessageType } from './Message';
 
 const LoginPage = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loginButtonText, setLoginButtonText] = useState<string>('Login');
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<MessageType>(MessageType.Success);
+  const history = useHistory();
 
   const loggingIn = (logging: boolean): void => {
     if (logging) {
@@ -26,7 +30,8 @@ const LoginPage = () => {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
       loggingIn(false);
-      setError('Invalid username or password');
+      setMessageType(MessageType.Error);
+      setMessage('Invalid username or password');
     }
   });
 
@@ -34,7 +39,13 @@ const LoginPage = () => {
     if (result.data) {
       const token = result.data.login.token;
       console.log(token);
+      setMessageType(MessageType.Success);
+      setMessage('Successfully logged in');
       loggingIn(false);
+
+      setTimeout(() => {
+        history.push('/');
+      }, 1000);
     }
   }, [result.data]);
 
@@ -43,28 +54,30 @@ const LoginPage = () => {
     loggingIn(true);
 
     if (!username) {
-      setError('Username required');
+      setMessageType(MessageType.Error);
+      setMessage('Username required');
       loggingIn(false);
     }
     else if (!password) {
-      setError('Password required');
+      setMessageType(MessageType.Error);
+      setMessage('Password required');
       loggingIn(false);
     }
     else {
       // temporarily added delay to see disabled form elements when login in progress, TODO: delete from product version
       setTimeout(() => {
         login({ variables: { username, password } });
-      }, 1000);
+      }, 1500);
     }
   };
   
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
+    setMessage(null);
     setUsername(e.target.value);
   };
   
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
+    setMessage(null);
     setPassword(e.target.value);
   };
 
@@ -73,10 +86,10 @@ const LoginPage = () => {
       <Container>
         <Topic>Login</Topic>
         <form onSubmit={handleSubmit}>
-          <Error message={error}>Invalid email or password</Error>
           <Input disabled={disabled} placeholder='Username' onChange={handleUsernameChange}/><br />
           <Input disabled={disabled} placeholder='Password' type='password' onChange={handlePasswordChange} /><br />
           <Button disabled={disabled} type='submit'>{loginButtonText}</Button>
+          <Message message={message} type={messageType}>Invalid email or password</Message>
         </form>
       </Container>
     </OuterContainer>

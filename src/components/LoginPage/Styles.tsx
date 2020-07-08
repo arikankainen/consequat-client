@@ -82,14 +82,12 @@ export const Button = styled.button`
 `;
 
 export const ErrorNotification = styled.div`
-  width: 100%;
-  height: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 4px;
-  background-color: #990000;
-  border: none;
-  border-radius: var(--input-border-radius);
-  color: #eee;
-  text-align: center;
+  margin-top: 5px;
+  height: 25px;
+  margin-bottom: -10px;
+  color: #cc5555;
+`;
+
+export const SuccessNotification = styled(ErrorNotification)`
+  color: #55cc55;
 `;
