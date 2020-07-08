@@ -7,7 +7,7 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 
 import MainPage from './components/MainPage';
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/LoginPage/LoginPage';
 
 const App = () => {
   return (

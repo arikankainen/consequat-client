@@ -1,6 +1,5 @@
-export interface User {
+export interface LoggedUser {
   username: string;
-  password: string;
   email: string;
   fullname: string;
   isAdmin: boolean;

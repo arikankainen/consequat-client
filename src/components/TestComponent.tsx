@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { User } from '../utils/types';
+import { LoggedUser } from '../utils/types';
 import { GET_USERS } from '../utils/queries';
 import { updateLogin, updateLoginThunk } from '../reducers/systemReducer';
 import { useDispatch } from 'react-redux';
@@ -15,7 +15,6 @@ function TestComponent() {
       loggedToken: 'ffsdfsafsafsafsdaf',
       loggedUser: {
         username: 'user',
-        password: 'fdfsdfsf',
         email: 'user@mail.com',
         fullname: 'Normal User',
         isAdmin: false,
@@ -31,7 +30,6 @@ function TestComponent() {
       loggedToken: '534k5ljlk4231kj5lk35',
       loggedUser: {
         username: 'admin',
-        password: 'fdfsdfsf',
         email: 'admin@mail.com',
         fullname: 'Administrator',
         isAdmin: true,
@@ -46,7 +44,7 @@ function TestComponent() {
 
   return (
     <div>
-      {result.data.listUsers.map((p: User) => p.username).join(', ')}
+      {result.data.listUsers.map((p: LoggedUser) => p.username).join(', ')}
       <button onClick={handleClick}>dispatch</button>
       <button onClick={handleClickThunk}>dispatch thunk</button>
     </div>
