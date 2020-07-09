@@ -12,7 +12,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message, type }) => {
-  if (type == MessageType.Error) {
+  if (type === MessageType.Error) {
     return (
       <ErrorNotification>
         {message}
