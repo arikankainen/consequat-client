@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { clearLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
 
+import { OuterContainer, Container, Topic }  from './Styles';
+
 const LogoutPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -14,12 +16,17 @@ const LogoutPage = () => {
 
     setTimeout(() => {
       history.push('/');
-    }, 1000);
+    }, 1500);
 
   }, []);  // eslint-disable-line
 
   return (
-    <div>Logging out...</div>
+    <OuterContainer>
+      <Container>
+        <Topic>Logout</Topic>
+        Logging out...
+      </Container>
+    </OuterContainer>
   );
 };
 

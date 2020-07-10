@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+import { updateLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
-import { LOGIN } from '../../utils/queries';
+import { LOGIN, ME } from '../../utils/queries';
+
 import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
 import Message, { MessageType } from './Message';
 
@@ -14,6 +17,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<MessageType>(MessageType.Success);
   const history = useHistory();
+  const dispatch =  useDispatch();
 
   const loggingProgress = (logging: boolean): void => {
     if (logging) {
@@ -35,11 +39,30 @@ const LoginPage = () => {
     }
   });
 
+  const [me, resultMe] = useLazyQuery(ME);
+
   useEffect(() => {
     if (resultLogin.data) {
       const token = resultLogin.data.login.token;
       storage.setToken(token);
+      me();
+    }
+  }, [resultLogin.data, history]);  // eslint-disable-line
 
+  useEffect(() => {
+    if (resultMe.data) {
+      dispatch(updateLogin({
+        loggedIn: true,
+        loggedToken: storage.getToken(),
+        loggedUser: {
+          username: resultMe.data.me.username,
+          email: resultMe.data.me.email,
+          fullname: resultMe.data.me.fullname,
+          isAdmin: resultMe.data.me.isAdmin,
+          id: resultMe.data.me.id
+        }
+      }));
+      
       setMessageType(MessageType.Success);
       setMessage('Successfully logged in');
       loggingProgress(false);
@@ -48,7 +71,8 @@ const LoginPage = () => {
         history.push('/');
       }, 1000);
     }
-  }, [resultLogin.data, history]);
+  }, [resultMe.data]); // eslint-disable-line
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
