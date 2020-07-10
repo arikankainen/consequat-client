@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import storage from '../../utils/storage';
 import { LOGIN } from '../../utils/queries';
-
 import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
 import Message, { MessageType } from './Message';
 
@@ -15,7 +15,7 @@ const LoginPage = () => {
   const [messageType, setMessageType] = useState<MessageType>(MessageType.Success);
   const history = useHistory();
 
-  const loggingIn = (logging: boolean): void => {
+  const loggingProgress = (logging: boolean): void => {
     if (logging) {
       setDisabled(true);
       setLoginButtonText('Logging in...');
@@ -26,42 +26,43 @@ const LoginPage = () => {
     }
   };
 
-  const [login, result] = useMutation(LOGIN, {
+  const [login, resultLogin] = useMutation(LOGIN, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
-      loggingIn(false);
+      loggingProgress(false);
       setMessageType(MessageType.Error);
       setMessage('Invalid username or password');
     }
   });
 
   useEffect(() => {
-    if (result.data) {
-      const token = result.data.login.token;
-      console.log(token);
+    if (resultLogin.data) {
+      const token = resultLogin.data.login.token;
+      storage.setToken(token);
+
       setMessageType(MessageType.Success);
       setMessage('Successfully logged in');
-      loggingIn(false);
+      loggingProgress(false);
 
       setTimeout(() => {
         history.push('/');
       }, 1000);
     }
-  }, [result.data, history]);
+  }, [resultLogin.data, history]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    loggingIn(true);
+    loggingProgress(true);
 
     if (!username) {
       setMessageType(MessageType.Error);
       setMessage('Username required');
-      loggingIn(false);
+      loggingProgress(false);
     }
     else if (!password) {
       setMessageType(MessageType.Error);
       setMessage('Password required');
-      loggingIn(false);
+      loggingProgress(false);
     }
     else {
       // temporarily added delay to see disabled form elements when login in progress, TODO: delete from product version
