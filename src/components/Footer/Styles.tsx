@@ -8,4 +8,5 @@ export const FooterContainer = styled.div`
   background-color: var(--navigation-bg-color);
   padding-left: 20px;
   padding-right: 20px;
+  color: #666;
 `;
