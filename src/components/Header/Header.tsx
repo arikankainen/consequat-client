@@ -26,7 +26,7 @@ const Header = () => {
     if (resultMe.data) {
       dispatch(updateLogin({
         loggedIn: true,
-        loggedToken: localStorage.getItem('consequat-token') as string,
+        loggedToken: localStorage.getItem('consequat-token'),
         loggedUser: {
           username: resultMe.data.me.username,
           email: resultMe.data.me.email,
@@ -41,6 +41,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo />
+      <LoginLink to='/logout'>Logout</LoginLink>
       <LoginLink to='/login'>Login</LoginLink>
     </HeaderContainer>
   );

@@ -5,9 +5,15 @@ import { RootState } from '../reducers/rootReducer';
 
 interface SystemState {
   loggedIn: boolean;
-  loggedToken: string;
+  loggedToken: string | null;
   loggedUser: LoggedUser | null;
 }
+
+const initialState: SystemState = {
+  loggedIn: false,
+  loggedToken: null,
+  loggedUser: null
+};
 
 export const UPDATE_LOGIN = 'UPDATE_LOGIN';
 
@@ -23,16 +29,17 @@ export const updateLogin = (data: SystemState): UpdateLogin => {
   };
 };
 
+export const clearLogin = (): UpdateLogin => {
+  return {
+    type: UPDATE_LOGIN,
+    data: initialState
+  };
+};
+
 export const updateLoginThunk = (
   data: SystemState
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   dispatch(updateLogin(data));
-};
-
-const initialState: SystemState = {
-  loggedIn: false,
-  loggedToken: '',
-  loggedUser: null
 };
 
 export const systemReducer = (state = initialState, action: UpdateLogin): SystemState => {
