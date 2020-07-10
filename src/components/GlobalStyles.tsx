@@ -11,6 +11,7 @@ const GlobalStyles = createGlobalStyle`
     --default-font-color-highlight: #fff;
     --default-font-size: 16px;
     --navigation-bg-color: #202022;
+    --navigation-bg-color-hover: #2b2c2d;
     --input-border-radius: 3px;
   }
 

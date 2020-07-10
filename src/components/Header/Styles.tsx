@@ -14,6 +14,7 @@ export const HeaderContainer = styled.div`
 export const LoginLink = styled(Link)`
   text-decoration: none;
   color: var(--default-font-color);
+
   &:visited {
     color: var(--default-font-color);
   }
@@ -25,4 +26,27 @@ export const LoginLink = styled(Link)`
 export const LogoImage = styled.img`
   height: 30px;
   margin-top: 6px;
+`;
+
+export const UserImage = styled.img`
+  height: 20px;
+`;
+
+export const UserName = styled.div`
+  margin-right: 10px;
+  color: var(--accent-color-2);
+`;
+
+export const UserMenuButton = styled(Link)`
+  display: flex;
+  align-items: center;
+
+  margin-right: -10px;
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: var(--input-border-radius);
+  
+  &:hover {
+    background-color: var(--navigation-bg-color-hover);
+  }
 `;

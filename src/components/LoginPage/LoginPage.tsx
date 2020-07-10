@@ -63,13 +63,7 @@ const LoginPage = () => {
         }
       }));
       
-      setMessageType(MessageType.Success);
-      setMessage('Successfully logged in');
-      loggingProgress(false);
-
-      setTimeout(() => {
-        history.push('/');
-      }, 1000);
+      history.push('/');
     }
   }, [resultMe.data]); // eslint-disable-line
 

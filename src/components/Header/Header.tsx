@@ -7,6 +7,7 @@ import { updateLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
 import { ME } from '../../utils/queries';
 import Logo from './Logo';
+import UserMenu from './UserMenu';
 import { LoginLink } from './Styles';
 import { HeaderContainer } from './Styles';
 
@@ -41,7 +42,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo />
-      {loginStatus.loggedIn && <LoginLink to='/logout'>Logout</LoginLink>}
+      {loginStatus.loggedIn && <UserMenu username={loginStatus.loggedUser?.username} />}
       {!loginStatus.loggedIn && <LoginLink to='/login'>Login</LoginLink>}
     </HeaderContainer>
   );
