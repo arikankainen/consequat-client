@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   :root {
     --bg-color: #171719;
+    --bg-color-active: #191920;
     --accent-color-1: #c37f1d;
     --accent-color-2: #007ad9;
     --accent-color-2-hover: #398ff2;
@@ -37,7 +38,46 @@ const GlobalStyles = createGlobalStyle`
     font-size: var(--default-font-size);
     color: var(--default-font-color);
     font-family: var(--default-font-family);
+    overflow-x: hidden;
   }
+
+  .usermenu-enter {
+    opacity: 0;
+    transform: translateX(300px) scale(0.2);
+  }
+  .usermenu-enter-active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .usermenu-exit {
+    opacity: 1;
+  }
+  .usermenu-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  /*
+  .usermenu-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  .usermenu-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .usermenu-exit {
+    opacity: 1;
+  }
+  .usermenu-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }
+  */
 `;
 
 export default GlobalStyles;

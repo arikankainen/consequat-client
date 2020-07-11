@@ -9,7 +9,7 @@ const Logo = () => {
       <LogoImage>
         <source media='(max-width: 500px)' srcSet={logoImageSmall} />
         <source media='(min-width: 501px)' srcSet={logoImage} />
-        <img src={logoImage} />
+        <img src={logoImage} alt='consequat-logo' />
       </LogoImage>
     </LogoLink>
   );

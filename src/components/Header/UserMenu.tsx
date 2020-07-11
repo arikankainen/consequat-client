@@ -6,6 +6,7 @@ import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { MenuButton } from './Styles';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 
 const Ul = styled.ul`
   position: absolute;
@@ -44,6 +45,8 @@ const MenuLink = styled(Link)`
     margin-right: 15px;
     color: var(--icon-color);
   }
+
+  transition: all 200ms linear;
 `;
 
 const MenuTextContainer = styled.div`
@@ -131,7 +134,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ username }) => {
       <MenuButton onClick={() => toggleMenu()}>
         <UserIcon />
       </MenuButton>
-      {open && <Menu username={username}/>}
+      <CSSTransition
+        in={open}
+        timeout={300}
+        unmountOnExit
+        classNames='usermenu'
+      >
+        <Menu username={username} />
+      </CSSTransition>
     </div>
   );
 };

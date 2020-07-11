@@ -43,16 +43,17 @@ export const Input = styled.input`
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  background-color: #303032;
-  border: 1px solid var(--bg-color);
+  /*background-color: #303032;
+  border: 1px solid var(--bg-color);*/
+  background-color: var(--bg-color);
+  border: none;
   border-radius: var(--input-border-radius);
   color: var(--default-font-color);
   text-align: center;
-  font-weight: 600;
 
   &:focus {
     outline-width: 0;
-    background-color: #3b3b3d;
+    /*background-color: #3b3b3d;*/
   }
 `;
 

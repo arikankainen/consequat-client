@@ -17,6 +17,7 @@ export const LoginLink = styled(Link)`
   color: var(--accent-color-2);
   padding-right: 10px;
   padding-left: 10px;
+  font-weight: 600;
 
   &:visited {
     color: var(--accent-color-2);
