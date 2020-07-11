@@ -10,6 +10,7 @@ import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { LoginLink } from './Styles';
 import { HeaderContainer } from './Styles';
+import Search from './Search';
 
 const Header = () => {
   const loginStatus = useSelector((state: RootState) => state.system);
@@ -42,6 +43,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo />
+      <Search />
       {loginStatus.loggedIn && <UserMenu username={loginStatus.loggedUser?.username} />}
       {!loginStatus.loggedIn && <LoginLink to='/login'>Login</LoginLink>}
     </HeaderContainer>

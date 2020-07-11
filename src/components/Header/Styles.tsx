@@ -5,48 +5,92 @@ export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 60px;
   background-color: var(--navigation-bg-color);
   padding-left: 20px;
-  padding-right: 20px;
+  padding-right: 10px;
+  /*box-shadow: var(--navigation-shadow);*/
 `;
 
 export const LoginLink = styled(Link)`
   text-decoration: none;
-  color: var(--default-font-color);
+  color: var(--accent-color-2);
+  padding-right: 10px;
+  padding-left: 10px;
 
   &:visited {
-    color: var(--default-font-color);
+    color: var(--accent-color-2);
   }
   &:hover {
-    color: var(--default-font-color-highlight);
+    color: var(--accent-color-2-hover);
   }
 `;
 
-export const LogoImage = styled.img`
+export const LogoLink = styled(Link)`
   height: 30px;
-  margin-top: 6px;
 `;
 
-export const UserImage = styled.img`
-  height: 20px;
+export const LogoImage = styled.picture`
+  height: 30px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  & > img {
+    height: 30px;
+  }
 `;
 
-export const UserName = styled.div`
-  margin-right: 10px;
-  color: var(--accent-color-2);
-`;
-
-export const UserMenuButton = styled(Link)`
+export const MenuButton = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: var(--button-size);
+  min-width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  cursor: pointer;
 
-  margin-right: -10px;
-  padding: 5px 15px;
-  text-decoration: none;
-  border-radius: var(--input-border-radius);
-  
   &:hover {
+    filter: brightness(1.2);
     background-color: var(--navigation-bg-color-hover);
+  }
+
+  & > svg {
+    height: var(--icon-size);
+    color: var(--icon-color);
+  }
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 3;
+  width: 400px;
+  margin-left: 20px;
+  margin-right: 10px;
+  padding-left: 15px;
+  height: var(--button-size);
+  border-radius: var(--input-border-radius);
+  background-color: var(--bg-color);
+
+  & > svg {
+    height: var(--icon-size);
+    color: var(--icon-color);
+  }
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: var(--bg-color);
+  border: none;
+  color: var(--default-font-color);
+
+  &:focus {
+    outline-width: 0;
   }
 `;
