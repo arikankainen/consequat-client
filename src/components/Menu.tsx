@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
 import { MenuButton } from './Header/Styles';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-const MenuContainer = styled.ul`
+export enum Direction {
+  Left,
+  Right,
+}
+
+interface MenuContainerProps {
+  top: string;
+  direction: Direction;
+}
+
+const MenuContainer = styled.ul<MenuContainerProps>`
   position: absolute;
-  top: 61px;
-  right: 1px;
   padding: 0px 0px;
   background-color: var(--navigation-bg-color);
+
+  ${props => props.direction === Direction.Right
+    && css`
+        right: 1px;
+  `}
+
+  ${props => props.direction === Direction.Left
+    && css`
+        left: 1px;
+  `}
+
+  top: ${props => props.top};
 `;
 
 const MenuItem = styled.li`
@@ -74,14 +94,9 @@ interface Item {
   icon: React.FunctionComponent;
 }
 
-export enum Direction {
-  Left,
-  Right,
-}
-
 interface Settings {
   classNames: string;
-  top: number;
+  top: string;
   direction: Direction;
 }
 
@@ -91,9 +106,9 @@ interface MenuProps {
   settings: Settings;
 }
 
-const MenuItems: React.FC<MenuProps> = ({ items }) => {
+const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
   return (
-    <MenuContainer>
+    <MenuContainer top={settings.top} direction={settings.direction}>
 
       {items.map(item => {
         return (

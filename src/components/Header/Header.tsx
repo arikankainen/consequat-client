@@ -80,7 +80,7 @@ const Header = () => {
 
   const userMenuSettings = {
     classNames: 'usermenu',
-    top: 61,
+    top: '61px',
     direction: Direction.Right,
   };
 
