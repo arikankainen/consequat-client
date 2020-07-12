@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
     --default-font-color-highlight: #fff;
     --default-font-size: 16px;
     --default-font-size-smaller: 14px;
-    --navigation-bg-color: #202022;
+    --navigation-bg-color: #232325;
     --navigation-bg-color-hover: #303032;
     --navigation-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     --input-border-radius: 3px;
@@ -59,25 +59,25 @@ const GlobalStyles = createGlobalStyle`
     transition: opacity 300ms, transform 300ms;
   }
 
-  /*
-  .usermenu-enter {
+  .loginpage-appear {
     opacity: 0;
     transform: scale(0.9);
   }
-  .usermenu-enter-active {
+
+  .loginpage-appear-done {
     opacity: 1;
-    transform: translateX(0);
+    transform: scale(1);
     transition: opacity 300ms, transform 300ms;
   }
-  .usermenu-exit {
+
+  .loginpage-exit {
     opacity: 1;
   }
-  .usermenu-exit-active {
+  .loginpage-exit-active {
     opacity: 0;
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
   }
-  */
 `;
 
 export default GlobalStyles;

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
-import { ReactComponent as SettingsIcon } from '../../images/menu_settings.svg';
-import { ReactComponent as ThemeIcon } from '../../images/menu_theme.svg';
-import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
-import { MenuButton } from './Styles';
+import { MenuButton } from './Header/Styles';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-const Ul = styled.ul`
+const MenuContainer = styled.ul`
   position: absolute;
   top: 61px;
   right: 1px;
@@ -16,7 +12,7 @@ const Ul = styled.ul`
   background-color: var(--navigation-bg-color);
 `;
 
-const Li = styled.li`
+const MenuItem = styled.li`
   display: flex;
   align-items: center;
   list-style: none;
@@ -66,52 +62,58 @@ const MenuTextLowerText = styled.div`
   line-height: 1.1;
 `;
 
-interface MenuTextProps {
-  text: string | undefined;
+interface Button {
+  text: string;
+  icon: React.FunctionComponent;
+}
+
+interface Item {
+  text: string;
   subText: string | undefined;
+  link: string;
+  icon: React.FunctionComponent;
 }
 
-const MenuText: React.FC<MenuTextProps> = ({ text, subText }) => {
+export enum Direction {
+  Left,
+  Right,
+}
+
+interface Settings {
+  classNames: string;
+  top: number;
+  direction: Direction;
+}
+
+interface MenuProps {
+  button: Button;
+  items: Item[];
+  settings: Settings;
+}
+
+const MenuItems: React.FC<MenuProps> = ({ items }) => {
   return (
-    <MenuTextContainer>
-      <MenuTextUpperText>{text}</MenuTextUpperText>
-      <MenuTextLowerText>{subText}</MenuTextLowerText>
-    </MenuTextContainer>
+    <MenuContainer>
+
+      {items.map(item => {
+        return (
+          <MenuItem key={item.text}>
+            <MenuLink to={item.link}>
+              <item.icon />
+              <MenuTextContainer>
+                <MenuTextUpperText>{item.text}</MenuTextUpperText>
+                <MenuTextLowerText>{item.subText}</MenuTextLowerText>
+              </MenuTextContainer>
+            </MenuLink>
+          </MenuItem>
+        );
+      })}
+
+    </MenuContainer>
   );
 };
 
-interface UserMenuProps {
-  username: string | undefined;
-}
-
-const Menu: React.FC<UserMenuProps> = ({ username }) => {
-  return (
-    <Ul>
-      <Li>
-        <MenuLink to='/account'>
-          <SettingsIcon />
-          <MenuText text='Account' subText='View account settings' />
-        </MenuLink>
-      </Li>
-
-      <Li>
-        <MenuLink to='/theme'>
-          <ThemeIcon />
-          <MenuText text='Theme' subText='Change between dark and light' />
-        </MenuLink>
-      </Li>
-      
-      <Li>
-        <MenuLink to='/logout'>
-          <LogoutIcon />
-          <MenuText text='Logout' subText={username} />
-        </MenuLink>
-      </Li>
-    </Ul>
-  );
-};
-
-const UserMenu: React.FC<UserMenuProps> = ({ username }) => {
+const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const closeMenu = () => {
@@ -132,18 +134,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ username }) => {
   return (
     <div>
       <MenuButton onClick={() => toggleMenu()}>
-        <UserIcon />
+        <button.icon />
       </MenuButton>
       <CSSTransition
         in={open}
         timeout={300}
         unmountOnExit
-        classNames='usermenu'
+        classNames={settings.classNames}
       >
-        <Menu username={username} />
+        <MenuItems button={button} items={items} settings={settings} />
       </CSSTransition>
     </div>
   );
 };
 
-export default UserMenu;
+export default Menu;

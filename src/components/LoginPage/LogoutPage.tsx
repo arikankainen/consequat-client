@@ -23,7 +23,7 @@ const LogoutPage = () => {
   return (
     <OuterContainer>
       <Container>
-        <Topic>Logout</Topic>
+        <Topic>Log Out</Topic>
         Logging out...
       </Container>
     </OuterContainer>

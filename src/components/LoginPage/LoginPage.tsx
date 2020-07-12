@@ -103,7 +103,7 @@ const LoginPage = () => {
   return (
     <OuterContainer>
       <Container>
-        <Topic>Login</Topic>
+        <Topic>Log In</Topic>
         <form onSubmit={handleSubmit}>
           <Input disabled={disabled} placeholder='Username' onChange={handleUsernameChange}/><br />
           <Input disabled={disabled} placeholder='Password' type='password' onChange={handlePasswordChange} /><br />
