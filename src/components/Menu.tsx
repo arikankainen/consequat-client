@@ -21,12 +21,12 @@ const MenuContainer = styled.ul<MenuContainerProps>`
 
   ${props => props.direction === Direction.Right
     && css`
-        right: 1px;
+      right: 1px;
   `}
 
   ${props => props.direction === Direction.Left
     && css`
-        left: 1px;
+      left: 1px;
   `}
 
   top: ${props => props.top};
@@ -89,7 +89,7 @@ interface Button {
 
 interface Item {
   text: string;
-  subText: string | undefined;
+  subText: string;
   link: string;
   icon: React.FunctionComponent;
 }

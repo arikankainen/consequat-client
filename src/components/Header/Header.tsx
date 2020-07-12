@@ -17,6 +17,7 @@ import { ReactComponent as AccountIcon } from '../../images/menu_settings.svg';
 import { ReactComponent as ThemeIcon } from '../../images/menu_theme.svg';
 import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
+import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 
 const Header = () => {
   const loginStatus = useSelector((state: RootState) => state.system);
@@ -48,6 +49,12 @@ const Header = () => {
 
   const userMenuItems = [
     {
+      text: 'Upload',
+      subText: 'Add new pictures',
+      link: '/upload',
+      icon: UploadIcon,
+    },
+    {
       text: 'Pictures',
       subText: 'Browse your own pictures',
       link: '/pictures',
@@ -67,7 +74,7 @@ const Header = () => {
     },
     {
       text: 'Log out',
-      subText: loginStatus.loggedUser?.username,
+      subText: loginStatus.loggedUser?.username || '',
       link: '/logout',
       icon: LogoutIcon,
     },

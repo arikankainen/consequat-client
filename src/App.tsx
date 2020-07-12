@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import LogoutPage from './components/LoginPage/LogoutPage';
+import UploadPage from './components/UploadPage/UploadPage';
 
 const App = () => {
   return (
@@ -23,6 +24,10 @@ const App = () => {
 
           <Route path='/logout'>
             <LogoutPage />
+          </Route>
+
+          <Route path='/upload'>
+            <UploadPage />
           </Route>
 
           <Route path='/'>
