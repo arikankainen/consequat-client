@@ -6,12 +6,12 @@ import {
   ApolloProvider,
   InMemoryCache,
   HttpLink,
-  split
+  /*split*/
 } from '@apollo/client';
 
 import { setContext } from '@apollo/link-context';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { WebSocketLink } from '@apollo/link-ws';
+//import { getMainDefinition } from '@apollo/client/utilities';
+//import { WebSocketLink } from '@apollo/link-ws';
 
 import { Provider } from 'react-redux';
 import App from './App';
@@ -29,8 +29,9 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000' });
+const httpLink = new HttpLink({ uri: '/graphql' });
 
+/*
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: { reconnect: true },
@@ -51,6 +52,12 @@ const splitLink = split(
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: splitLink
+});
+*/
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: authLink.concat(httpLink)
 });
 
 ReactDOM.render(

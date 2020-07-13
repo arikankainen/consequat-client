@@ -32,7 +32,6 @@ const UploadPage = () => {
         }
       );
     }
-
   };
 
   return (
