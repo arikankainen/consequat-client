@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useField from '../../utils/useField';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -10,23 +11,24 @@ import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
 import Message, { MessageType } from './Message';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
-  const [loginButtonText, setLoginButtonText] = useState<string>('Login');
+  const [buttonText, setButtonText] = useState<string>('Log in');
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<MessageType>(MessageType.Success);
   const history = useHistory();
   const dispatch =  useDispatch();
 
+  const username = useField('text', 'Username');
+  const password = useField('password', 'Password');
+
   const loggingProgress = (logging: boolean): void => {
     if (logging) {
       setDisabled(true);
-      setLoginButtonText('Logging in...');
+      setButtonText('Logging in...');
     }
     else {
       setDisabled(false);
-      setLoginButtonText('Login');
+      setButtonText('Log in');
     }
   };
 
@@ -72,12 +74,12 @@ const LoginPage = () => {
     e.preventDefault();
     loggingProgress(true);
 
-    if (!username) {
+    if (!username.value) {
       setMessageType(MessageType.Error);
       setMessage('Username required');
       loggingProgress(false);
     }
-    else if (!password) {
+    else if (!password.value) {
       setMessageType(MessageType.Error);
       setMessage('Password required');
       loggingProgress(false);
@@ -85,29 +87,19 @@ const LoginPage = () => {
     else {
       // temporarily added delay to see disabled form elements when login in progress, TODO: delete from product version
       setTimeout(() => {
-        login({ variables: { username, password } });
+        login({ variables: { username: username.value, password: password.value } });
       }, 1500);
     }
   };
   
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(null);
-    setUsername(e.target.value);
-  };
-  
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(null);
-    setPassword(e.target.value);
-  };
-
   return (
     <OuterContainer>
       <Container>
-        <Topic>Log In</Topic>
+        <Topic>Log in</Topic>
         <form onSubmit={handleSubmit}>
-          <Input disabled={disabled} placeholder='Username' onChange={handleUsernameChange}/><br />
-          <Input disabled={disabled} placeholder='Password' type='password' onChange={handlePasswordChange} /><br />
-          <Button disabled={disabled} type='submit'>{loginButtonText}</Button>
+          <Input disabled={disabled} {...username}/><br />
+          <Input disabled={disabled} {...password} /><br />
+          <Button disabled={disabled} type='submit'>{buttonText}</Button>
           <Message message={message} type={messageType}>Invalid email or password</Message>
         </form>
       </Container>

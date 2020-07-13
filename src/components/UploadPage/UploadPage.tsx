@@ -29,6 +29,9 @@ const UploadPage = () => {
         },
         function complete() {
           console.log('complete');
+          storageRef.getDownloadURL().then(url => {
+            console.log(url);
+          });
         }
       );
     }

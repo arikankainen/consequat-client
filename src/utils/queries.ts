@@ -24,6 +24,27 @@ export const LOGIN = gql`
   }
 `;
 
+export const SIGNUP = gql`
+  mutation createUser(
+    $username: String!,
+    $email: String!,
+    $fullname: String!,
+    $password: String!) {
+      createUser(
+        username: $username,
+        email: $email,
+        fullname: $fullname,
+        password: $password
+      ) {
+        username,
+        email,
+        fullname,
+        isAdmin,
+        id
+      }
+    }
+`;
+
 export const ME = gql`
   query me {
     me {

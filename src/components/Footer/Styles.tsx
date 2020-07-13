@@ -9,5 +9,4 @@ export const FooterContainer = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   color: #666;
-  /*box-shadow: var(--navigation-shadow);*/
 `;

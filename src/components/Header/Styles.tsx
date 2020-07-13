@@ -9,7 +9,6 @@ export const HeaderContainer = styled.div`
   background-color: var(--navigation-bg-color);
   padding-left: 20px;
   padding-right: 10px;
-  /*box-shadow: var(--navigation-shadow);*/
 `;
 
 export const LoginLink = styled(Link)`
@@ -18,6 +17,7 @@ export const LoginLink = styled(Link)`
   padding-right: 10px;
   padding-left: 10px;
   font-weight: 600;
+  white-space: nowrap;
 
   &:visited {
     color: var(--accent-color-2);

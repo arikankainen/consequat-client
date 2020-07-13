@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import LogoutPage from './components/LoginPage/LogoutPage';
+import SignupPage from './components/LoginPage/SignupPage';
 import UploadPage from './components/UploadPage/UploadPage';
 
 const App = () => {
@@ -20,6 +21,10 @@ const App = () => {
 
           <Route path='/login'>
             <LoginPage />
+          </Route>
+
+          <Route path='/signup'>
+            <SignupPage />
           </Route>
 
           <Route path='/logout'>
