@@ -1,33 +1,29 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import { clearLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
-
-import { OuterContainer, Container, Topic }  from './Styles';
+import { setMessage } from '../../reducers/notificationReducer';
 
 const LogoutPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const loginStatus = useSelector((state: RootState) => state.system);
 
   useEffect(() => {
-    dispatch(clearLogin());
-    storage.clearToken();
+    if (loginStatus && loginStatus.loggedIn) {
+      dispatch(setMessage('Log out', `${loginStatus.loggedUser?.fullname} logged out successfully.`));
+      dispatch(clearLogin());
+      storage.clearToken();
+    }
 
-    setTimeout(() => {
-      history.replace('/');
-    }, 1500);
+    history.replace('/');
 
   }, []);  // eslint-disable-line
 
-  return (
-    <OuterContainer>
-      <Container>
-        <Topic>Log Out</Topic>
-        Logging out...
-      </Container>
-    </OuterContainer>
-  );
+  return null;
 };
 
 export default LogoutPage;

@@ -74,7 +74,7 @@ const Header = () => {
     },
     {
       text: 'Log out',
-      subText: loginStatus.loggedUser?.username || '',
+      subText: loginStatus.loggedUser?.fullname || '',
       link: '/logout',
       icon: LogoutIcon,
     },

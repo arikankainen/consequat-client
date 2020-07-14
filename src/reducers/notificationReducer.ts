@@ -41,6 +41,7 @@ export const clearNotification = (): SetNotification => {
 export const setMessage = (topic: string, text: string): ThunkType => {
   if (timeoutID != null) {
     clearTimeout(timeoutID);
+    clearNotification();
   }
   
   return async dispatch => {
@@ -62,6 +63,7 @@ export const setMessage = (topic: string, text: string): ThunkType => {
 export const setError = (topic: string, text: string): ThunkType => {
   if (timeoutID != null) {
     clearTimeout(timeoutID);
+    clearNotification();
   }
   
   return async dispatch => {
@@ -79,35 +81,6 @@ export const setError = (topic: string, text: string): ThunkType => {
     });
   };
 };
-
-/*
-export const setMessage = (topic: string, text: string): SetNotification => {
-  return {
-    type: SET_NOTIFICATION,
-    data: {
-      notificationType: NotificationType.Message,
-      topic,
-      text
-    }
-  };
-};
-
-export const setError = (topic: string, text: string): SetNotification => {
-  return {
-    type: SET_NOTIFICATION,
-    data: {
-      notificationType: NotificationType.Error,
-      topic,
-      text
-    }
-  };
-};
-
-export const setMessageAsync = (topic: string, text: string):
-  ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-  dispatch(setMessage(topic, text));
-};
-*/
 
 export const notificationReducer = (state = initialState, action: SetNotification): NotificationState => {
   switch (action.type) {

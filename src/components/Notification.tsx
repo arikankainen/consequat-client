@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
@@ -93,6 +93,12 @@ const Notification = () => {
     setText(notification.text);
     setType(notification.notificationType);
     setOpen(true);
+  }
+
+  if (notification.text && notification.text !== text) {
+    setTopic(notification.topic);
+    setText(notification.text);
+    setType(notification.notificationType);
   }
 
   return (

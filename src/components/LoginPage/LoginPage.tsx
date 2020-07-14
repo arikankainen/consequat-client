@@ -4,17 +4,15 @@ import { useHistory } from 'react-router-dom';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { updateLogin } from '../../reducers/systemReducer';
+import { setMessage, setError } from '../../reducers/notificationReducer';
 import storage from '../../utils/storage';
 import { LOGIN, ME } from '../../utils/queries';
 
 import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
-import Message, { MessageType } from './Message';
 
 const LoginPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>('Log in');
-  const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<MessageType>(MessageType.Success);
   const history = useHistory();
   const dispatch =  useDispatch();
 
@@ -36,8 +34,7 @@ const LoginPage = () => {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
       loggingProgress(false);
-      setMessageType(MessageType.Error);
-      setMessage('Invalid username or password');
+      dispatch(setError('Log in', 'Invalid username or password.'));
     }
   });
 
@@ -67,6 +64,7 @@ const LoginPage = () => {
         }
       }));
       
+      dispatch(setMessage('Log in', `${resultMe.data.me.fullname} logged in successfully.`));
       history.replace('/');
     }
   }, [resultMe.data]); // eslint-disable-line
@@ -77,20 +75,15 @@ const LoginPage = () => {
     loggingProgress(true);
 
     if (!username.value) {
-      setMessageType(MessageType.Error);
-      setMessage('Username required');
+      dispatch(setError('Log in', 'Username and password required.'));
       loggingProgress(false);
     }
     else if (!password.value) {
-      setMessageType(MessageType.Error);
-      setMessage('Password required');
+      dispatch(setError('Log in', 'Username and password required.'));
       loggingProgress(false);
     }
     else {
-      // temporarily added delay to see disabled form elements when login in progress, TODO: delete from product version
-      setTimeout(() => {
-        login({ variables: { username: username.value, password: password.value } });
-      }, 1500);
+      login({ variables: { username: username.value, password: password.value } });
     }
   };
   
@@ -102,7 +95,6 @@ const LoginPage = () => {
           <Input disabled={disabled} {...username}/><br />
           <Input disabled={disabled} {...password} /><br />
           <Button disabled={disabled} type='submit'>{buttonText}</Button>
-          <Message message={message} type={messageType}>Invalid email or password</Message>
         </form>
       </Container>
     </OuterContainer>
