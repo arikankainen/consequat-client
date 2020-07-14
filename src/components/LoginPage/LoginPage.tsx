@@ -41,7 +41,9 @@ const LoginPage = () => {
     }
   });
 
-  const [me, resultMe] = useLazyQuery(ME);
+  const [me, resultMe] = useLazyQuery(ME, {
+    fetchPolicy: 'no-cache'
+  });
 
   useEffect(() => {
     if (resultLogin.data) {
@@ -65,7 +67,7 @@ const LoginPage = () => {
         }
       }));
       
-      history.push('/');
+      history.replace('/');
     }
   }, [resultMe.data]); // eslint-disable-line
 

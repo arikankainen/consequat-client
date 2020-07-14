@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import storage from './utils/storage';
 
 import {
   ApolloClient,
@@ -20,7 +21,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from './components/GlobalStyles';
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('consequat-token');
+  const token = storage.getToken();
   return {
     headers: {
       ...headers,

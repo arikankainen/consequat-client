@@ -3,9 +3,13 @@ import { ReactComponent as SearchIcon } from '../../images/menu_search.svg';
 import { SearchContainer, Input } from './Styles';
 
 const Search = () => {
+  const clickHandler = () => {
+    console.log('click');
+  };
+
   return (
     <SearchContainer>
-      <SearchIcon />
+      <SearchIcon onClick={clickHandler} />
       <Input placeholder='Search photos' />
     </SearchContainer>
   );

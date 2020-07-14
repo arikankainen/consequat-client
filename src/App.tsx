@@ -5,6 +5,7 @@ import { SiteContainer, Main } from './components/Styles';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
+import Notification from './components/Notification';
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import LogoutPage from './components/LoginPage/LogoutPage';
@@ -14,6 +15,7 @@ import UploadPage from './components/UploadPage/UploadPage';
 const App = () => {
   return (
     <SiteContainer>
+      <Notification />
       <Header />
 
       <Main>

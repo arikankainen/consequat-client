@@ -45,7 +45,6 @@ export const updateLoginThunk = (
 export const systemReducer = (state = initialState, action: UpdateLogin): SystemState => {
   switch (action.type) {
     case UPDATE_LOGIN:
-      console.log('update_login', action.data);
       return {
         ...state,
         ...action.data

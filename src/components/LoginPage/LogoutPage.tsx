@@ -15,7 +15,7 @@ const LogoutPage = () => {
     storage.clearToken();
 
     setTimeout(() => {
-      history.push('/');
+      history.replace('/');
     }, 1500);
 
   }, []);  // eslint-disable-line

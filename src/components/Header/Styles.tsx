@@ -43,27 +43,6 @@ export const LogoImage = styled.picture`
   }
 `;
 
-export const MenuButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--button-size);
-  min-width: var(--button-size);
-  height: var(--button-size);
-  border-radius: 50%;
-  cursor: pointer;
-
-  &:hover {
-    filter: brightness(1.2);
-    background-color: var(--navigation-bg-color-hover);
-  }
-
-  & > svg {
-    height: var(--icon-size);
-    color: var(--icon-color);
-  }
-`;
-
 export const SearchContainer = styled.div`
   display: flex;
   align-items: center;

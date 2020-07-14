@@ -9,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-2-hover: #398ff2;
     --default-font-family: 'Hind', 'sans-serif';
     --default-font-color: #bbb;
+    --default-font-color-slightly-darker: #999;
     --default-font-color-darker: #777;
     --default-font-color-highlight: #fff;
     --default-font-size: 16px;
@@ -20,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
     --icon-color: #007ad9;
     --icon-size: 20px;
     --button-size: 40px;
+    --notification-message-bg-color: #232325;
   }
 
   * {
