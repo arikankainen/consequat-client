@@ -34,7 +34,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:server": "rmdir /s /q ..\\server\\build && npm run build --prod && xcopy build ..\\server\\build\\ /s /e /y"
   },
   "eslintConfig": {
     "extends": "react-app"

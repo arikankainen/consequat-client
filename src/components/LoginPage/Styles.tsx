@@ -90,7 +90,8 @@ export const QuestionArea = styled.div`
 
 export const QuestionLink = styled(Link)`
   text-decoration: none;
-
+  color: var(--default-font-color);
+  
   &:visited {
     color: var(--default-font-color);
   }
