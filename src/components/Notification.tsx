@@ -1,5 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reducers/rootReducer';
+import { NotificationType } from '../reducers/notificationReducer';
+import { CSSTransition } from 'react-transition-group';
+import { clearNotification } from '../reducers/notificationReducer';
+import { useDispatch } from 'react-redux';
+
 import { ReactComponent as MessageIcon } from '../images/notification_message.svg';
 import { ReactComponent as ErrorIcon } from '../images/notification_error.svg';
 
@@ -9,6 +16,7 @@ const Container = styled.div`
   position: absolute;
   width: 100%;
   top: 65px;
+  cursor: pointer;
 `;
 
 const MessageBox = styled.div`
@@ -21,7 +29,11 @@ const MessageBox = styled.div`
   border-radius: 5px;
 `;
 
-const IconContainer = styled.div`
+interface IconContainerProps {
+  type: NotificationType;
+}
+
+const IconContainer = styled.div<IconContainerProps>`
   display: flex;
   flex-shrink: 0;
   margin-top: 2px;
@@ -29,7 +41,16 @@ const IconContainer = styled.div`
   & > svg {
       height: 40px;
       margin-right: 20px;
-      color: var(--icon-color);
+      
+      ${props => props.type === NotificationType.Message
+        && css`
+        color: var(--color-success);
+      `}
+
+      ${props => props.type === NotificationType.Error
+        && css`
+        color: var(--color-error);
+      `}
     }
 `;
 
@@ -51,22 +72,53 @@ const Body = styled.div`
 `;
 
 const Notification = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [topic, setTopic] = useState<string | null>(null);
+  const [text, setText] = useState<string | null>(null);
+  const [type, setType] = useState<NotificationType>(NotificationType.Message);
+  const notification = useSelector((state: RootState) => state.notification);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(clearNotification());
+  };
+
+  if (!notification.text) {
+    if (open) {
+      setOpen(false);
+    }
+  }
+  else if (!open) {
+    setTopic(notification.topic);
+    setText(notification.text);
+    setType(notification.notificationType);
+    setOpen(true);
+  }
+
   return (
-    <Container>
-      <MessageBox>
-        <IconContainer>
-          <MessageIcon />
-        </IconContainer>
-        <ContentContainer>
-          <Topic>
-            Message
-          </Topic>
-          <Body>
-            Sample message, nothing to show.
-          </Body>
-        </ContentContainer>
-      </MessageBox>
-    </Container>
+    <CSSTransition
+      in={open}
+      timeout={300}
+      mountOnEnter
+      unmountOnExit
+      classNames='notification'
+    >
+      <Container onClick={handleClick}>
+        <MessageBox>
+          <IconContainer type={type}>
+            {type === NotificationType.Message ? <MessageIcon /> : <ErrorIcon />}
+          </IconContainer>
+          <ContentContainer>
+            <Topic>
+              {topic}
+            </Topic>
+            <Body>
+              {text}
+            </Body>
+          </ContentContainer>
+        </MessageBox>
+      </Container>
+    </CSSTransition>
   );
 };
 

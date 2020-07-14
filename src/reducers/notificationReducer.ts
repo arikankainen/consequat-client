@@ -1,3 +1,10 @@
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { RootState } from '../reducers/rootReducer';
+
+const TIMEOUT = 5000;
+let timeoutID: number | null = null;
+
 export enum NotificationType {
   Message,
   Error
@@ -22,12 +29,7 @@ export interface SetNotification {
   data: NotificationState;
 }
 
-export const setNotification = (data: NotificationState): SetNotification => {
-  return {
-    type: SET_NOTIFICATION,
-    data
-  };
-};
+type ThunkType = ThunkAction<void, RootState, unknown, Action<string>>;
 
 export const clearNotification = (): SetNotification => {
   return {
@@ -35,6 +37,77 @@ export const clearNotification = (): SetNotification => {
     data: initialState
   };
 };
+
+export const setMessage = (topic: string, text: string): ThunkType => {
+  if (timeoutID != null) {
+    clearTimeout(timeoutID);
+  }
+  
+  return async dispatch => {
+    timeoutID = setTimeout(() => {
+      dispatch(clearNotification());
+    }, TIMEOUT);
+
+    dispatch({
+      type: SET_NOTIFICATION,
+      data: {
+        notificationType: NotificationType.Message,
+        topic,
+        text
+      }
+    });
+  };
+};
+
+export const setError = (topic: string, text: string): ThunkType => {
+  if (timeoutID != null) {
+    clearTimeout(timeoutID);
+  }
+  
+  return async dispatch => {
+    timeoutID = setTimeout(() => {
+      dispatch(clearNotification());
+    }, TIMEOUT);
+
+    dispatch({
+      type: SET_NOTIFICATION,
+      data: {
+        notificationType: NotificationType.Error,
+        topic,
+        text
+      }
+    });
+  };
+};
+
+/*
+export const setMessage = (topic: string, text: string): SetNotification => {
+  return {
+    type: SET_NOTIFICATION,
+    data: {
+      notificationType: NotificationType.Message,
+      topic,
+      text
+    }
+  };
+};
+
+export const setError = (topic: string, text: string): SetNotification => {
+  return {
+    type: SET_NOTIFICATION,
+    data: {
+      notificationType: NotificationType.Error,
+      topic,
+      text
+    }
+  };
+};
+
+export const setMessageAsync = (topic: string, text: string):
+  ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+  dispatch(setMessage(topic, text));
+};
+*/
 
 export const notificationReducer = (state = initialState, action: SetNotification): NotificationState => {
   switch (action.type) {

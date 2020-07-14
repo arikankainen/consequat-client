@@ -22,6 +22,8 @@ const GlobalStyles = createGlobalStyle`
     --icon-size: 20px;
     --button-size: 40px;
     --notification-message-bg-color: #232325;
+    --color-success: #45904c;
+    --color-error: #a13434;
   }
 
   * {
@@ -61,21 +63,19 @@ const GlobalStyles = createGlobalStyle`
     transition: opacity 300ms, transform 300ms;
   }
 
-  .loginpage-appear {
+  .notification-enter {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translateY(-300px) scale(0.2);
   }
-
-  .loginpage-appear-done {
+  .notification-enter-active {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     transition: opacity 300ms, transform 300ms;
   }
-
-  .loginpage-exit {
+  .notification-exit {
     opacity: 1;
   }
-  .loginpage-exit-active {
+  .notification-exit-active {
     opacity: 0;
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
