@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
+import { Link } from 'react-router-dom';
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ export const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
+  padding-bottom: 15px;
   background-color: var(--navigation-bg-color);
   border: none;
   border-radius: var(--input-border-radius);
@@ -43,8 +45,6 @@ export const Input = styled.input`
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  /*background-color: #303032;
-  border: 1px solid var(--bg-color);*/
   background-color: var(--bg-color);
   border: none;
   border-radius: var(--input-border-radius);
@@ -53,7 +53,6 @@ export const Input = styled.input`
 
   &:focus {
     outline-width: 0;
-    /*background-color: #3b3b3d;*/
   }
 `;
 
@@ -80,6 +79,23 @@ export const Button = styled.button`
     background-color: var(--accent-color-2);
     cursor: wait;
   }
+`;
+
+export const QuestionArea = styled.div`
+  margin-top: 15px;
+  font-size: 14px;
+`;
+
+export const QuestionLink = styled(Link)`
+  text-decoration: none;
+
+  &:visited {
+    color: var(--default-font-color);
+  }
+  &:hover {
+    color: var(--default-font-color-highlight);
+  }
+
 `;
 
 export const ErrorNotification = styled.div`

@@ -8,7 +8,15 @@ import { setMessage, setError } from '../../reducers/notificationReducer';
 import storage from '../../utils/storage';
 import { LOGIN, ME } from '../../utils/queries';
 
-import { OuterContainer, Container, Topic, Input, Button }  from './Styles';
+import {
+  OuterContainer,
+  Container,
+  Topic,
+  Input,
+  Button,
+  QuestionArea,
+  QuestionLink
+}  from './Styles';
 
 const LoginPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -34,7 +42,7 @@ const LoginPage = () => {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
       loggingProgress(false);
-      dispatch(setError('Log in', 'Invalid username or password.'));
+      dispatch(setError('Error', 'Invalid username or password.'));
     }
   });
 
@@ -75,11 +83,11 @@ const LoginPage = () => {
     loggingProgress(true);
 
     if (!username.value) {
-      dispatch(setError('Log in', 'Username and password required.'));
+      dispatch(setError('Error', 'Username and password required.'));
       loggingProgress(false);
     }
     else if (!password.value) {
-      dispatch(setError('Log in', 'Username and password required.'));
+      dispatch(setError('Error', 'Username and password required.'));
       loggingProgress(false);
     }
     else {
@@ -95,6 +103,11 @@ const LoginPage = () => {
           <Input disabled={disabled} {...username}/><br />
           <Input disabled={disabled} {...password} /><br />
           <Button disabled={disabled} type='submit'>{buttonText}</Button>
+          <QuestionArea>
+            <QuestionLink to='/signup'>
+              Not registered? Sign up.
+            </QuestionLink>
+          </QuestionArea>
         </form>
       </Container>
     </OuterContainer>

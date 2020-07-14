@@ -23,10 +23,11 @@ const MessageBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  max-width: 50%;
+  margin: 0px 5px;
   padding: 15px 20px;
   background-color: var(--notification-message-bg-color);
   border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
 `;
 
 interface IconContainerProps {
