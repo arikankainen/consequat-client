@@ -4,7 +4,7 @@ import { FooterContainer } from './Styles';
 const Header = () => {
   return (
     <FooterContainer>
-      &copy; 2020 Ari Kankainen
+      Consequat &copy; 2020 Ari Kankainen
     </FooterContainer>
   );
 };

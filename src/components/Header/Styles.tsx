@@ -12,10 +12,13 @@ export const HeaderContainer = styled.div`
 `;
 
 export const LoginLink = styled(Link)`
+  display: flex;
+  justify-content: flex-end;
   text-decoration: none;
   color: var(--accent-color-2);
   padding-right: 10px;
   padding-left: 10px;
+  font-size: var(--default-font-size-bigger);
   font-weight: 600;
   white-space: nowrap;
 
@@ -25,10 +28,13 @@ export const LoginLink = styled(Link)`
   &:hover {
     color: var(--accent-color-2-hover);
   }
+  
+  flex-grow: 1;
 `;
 
 export const LogoLink = styled(Link)`
   height: 30px;
+  flex-grow: 1;
 `;
 
 export const LogoImage = styled.picture`
@@ -54,21 +60,26 @@ export const SearchContainer = styled.div`
   padding-left: 15px;
   height: var(--button-size);
   border-radius: var(--input-border-radius);
-  background-color: var(--bg-color);
+  /*background-color: var(--bg-color);*/
+  background-color: var(--input-bg-color);
 
   & > svg {
     height: var(--icon-size);
     color: var(--icon-color);
   }
+  flex-grow: 1;
 `;
 
 export const Input = styled.input`
   width: 100%;
   margin-left: 20px;
   margin-right: 20px;
-  background-color: var(--bg-color);
+  /*background-color: var(--bg-color);*/
+  background-color: var(--input-bg-color);
   border: none;
-  color: var(--default-font-color);
+  /*color: var(--default-font-color);*/
+  color: var(--input-color);
+  font-size: var(--default-font-size);
 
   &:focus {
     outline-width: 0;

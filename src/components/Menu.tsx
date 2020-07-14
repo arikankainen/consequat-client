@@ -3,29 +3,35 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
+const MenuContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+`;
+
 export enum Direction {
   Left,
   Right,
 }
 
-interface MenuContainerProps {
+interface MenuItemsContainerProps {
   top: string;
   direction: Direction;
 }
 
-const MenuContainer = styled.ul<MenuContainerProps>`
+const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   position: absolute;
   padding: 0px 0px;
   background-color: var(--navigation-bg-color);
 
   ${props => props.direction === Direction.Right
     && css`
-      right: 1px;
+      right: 0px;
   `}
 
   ${props => props.direction === Direction.Left
     && css`
-      left: 1px;
+      left: 0px;
   `}
 
   top: ${props => props.top};
@@ -42,7 +48,6 @@ const MenuButton = styled.div`
   cursor: pointer;
 
   &:hover {
-    filter: brightness(1.2);
     background-color: var(--navigation-bg-color-hover);
   }
 
@@ -56,7 +61,7 @@ const MenuItem = styled.li`
   display: flex;
   align-items: center;
   list-style: none;
-  border-bottom: 1px solid #111;
+  border-top: 1px solid #111;
 `;
 
 const MenuLink = styled(Link)`
@@ -91,7 +96,7 @@ const MenuTextContainer = styled.div`
 `;
 
 const MenuTextUpperText = styled.div`
-  font-size: var(--default-font-size);
+  font-size: var(--default-font-size-bigger);
   color: var(--default-font-color);
   line-height: 1.1;
 `;
@@ -128,7 +133,7 @@ interface MenuProps {
 
 const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
   return (
-    <MenuContainer top={settings.top} direction={settings.direction}>
+    <MenuItemsContainer top={settings.top} direction={settings.direction}>
 
       {items.map(item => {
         return (
@@ -144,7 +149,7 @@ const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
         );
       })}
 
-    </MenuContainer>
+    </MenuItemsContainer>
   );
 };
 
@@ -167,7 +172,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   };
 
   return (
-    <div>
+    <MenuContainer>
       <MenuButton onClick={() => toggleMenu()}>
         <button.icon />
       </MenuButton>
@@ -179,7 +184,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
       >
         <MenuItems button={button} items={items} settings={settings} />
       </CSSTransition>
-    </div>
+    </MenuContainer>
   );
 };
 

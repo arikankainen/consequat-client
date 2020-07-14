@@ -1,5 +1,5 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import { SiteContainer, Main } from './components/Styles';
 import Header from './components/Header/Header';
@@ -13,8 +13,22 @@ import SignupPage from './components/LoginPage/SignupPage';
 import UploadPage from './components/UploadPage/UploadPage';
 
 const App = () => {
+  const location = useLocation();
+  const [back, setBack] = useState<boolean>(false);
+  
+  if (
+    location.pathname === '/login' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/'
+  ) {
+    if (!back) setBack(true);
+  }
+  else {
+    if (back) setBack(false);
+  }
+  
   return (
-    <SiteContainer>
+    <SiteContainer picture={back}>
       <Notification />
       <Header />
 

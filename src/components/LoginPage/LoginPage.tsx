@@ -105,7 +105,7 @@ const LoginPage = () => {
           <Button disabled={disabled} type='submit'>{buttonText}</Button>
           <QuestionArea>
             <QuestionLink to='/signup'>
-              Not registered? Sign up.
+              Not registered yet? Sign up!
             </QuestionLink>
           </QuestionArea>
         </form>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
@@ -37,7 +37,6 @@ interface IconContainerProps {
 const IconContainer = styled.div<IconContainerProps>`
   display: flex;
   flex-shrink: 0;
-  margin-top: 2px;
 
   & > svg {
       height: 40px;
@@ -61,7 +60,7 @@ const ContentContainer = styled.div`
 `;
 
 const Topic = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 20px;
   color: var(--default-font-color);
   line-height: 1;

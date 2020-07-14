@@ -33,7 +33,7 @@ export const Container = styled.div`
 
 export const Topic = styled.h1`
   margin-bottom: 10px;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--accent-color-2);
   color: var(--accent-color-1);
   text-transform: uppercase;
@@ -45,10 +45,11 @@ export const Input = styled.input`
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  background-color: var(--bg-color);
+  background-color: var(--input-bg-color);
   border: none;
   border-radius: var(--input-border-radius);
-  color: var(--default-font-color);
+  color: var(--input-color);
+  font-size: var(--default-font-size);
   text-align: center;
 
   &:focus {
@@ -64,6 +65,7 @@ export const Button = styled.button`
   border: none;
   border-radius: var(--input-border-radius);
   color: #eee;
+  font-size: var(--default-font-size);
   font-weight: 600;
   cursor: pointer;
 
