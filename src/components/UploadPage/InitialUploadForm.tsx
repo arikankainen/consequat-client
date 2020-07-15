@@ -1,5 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
+
+import { addPicture } from '../../reducers/pictureReducer';
 
 import { ReactComponent as ImagesIcon } from '../../images/menu_upload.svg';
 
@@ -56,6 +60,12 @@ const Button = styled.button`
 const InitialUploadForm = () => {
   const [filesToUpload, setFilesToUpload] = useState<FileList | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
+  const pictures = useSelector((state: RootState) => state.picture);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(pictures);
+  }, [pictures]);
 
   const handleClick = () => {
     if (fileInput.current !== null) fileInput.current.click();
@@ -65,6 +75,8 @@ const InitialUploadForm = () => {
     if (event.target.files) {
       setFilesToUpload(event.target.files);
       console.log(event.target.files);
+
+      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
     }
   };
 
