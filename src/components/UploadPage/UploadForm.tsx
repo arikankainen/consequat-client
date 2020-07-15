@@ -16,6 +16,7 @@ const OuterContainer = styled.div`
 const ToolBar = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 const PictureArea = styled.div`

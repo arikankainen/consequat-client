@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  width: 200px;
   margin: 10px;
 `;
 
@@ -14,6 +15,7 @@ const Image = styled.img`
 `;
 
 const Properties = styled.div`
+  padding: 0px 10px;
   word-wrap: break-word;
   font-size: 12px;
 `;
@@ -40,7 +42,6 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture }) => {
       <Image ref={image} />
       <Properties>
         {picture.name}<br />
-        {picture.size} bytes
       </Properties>
     </Container>
   );
