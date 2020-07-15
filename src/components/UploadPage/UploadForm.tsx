@@ -1,10 +1,14 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { addPicture, removePictures, updateProgress } from '../../reducers/pictureReducer';
 import { storage } from '../../firebase/firebase';
 import Thumbnail from './Thumbnail';
-import { PictureWithData } from '../../reducers/pictureReducer';
+import {
+  PictureWithData,
+  addPicture,
+  removePictures,
+  updateProgress
+} from '../../reducers/pictureReducer';
 
 const OuterContainer = styled.div`
   display: flex;
@@ -96,6 +100,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           console.log('complete');
           storageRef.getDownloadURL().then(url => {
             console.log(url);
+            dispatch(updateProgress(file.name, 100));
             resolve(url);
           });
         }

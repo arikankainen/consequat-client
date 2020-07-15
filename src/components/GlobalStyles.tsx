@@ -28,14 +28,15 @@ const GlobalStyles = createGlobalStyle`
     --button-size: 40px;
     --notification-message-bg-color: #232325;
     --notification-message-bg-color: rgba(48, 48, 50, 0.9);
-    --color-success: #45904c;
     --color-success: #38a342;
-    --color-error: #a13434;
     --color-error: #be2b2b;
+    --color-inprogress: #aaa92d;
     --input-bg-color: #c9c9cf;
     --input-color: #222;
     --image-color: #555558;
     --image-size: 140px;
+    --progress-back: var(--navigation-bg-color);
+    --progress-value: #666;
   }
 
   * {
