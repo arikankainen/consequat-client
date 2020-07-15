@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { addPicture, removePictures } from '../../reducers/pictureReducer';
+import { addPicture, removePictures, updateProgress } from '../../reducers/pictureReducer';
 import { storage } from '../../firebase/firebase';
 import Thumbnail from './Thumbnail';
 import { PictureWithData } from '../../reducers/pictureReducer';
@@ -86,6 +86,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
         function progress(snapshot) {
           const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(percentage);
+          dispatch(updateProgress(file.name, Math.round(percentage)));
         },
         function error(err) {
           console.log(err);
