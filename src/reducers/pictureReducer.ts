@@ -33,6 +33,12 @@ export const addPicture = (picture: File): AddPicture => {
   };
 };
 
+export const removePictures = (): Clear => {
+  return {
+    type: CLEAR,
+  };
+};
+
 export const pictureReducer = (state = initialState, action: Actions): PictureState => {
   switch (action.type) {
     case ADD_PICTURE:

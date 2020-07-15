@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { addPicture } from '../../reducers/pictureReducer';
+import { addPicture, removePictures } from '../../reducers/pictureReducer';
 import { storage } from '../../firebase/firebase';
 import Thumbnail from './Thumbnail';
 
@@ -76,7 +76,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
-  const uploadFiles = () => {
+  const handleUploadPictures = () => {
     if (pictures) {
       pictures.forEach(file => {
         const storageRef = storage.ref(`images/${file.name}`);
@@ -101,8 +101,12 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   };
 
-  const handleClick = () => {
+  const handleAddPictures = () => {
     if (fileInput.current !== null) fileInput.current.click();
+  };
+
+  const handleRemovePictures = () => {
+    dispatch(removePictures());
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,8 +122,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   return (
     <OuterContainer>
       <ToolBar>
-        <ToolBarButton onClick={handleClick}>Add more pictures</ToolBarButton>
-        <ToolBarButton onClick={uploadFiles}>Upload pictures</ToolBarButton>
+        <ToolBarButton onClick={handleAddPictures}>Add more pictures</ToolBarButton>
+        <ToolBarButton onClick={handleRemovePictures}>Remove pictures</ToolBarButton>
+        <ToolBarButton onClick={handleUploadPictures}>Upload pictures</ToolBarButton>
       </ToolBar>
 
       <PictureArea>
