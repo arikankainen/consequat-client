@@ -93,6 +93,7 @@ const MenuLink = styled(Link)`
 const MenuTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 5px;
 `;
 
 const MenuTextUpperText = styled.div`
@@ -102,7 +103,7 @@ const MenuTextUpperText = styled.div`
 `;
 
 const MenuTextLowerText = styled.div`
-  font-size: var(--default-font-size-smaller);
+  font-size: var(--default-font-size);
   color: var(--default-font-color-darker);
   line-height: 1.1;
 `;

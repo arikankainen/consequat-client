@@ -12,8 +12,8 @@ const GlobalStyles = createGlobalStyle`
     --default-font-color-slightly-darker: #999;
     --default-font-color-darker: #888;
     --default-font-color-highlight: #fff;
-    --default-font-size-bigger: 16px;
-    --default-font-size: 14px;
+    --default-font-size-bigger: 18px;
+    --default-font-size: 16px;
     --default-font-size-smaller: 14px;
     --navigation-bg-color: #232325;
     --navigation-bg-color: #303032;
@@ -34,6 +34,8 @@ const GlobalStyles = createGlobalStyle`
     --color-error: #be2b2b;
     --input-bg-color: #c9c9cf;
     --input-color: #222;
+    --image-color: #555558;
+    --image-size: 140px;
   }
 
   * {
@@ -54,6 +56,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: var(--default-font-family);
     overflow-x: hidden;
   }
+
 
   .usermenu-enter {
     opacity: 0;
