@@ -22,9 +22,10 @@ const Properties = styled.div`
 
 interface ThumbnailProps {
   picture: File;
+  progress: number;
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ picture }) => {
+const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress }) => {
   const image = useRef<HTMLImageElement>(null);
   
   const reader = new FileReader();
@@ -42,6 +43,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture }) => {
       <Image ref={image} />
       <Properties>
         {picture.name}<br />
+        Upload progress: {progress} %
       </Properties>
     </Container>
   );

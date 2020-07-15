@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addPicture, removePictures } from '../../reducers/pictureReducer';
 import { storage } from '../../firebase/firebase';
 import Thumbnail from './Thumbnail';
+import { PictureWithData } from '../../reducers/pictureReducer';
 
 const OuterContainer = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ const ToolBarButton = styled.button`
 `;
 
 interface UploadFormProps {
-  pictures: File[];
+  pictures: PictureWithData[];
 }
 
 const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
@@ -101,7 +102,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     });
   };
   
-  async function asyncForEach(array: File[], callback: Function) {
+  async function asyncForEach(array: PictureWithData[], callback: Function) {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
     }
@@ -109,7 +110,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
   const handleUploadPictures = async () => {
     if (pictures) {
-      await asyncForEach(pictures, async (file: File) => uploadPicture(file));
+      await asyncForEach(
+        pictures, async (pictureWithData: PictureWithData) => uploadPicture(pictureWithData.picture)
+      );
     }
   };
 
@@ -140,7 +143,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       </ToolBar>
 
       <PictureArea>
-        {pictures.map(file => <Thumbnail key={file.name} picture={file} />)}
+        {pictures.map(file =>
+          <Thumbnail key={file.picture.name} picture={file.picture} progress={file.progress} />
+        )}
       </PictureArea>
 
       <Container>
