@@ -20,7 +20,9 @@ const ToolBar = styled.div`
 
 const PictureArea = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 `;
 
 const Container = styled.div`
@@ -116,7 +118,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     <OuterContainer>
       <ToolBar>
         <ToolBarButton onClick={handleClick}>Add more pictures</ToolBarButton>
-        <ToolBarButton onClick={handleClick}>Upload pictures</ToolBarButton>
+        <ToolBarButton onClick={uploadFiles}>Upload pictures</ToolBarButton>
       </ToolBar>
 
       <PictureArea>

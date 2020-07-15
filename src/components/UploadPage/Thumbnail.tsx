@@ -5,45 +5,43 @@ const Container = styled.div`
   margin: 10px;
 `;
 
+const Image = styled.img`
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  margin: 1px;
+  border: 10px solid var(--navigation-bg-color);
+`;
+
+const Properties = styled.div`
+  word-wrap: break-word;
+  font-size: 12px;
+`;
+
 interface ThumbnailProps {
   picture: File;
 }
 
 const Thumbnail: React.FC<ThumbnailProps> = ({ picture }) => {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const image = useRef<HTMLImageElement>(null);
   
-  if (FileReader && picture) {
-    console.log('1');
-    const reader = new FileReader();
-    reader.readAsDataURL(picture);
+  const reader = new FileReader();
+  reader.readAsDataURL(picture);
 
-    if (reader !== null) {
-      console.log('2');
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        if (canvas.current && event.target?.readyState == FileReader.DONE) {
-          console.log('3');
-          const ctx = canvas.current.getContext('2d');
-          const image = new Image();
-          image.src = event.target.result as string;
-          console.log('res', event.target.result);
-          if (ctx) {
-            console.log('4');
-            ctx.rect(0, 0, 100, 100);
-            ctx.strokeStyle = '#ff0000';
-            ctx.stroke();
-            ctx.drawImage(image, 100, 100);
-          }
-        }
-      };
+  reader.onload = function (event) {
+    const elem = image.current;
+    if (elem !== null && event.target !== null) {
+      elem.src = event.target.result as string;
     }
-  }
-
+  };
+  
   return (
     <Container>
-      {picture.name}<br />
-      <canvas ref={canvas} style={{ border: '1px solid green' }}>
-
-      </canvas>
+      <Image ref={image} />
+      <Properties>
+        {picture.name}<br />
+        {picture.size} bytes
+      </Properties>
     </Container>
   );
 };
