@@ -76,28 +76,40 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
-  const handleUploadPictures = () => {
-    if (pictures) {
-      pictures.forEach(file => {
-        const storageRef = storage.ref(`images/${file.name}`);
-        const task = storageRef.put(file);
+  const uploadPicture = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = storage.ref(`images/${file.name}`);
+      const task = storageRef.put(file);
 
-        task.on('state_changed',
-          function progress(snapshot) {
-            const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(percentage);
-          },
-          function error(err) {
-            console.log(err);
-          },
-          function complete() {
-            console.log('complete');
-            storageRef.getDownloadURL().then(url => {
-              console.log(url);
-            });
-          }
-        );
-      });
+      task.on('state_changed',
+        function progress(snapshot) {
+          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(percentage);
+        },
+        function error(err) {
+          console.log(err);
+          reject(err);
+        },
+        function complete() {
+          console.log('complete');
+          storageRef.getDownloadURL().then(url => {
+            console.log(url);
+            resolve(url);
+          });
+        }
+      );
+    });
+  };
+  
+  async function asyncForEach(array: File[], callback: Function) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  }
+
+  const handleUploadPictures = async () => {
+    if (pictures) {
+      await asyncForEach(pictures, async (file: File) => uploadPicture(file));
     }
   };
 
