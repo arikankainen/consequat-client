@@ -2,14 +2,25 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { addPicture } from '../../reducers/pictureReducer';
-
-import { ReactComponent as ImagesIcon } from '../../images/menu_upload.svg';
+import { storage } from '../../firebase/firebase';
+import Thumbnail from './Thumbnail';
 
 const OuterContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
+`;
+
+const ToolBar = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const PictureArea = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -29,16 +40,15 @@ const FileButton = styled.input`
   display: none;
 `;
 
-const Button = styled.button`
+const ToolBarButton = styled.button`
   height: 30px;
-  margin-top: 20px;
+  margin: 10px;
   padding: 0px 10px;
   background-color: var(--accent-color-2);
   border: none;
   border-radius: var(--input-border-radius);
   color: #eee;
   font-size: var(--default-font-size);
-  font-weight: 600;
   cursor: pointer;
 
   &:focus {
@@ -55,9 +65,38 @@ const Button = styled.button`
   }
 `;
 
-const InitialUploadForm = () => {
+interface UploadFormProps {
+  pictures: File[];
+}
+
+const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+
+  const uploadFiles = () => {
+    if (pictures) {
+      pictures.forEach(file => {
+        const storageRef = storage.ref(`images/${file.name}`);
+        const task = storageRef.put(file);
+
+        task.on('state_changed',
+          function progress(snapshot) {
+            const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(percentage);
+          },
+          function error(err) {
+            console.log(err);
+          },
+          function complete() {
+            console.log('complete');
+            storageRef.getDownloadURL().then(url => {
+              console.log(url);
+            });
+          }
+        );
+      });
+    }
+  };
 
   const handleClick = () => {
     if (fileInput.current !== null) fileInput.current.click();
@@ -75,11 +114,17 @@ const InitialUploadForm = () => {
 
   return (
     <OuterContainer>
+      <ToolBar>
+        <ToolBarButton onClick={handleClick}>Add more pictures</ToolBarButton>
+        <ToolBarButton onClick={handleClick}>Upload pictures</ToolBarButton>
+      </ToolBar>
+
+      <PictureArea>
+        {pictures.map(file => <Thumbnail key={file.name} picture={file} />)}
+      </PictureArea>
+
       <Container>
-        <ImagesIcon />
-        You can select pictures to upload by using the button below.
         <form onSubmit={handleSubmit}>
-          <Button onClick={handleClick}>Select pictures to upload</Button>
           <FileButton
             type='file'
             ref={fileInput}
@@ -93,4 +138,4 @@ const InitialUploadForm = () => {
   );
 };
 
-export default InitialUploadForm;
+export default UploadForm;

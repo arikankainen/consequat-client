@@ -1,41 +1,20 @@
 import React from 'react';
-//import { storage } from '../../firebase/firebase';
-//import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import InitialUploadForm from './InitialUploadForm';
+import UploadForm from './UploadForm';
 
 const UploadPage = () => {
-  
-  /*
-  const uploadFiles = () => {
-    if (filesToUpload) {
-      Array.from(filesToUpload).forEach(file => {
-        console.log(filesToUpload);
-
-        const storageRef = storage.ref(`images/${file.name}`);
-        const task = storageRef.put(file);
-
-        task.on('state_changed',
-          function progress(snapshot) {
-            const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(percentage);
-          },
-          function error(err) {
-            console.log(err);
-          },
-          function complete() {
-            console.log('complete');
-            storageRef.getDownloadURL().then(url => {
-              console.log(url);
-            });
-          }
-        );
-      });
-    }
-  };
-  */
+  const picture = useSelector((state: RootState) => state.picture);
+    
+  if (picture.pictures.length === 0) {
+    return (
+      <InitialUploadForm />
+    );
+  }
 
   return (
-    <InitialUploadForm />
+    <UploadForm pictures={picture.pictures} />
   );
 };
 

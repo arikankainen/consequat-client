@@ -41,7 +41,7 @@ export const pictureReducer = (state = initialState, action: Actions): PictureSt
       };
     case REMOVE_PICTURE:
       return {
-        pictures: [...state.pictures].filter(picture => picture.name != action.data)
+        pictures: [...state.pictures].filter(picture => picture.name !== action.data)
       };
     case CLEAR:
       return {
