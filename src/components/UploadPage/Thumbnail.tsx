@@ -21,10 +21,10 @@ const Container = styled.div<ContainerProps>`
 
   ${props => props.selected
     && css`
-      border: 5px solid var(--color-success);
+      border: 5px solid var(--accent-color-2);
 
       &:hover {
-        border: 5px solid var(--color-success-hover);
+        border: 5px solid var(--accent-color-2-hover);
       }
   `}
 `;

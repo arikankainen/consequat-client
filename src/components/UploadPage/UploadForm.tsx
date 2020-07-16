@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
@@ -11,6 +11,8 @@ import {
   removePictures,
   updateProgress
 } from '../../reducers/pictureReducer';
+import EditArea from './EditArea';
+import breakPoints from '../../utils/breakPoints';
 
 const OuterContainer = styled.div`
   display: flex;
@@ -22,8 +24,13 @@ const OuterContainer = styled.div`
 
 const ToolBar = styled.div`
   display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  margin: 0px 15px;
 `;
 
 const PictureArea = styled.div`
@@ -52,7 +59,7 @@ const FileButton = styled.input`
 `;
 
 const ToolBarButton = styled.button`
-  margin: 10px;
+  margin: 10px 5px;
   padding: 5px 10px;
   background-color: var(--accent-color-2);
   border: none;
@@ -83,14 +90,26 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const pictureState = useSelector((state: RootState) => state.picture);
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [selectedCount, setSelectedCount] = useState<number>(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  console.log(pictureState.pictures);
-  
-  let selectedCount = 0;
-  pictureState.pictures.forEach(element => {
-    if (element.selected) selectedCount++;
-  });
-  
+  useEffect(() => {
+    let count = 0;
+    pictureState.pictures.forEach(element => {
+      if (element.selected) count++;
+    });
+    setSelectedCount(count);
+
+    if (count === 1) {
+      pictureState.pictures.forEach(element => {
+        if (element.selected) setSelectedFile(element.picture);
+      });
+    }
+    else {
+      setSelectedFile(null);
+    }
+  }, [pictureState]);
+
   const uploadPicture = (file: File) => {
     return new Promise((resolve, reject) => {
       const storageRef = storage.ref(`images/${file.name}`);
@@ -160,14 +179,24 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   return (
     <OuterContainer>
       <ToolBar>
-        <ToolBarButton onClick={handleAddPictures}>Add more pictures</ToolBarButton>
-        <ToolBarButton onClick={handleRemovePictures}>
-          {selectedCount === 0 && <span>Remove all pictures</span>}
-          {selectedCount === 1 && <span>Remove 1 picture</span>}
-          {selectedCount > 1 && <span>Remove {selectedCount} pictures</span>}
-        </ToolBarButton>
-        <ToolBarButton onClick={handleUploadPictures}>Upload pictures</ToolBarButton>
+        <ButtonGroup>
+          <ToolBarButton onClick={handleAddPictures}>Add</ToolBarButton>
+          <ToolBarButton onClick={handleRemovePictures}>
+            {selectedCount === 0 ?
+              <span>Remove</span> :
+              <span>Remove ({selectedCount})</span>
+            }
+          </ToolBarButton>
+        </ButtonGroup>
+        <ButtonGroup>
+          <ToolBarButton onClick={handleUploadPictures}>Upload</ToolBarButton>
+        </ButtonGroup>
       </ToolBar>
+
+      <EditArea
+        selectedCount={selectedCount}
+        selectedFile={selectedFile}
+      />
 
       <PictureArea>
         {pictures.map(file =>
