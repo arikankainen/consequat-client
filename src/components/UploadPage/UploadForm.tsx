@@ -28,7 +28,7 @@ const PictureArea = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const Container = styled.div`
@@ -49,9 +49,8 @@ const FileButton = styled.input`
 `;
 
 const ToolBarButton = styled.button`
-  height: 30px;
   margin: 10px;
-  padding: 0px 10px;
+  padding: 5px 10px;
   background-color: var(--accent-color-2);
   border: none;
   border-radius: var(--input-border-radius);

@@ -77,7 +77,7 @@ const InitialUploadForm = () => {
     <OuterContainer>
       <Container>
         <ImagesIcon />
-        You can select pictures to upload by using the button below.
+        Select pictures to upload by using the button below.
         <form onSubmit={handleSubmit}>
           <Button onClick={handleClick}>Select pictures to upload</Button>
           <FileButton
