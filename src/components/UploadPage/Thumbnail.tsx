@@ -5,16 +5,50 @@ import { setError } from '../../reducers/notificationReducer';
 import Filename from './Filename';
 
 const Container = styled.div`
-  width: 270px;
   margin: 10px;
   background-color: var(--navigation-bg-color);
-  border: 10px solid var(--navigation-bg-color);
+  border: 5px solid var(--navigation-bg-color);
+`;
+
+const pageMargin = '45px';  // imagecontainer paddings + scrollbar width
+const imageMargin = '30px'; // margins, padding and border around image
+
+const query = (col: number, minWidth: number, maxWidth: number): string => {
+  return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) { --columns: ${col}; }`;
+};
+
+const PictureLink = styled.a`
+  ${query(21, 3900, 9999)}
+  ${query(20, 3900, 4099)}
+  ${query(19, 3700, 3899)}
+  ${query(18, 3500, 3699)}
+  ${query(17, 3300, 3499)}
+  ${query(16, 3100, 3299)}
+  ${query(15, 2900, 3099)}
+  ${query(14, 2700, 2899)}
+  ${query(13, 2500, 2699)}
+  ${query(12, 2300, 2499)}
+  ${query(11, 2100, 2299)}
+  ${query(10, 1900, 2099)}
+  ${query(9, 1700, 1899)}
+  ${query(8, 1500, 1699)}
+  ${query(7, 1300, 1499)}
+  ${query(6, 1100, 1299)}
+  ${query(5, 900, 1099)}
+  ${query(4, 700, 899)}
+  ${query(3, 500, 699)}
+  ${query(2, 320, 499)}
+  ${query(1, 0, 319)}
+
+  display: block;
+  width: calc(((100vw - ${pageMargin}) / var(--columns)) - ${imageMargin});
+  height: calc(((100vw - ${pageMargin}) / var(--columns)) - ${imageMargin});
 `;
 
 const Picture = styled.img`
   object-fit: cover;
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Properties = styled.div`
@@ -114,9 +148,10 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress }) => {
   
   return (
     <Container>
-      <Picture ref={thumbnailImage} />
+      <PictureLink>
+        <Picture ref={thumbnailImage} />
+      </PictureLink>
       <Properties>
-        <Filename text={picture.name} />
         <Progress ref={progressBar} max='100' value={progress} progress={progress} />
       </Properties>
     </Container>
