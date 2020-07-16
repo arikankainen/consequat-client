@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
 import Thumbnail from './Thumbnail';
 import {
   PictureWithData,
   addPicture,
+  removePicture,
   removePictures,
   updateProgress
 } from '../../reducers/pictureReducer';
@@ -78,9 +80,17 @@ interface UploadFormProps {
 }
 
 const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
+  const pictureState = useSelector((state: RootState) => state.picture);
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
+  console.log(pictureState.pictures);
+  
+  let selectedCount = 0;
+  pictureState.pictures.forEach(element => {
+    if (element.selected) selectedCount++;
+  });
+  
   const uploadPicture = (file: File) => {
     return new Promise((resolve, reject) => {
       const storageRef = storage.ref(`images/${file.name}`);
@@ -127,7 +137,14 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const handleRemovePictures = () => {
-    dispatch(removePictures());
+    if (selectedCount === 0) {
+      dispatch(removePictures());
+    }
+    else {
+      pictureState.pictures.forEach(picture => {
+        if (picture.selected) dispatch(removePicture(picture.picture.name));
+      });
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +161,11 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     <OuterContainer>
       <ToolBar>
         <ToolBarButton onClick={handleAddPictures}>Add more pictures</ToolBarButton>
-        <ToolBarButton onClick={handleRemovePictures}>Remove pictures</ToolBarButton>
+        <ToolBarButton onClick={handleRemovePictures}>
+          {selectedCount === 0 && <span>Remove all pictures</span>}
+          {selectedCount === 1 && <span>Remove 1 picture</span>}
+          {selectedCount > 1 && <span>Remove {selectedCount} pictures</span>}
+        </ToolBarButton>
         <ToolBarButton onClick={handleUploadPictures}>Upload pictures</ToolBarButton>
       </ToolBar>
 

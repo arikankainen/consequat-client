@@ -20,16 +20,16 @@ import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 
 const Header = () => {
-  const loginStatus = useSelector((state: RootState) => state.system);
+  const loginState = useSelector((state: RootState) => state.system);
   const dispatch =  useDispatch();
   
   const [me, resultMe] = useLazyQuery(ME);
 
   useEffect(() => {
-    if (!loginStatus.loggedIn && storage.getToken()) {
+    if (!loginState.loggedIn && storage.getToken()) {
       me();
     }
-  }, [loginStatus, me]);
+  }, [loginState, me]);
 
   useEffect(() => {
     if (resultMe.data) {
@@ -74,7 +74,7 @@ const Header = () => {
     },
     {
       text: 'Log out',
-      subText: loginStatus.loggedUser?.fullname || '',
+      subText: loginState.loggedUser?.fullname || '',
       link: '/logout',
       icon: LogoutIcon,
     },
@@ -95,14 +95,14 @@ const Header = () => {
     <HeaderContainer>
       <Logo />
       <Search />
-      {loginStatus.loggedIn && 
+      {loginState.loggedIn && 
         <Menu
           button={userMenuButton}
           items={userMenuItems}
           settings={userMenuSettings}
         />
       }
-      {!loginStatus.loggedIn && <LoginLink to='/login'>Log In</LoginLink>}
+      {!loginState.loggedIn && <LoginLink to='/login'>Log In</LoginLink>}
     </HeaderContainer>
   );
 };

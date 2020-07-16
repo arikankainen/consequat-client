@@ -62,6 +62,13 @@ export const addPicture = (picture: File): AddPicture => {
   };
 };
 
+export const removePicture = (picture: string): RemovePicture => {
+  return {
+    type: REMOVE_PICTURE,
+    data: picture
+  };
+};
+
 export const removePictures = (): Clear => {
   return {
     type: CLEAR,
