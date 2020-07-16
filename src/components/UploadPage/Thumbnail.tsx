@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import { setError } from '../../reducers/notificationReducer';
 import { updateSelected } from '../../reducers/pictureReducer';
 import Filename from './Filename';
@@ -12,11 +13,19 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   margin: 10px;
   background-color: var(--navigation-bg-color);
-  border: 5px solid var(--navigation-bg-color);
+  border: 5px solid #111;
+
+  &:hover {
+    border: 5px solid var(--navigation-bg-color-hover);
+  }
 
   ${props => props.selected
     && css`
       border: 5px solid var(--color-success);
+
+      &:hover {
+        border: 5px solid var(--color-success-hover);
+      }
   `}
 `;
 
@@ -108,14 +117,24 @@ interface ThumbnailProps {
 }
 
 const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) => {
+  const pictureState = useSelector((state: RootState) => state.picture);
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const progressBar = useRef<HTMLProgressElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    console.log('click', picture.name);
-    dispatch(updateSelected(picture.name, !selected));
+  const handleClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    if (event.ctrlKey) {
+      dispatch(updateSelected(picture.name, !selected));
+    }
+    else {
+      pictureState.pictures.forEach(element => {
+        if (element.selected) {
+          dispatch(updateSelected(element.picture.name, false));
+        }
+      });
+      dispatch(updateSelected(picture.name, true));
+    }
   };
 
   function resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<unknown> {

@@ -29,6 +29,7 @@ const GlobalStyles = createGlobalStyle`
     --notification-message-bg-color: #232325;
     --notification-message-bg-color: rgba(48, 48, 50, 0.9);
     --color-success: #38a342;
+    --color-success-hover: #5bc360;
     --color-error: #be2b2b;
     --color-inprogress: #aaa92d;
     --input-bg-color: #c9c9cf;
