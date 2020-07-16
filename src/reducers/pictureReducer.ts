@@ -2,10 +2,12 @@ export const ADD_PICTURE = 'ADD_PICTURE';
 export const REMOVE_PICTURE = 'REMOVE_PICTURE';
 export const CLEAR = 'CLEAR';
 export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+export const UPDATE_SELECTED = 'UPDATE_SELECTED';
 
 export interface PictureWithData {
   picture: File;
   progress: number;
+  selected: boolean;
 }
 
 interface PictureState {
@@ -38,7 +40,20 @@ export interface UpdateProgress {
   };
 }
 
-type Actions = AddPicture | RemovePicture | Clear | UpdateProgress;
+export interface UpdateSelected {
+  type: typeof UPDATE_SELECTED;
+  data: {
+    filename: string;
+    selected: boolean;
+  };
+}
+
+type Actions =
+  AddPicture |
+  RemovePicture |
+  Clear |
+  UpdateProgress |
+  UpdateSelected;
 
 export const addPicture = (picture: File): AddPicture => {
   return {
@@ -63,11 +78,25 @@ export const updateProgress = (filename: string, progress: number): UpdateProgre
   };
 };
 
+export const updateSelected = (filename: string, selected: boolean): UpdateSelected => {
+  return {
+    type: UPDATE_SELECTED,
+    data: {
+      filename,
+      selected
+    }
+  };
+};
+
 export const pictureReducer = (state = initialState, action: Actions): PictureState => {
   switch (action.type) {
     case ADD_PICTURE:
       return {
-        pictures: [...state.pictures, { picture: action.data, progress: 0 }]
+        pictures: [...state.pictures, {
+          picture: action.data,
+          progress: 0,
+          selected: false 
+        }]
       };
     case REMOVE_PICTURE:
       return {
@@ -82,6 +111,15 @@ export const pictureReducer = (state = initialState, action: Actions): PictureSt
         pictures: [...state.pictures].map(picture => {
           if (picture.picture.name === action.data.filename) {
             picture.progress = action.data.progress;
+          }
+          return picture;
+        })
+      };
+    case UPDATE_SELECTED:
+      return {
+        pictures: [...state.pictures].map(picture => {
+          if (picture.picture.name === action.data.filename) {
+            picture.selected = action.data.selected;
           }
           return picture;
         })

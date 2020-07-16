@@ -1,23 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setError } from '../../reducers/notificationReducer';
+import { updateSelected } from '../../reducers/pictureReducer';
 import Filename from './Filename';
 
-const Container = styled.div`
+interface ContainerProps {
+  selected: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   margin: 10px;
   background-color: var(--navigation-bg-color);
   border: 5px solid var(--navigation-bg-color);
+
+  ${props => props.selected
+    && css`
+      border: 5px solid var(--color-success);
+  `}
 `;
 
-const pageMargin = '45px';  // imagecontainer paddings + scrollbar width
+const pageMargin = '45px';  // imagecontainer paddings + possible scrollbar
 const imageMargin = '30px'; // margins, padding and border around image
 
 const query = (col: number, minWidth: number, maxWidth: number): string => {
   return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) { --columns: ${col}; }`;
 };
 
-const PictureLink = styled.a`
+const PictureContainer = styled.div`
   ${query(21, 3900, 9999)}
   ${query(20, 3900, 4099)}
   ${query(19, 3700, 3899)}
@@ -94,12 +104,19 @@ const Progress = styled.progress<ProgressProps>`
 interface ThumbnailProps {
   picture: File;
   progress: number;
+  selected: boolean;
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress }) => {
+const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) => {
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const progressBar = useRef<HTMLProgressElement>(null);
+  const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
+
+  const handleClick = () => {
+    console.log('click', picture.name);
+    dispatch(updateSelected(picture.name, !selected));
+  };
 
   function resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<unknown> {
     return new Promise((resolve, reject) => {
@@ -147,15 +164,19 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress }) => {
   });
   
   return (
-    <Container>
-      <PictureLink>
-        <Picture ref={thumbnailImage} />
-      </PictureLink>
-      <Properties>
-        <Progress ref={progressBar} max='100' value={progress} progress={progress} />
-      </Properties>
+    <Container ref={container} selected={selected}>
+      <PictureContainer>
+        <Picture ref={thumbnailImage} onClick={handleClick} />
+      </PictureContainer>
     </Container>
   );
 };
 
 export default Thumbnail;
+
+/*
+      <Properties>
+        <Filename text={picture.name} />
+        <Progress ref={progressBar} max='100' value={progress} progress={progress} />
+      </Properties>
+*/
