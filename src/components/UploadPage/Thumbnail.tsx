@@ -1,42 +1,40 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { setError } from '../../reducers/notificationReducer';
 import { updateSelected } from '../../reducers/pictureReducer';
-import Filename from './Filename';
+
+const query = (col: number, minWidth: number, maxWidth: number): string => {
+  const width = 93.5 / col;
+  const margin = 3 / col;
+
+  return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) {
+    width: ${width}%;
+    margin-left: ${margin}%;
+    margin-right: ${margin}%;
+    margin-top: ${margin}%;
+  }`;
+};
 
 interface ContainerProps {
   selected: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+	box-sizing: border-box;
+	cursor: pointer;
+
   margin: 10px;
   background-color: var(--navigation-bg-color);
   border: 5px solid #111;
 
-  &:hover {
-    border: 5px solid var(--navigation-bg-color-hover);
-  }
-
-  ${props => props.selected
-    && css`
-      border: 5px solid var(--accent-color-2);
-
-      &:hover {
-        border: 5px solid var(--accent-color-2-hover);
-      }
-  `}
-`;
-
-const pageMargin = '45px';  // imagecontainer paddings + possible scrollbar
-const imageMargin = '30px'; // margins, padding and border around image
-
-const query = (col: number, minWidth: number, maxWidth: number): string => {
-  return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) { --columns: ${col}; }`;
-};
-
-const PictureContainer = styled.div`
   ${query(21, 3900, 9999)}
   ${query(20, 3900, 4099)}
   ${query(19, 3700, 3899)}
@@ -59,20 +57,24 @@ const PictureContainer = styled.div`
   ${query(2, 320, 499)}
   ${query(1, 0, 319)}
 
-  display: block;
-  width: calc(((100vw - ${pageMargin}) / var(--columns)) - ${imageMargin});
-  height: calc(((100vw - ${pageMargin}) / var(--columns)) - ${imageMargin});
+  &:hover {
+    border: 5px solid var(--navigation-bg-color-hover);
+  }
+
+  ${props => props.selected
+    && css`
+      border: 5px solid var(--accent-color-2);
+
+      &:hover {
+        border: 5px solid var(--accent-color-2-hover);
+      }
+  `}
 `;
 
 const Picture = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
-`;
-
-const Properties = styled.div`
-  word-wrap: break-word;
-  font-size: var(--default-font-size-small);
 `;
 
 interface ProgressProps {
@@ -146,9 +148,11 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
         const width = image.width;
         const height = image.height;
             
+        /*
         if (width <= maxWidth && height <= maxHeight) {
           resolve(file);
         }
+        */
 
         let newWidth;
         let newHeight;
@@ -162,11 +166,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
         }
 
         const canvas = document.createElement('canvas');
-        canvas.width = newWidth;
-        canvas.height = newHeight;
+        canvas.width = 500; //newWidth
+        canvas.height = 500; //newHeight
 
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-        context.drawImage(image, 0, 0, newWidth, newHeight);
+        //context.drawImage(image, 0, 0, newWidth, newHeight);
+        context.drawImage(image, 0, 0, 500, 500);
         canvas.toBlob(resolve, file.type);
       };
 
@@ -184,9 +189,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   
   return (
     <Container ref={container} selected={selected}>
-      <PictureContainer>
-        <Picture ref={thumbnailImage} onClick={handleClick} />
-      </PictureContainer>
+      <Picture ref={thumbnailImage} onClick={handleClick} />
     </Container>
   );
 };
