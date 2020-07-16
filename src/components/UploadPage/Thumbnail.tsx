@@ -8,12 +8,13 @@ import { updateSelected } from '../../reducers/pictureReducer';
 const query = (col: number, minWidth: number, maxWidth: number): string => {
   const width = 93.5 / col;
   const margin = 3 / col;
+  const marginTop = 2 / col;
 
   return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) {
     width: ${width}%;
     margin-left: ${margin}%;
     margin-right: ${margin}%;
-    margin-top: ${margin}%;
+    margin-top: ${marginTop}%;
   }`;
 };
 
