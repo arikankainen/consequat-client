@@ -47,6 +47,7 @@ const PictureArea = styled.div`
   align-content: flex-start;
   box-sizing: border-box;
   padding: 10px;
+  width: 100%;
 `;
 
 const Container = styled.div`

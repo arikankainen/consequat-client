@@ -140,7 +140,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
     }
   };
 
-  const resizeImage = (file: File, targetSize: number): Promise<unknown> => {
+  const resizeImage = (file: File, square: boolean, maxSize: number): Promise<unknown> => {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.src = URL.createObjectURL(file);
@@ -148,17 +148,25 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
       image.onload = () => {
         const inputWidth = image.width;
         const inputHeight = image.height;
-            
-        const square = inputWidth > inputHeight ? inputHeight : inputWidth;
-        const startX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
-        const startY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
+
+        const squareSize = inputWidth > inputHeight ? inputHeight : inputWidth;
+        const squareStartX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
+        const squareStartY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
+
+        const ratio = inputWidth > inputHeight ? maxSize / inputWidth : maxSize / inputHeight;
+        const outputWidth = inputWidth * ratio;
+        const outputHeight = inputHeight * ratio;
 
         const canvas = document.createElement('canvas');
-        canvas.width = targetSize;
-        canvas.height = targetSize;
+        canvas.width = square ? maxSize : outputWidth;
+        canvas.height = square ? maxSize : outputHeight;
 
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-        context.drawImage(image, startX, startY, square, square, 0, 0, targetSize, targetSize);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
+
+        if (square) context.drawImage(image, squareStartX, squareStartY, squareSize, squareSize, 0, 0, maxSize, maxSize);
+        else context.drawImage(image, 0, 0, inputWidth, inputHeight, 0, 0, outputWidth, outputHeight);
         
         canvas.toBlob(resolve, file.type);
       };
@@ -167,13 +175,14 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
     });
   };
 
-  resizeImage(picture, 500).then(blob => {
-    if (thumbnailImage.current) {
-      thumbnailImage.current.src = URL.createObjectURL(blob);
-    }
-  }, () => {
-    dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
-  });
+  resizeImage(picture, true, 500)
+    .then(blob => {
+      if (thumbnailImage.current) {
+        thumbnailImage.current.src = URL.createObjectURL(blob);
+      }
+    }, () => {
+      dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
+    });
   
   return (
     <Container ref={container} selected={selected}>
