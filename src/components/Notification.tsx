@@ -16,6 +16,7 @@ const Container = styled.div`
   position: absolute;
   width: 100%;
   top: 65px;
+  z-index: 999;
   cursor: pointer;
 `;
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import breakPoints from '../../utils/breakPoints';
 
 const OuterContainer = styled.div`
   display: flex;
@@ -13,6 +14,11 @@ const Container = styled.div`
   margin: 0px 20px;
   padding: 10px;
   background-color: var(--navigation-bg-color);
+
+  
+  ${breakPoints.mobileXL} {
+    margin: 0px 10px;
+  }
 `;
 
 const FieldBlock = styled.div`

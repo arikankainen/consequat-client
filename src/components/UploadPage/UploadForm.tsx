@@ -31,6 +31,10 @@ const ToolBar = styled.div`
 const ButtonGroup = styled.div`
   display: flex;
   margin: 0px 15px;
+
+  ${breakPoints.mobileXL} {
+    margin: 0px 5px;
+  }
 `;
 
 const PictureArea = styled.div`

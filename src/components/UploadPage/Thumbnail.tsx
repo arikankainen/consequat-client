@@ -140,47 +140,34 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
     }
   };
 
-  function resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<unknown> {
+  const resizeImage = (file: File, targetSize: number): Promise<unknown> => {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.src = URL.createObjectURL(file);
       
       image.onload = () => {
-        const width = image.width;
-        const height = image.height;
+        const inputWidth = image.width;
+        const inputHeight = image.height;
             
-        /*
-        if (width <= maxWidth && height <= maxHeight) {
-          resolve(file);
-        }
-        */
-
-        let newWidth;
-        let newHeight;
-
-        if (width > height) {
-          newHeight = height * (maxWidth / width);
-          newWidth = maxWidth;
-        } else {
-          newWidth = width * (maxHeight / height);
-          newHeight = maxHeight;
-        }
+        const square = inputWidth > inputHeight ? inputHeight : inputWidth;
+        const startX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
+        const startY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
 
         const canvas = document.createElement('canvas');
-        canvas.width = 500; //newWidth
-        canvas.height = 500; //newHeight
+        canvas.width = targetSize;
+        canvas.height = targetSize;
 
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-        //context.drawImage(image, 0, 0, newWidth, newHeight);
-        context.drawImage(image, 0, 0, 500, 500);
+        context.drawImage(image, startX, startY, square, square, 0, 0, targetSize, targetSize);
+        
         canvas.toBlob(resolve, file.type);
       };
 
       image.onerror = reject;
     });
-  }
+  };
 
-  resizeImage(picture, 500, 500).then(blob => {
+  resizeImage(picture, 500).then(blob => {
     if (thumbnailImage.current) {
       thumbnailImage.current.src = URL.createObjectURL(blob);
     }
