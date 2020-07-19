@@ -167,7 +167,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
         dispatch(removePicture(picture.name));
         dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
       });
-  }, []);
+  }, [picture]); //eslint-disable-line
   
   const handleThumbnailClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     if (event.ctrlKey) {

@@ -98,6 +98,11 @@ export const updateSelected = (filename: string, selected: boolean): UpdateSelec
 export const pictureReducer = (state = initialState, action: Actions): PictureState => {
   switch (action.type) {
     case ADD_PICTURE:
+      const exist = state.pictures.find(picture =>
+        picture.picture.name === action.data.name
+      );
+
+      if (exist) return state;
       return {
         pictures: [...state.pictures, {
           picture: action.data,
