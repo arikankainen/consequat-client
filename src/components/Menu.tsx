@@ -7,6 +7,7 @@ const MenuContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-grow: 1;
+  z-index: 999;
 `;
 
 export enum Direction {

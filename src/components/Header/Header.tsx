@@ -14,7 +14,6 @@ import Search from './Search';
 
 import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
 import { ReactComponent as AccountIcon } from '../../images/menu_settings.svg';
-import { ReactComponent as ThemeIcon } from '../../images/menu_theme.svg';
 import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
@@ -65,12 +64,6 @@ const Header = () => {
       subText: 'View account settings',
       link: '/account',
       icon: AccountIcon,
-    },
-    {
-      text: 'Theme',
-      subText: 'Change between dark and light',
-      link: '/theme',
-      icon: ThemeIcon,
     },
     {
       text: 'Log out',

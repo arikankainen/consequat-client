@@ -3,8 +3,10 @@ import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { setError } from '../../reducers/notificationReducer';
-import { updateSelected } from '../../reducers/pictureReducer';
+import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
+
+import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 
 const query = (col: number, minWidth: number, maxWidth: number): string => {
   const width = 93.5 / col;
@@ -24,6 +26,7 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -34,8 +37,9 @@ const Container = styled.div<ContainerProps>`
 	cursor: pointer;
 
   margin: 10px;
+  padding: 1px;
   background-color: var(--navigation-bg-color);
-  border: 5px solid #111;
+  border: 1px solid #111;
 
   ${query(21, 3900, 9999)}
   ${query(20, 3900, 4099)}
@@ -60,15 +64,15 @@ const Container = styled.div<ContainerProps>`
   ${query(1, 0, 319)}
 
   &:hover {
-    border: 5px solid var(--navigation-bg-color-hover);
+    border: 1px solid var(--navigation-bg-color-hover);
   }
 
   ${props => props.selected
     && css`
-      border: 5px solid var(--accent-color-2);
+      border: 1px solid var(--accent-color-2);
 
       &:hover {
-        border: 5px solid var(--accent-color-2-hover);
+        border: 1px solid var(--accent-color-2-hover);
       }
   `}
 `;
@@ -77,6 +81,25 @@ const Picture = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
+`;
+
+const IconArea = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgb(0, 0, 0, 0.4);
+  border: 1px solid rgb(255, 255, 255, 0.2);
+
+  & > svg {
+    height: var(--icon-size);
+    color: #fff;
+  }
 `;
 
 interface ProgressProps {
@@ -127,7 +150,17 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const handleClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+  resizeImage(picture, true, 500)
+    .then(blob => {
+      if (thumbnailImage.current) {
+        thumbnailImage.current.src = URL.createObjectURL(blob);
+      }
+    }, () => {
+      dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
+      dispatch(removePicture(picture.name));
+    });
+
+  const handleThumbnailClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     if (event.ctrlKey) {
       dispatch(updateSelected(picture.name, !selected));
     }
@@ -141,18 +174,16 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
     }
   };
 
-  resizeImage(picture, true, 500)
-    .then(blob => {
-      if (thumbnailImage.current) {
-        thumbnailImage.current.src = URL.createObjectURL(blob);
-      }
-    }, () => {
-      dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
-    });
-  
+  const handleCheckClick = () => {
+    dispatch(updateSelected(picture.name, !selected));
+  };
+
   return (
     <Container ref={container} selected={selected}>
-      <Picture ref={thumbnailImage} onClick={handleClick} />
+      <Picture ref={thumbnailImage} onClick={handleThumbnailClick} />
+      <IconArea onClick={handleCheckClick}>
+        {selected && <CheckedIcon />}
+      </IconArea>
     </Container>
   );
 };
