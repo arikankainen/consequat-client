@@ -99,8 +99,13 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const pictureState = useSelector((state: RootState) => state.picture);
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [pictureCount, setPictureCount] = useState<number>(0);
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    setPictureCount(pictureState.pictures.length);
+  }, [pictureState]);
 
   useEffect(() => {
     let count = 0;
@@ -139,6 +144,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           storageRef.getDownloadURL().then(url => {
             console.log(url);
             dispatch(updateProgress(file.name, 100));
+            dispatch(removePicture(file.name));
             resolve(url);
           });
         }
@@ -190,12 +196,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       <ToolBar>
         <ButtonGroup>
           <ToolBarButton onClick={handleAddPictures}>Add</ToolBarButton>
-          <ToolBarButton onClick={handleRemovePictures}>
-            {selectedCount === 0 ?
-              <span>Remove</span> :
-              <span>Remove ({selectedCount})</span>
-            }
-          </ToolBarButton>
+          <ToolBarButton onClick={handleRemovePictures}>Remove</ToolBarButton>
         </ButtonGroup>
         <ButtonGroup>
           <ToolBarButton onClick={handleUploadPictures}>Upload</ToolBarButton>
@@ -203,6 +204,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       </ToolBar>
 
       <EditArea
+        pictureCount={pictureCount}
         selectedCount={selectedCount}
         selectedFile={selectedFile}
       />

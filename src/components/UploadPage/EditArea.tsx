@@ -52,17 +52,18 @@ export const Input = styled.input`
 `;
 
 interface EditAreaProps {
+  pictureCount: number;
   selectedCount: number;
   selectedFile: File | null;
 }
 
-const EditArea: React.FC<EditAreaProps> = ({ selectedCount, selectedFile }) => {
+const EditArea: React.FC<EditAreaProps> = ({ pictureCount, selectedCount, selectedFile }) => {
   return (
     <OuterContainer>
       <Container>
         <FieldBlock>
           <FieldName>Selected pictures:</FieldName>
-          <FieldValue>{selectedCount}</FieldValue>
+          <FieldValue>{selectedCount} / {pictureCount}</FieldValue>
         </FieldBlock>
         
         <FieldBlock>
