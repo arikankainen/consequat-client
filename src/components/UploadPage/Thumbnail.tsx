@@ -7,6 +7,7 @@ import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
 
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
+import placeholder from '../../images/placeholder.png';
 
 const query = (col: number, minWidth: number, maxWidth: number): string => {
   const width = 94 / col;
@@ -187,8 +188,15 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   };
 
   return (
-    <Container ref={container} selected={selected}>
-      <Picture ref={thumbnailImage} onClick={handleThumbnailClick} />
+    <Container
+      ref={container}
+      selected={selected}>
+      
+      <Picture
+        ref={thumbnailImage}
+        onClick={handleThumbnailClick}
+        src={placeholder} />
+
       <IconArea onClick={handleCheckClick}>
         {selected && <CheckedIcon />}
       </IconArea>
@@ -204,10 +212,3 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
 };
 
 export default Thumbnail;
-
-/*
-      <Properties>
-        <Filename text={picture.name} />
-        <Progress ref={progressBar} max='100' value={progress} progress={progress} />
-      </Properties>
-*/
