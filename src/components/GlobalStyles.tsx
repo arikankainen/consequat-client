@@ -31,12 +31,12 @@ const GlobalStyles = createGlobalStyle`
     --color-success: #38a342;
     --color-success-hover: #5bc360;
     --color-error: #be2b2b;
-    --color-inprogress: #aaa92d;
+    --color-inprogress: #c3c22a;
     --input-bg-color: #c9c9cf;
     --input-color: #222;
     --image-color: #555558;
     --image-size: 140px;
-    --progress-back: var(--navigation-bg-color);
+    --progress-back: rgb(0, 0, 0, 0.5);
     --progress-value: #666;
   }
 

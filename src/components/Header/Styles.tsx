@@ -6,6 +6,7 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 60px;
+  min-height: 60px;
   background-color: var(--navigation-bg-color);
   padding-left: 20px;
   padding-right: 10px;

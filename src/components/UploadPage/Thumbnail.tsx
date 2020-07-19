@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
@@ -9,7 +9,7 @@ import resizeImage from '../../utils/resizeImage';
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 
 const query = (col: number, minWidth: number, maxWidth: number): string => {
-  const width = 93.5 / col;
+  const width = 94 / col;
   const margin = 3 / col;
   const marginTop = 2 / col;
 
@@ -93,8 +93,8 @@ const IconArea = styled.div`
   left: 10px;
   width: 30px;
   height: 30px;
-  background: rgb(0, 0, 0, 0.4);
-  border: 1px solid rgb(255, 255, 255, 0.2);
+  background: rgb(0, 0, 0, 0.5);
+  border: 1px solid rgb(255, 255, 255, 0.3);
 
   & > svg {
     height: var(--icon-size);
@@ -107,19 +107,25 @@ interface ProgressProps {
 }
 
 const Progress = styled.progress<ProgressProps>`
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
   appearance: none;
   display: block;
-  height: 5px;
-  width: 100%;
-  margin-bottom: 5px;
+  height: 10px;
   background-color: var(--progress-back);
+  border: 1px solid rgb(255, 255, 255, 0.3);
 
   &::-webkit-progress-bar { /* background-color (chrome, safari, opera) */
     background-color: var(--progress-back);
   }
 
   &::-moz-progress-bar { /* progress-color (firefox) */
-    background-color: var(--color-inprogress);
+    background-color: var(--accent-color-2);
 
     ${props => props.progress === 100
     && css`
@@ -128,7 +134,7 @@ const Progress = styled.progress<ProgressProps>`
   }
 
   &::-webkit-progress-value { /* progress-color (chrome, safari, opera) */
-    background-color: var(--color-inprogress);
+    background-color: var(--accent-color-2);
 
     ${props => props.progress === 100
     && css`
@@ -150,16 +156,18 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  resizeImage(picture, true, 500)
-    .then(blob => {
-      if (thumbnailImage.current) {
-        thumbnailImage.current.src = URL.createObjectURL(blob);
-      }
-    }, () => {
-      dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
-      dispatch(removePicture(picture.name));
-    });
-
+  useEffect(() => {
+    resizeImage(picture, true, 500)
+      .then(blob => {
+        if (thumbnailImage.current) {
+          thumbnailImage.current.src = URL.createObjectURL(blob);
+        }
+      }, () => {
+        dispatch(removePicture(picture.name));
+        dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
+      });
+  }, []);
+  
   const handleThumbnailClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     if (event.ctrlKey) {
       dispatch(updateSelected(picture.name, !selected));
@@ -184,6 +192,13 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
       <IconArea onClick={handleCheckClick}>
         {selected && <CheckedIcon />}
       </IconArea>
+      
+      {progress > 0 && <Progress
+        max='100'
+        ref={progressBar}
+        value={progress}
+        progress={progress}
+      />}
     </Container>
   );
 };
