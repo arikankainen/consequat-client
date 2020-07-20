@@ -17,7 +17,7 @@ const Container = styled.div`
 
   
   ${breakPoints.mobileXL} {
-    margin: 0px 10px;
+    margin: 0px;
   }
 `;
 

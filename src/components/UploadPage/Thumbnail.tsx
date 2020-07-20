@@ -9,19 +9,6 @@ import resizeImage from '../../utils/resizeImage';
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 import placeholder from '../../images/placeholder.png';
 
-const query = (col: number, minWidth: number, maxWidth: number): string => {
-  const width = 94 / col;
-  const margin = 3 / col;
-  const marginTop = 2 / col;
-
-  return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px) {
-    width: ${width}%;
-    margin-left: ${margin}%;
-    margin-right: ${margin}%;
-    margin-top: ${marginTop}%;
-  }`;
-};
-
 interface ContainerProps {
   selected: boolean;
 }
@@ -29,62 +16,38 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   position: relative;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-	box-sizing: border-box;
+  flex-direction: column;
 	cursor: pointer;
 
-  margin: 10px;
-  padding: 1px;
-  background-color: var(--navigation-bg-color);
-  border: 1px solid #111;
-
-  ${query(21, 3900, 9999)}
-  ${query(20, 3900, 4099)}
-  ${query(19, 3700, 3899)}
-  ${query(18, 3500, 3699)}
-  ${query(17, 3300, 3499)}
-  ${query(16, 3100, 3299)}
-  ${query(15, 2900, 3099)}
-  ${query(14, 2700, 2899)}
-  ${query(13, 2500, 2699)}
-  ${query(12, 2300, 2499)}
-  ${query(11, 2100, 2299)}
-  ${query(10, 1900, 2099)}
-  ${query(9, 1700, 1899)}
-  ${query(8, 1500, 1699)}
-  ${query(7, 1300, 1499)}
-  ${query(6, 1100, 1299)}
-  ${query(5, 900, 1099)}
-  ${query(4, 700, 899)}
-  ${query(3, 500, 699)}
-  ${query(2, 320, 499)}
-  ${query(1, 0, 319)}
+  /*background-color: var(--navigation-bg-color);*/
+  /*border: 1px solid #111;*/
 
   &:hover {
-    border: 1px solid var(--navigation-bg-color-hover);
+    /*border: 1px solid var(--navigation-bg-color-hover);*/
   }
 
   ${props => props.selected
     && css`
-      border: 1px solid var(--accent-color-2);
-
-      &:hover {
-        border: 1px solid var(--accent-color-2-hover);
-      }
+      /*border: 1px solid var(--accent-color-2);*/
   `}
+  transition: all 50ms linear;
 `;
 
 const Picture = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 `;
 
-const IconArea = styled.div`
+interface IconAreaProps {
+  selected: boolean;
+}
+
+const IconArea = styled.div<IconAreaProps>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -92,10 +55,16 @@ const IconArea = styled.div`
   align-content: center;
   top: 10px;
   left: 10px;
-  width: 30px;
-  height: 30px;
-  background: rgb(0, 0, 0, 0.5);
-  border: 1px solid rgb(255, 255, 255, 0.3);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0, 0.5);
+  border: 1px solid rgb(255, 255, 255, 0.7);
+
+  ${props => props.selected && css`
+    background-color: rgb(0, 0, 0, 0.5);
+    border: 1px solid rgb(0, 0, 0, 0.5);
+  `}
 
   & > svg {
     height: var(--icon-size);
@@ -197,7 +166,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
         onClick={handleThumbnailClick}
         src={placeholder} />
 
-      <IconArea onClick={handleCheckClick}>
+      <IconArea onClick={handleCheckClick} selected={selected}>
         {selected && <CheckedIcon />}
       </IconArea>
       

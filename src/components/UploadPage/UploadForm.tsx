@@ -39,15 +39,15 @@ const ButtonGroup = styled.div`
 
 const PictureArea = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  box-sizing: border-box;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 2px;
   width: 100%;
+  padding: 20px;
+
+  ${breakPoints.mobileXL} {
+    padding: 10px 0px;
+  }
 `;
 
 const Container = styled.div`
@@ -227,7 +227,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
             ref={fileInput}
             onChange={handleFileChange}
             multiple
-            accept='.jpg,.jpeg,.png,.gif'
+            /*accept='.jpg,.jpeg,.png,.gif'*/
+            accept='image/*'
           />
         </form>
       </Container>
