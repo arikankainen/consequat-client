@@ -23,8 +23,19 @@ const OuterContainer = styled.div`
 `;
 
 const ToolBar = styled.div`
+  position: sticky;
+  top: var(--header-height);
+  z-index: 1;
+
   display: flex;
+  flex-direction: column;
   width: 100%;
+  background-color: rgba(23, 23, 25, 0.9);
+`;
+
+const ButtonGroups = styled.div`
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
 `;
 
@@ -46,20 +57,7 @@ const PictureArea = styled.div`
   padding: 20px;
 
   ${breakPoints.mobileXL} {
-    padding: 10px 0px;
-  }
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  text-align: center;
-
-  & > svg {
-    height: var(--image-size);
-    color: var(--image-color);
-    margin-bottom: 20px;
+    padding: 0px;
   }
 `;
 
@@ -194,22 +192,26 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   return (
     <OuterContainer>
       <ToolBar>
-        <ButtonGroup>
-          <ToolBarButton onClick={handleAddPictures}>Add</ToolBarButton>
-          <ToolBarButton onClick={handleRemovePictures}>Remove</ToolBarButton>
-        </ButtonGroup>
-        <ButtonGroup>
-          <ToolBarButton onClick={handleUploadPictures}>Upload</ToolBarButton>
-        </ButtonGroup>
+        <ButtonGroups>
+          <ButtonGroup>
+            <ToolBarButton onClick={handleAddPictures}>Add</ToolBarButton>
+            <ToolBarButton onClick={handleRemovePictures}>Remove</ToolBarButton>
+          </ButtonGroup>
+          <ButtonGroup>
+            <ToolBarButton onClick={handleUploadPictures}>Upload</ToolBarButton>
+          </ButtonGroup>
+        </ButtonGroups>
+        <EditArea
+          pictureCount={pictureCount}
+          selectedCount={selectedCount}
+          selectedFile={selectedFile}
+        />
       </ToolBar>
 
-      <EditArea
-        pictureCount={pictureCount}
-        selectedCount={selectedCount}
-        selectedFile={selectedFile}
-      />
-
       <PictureArea>
+        {/*
+        kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd 
+        */}
         {pictures.map(file =>
           <Thumbnail
             key={file.picture.name}
@@ -220,18 +222,16 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
         )}
       </PictureArea>
 
-      <Container>
-        <form onSubmit={handleSubmit}>
-          <FileButton
-            type='file'
-            ref={fileInput}
-            onChange={handleFileChange}
-            multiple
-            /*accept='.jpg,.jpeg,.png,.gif'*/
-            accept='image/*'
-          />
-        </form>
-      </Container>
+      <form onSubmit={handleSubmit}>
+        <FileButton
+          type='file'
+          ref={fileInput}
+          onChange={handleFileChange}
+          multiple
+          /*accept='.jpg,.jpeg,.png,.gif'*/
+          accept='image/*'
+        />
+      </form>
     </OuterContainer>
   );
 };

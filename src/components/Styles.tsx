@@ -19,7 +19,6 @@ export const SiteContainer = styled.section<SiteContainerProps>`
     && css`
       background-position: center center;
       background-repeat: no-repeat;
-      /*background-attachment: fixed;*/
       background-size: cover;
       
       @media screen and (max-width: 1280px) {
@@ -39,5 +38,5 @@ export const SiteContainer = styled.section<SiteContainerProps>`
 
 export const Main = styled.div`
   flex: auto;
-  overflow: auto;
+  /*overflow: auto;*/
 `;

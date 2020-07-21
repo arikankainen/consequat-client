@@ -55,19 +55,19 @@ const IconArea = styled.div<IconAreaProps>`
   align-content: center;
   top: 10px;
   left: 10px;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background-color: rgb(0, 0, 0, 0.5);
-  border: 1px solid rgb(255, 255, 255, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 
   ${props => props.selected && css`
-    background-color: rgb(0, 0, 0, 0.5);
-    border: 1px solid rgb(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
   `}
 
   & > svg {
-    height: var(--icon-size);
+    height: 30px;
     color: #fff;
   }
 `;
@@ -88,7 +88,7 @@ const Progress = styled.progress<ProgressProps>`
   display: block;
   height: 10px;
   background-color: var(--progress-back);
-  border: 1px solid rgb(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 
   &::-webkit-progress-bar { /* background-color (chrome, safari, opera) */
     background-color: var(--progress-back);

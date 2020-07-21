@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   :root {
-    --bg-color: #171719;
+    --bg-color: rgb(23, 23, 25);
     --bg-color-active: #191920;
     --accent-color-1: #c37f1d;
     --accent-color-2: #007ad9;
@@ -36,8 +36,10 @@ const GlobalStyles = createGlobalStyle`
     --input-color: #222;
     --image-color: #555558;
     --image-size: 140px;
-    --progress-back: rgb(0, 0, 0, 0.5);
+    --progress-back: rgba(0, 0, 0, 0.5);
     --progress-value: #666;
+
+    --header-height: 60px;
   }
 
   * {
@@ -46,8 +48,13 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root {
+  html {
     height: 100%;
+  }
+
+  body, #root {
+    display: flex;
+    min-height: 100%;
     width: 100%;
   }
 

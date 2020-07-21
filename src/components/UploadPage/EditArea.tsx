@@ -12,9 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0px 20px;
-  padding: 10px;
-  background-color: var(--navigation-bg-color);
-
+  padding: 0px 10px;
   
   ${breakPoints.mobileXL} {
     margin: 0px;
@@ -24,6 +22,7 @@ const Container = styled.div`
 const FieldBlock = styled.div`
   display: flex;
   flex-direction: row;
+  line-height: 1;
 `;
 
 const FieldName = styled.div`
@@ -36,15 +35,11 @@ const FieldValue = styled.div`
 
 export const Input = styled.input`
   height: 30px;
-  margin-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: var(--input-bg-color);
+  width: 100%;
+  background-color: transparent;
   border: none;
-  border-radius: var(--input-border-radius);
-  color: var(--input-color);
+  color: var(--default-font-color);
   font-size: var(--default-font-size);
-  text-align: center;
 
   &:focus {
     outline-width: 0;
@@ -61,17 +56,37 @@ const EditArea: React.FC<EditAreaProps> = ({ pictureCount, selectedCount, select
   return (
     <OuterContainer>
       <Container>
+
         <FieldBlock>
-          <FieldName>Selected pictures:</FieldName>
+          <FieldName>Pictures selected:</FieldName>
           <FieldValue>{selectedCount} / {pictureCount}</FieldValue>
         </FieldBlock>
-        
+
         <FieldBlock>
-          <FieldName>Picture name:</FieldName>
-          {selectedCount === 0 && <FieldValue>(Picture not selected)</FieldValue>}
-          {selectedCount > 1 && <FieldValue>(Multiple pictures)</FieldValue>}
-          {selectedFile !== null && selectedCount === 1 && <FieldValue>{selectedFile.name}</FieldValue>}
+          {selectedFile !== null && selectedCount === 1 &&
+            <Input
+              value={selectedFile.name}
+              suppressContentEditableWarning={true}
+              spellCheck={false}
+            />}
+          
+          {selectedCount === 0 &&
+            <Input
+              placeholder='No picture selected'
+              suppressContentEditableWarning={true}
+              spellCheck={false}
+              disabled
+            />}
+
+          {selectedCount > 1 &&
+            <Input
+              placeholder='Multiple pictures'
+              suppressContentEditableWarning={true}
+              spellCheck={false}
+              disabled
+            />}
         </FieldBlock>
+        
       </Container>
     </OuterContainer>
   );

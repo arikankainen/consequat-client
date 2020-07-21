@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
-  min-height: 60px;
+  height: var(--header-height);
+  min-height: var(--header-height);
   background-color: var(--navigation-bg-color);
   padding-left: 20px;
   padding-right: 10px;
+  z-index: 1000;
 `;
 
 export const LoginLink = styled(Link)`
