@@ -5,6 +5,7 @@ import { RootState } from '../../reducers/rootReducer';
 import { setError } from '../../reducers/notificationReducer';
 import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
+import breakPoints from '../../utils/breakPoints';
 
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 import placeholder from '../../images/placeholder.png';
@@ -27,11 +28,11 @@ const Picture = styled.img`
   }
 `;
 
-interface IconAreaProps {
+interface NameAreaProps {
   selected: boolean;
 }
 
-const IconArea = styled.div<IconAreaProps>`
+const IconArea = styled.div<NameAreaProps>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -53,6 +54,33 @@ const IconArea = styled.div<IconAreaProps>`
   & > svg {
     height: 30px;
     color: #fff;
+  }
+`;
+
+const NameArea = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const NameAreaText = styled.div`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+  font-size: 12px;
+
+  ${breakPoints.laptop} {
+    font-size: 10px;
   }
 `;
 
@@ -151,6 +179,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
       <IconArea onClick={handleCheckClick} selected={selected}>
         {selected && <CheckedIcon />}
       </IconArea>
+
+      <NameArea>
+        <NameAreaText>
+          {picture.name}
+        </NameAreaText>
+      </NameArea>
       
       {progress > 0 && <Progress
         max='100'

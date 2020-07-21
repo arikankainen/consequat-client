@@ -4,15 +4,16 @@ import breakPoints from '../../utils/breakPoints';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
   width: 100%;
-  margin: 0px 10px;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 8px;
   
   ${breakPoints.mobileXL} {
-    margin: 0px;
+    flex-direction: column;
   }
 `;
 
@@ -22,7 +23,13 @@ const TextBlock = styled.div`
   justify-content: left;
   line-height: 1.3;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: hidden;
+  padding: 0px 10px;
+
+  ${breakPoints.laptop} {
+    padding: 0px;
+  }
 `;
 
 interface InfoAreaProps {

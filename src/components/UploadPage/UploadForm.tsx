@@ -43,7 +43,7 @@ const ButtonGroup = styled.div`
   display: flex;
   margin: 0px 15px;
 
-  ${breakPoints.mobileXL} {
+  ${breakPoints.laptop} {
     margin: 0px 5px;
   }
 `;
@@ -55,11 +55,16 @@ interface PictureAreaProps {
 const PictureArea = styled.div<PictureAreaProps>`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2px;
   width: 100%;
   padding: 20px;
   padding-top: 0px;
+
+  ${breakPoints.laptop} {
+    padding: 0px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
 
   ${breakPoints.mobileXL} {
     padding: 0px;
