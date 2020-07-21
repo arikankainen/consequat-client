@@ -69,11 +69,13 @@ const GlobalStyles = createGlobalStyle`
 
   .usermenu-enter {
     opacity: 0;
-    transform: translateX(300px) scale(0.2);
+    /*transform: translateX(300px) scale(0.2);*/
+    transform: scale(0.2);
   }
   .usermenu-enter-active {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    /*transform: translateX(0) scale(1);*/
+    transform: scale(1);
     transition: opacity 300ms, transform 300ms;
   }
   .usermenu-exit {

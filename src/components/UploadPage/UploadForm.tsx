@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
@@ -11,10 +11,10 @@ import {
   removePictures,
   updateProgress
 } from '../../reducers/pictureReducer';
-import EditArea from './EditArea';
+import InfoArea from './InfoArea';
 import breakPoints from '../../utils/breakPoints';
 
-const OuterContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,16 +48,24 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const PictureArea = styled.div`
+interface PictureAreaProps {
+  count: number;
+}
+
+const PictureArea = styled.div<PictureAreaProps>`
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 2px;
   width: 100%;
   padding: 20px;
+  padding-top: 0px;
 
   ${breakPoints.mobileXL} {
     padding: 0px;
+    ${props => props.count === 1 && css`
+      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    `}
   }
 `;
 
@@ -114,7 +122,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
     if (count === 1) {
       pictureState.pictures.forEach(element => {
-        if (element.selected) setSelectedFile(element.picture);
+        if (element.selected) {
+          setSelectedFile(element.picture);
+        }
       });
     }
     else {
@@ -190,28 +200,32 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   return (
-    <OuterContainer>
+    <Container>
       <ToolBar>
         <ButtonGroups>
           <ButtonGroup>
             <ToolBarButton onClick={handleAddPictures}>Add</ToolBarButton>
-            <ToolBarButton onClick={handleRemovePictures}>Remove</ToolBarButton>
+            {selectedCount === 0
+              ?
+              <ToolBarButton onClick={handleRemovePictures}>Remove all</ToolBarButton>
+              :
+              <ToolBarButton onClick={handleRemovePictures}>Remove ({selectedCount})</ToolBarButton>
+            }
           </ButtonGroup>
+
           <ButtonGroup>
-            <ToolBarButton onClick={handleUploadPictures}>Upload</ToolBarButton>
+            <ToolBarButton onClick={handleUploadPictures}>Upload all</ToolBarButton>
           </ButtonGroup>
         </ButtonGroups>
-        <EditArea
+        
+        <InfoArea
           pictureCount={pictureCount}
           selectedCount={selectedCount}
           selectedFile={selectedFile}
         />
       </ToolBar>
 
-      <PictureArea>
-        {/*
-        kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd kfaösldk föaskdfsöl asköflk asödlfka sölfkaös dkfd 
-        */}
+      <PictureArea count={pictures.length}>
         {pictures.map(file =>
           <Thumbnail
             key={file.picture.name}
@@ -228,11 +242,10 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           ref={fileInput}
           onChange={handleFileChange}
           multiple
-          /*accept='.jpg,.jpeg,.png,.gif'*/
           accept='image/*'
         />
       </form>
-    </OuterContainer>
+    </Container>
   );
 };
 

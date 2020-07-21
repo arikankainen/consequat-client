@@ -107,7 +107,7 @@ export const pictureReducer = (state = initialState, action: Actions): PictureSt
         pictures: [...state.pictures, {
           picture: action.data,
           progress: 0,
-          selected: false 
+          selected: false,
         }]
       };
     case REMOVE_PICTURE:

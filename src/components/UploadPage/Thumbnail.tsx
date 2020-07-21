@@ -9,31 +9,15 @@ import resizeImage from '../../utils/resizeImage';
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 import placeholder from '../../images/placeholder.png';
 
-interface ContainerProps {
-  selected: boolean;
-}
-
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 	cursor: pointer;
-
-  /*background-color: var(--navigation-bg-color);*/
-  /*border: 1px solid #111;*/
-
-  &:hover {
-    /*border: 1px solid var(--navigation-bg-color-hover);*/
-  }
-
-  ${props => props.selected
-    && css`
-      /*border: 1px solid var(--accent-color-2);*/
-  `}
-  transition: all 50ms linear;
 `;
 
 const Picture = styled.img`
+  background-color: rgba(255, 255, 255, 0.1);
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -157,14 +141,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   };
 
   return (
-    <Container
-      ref={container}
-      selected={selected}>
-      
+    <Container ref={container}>
       <Picture
         ref={thumbnailImage}
         onClick={handleThumbnailClick}
-        src={placeholder} />
+        src={placeholder}
+      />
 
       <IconArea onClick={handleCheckClick} selected={selected}>
         {selected && <CheckedIcon />}
