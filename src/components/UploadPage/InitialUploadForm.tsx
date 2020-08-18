@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPicture } from '../../reducers/pictureReducer';
-
 import { ReactComponent as ImagesIcon } from '../../images/menu_upload.svg';
+
 import {
   InitialUploadOuterContainer,
   InitialUploadContainer,
