@@ -51,7 +51,7 @@ export const InitialUploadButton = styled.button`
   }
 `;
 
-export const UploadContainer = styled.div`
+export const PictureListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +59,7 @@ export const UploadContainer = styled.div`
   height: 100%;
 `;
 
-export const UploadToolBar = styled.div`
+export const PictureListToolBar = styled.div`
   position: sticky;
   top: var(--header-height);
   z-index: 1;
@@ -70,13 +70,13 @@ export const UploadToolBar = styled.div`
   background-color: rgba(23, 23, 25, 0.9);
 `;
 
-export const UploadButtonGroups = styled.div`
+export const PictureListButtonGroups = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
-export const UploadButtonGroup = styled.div`
+export const PictureListButtonGroup = styled.div`
   display: flex;
   margin: 0px 15px;
 
@@ -85,11 +85,11 @@ export const UploadButtonGroup = styled.div`
   }
 `;
 
-interface UploadPictureAreaProps {
+interface PictureListAreaProps {
   count: number;
 }
 
-export const UploadPictureArea = styled.div<UploadPictureAreaProps> `
+export const PictureListArea = styled.div<PictureListAreaProps> `
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -111,11 +111,7 @@ export const UploadPictureArea = styled.div<UploadPictureAreaProps> `
   }
 `;
 
-export const UploadFileButton = styled.input`
-  display: none;
-`;
-
-export const UploadToolBarButton = styled.button`
+export const PictureListToolBarButton = styled.button`
   margin: 10px 5px;
   padding: 5px 10px;
   background-color: var(--accent-color-2);
@@ -137,6 +133,10 @@ export const UploadToolBarButton = styled.button`
     background-color: var(--accent-color-2);
     cursor: wait;
   }
+`;
+
+export const UploadFileButton = styled.input`
+  display: none;
 `;
 
 export const ThumbnailContainer = styled.div`

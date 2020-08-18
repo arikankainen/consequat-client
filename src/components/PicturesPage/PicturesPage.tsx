@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { ME } from '../../utils/queries';
 import { Photo } from '../../utils/types';
 import Thumbnail from './Thumbnail';
+
+import {
+  PictureListContainer,
+  PictureListToolBar,
+  PictureListButtonGroups,
+  PictureListButtonGroup,
+  PictureListToolBarButton,
+  PictureListArea,
+} from '../UploadPage/Styles';
 
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
@@ -16,9 +24,27 @@ const PicturesPage = () => {
   }, [resultMe.data]);
 
   return (
-    <div>
-      {photos.map(photo => <Thumbnail key={photo.id} photo={photo} />)}
-    </div>
+    <PictureListContainer>
+      <PictureListToolBar>
+        <PictureListButtonGroups>
+          <PictureListButtonGroup>
+            <PictureListToolBarButton>Remove</PictureListToolBarButton>
+          </PictureListButtonGroup>
+
+          <PictureListButtonGroup>
+            <PictureListToolBarButton>Move to collection</PictureListToolBarButton>
+          </PictureListButtonGroup>
+        </PictureListButtonGroups>
+
+      </PictureListToolBar>
+
+      <PictureListArea count={photos.length}>
+        {photos.map(photo =>
+          <Thumbnail key={photo.id} photo={photo} />
+        )}
+      </PictureListArea>
+
+    </PictureListContainer>
   );
 };
 

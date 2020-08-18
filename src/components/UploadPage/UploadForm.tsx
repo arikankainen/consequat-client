@@ -18,12 +18,12 @@ import {
 } from '../../reducers/pictureReducer';
 
 import {
-  UploadContainer,
-  UploadToolBar,
-  UploadButtonGroups,
-  UploadButtonGroup,
-  UploadToolBarButton,
-  UploadPictureArea,
+  PictureListContainer,
+  PictureListToolBar,
+  PictureListButtonGroups,
+  PictureListButtonGroup,
+  PictureListToolBarButton,
+  PictureListArea,
   UploadFileButton
 } from './Styles';
 
@@ -178,32 +178,32 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   return (
-    <UploadContainer>
-      <UploadToolBar>
-        <UploadButtonGroups>
-          <UploadButtonGroup>
-            <UploadToolBarButton onClick={handleAddPictures}>Add</UploadToolBarButton>
+    <PictureListContainer>
+      <PictureListToolBar>
+        <PictureListButtonGroups>
+          <PictureListButtonGroup>
+            <PictureListToolBarButton onClick={handleAddPictures}>Add</PictureListToolBarButton>
             {selectedCount === 0
               ?
-              <UploadToolBarButton onClick={handleRemovePictures}>Remove all</UploadToolBarButton>
+              <PictureListToolBarButton onClick={handleRemovePictures}>Remove all</PictureListToolBarButton>
               :
-              <UploadToolBarButton onClick={handleRemovePictures}>Remove ({selectedCount})</UploadToolBarButton>
+              <PictureListToolBarButton onClick={handleRemovePictures}>Remove ({selectedCount})</PictureListToolBarButton>
             }
-          </UploadButtonGroup>
+          </PictureListButtonGroup>
 
-          <UploadButtonGroup>
-            <UploadToolBarButton onClick={handleUploadPictures}>Upload all</UploadToolBarButton>
-          </UploadButtonGroup>
-        </UploadButtonGroups>
+          <PictureListButtonGroup>
+            <PictureListToolBarButton onClick={handleUploadPictures}>Upload all</PictureListToolBarButton>
+          </PictureListButtonGroup>
+        </PictureListButtonGroups>
 
         <InfoArea
           pictureCount={pictureCount}
           selectedCount={selectedCount}
           selectedFile={selectedFile}
         />
-      </UploadToolBar>
+      </PictureListToolBar>
 
-      <UploadPictureArea count={pictures.length}>
+      <PictureListArea count={pictures.length}>
         {pictures.map(file =>
           <Thumbnail
             key={file.picture.name}
@@ -212,7 +212,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
             selected={file.selected}
           />
         )}
-      </UploadPictureArea>
+      </PictureListArea>
 
       <form onSubmit={handleSubmit}>
         <UploadFileButton
@@ -223,7 +223,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           accept='image/*'
         />
       </form>
-    </UploadContainer>
+    </PictureListContainer>
   );
 };
 
