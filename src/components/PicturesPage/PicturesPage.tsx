@@ -2,16 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { ME } from '../../utils/queries';
-
-interface Photo {
-  mainUrl: string;
-  thumbUrl: string;
-  originalName: string;
-  name: string;
-  description: string;
-  dateAdded: Date;
-  id: string;
-}
+import { Photo } from '../../utils/types';
 
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
