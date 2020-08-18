@@ -56,3 +56,25 @@ export const ME = gql`
     }
   }
 `;
+
+export const ADD_PHOTO = gql`
+  mutation addPhoto(
+    $mainUrl: String!,
+    $thumbUrl: String!,
+    $name: String!,
+    $description: String) {
+      addPhoto(
+        mainUrl: $mainUrl,
+        thumbUrl: $thumbUrl,
+        name: $name,
+        description: $description
+      ) {
+        mainUrl,
+        thumbUrl,
+        name,
+        description,
+        dateAdded,
+        id
+      }
+    }
+`;

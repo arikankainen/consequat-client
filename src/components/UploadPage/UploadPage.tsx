@@ -6,8 +6,8 @@ import UploadForm from './UploadForm';
 
 const UploadPage = () => {
   const picture = useSelector((state: RootState) => state.picture);
-    
-  if (picture.pictures.length === 999) {
+
+  if (picture.pictures.length === 0) {
     return (
       <InitialUploadForm />
     );

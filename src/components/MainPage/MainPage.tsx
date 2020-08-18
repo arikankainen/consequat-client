@@ -1,10 +1,10 @@
 import React from 'react';
-import Confirmation from '../Confirmation';
+//import Confirmation from '../Confirmation';
 
 const MainPage = () => {
   return (
     <div>
-      <Confirmation />
+      {/*<Confirmation />*/}
     </div>
   );
 };

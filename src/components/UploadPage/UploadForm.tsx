@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
+import { useMutation } from '@apollo/client';
 import Thumbnail from './Thumbnail';
 import {
   PictureWithData,
@@ -13,6 +14,7 @@ import {
 } from '../../reducers/pictureReducer';
 import InfoArea from './InfoArea';
 import breakPoints from '../../utils/breakPoints';
+import { ADD_PHOTO } from '../../utils/queries';
 
 const Container = styled.div`
   display: flex;
@@ -114,6 +116,12 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const [addPhotoToDb] = useMutation(ADD_PHOTO, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    }
+  });
+
   useEffect(() => {
     setPictureCount(pictureState.pictures.length);
   }, [pictureState]);
@@ -158,13 +166,22 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
             console.log(url);
             dispatch(updateProgress(file.name, 100));
             dispatch(removePicture(file.name));
+
+            addPhotoToDb({
+              variables: {
+                mainUrl: url,
+                thumbUrl: url,
+                name: file.name
+              }
+            });
+
             resolve(url);
           });
         }
       );
     });
   };
-  
+
   async function asyncForEach(array: PictureWithData[], callback: Function) {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
@@ -222,7 +239,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
             <ToolBarButton onClick={handleUploadPictures}>Upload all</ToolBarButton>
           </ButtonGroup>
         </ButtonGroups>
-        
+
         <InfoArea
           pictureCount={pictureCount}
           selectedCount={selectedCount}
