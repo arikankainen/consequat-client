@@ -61,16 +61,19 @@ export const ADD_PHOTO = gql`
   mutation addPhoto(
     $mainUrl: String!,
     $thumbUrl: String!,
+    $originalFilename: String!
     $name: String!,
     $description: String) {
       addPhoto(
         mainUrl: $mainUrl,
         thumbUrl: $thumbUrl,
+        originalFilename: $originalFilename,
         name: $name,
         description: $description
       ) {
         mainUrl,
         thumbUrl,
+        originalFilename,
         name,
         description,
         dateAdded,

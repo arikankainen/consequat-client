@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
 import { useMutation } from '@apollo/client';
+import { ADD_PHOTO } from '../../utils/queries';
+import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
 import {
   PictureWithData,
@@ -14,7 +16,6 @@ import {
 } from '../../reducers/pictureReducer';
 import InfoArea from './InfoArea';
 import breakPoints from '../../utils/breakPoints';
-import { ADD_PHOTO } from '../../utils/queries';
 
 const Container = styled.div`
   display: flex;
@@ -147,7 +148,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
   const uploadPicture = (file: File) => {
     return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(`images/${file.name}`);
+      //const storageRef = storage.ref(`images/${file.name}`);
+      const storageRef = storage.ref(`images/${uuid()}`);
       const task = storageRef.put(file);
 
       task.on('state_changed',
@@ -171,6 +173,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
               variables: {
                 mainUrl: url,
                 thumbUrl: url,
+                originalFilename: file.name,
                 name: file.name
               }
             });
