@@ -155,7 +155,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       task.on('state_changed',
         function progress(snapshot) {
           const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percentage);
+          console.log('picture:', percentage);
           dispatch(updateProgress(file.name, Math.round(percentage)));
         },
         function error(err) {
@@ -163,11 +163,35 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           reject(err);
         },
         function complete() {
-          console.log('complete');
+          console.log('picture upload complete');
           storageRef.getDownloadURL().then(url => {
             console.log(url);
             dispatch(updateProgress(file.name, 100));
-            dispatch(removePicture(file.name));
+            resolve(url);
+          });
+        }
+      );
+    });
+  };
+
+  const uploadThumb = (file: Blob) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = storage.ref(`images/${uuid()}`);
+      const task = storageRef.put(file);
+
+      task.on('state_changed',
+        function progress(snapshot) {
+          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('thumb:', percentage);
+        },
+        function error(err) {
+          console.log(err);
+          reject(err);
+        },
+        function complete() {
+          console.log('thumb upload complete');
+          storageRef.getDownloadURL().then(url => {
+            console.log(url);
             resolve(url);
           });
         }
@@ -176,10 +200,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
-    //const resized = await resizeImage(file, true, 500);
-
+    const resized = await resizeImage(file, true, 500);
     const mainUrl = await uploadPicture(file);
-    const thumbUrl = await uploadPicture(file);
+    const thumbUrl = (resized != null) ? await uploadThumb(resized) : '';
 
     addPhotoToDb({
       variables: {
@@ -189,6 +212,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
         name: file.name
       }
     });
+
+    dispatch(removePicture(file.name));
   };
 
   async function asyncForEach(array: PictureWithData[], callback: Function) {
