@@ -52,6 +52,14 @@ export const ME = gql`
       email,
       fullname,
       isAdmin,
+      photos {
+        mainUrl,
+        thumbUrl,
+        originalFilename,
+        name,
+        description,
+        id
+      },
       id
     }
   }

@@ -202,7 +202,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const doUpload = async (file: File) => {
     const resized = await resizeImage(file, true, 500);
     const mainUrl = await uploadPicture(file);
-    const thumbUrl = (resized != null) ? await uploadThumb(resized) : '';
+    const thumbUrl = (resized != null) ? await uploadThumb(resized) : mainUrl;
 
     addPhotoToDb({
       variables: {

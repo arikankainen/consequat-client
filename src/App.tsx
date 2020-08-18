@@ -11,11 +11,12 @@ import LoginPage from './components/LoginPage/LoginPage';
 import LogoutPage from './components/LoginPage/LogoutPage';
 import SignupPage from './components/LoginPage/SignupPage';
 import UploadPage from './components/UploadPage/UploadPage';
+import PicturesPage from './components/PicturesPage/PicturesPage';
 
 const App = () => {
   const location = useLocation();
   const [back, setBack] = useState<boolean>(false);
-  
+
   if (
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
@@ -26,7 +27,7 @@ const App = () => {
   else {
     if (back) setBack(false);
   }
-  
+
   return (
     <SiteContainer picture={back}>
       <Notification />
@@ -51,13 +52,17 @@ const App = () => {
             <UploadPage />
           </Route>
 
+          <Route path='/pictures'>
+            <PicturesPage />
+          </Route>
+
           <Route path='/'>
             <MainPage />
           </Route>
 
         </Switch>
       </Main>
-      
+
       <Footer />
     </SiteContainer>
   );
