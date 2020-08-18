@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
 import { useMutation } from '@apollo/client';
-import { ADD_PHOTO } from '../../utils/queries';
+import { ADD_PHOTO, ME } from '../../utils/queries';
 import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
 import {
@@ -121,7 +121,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
-    }
+    },
+    refetchQueries: [{ query: ME }]
   });
 
   useEffect(() => {
