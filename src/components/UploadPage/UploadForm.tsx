@@ -16,6 +16,7 @@ import {
 } from '../../reducers/pictureReducer';
 import InfoArea from './InfoArea';
 import breakPoints from '../../utils/breakPoints';
+import resizeImage from '../../utils/resizeImage';
 
 const Container = styled.div`
   display: flex;
@@ -148,7 +149,6 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
   const uploadPicture = (file: File) => {
     return new Promise((resolve, reject) => {
-      //const storageRef = storage.ref(`images/${file.name}`);
       const storageRef = storage.ref(`images/${uuid()}`);
       const task = storageRef.put(file);
 
@@ -168,20 +168,26 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
             console.log(url);
             dispatch(updateProgress(file.name, 100));
             dispatch(removePicture(file.name));
-
-            addPhotoToDb({
-              variables: {
-                mainUrl: url,
-                thumbUrl: url,
-                originalFilename: file.name,
-                name: file.name
-              }
-            });
-
             resolve(url);
           });
         }
       );
+    });
+  };
+
+  const doUpload = async (file: File) => {
+    //const resized = await resizeImage(file, true, 500);
+
+    const mainUrl = await uploadPicture(file);
+    const thumbUrl = await uploadPicture(file);
+
+    addPhotoToDb({
+      variables: {
+        mainUrl: mainUrl,
+        thumbUrl: thumbUrl,
+        originalFilename: file.name,
+        name: file.name
+      }
     });
   };
 
@@ -194,7 +200,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleUploadPictures = async () => {
     if (pictures) {
       await asyncForEach(
-        pictures, async (pictureWithData: PictureWithData) => uploadPicture(pictureWithData.picture)
+        pictures, async (pictureWithData: PictureWithData) => doUpload(pictureWithData.picture)
       );
     }
   };

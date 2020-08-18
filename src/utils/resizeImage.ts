@@ -2,7 +2,7 @@ const resizeImage = (file: File, square: boolean, maxSize: number): Promise<unkn
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.src = URL.createObjectURL(file);
-    
+
     image.onload = () => {
       const inputWidth = image.width;
       const inputHeight = image.height;
@@ -25,7 +25,7 @@ const resizeImage = (file: File, square: boolean, maxSize: number): Promise<unkn
 
       if (square) context.drawImage(image, squareStartX, squareStartY, squareSize, squareSize, 0, 0, maxSize, maxSize);
       else context.drawImage(image, 0, 0, inputWidth, inputHeight, 0, 0, outputWidth, outputHeight);
-      
+
       canvas.toBlob(resolve, file.type);
     };
 
