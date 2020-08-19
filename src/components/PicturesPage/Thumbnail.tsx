@@ -6,7 +6,7 @@ import {
   ThumbnailPicture,
   ThumbnailNameArea,
   ThumbnailNameAreaText,
-} from '../UploadPage/Styles';
+} from '../PictureList/Styles';
 
 interface ThumbnailProps {
   photo: Photo;

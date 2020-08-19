@@ -38,6 +38,8 @@ const GlobalStyles = createGlobalStyle`
     --image-size: 140px;
     --progress-back: rgba(0, 0, 0, 0.5);
     --progress-value: #666;
+    --picturelist-header-bg-color: #eee;
+    --picturelist-header-color: #222;
 
     --header-height: 60px;
   }

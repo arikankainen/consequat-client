@@ -25,7 +25,7 @@ import {
   PictureListToolBarButton,
   PictureListArea,
   UploadFileButton
-} from './Styles';
+} from '../PictureList/Styles';
 
 interface UploadFormProps {
   pictures: PictureWithData[];

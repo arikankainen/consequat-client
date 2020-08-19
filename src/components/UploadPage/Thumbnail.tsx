@@ -15,7 +15,7 @@ import {
   ThumbnailNameArea,
   ThumbnailNameAreaText,
   ThumbnailProgress
-} from './Styles';
+} from '../PictureList/Styles';
 
 interface ThumbnailProps {
   picture: File;

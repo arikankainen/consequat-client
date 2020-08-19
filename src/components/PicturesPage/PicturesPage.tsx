@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { ME } from '../../utils/queries';
 import { Photo } from '../../utils/types';
 import Thumbnail from './Thumbnail';
+import { PictureListHeader } from './PictureListHeader';
 
 import {
   PictureListContainer,
@@ -11,7 +12,7 @@ import {
   PictureListButtonGroup,
   PictureListToolBarButton,
   PictureListArea,
-} from '../UploadPage/Styles';
+} from '../PictureList/Styles';
 
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
@@ -28,7 +29,7 @@ const PicturesPage = () => {
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
-            <PictureListToolBarButton>Remove</PictureListToolBarButton>
+            <PictureListToolBarButton>Delete</PictureListToolBarButton>
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
@@ -38,6 +39,7 @@ const PicturesPage = () => {
 
       </PictureListToolBar>
 
+      <PictureListHeader name="Uudet kuvat" />
       <PictureListArea count={photos.length}>
         {photos.map(photo =>
           <Thumbnail key={photo.id} photo={photo} />
