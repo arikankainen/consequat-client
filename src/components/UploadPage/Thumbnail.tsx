@@ -18,12 +18,12 @@ import {
 } from '../PictureList/Styles';
 
 interface ThumbnailProps {
-  picture: File;
+  file: File;
   progress: number;
   selected: boolean;
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) => {
+const Thumbnail: React.FC<ThumbnailProps> = ({ file, progress, selected }) => {
   const pictureState = useSelector((state: RootState) => state.picture);
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const progressBar = useRef<HTMLProgressElement>(null);
@@ -31,20 +31,20 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
   const dispatch = useDispatch();
 
   useEffect(() => {
-    resizeImage(picture, true, 500)
+    resizeImage(file, true, 500)
       .then(blob => {
         if (thumbnailImage.current) {
           thumbnailImage.current.src = URL.createObjectURL(blob);
         }
       }, () => {
-        dispatch(removePicture(picture.name));
-        dispatch(setError('Error', `Cannot read file '${picture.name}'.`));
+        dispatch(removePicture(file.name));
+        dispatch(setError('Error', `Cannot read file '${file.name}'.`));
       });
-  }, [picture]); //eslint-disable-line
+  }, [file]); //eslint-disable-line
 
   const handleThumbnailClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     if (event.ctrlKey) {
-      dispatch(updateSelected(picture.name, !selected));
+      dispatch(updateSelected(file.name, !selected));
     }
     else {
       pictureState.pictures.forEach(element => {
@@ -52,12 +52,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
           dispatch(updateSelected(element.picture.name, false));
         }
       });
-      dispatch(updateSelected(picture.name, true));
+      dispatch(updateSelected(file.name, true));
     }
   };
 
   const handleCheckClick = () => {
-    dispatch(updateSelected(picture.name, !selected));
+    dispatch(updateSelected(file.name, !selected));
   };
 
   return (
@@ -74,7 +74,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ picture, progress, selected }) =>
 
       <ThumbnailNameArea>
         <ThumbnailNameAreaText>
-          {picture.name}
+          {file.name}
         </ThumbnailNameAreaText>
       </ThumbnailNameArea>
 

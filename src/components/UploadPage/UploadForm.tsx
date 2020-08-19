@@ -207,7 +207,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
         {pictures.map(file =>
           <Thumbnail
             key={file.picture.name}
-            picture={file.picture}
+            file={file.picture}
             progress={file.progress}
             selected={file.selected}
           />
