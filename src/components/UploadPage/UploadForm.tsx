@@ -41,7 +41,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
+      console.log(error);
     },
     refetchQueries: [{ query: ME }]
   });
@@ -69,9 +69,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   }, [pictureState]);
 
-  const uploadPicture = (file: File) => {
+  const uploadPicture = (file: File, filename: string) => {
     return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(`images/${uuid()}`);
+      const storageRef = storage.ref(filename);
       const task = storageRef.put(file);
 
       task.on('state_changed',
@@ -96,9 +96,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     });
   };
 
-  const uploadThumb = (file: Blob) => {
+  const uploadThumb = (file: Blob, filename: string) => {
     return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(`images/${uuid()}`);
+      const storageRef = storage.ref(filename);
       const task = storageRef.put(file);
 
       task.on('state_changed',
@@ -122,14 +122,19 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
+    const filename = `images/${uuid()}`;
+    const thumbFilename = `images/${uuid()}`;
+
     const resized = await resizeImage(file, true, 500);
-    const mainUrl = await uploadPicture(file);
-    const thumbUrl = (resized != null) ? await uploadThumb(resized) : mainUrl;
+    const mainUrl = await uploadPicture(file, filename);
+    const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
 
     addPhotoToDb({
       variables: {
         mainUrl: mainUrl,
         thumbUrl: thumbUrl,
+        filename,
+        thumbFilename,
         originalFilename: file.name,
         name: file.name
       }

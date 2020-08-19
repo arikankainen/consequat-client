@@ -9,6 +9,8 @@ export interface LoggedUser {
 export interface Photo {
   mainUrl: string;
   thumbUrl: string;
+  filename: string;
+  thumbFilename: string;
   originalName: string;
   name: string;
   description: string;

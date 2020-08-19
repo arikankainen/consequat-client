@@ -55,6 +55,8 @@ export const ME = gql`
       photos {
         mainUrl,
         thumbUrl,
+        filename,
+        thumbFilename,
         originalFilename,
         name,
         description,
@@ -69,18 +71,25 @@ export const ADD_PHOTO = gql`
   mutation addPhoto(
     $mainUrl: String!,
     $thumbUrl: String!,
+    $filename: String!
+    $thumbFilename: String!
     $originalFilename: String!
     $name: String!,
-    $description: String) {
+    $description: String
+  ) {
       addPhoto(
         mainUrl: $mainUrl,
         thumbUrl: $thumbUrl,
+        filename: $filename,
+        thumbFilename: $thumbFilename,
         originalFilename: $originalFilename,
         name: $name,
         description: $description
       ) {
         mainUrl,
         thumbUrl,
+        filename,
+        thumbFilename,
         originalFilename,
         name,
         description,
@@ -92,12 +101,15 @@ export const ADD_PHOTO = gql`
 
 export const DELETE_PHOTO = gql`
   mutation deletePhoto(
-    $id: String) {
+    $id: ID!
+  ) {
       deletePhoto(
         id: $id
       ) {
         mainUrl,
         thumbUrl,
+        filename,
+        thumbFilename,
         originalFilename,
         name,
         description,

@@ -22,7 +22,7 @@ const PicturesPage = () => {
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
+      console.log(error);
     },
     refetchQueries: [{ query: ME }]
   });
@@ -33,13 +33,19 @@ const PicturesPage = () => {
     }
   }, [resultMe.data]);
 
-  const deleteFirebasePhoto = (url: string) => {
-    console.log(url);
+  const deletePhotoFromFirebase = (filename: string) => {
+    const storageRef = storage.ref(filename);
+
+    storageRef.delete().then(() => {
+      console.log('deleted successfully from firebase');
+    }).catch(() => {
+      console.log('error deleting from firebase');
+    });
   };
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
-      setSelection(selection.filter(value => value != id));
+      setSelection(selection.filter(value => value !== id));
     } else {
       setSelection(selection.concat(id));
     }
@@ -58,16 +64,22 @@ const PicturesPage = () => {
   };
 
   const handleDeletePictures = () => {
-    console.log('delete', selection);
-
     selection.forEach(id => {
-      console.log(id);
       const photo = photos.find(photo => photo.id === id);
+
       if (photo) {
-        //deletePhotoFromDb({ variables: { id } });
-        deleteFirebasePhoto(photo.mainUrl);
+        try {
+          deletePhotoFromDb({ variables: { id } });
+        } catch (error) {
+          console.log(error);
+        }
+
+        deletePhotoFromFirebase(photo.filename);
+        deletePhotoFromFirebase(photo.thumbFilename);
       }
     });
+
+    setSelection([]);
   };
 
   return (
