@@ -89,3 +89,20 @@ export const ADD_PHOTO = gql`
       }
     }
 `;
+
+export const DELETE_PHOTO = gql`
+  mutation deletePhoto(
+    $id: String) {
+      deletePhoto(
+        id: $id
+      ) {
+        mainUrl,
+        thumbUrl,
+        originalFilename,
+        name,
+        description,
+        dateAdded,
+        id
+      }
+    }
+`;

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { ME } from '../../utils/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { DELETE_PHOTO, ME } from '../../utils/queries';
 import { Photo } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
+import { storage } from '../../firebase/firebase';
 
 import {
   PictureListContainer,
@@ -19,11 +20,22 @@ const PicturesPage = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
 
+  const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+    refetchQueries: [{ query: ME }]
+  });
+
   useEffect(() => {
     if (resultMe.data) {
       setPhotos(resultMe.data.me.photos);
     }
   }, [resultMe.data]);
+
+  const deleteFirebasePhoto = (url: string) => {
+    console.log(url);
+  };
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
@@ -38,15 +50,24 @@ const PicturesPage = () => {
   };
 
   const handleEditPictures = () => {
-    console.log('edit');
+    console.log('edit', selection);
   };
 
   const handleMovePictures = () => {
-    console.log('move');
+    console.log('move', selection);
   };
 
   const handleDeletePictures = () => {
-    console.log('delete');
+    console.log('delete', selection);
+
+    selection.forEach(id => {
+      console.log(id);
+      const photo = photos.find(photo => photo.id === id);
+      if (photo) {
+        //deletePhotoFromDb({ variables: { id } });
+        deleteFirebasePhoto(photo.mainUrl);
+      }
+    });
   };
 
   return (
