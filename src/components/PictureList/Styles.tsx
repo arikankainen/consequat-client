@@ -61,7 +61,7 @@ interface PictureListAreaProps {
   count: number;
 }
 
-export const PictureListArea = styled.div<PictureListAreaProps> `
+export const PictureListArea = styled.div<PictureListAreaProps>`
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -102,8 +102,9 @@ export const PictureListToolBarButton = styled.button`
   }
   
   &:disabled {
-    background-color: var(--accent-color-2);
-    cursor: wait;
+    background-color: var(--accent-color-2-disabled);
+    color: #000755;
+    /*cursor: wait;*/
   }
 `;
 

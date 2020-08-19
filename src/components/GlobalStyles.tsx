@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-1: #c37f1d;
     --accent-color-2: #007ad9;
     --accent-color-2-hover: #398ff2;
+    --accent-color-2-disabled: #00449b;
     --default-font-family: 'Hind', 'sans-serif';
     --default-font-color: #bbb;
     --default-font-color-slightly-darker: #999;
