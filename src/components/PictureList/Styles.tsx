@@ -28,7 +28,7 @@ export const PictureListButtonGroups = styled.div`
 
 export const PictureListButtonGroup = styled.div`
   display: flex;
-  margin: 0px 15px;
+  margin: 10px 15px;
 
   ${breakPoints.laptop} {
     margin: 0px 5px;
@@ -38,10 +38,23 @@ export const PictureListButtonGroup = styled.div`
 export const PictureListHeaderContainer = styled.div`
   display: block;
   width: 100%;
+`;
+
+export const PictureListHeaderContent = styled.div`
+  display: block;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-bottom: 2px;
-  padding: 5px;
+  padding: 10px;
   background-color: var(--picturelist-header-bg-color);
   color: var(--picturelist-header-color);
+  font-size: 18px;
+  line-height: 1;
+
+  ${breakPoints.laptop} {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 interface PictureListAreaProps {

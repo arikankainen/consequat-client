@@ -29,11 +29,12 @@ const PicturesPage = () => {
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
-            <PictureListToolBarButton>Delete</PictureListToolBarButton>
+            <PictureListToolBarButton>Edit</PictureListToolBarButton>
+            <PictureListToolBarButton>Move</PictureListToolBarButton>
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            <PictureListToolBarButton>Move to collection</PictureListToolBarButton>
+            <PictureListToolBarButton>Delete</PictureListToolBarButton>
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 

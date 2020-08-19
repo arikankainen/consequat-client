@@ -1,5 +1,5 @@
 import React from 'react';
-import { PictureListHeaderContainer } from '../PictureList/Styles';
+import { PictureListHeaderContainer, PictureListHeaderContent } from '../PictureList/Styles';
 
 interface PictureListHeaderProps {
   name: string;
@@ -8,7 +8,9 @@ interface PictureListHeaderProps {
 export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ name }) => {
   return (
     <PictureListHeaderContainer>
-      {name}
+      <PictureListHeaderContent>
+        {name}
+      </PictureListHeaderContent>
     </PictureListHeaderContainer>
   );
 };
