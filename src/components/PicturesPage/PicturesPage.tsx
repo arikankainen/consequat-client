@@ -113,7 +113,8 @@ const PicturesPage = () => {
 
       </PictureListToolBar>
 
-      <PictureListHeader name="Uudet kuvat" />
+      {photos.length > 0 && <PictureListHeader name="Uudet kuvat" />}
+
       <PictureListArea count={photos.length}>
         {photos.map(photo =>
           <Thumbnail
