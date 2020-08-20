@@ -30,7 +30,8 @@ const Confirmation = () => {
       <BackDrop>
         <Container>
           Jeps
-          <button onClick={() => setIsOpen(false)}>Close</button>
+          <button onClick={() => setIsOpen(false)}>Cancel</button>
+          <button onClick={() => setIsOpen(false)}>OK</button>
         </Container>
       </BackDrop>
     </Modal>
