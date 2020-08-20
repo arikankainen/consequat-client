@@ -107,6 +107,40 @@ const GlobalStyles = createGlobalStyle`
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
   }
+
+  .backdrop-enter {
+    opacity: 0;
+  }
+  .backdrop-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
+  .backdrop-exit {
+    opacity: 1;
+  }
+  .backdrop-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  .confirmation-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  .confirmation-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .confirmation-exit {
+    opacity: 1;
+  }
+  .confirmation-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }
+
 `;
 
 export default GlobalStyles;

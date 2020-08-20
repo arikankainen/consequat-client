@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './ModalTest';
+import { CSSTransition } from 'react-transition-group';
 
 import {
   BackDrop,
@@ -26,29 +27,71 @@ export interface ConfirmationProps {
   handleCancel?: () => void;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({
-  open,
-  topic,
-  text,
-  text2,
-  progress,
-  progress2,
-  handleOk,
-  handleCancel,
-}) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const Confirmation: React.FC<ConfirmationProps> = (props) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [topic, setTopic] = useState<string | undefined>('');
+  const [text, setText] = useState<string | undefined>('');
+  const [text2, setText2] = useState<string | undefined>('');
+  const [progress, setProgress] = useState<number | undefined>(undefined);
+  const [progress2, setProgress2] = useState<number | undefined>(undefined);
+  const [handleOk, setHandleOk] = useState<(() => void) | undefined>(undefined);
+  const [handleCancel, setHandleCancel] = useState<(() => void) | undefined>(undefined);
 
-  if (open && !isOpen) setIsOpen(true);
-  else if (!open && isOpen) setIsOpen(false);
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const update = (input: any, output: any, setter: Function) => {
+    if (input !== undefined && output === undefined) setter(input);
+    else if (input !== undefined && output !== undefined && input.toString() !== output.toString()) setter(input);
+    else if (input === undefined && output !== undefined) setter(undefined);
+  };
+
+  const updateFunction = (input: any, output: any, setter: Function) => {
+    if (input && !output) setter(() => input);
+    else if (input && output && input.toString() !== output.toString()) setter(() => input);
+    else if (!input && output) setter(undefined);
+  };
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  if (props.open) {
+    update(props.topic, topic, setTopic);
+    update(props.text, text, setText);
+    update(props.text2, text2, setText2);
+    update(props.progress, progress, setProgress);
+    update(props.progress2, progress2, setProgress2);
+
+    updateFunction(props.handleOk, handleOk, setHandleOk);
+    updateFunction(props.handleCancel, handleCancel, setHandleCancel);
+  }
+
+  if (props.open && !open) {
+    setOpen(true);
+    if (props.handleOk) setHandleOk(() => props.handleOk);
+    if (props.handleCancel) setHandleCancel(() => props.handleCancel);
+  }
+  else if (!props.open && open) setOpen(false);
 
   return (
-    <Modal isOpen={isOpen}>
-      <BackDrop>
+    <Modal>
+      <CSSTransition
+        in={open}
+        timeout={300}
+        mountOnEnter
+        unmountOnExit
+        classNames='backdrop'
+      >
+        <BackDrop />
+      </CSSTransition>
+
+      <CSSTransition
+        in={open}
+        timeout={300}
+        mountOnEnter
+        unmountOnExit
+        classNames='confirmation'
+      >
         <FloatingContainer>
           <Container>
             <Topic>{topic || <>Confirmation</>}</Topic>
             <Content>
-
               {text &&
                 <Text>{text}</Text>
               }
@@ -69,9 +112,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
                 </ProgressContainer>
               }
             </Content>
-
             <ButtonArea>
-
               {handleCancel && handleOk &&
                 <>
                   <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>
@@ -86,11 +127,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
               {handleCancel && !handleOk &&
                 <Button onClick={handleCancel}>Cancel</Button>
               }
-
             </ButtonArea>
           </Container>
         </FloatingContainer>
-      </BackDrop>
+      </CSSTransition>
     </Modal>
   );
 };

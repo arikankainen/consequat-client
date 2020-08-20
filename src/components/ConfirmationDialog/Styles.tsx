@@ -21,6 +21,7 @@ export const FloatingContainer = styled.div`
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 1003;
 `;
 
 export const Container = styled.div`
