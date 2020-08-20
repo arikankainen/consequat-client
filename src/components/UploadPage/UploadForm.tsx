@@ -40,6 +40,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
+  const [uploadCancelled, setUploadCancelled] = useState<boolean>(false);
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -124,25 +125,29 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
-    const filename = `images/${uuid()}`;
-    const thumbFilename = `images/${uuid()}`;
+    if (!uploadCancelled) {
+      const filename = `images/${uuid()}`;
+      const thumbFilename = `images/${uuid()}`;
 
-    const resized = await resizeImage(file, true, 500);
-    const mainUrl = await uploadPicture(file, filename);
-    const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
+      const resized = await resizeImage(file, true, 500);
+      const mainUrl = await uploadPicture(file, filename);
+      const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
 
-    addPhotoToDb({
-      variables: {
-        mainUrl: mainUrl,
-        thumbUrl: thumbUrl,
-        filename,
-        thumbFilename,
-        originalFilename: file.name,
-        name: file.name
-      }
-    });
+      addPhotoToDb({
+        variables: {
+          mainUrl: mainUrl,
+          thumbUrl: thumbUrl,
+          filename,
+          thumbFilename,
+          originalFilename: file.name,
+          name: file.name
+        }
+      });
 
-    dispatch(removePicture(file.name));
+      dispatch(removePicture(file.name));
+    }
+
+    setUploadCancelled(false);
   };
 
   async function asyncForEach(array: PictureWithData[], callback: Function) {
@@ -168,8 +173,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleUploadPictures = () => {
     const count = pictures.length;
     const text = count === 1 ?
-      'Really upload selected photo?' :
-      `Really upload ${count} selected photos?`;
+      'Upload selected photo?' :
+      `Upload ${count} selected photos?`;
 
     setConfirmation({
       open: true,
