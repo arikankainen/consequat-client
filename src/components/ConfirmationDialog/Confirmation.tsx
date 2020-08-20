@@ -53,7 +53,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
                 <Text>{text}</Text>
               }
 
-              {progress &&
+              {typeof progress !== 'undefined' &&
                 <ProgressContainer>
                   <Progress progress={progress} />
                 </ProgressContainer>
@@ -63,7 +63,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
                 <Text>{text2}</Text>
               }
 
-              {progress2 &&
+              {typeof progress2 !== 'undefined' &&
                 <ProgressContainer>
                   <Progress progress={progress2} />
                 </ProgressContainer>
