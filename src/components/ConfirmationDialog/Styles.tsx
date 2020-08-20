@@ -47,9 +47,6 @@ export const Topic = styled.div`
 `;
 
 export const Content = styled.div`
-  /*padding: 20px;
-  color: #333;
-  line-height: 1;*/
   background-color: #eee;
 `;
 

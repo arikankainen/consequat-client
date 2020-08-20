@@ -61,25 +61,17 @@ const PicturesPage = () => {
     setSelection([id]);
   };
 
-  const handleEditConfirmationOk = () => {
-    setConfirmation({});
-    console.log('OK!');
-  };
-
   const handleEditPictures = () => {
-    setConfirmation({
-      open: true,
-      text: 'Really delete all selected photos?',
-      handleOk: handleEditConfirmationOk,
-      handleCancel: handleCancel,
-    });
+    console.log('edit', selection);
   };
 
   const handleMovePictures = () => {
     console.log('move', selection);
   };
 
-  const handleDeletePictures = () => {
+  const handleDeletePicturesOk = () => {
+    setConfirmation({});
+
     selection.forEach(id => {
       const photo = photos.find(photo => photo.id === id);
 
@@ -96,6 +88,20 @@ const PicturesPage = () => {
     });
 
     setSelection([]);
+  };
+
+  const handleDeletePictures = () => {
+    const count = selection.length;
+    const text = count === 1 ?
+      'Really delete selected photo?' :
+      `Really delete ${count} selected photos?`;
+
+    setConfirmation({
+      open: true,
+      text,
+      handleOk: handleDeletePicturesOk,
+      handleCancel: handleCancel,
+    });
   };
 
   return (
