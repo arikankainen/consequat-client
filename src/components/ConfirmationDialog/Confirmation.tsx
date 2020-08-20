@@ -21,7 +21,7 @@ const Confirmation = () => {
           <Container>
             <Topic>Confirmation</Topic>
             <Content>
-              Are you sure you want to upload all pictures?
+              Are you sure you want to upload all pictures? Are you sure you want to upload all pictures? Are you sure you want to upload all pictures?
             </Content>
             <ButtonArea>
               <WhiteButton onClick={() => setIsOpen(false)}>Cancel</WhiteButton>

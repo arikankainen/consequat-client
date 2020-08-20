@@ -13,24 +13,25 @@ export const BackDrop = styled.div`
 
 export const FloatingContainer = styled.div`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1002;
-
-  ${breakPoints.mobileXL} {
-    top: 50%;
-    left: 0;
-    transform: translateX(0) translateY(-50%);
-    width: 100%;
-    padding: 0px 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #eee;
+  margin: 40px;
+  max-width: 600px;
+  
+  ${breakPoints.mobileXL} {
+    margin: 10px;
+  }
 `;
 
 export const Topic = styled.div`
