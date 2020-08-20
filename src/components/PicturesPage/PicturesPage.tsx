@@ -104,6 +104,11 @@ const PicturesPage = () => {
     });
   };
 
+  const handleSelectAll = () => {
+    const all = photos.map(photo => photo.id);
+    setSelection(all);
+  };
+
   return (
     <PictureListContainer>
       <Confirmation {...confirmation} />
@@ -122,6 +127,15 @@ const PicturesPage = () => {
               disabled={selection.length === 0}
             >
               Move
+            </PictureListToolBarButton>
+          </PictureListButtonGroup>
+
+          <PictureListButtonGroup>
+            <PictureListToolBarButton
+              onClick={handleSelectAll}
+              disabled={photos.length === 0}
+            >
+              Select all
             </PictureListToolBarButton>
           </PictureListButtonGroup>
 
