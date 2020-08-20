@@ -125,29 +125,25 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
-    if (!uploadCancelled) {
-      const filename = `images/${uuid()}`;
-      const thumbFilename = `images/${uuid()}`;
+    const filename = `images/${uuid()}`;
+    const thumbFilename = `images/${uuid()}`;
 
-      const resized = await resizeImage(file, true, 500);
-      const mainUrl = await uploadPicture(file, filename);
-      const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
+    const resized = await resizeImage(file, true, 500);
+    const mainUrl = await uploadPicture(file, filename);
+    const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
 
-      addPhotoToDb({
-        variables: {
-          mainUrl: mainUrl,
-          thumbUrl: thumbUrl,
-          filename,
-          thumbFilename,
-          originalFilename: file.name,
-          name: file.name
-        }
-      });
+    addPhotoToDb({
+      variables: {
+        mainUrl: mainUrl,
+        thumbUrl: thumbUrl,
+        filename,
+        thumbFilename,
+        originalFilename: file.name,
+        name: file.name
+      }
+    });
 
-      dispatch(removePicture(file.name));
-    }
-
-    setUploadCancelled(false);
+    dispatch(removePicture(file.name));
   };
 
   async function asyncForEach(array: PictureWithData[], callback: Function) {
@@ -160,8 +156,23 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     setConfirmation({});
   };
 
-  const handleUploadPicturesConfirmed = async () => {
+  const handleUploadPicturesAbort = () => {
+    setUploadCancelled(true);
     setConfirmation({});
+  };
+
+  const handleUploadPicturesConfirmed = async () => {
+    setUploadCancelled(false);
+
+    setConfirmation({
+      open: true,
+      topic: 'Upload',
+      text: 'Uploading picture',
+      progress: 0,
+      text2: 'Uploading picture',
+      progress2: 0,
+      handleCancel: handleUploadPicturesAbort
+    });
 
     if (pictures) {
       await asyncForEach(
