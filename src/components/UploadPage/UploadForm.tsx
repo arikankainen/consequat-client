@@ -8,6 +8,7 @@ import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
 import InfoArea from './InfoArea';
 import resizeImage from '../../utils/resizeImage';
+import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
 
 import {
   PictureWithData,
@@ -38,6 +39,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [pictureCount, setPictureCount] = useState<number>(0);
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -149,12 +151,32 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   }
 
-  const handleUploadPictures = async () => {
+  const handleCancel = () => {
+    setConfirmation({});
+  };
+
+  const handleUploadPicturesConfirmed = async () => {
+    setConfirmation({});
+
     if (pictures) {
       await asyncForEach(
         pictures, async (pictureWithData: PictureWithData) => doUpload(pictureWithData.picture)
       );
     }
+  };
+
+  const handleUploadPictures = () => {
+    const count = pictures.length;
+    const text = count === 1 ?
+      'Really upload selected photo?' :
+      `Really upload ${count} selected photos?`;
+
+    setConfirmation({
+      open: true,
+      text,
+      handleOk: handleUploadPicturesConfirmed,
+      handleCancel: handleCancel,
+    });
   };
 
   const handleAddPictures = () => {
@@ -184,6 +206,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
   return (
     <PictureListContainer>
+      <Confirmation {...confirmation} />
+
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
