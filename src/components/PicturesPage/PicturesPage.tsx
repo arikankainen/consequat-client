@@ -45,6 +45,10 @@ const PicturesPage = () => {
     });
   };
 
+  const handleCancel = () => {
+    setConfirmation({});
+  };
+
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
       setSelection(selection.filter(value => value !== id));
@@ -58,21 +62,16 @@ const PicturesPage = () => {
   };
 
   const handleEditConfirmationOk = () => {
-    setConfirmation({ ...confirmation, open: false });
+    setConfirmation({});
     console.log('OK!');
-  };
-
-  const handleEditConfirmationCancel = () => {
-    setConfirmation({ ...confirmation, open: false });
   };
 
   const handleEditPictures = () => {
     setConfirmation({
       open: true,
-      topic: 'Confirmation',
       text: 'Really delete all selected photos?',
       handleOk: handleEditConfirmationOk,
-      handleCancel: handleEditConfirmationCancel,
+      handleCancel: handleCancel,
     });
   };
 

@@ -47,10 +47,16 @@ export const Topic = styled.div`
 `;
 
 export const Content = styled.div`
-  padding: 20px;
+  /*padding: 20px;
+  color: #333;
+  line-height: 1;*/
+  background-color: #eee;
+`;
+
+export const Text = styled.div`
+  padding: 20px 20px 10px 20px;
   color: #333;
   line-height: 1;
-  background-color: #eee;
 `;
 
 export const ButtonArea = styled.div`
@@ -90,4 +96,20 @@ export const WhiteButton = styled(Button)`
     background-color: #fff;
     color: var(--accent-color-2-hover);
   }
+`;
+
+export const ProgressContainer = styled.div`
+  height: 20px;
+  margin: 0px 15px 0px 15px;
+  background-color: #ddd;
+`;
+
+interface ProgressProps {
+  progress: number;
+}
+
+export const Progress = styled.div<ProgressProps> `
+  height: 100%;
+  width: ${props => props.progress}%;
+  background-color: #55bb55;
 `;
