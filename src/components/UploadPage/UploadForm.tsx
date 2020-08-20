@@ -164,6 +164,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleUploadPicturesConfirmed = async () => {
     setUploadCancelled(false);
 
+    /*
     setConfirmation({
       open: true,
       topic: 'Upload',
@@ -173,6 +174,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       progress2: 0,
       handleCancel: handleUploadPicturesAbort
     });
+    */
 
     if (pictures) {
       await asyncForEach(
