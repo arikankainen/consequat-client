@@ -16,10 +16,27 @@ import {
   PictureListArea,
 } from '../PictureList/Styles';
 
+interface ConfirmationProps {
+  open: boolean;
+  topic: string;
+  text: string;
+  handleOk: () => void;
+  handleCancel: () => void;
+}
+
+const confirmationPropsDefault = {
+  open: false,
+  topic: '',
+  text: '',
+  handleOk: () => void 0,
+  handleCancel: () => void 0
+};
+
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
+  const [confirmation, setConfirmation] = useState<ConfirmationProps>(confirmationPropsDefault);
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -56,8 +73,23 @@ const PicturesPage = () => {
     setSelection([id]);
   };
 
+  const handleEditConfirmationOk = () => {
+    setConfirmation({ ...confirmation, open: false });
+    console.log('OK!');
+  };
+
+  const handleEditConfirmationCancel = () => {
+    setConfirmation({ ...confirmation, open: false });
+  };
+
   const handleEditPictures = () => {
-    console.log('edit', selection);
+    setConfirmation({
+      open: true,
+      topic: 'Confirmation',
+      text: 'Really delete all selected photos?',
+      handleOk: handleEditConfirmationOk,
+      handleCancel: handleEditConfirmationCancel,
+    });
   };
 
   const handleMovePictures = () => {
@@ -85,14 +117,7 @@ const PicturesPage = () => {
 
   return (
     <PictureListContainer>
-
-      <Confirmation
-        open={true}
-        topic='Confirmation'
-        text='Delete all selected pictures?'
-        handleOk={handleMovePictures}
-        handleCancel={handleMovePictures}
-      />
+      <Confirmation {...confirmation} />
 
       <PictureListToolBar>
         <PictureListButtonGroups>

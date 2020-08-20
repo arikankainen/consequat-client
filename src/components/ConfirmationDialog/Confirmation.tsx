@@ -20,7 +20,13 @@ interface ConfirmationProps {
   handleCancel: () => void;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({ open, topic, text, handleOk, handleCancel }) => {
+const Confirmation: React.FC<ConfirmationProps> = ({
+  open,
+  topic,
+  text,
+  handleOk,
+  handleCancel
+}) => {
   return (
     <Modal isOpen={open}>
       <BackDrop>
