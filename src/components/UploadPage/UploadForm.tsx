@@ -41,6 +41,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [uploadCancelled, setUploadCancelled] = useState<boolean>(false);
+  const [currentFileProgress, setCurrentFileProgress] = useState<number>(0);
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -72,6 +73,10 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   }, [pictureState]);
 
+  useEffect(() => {
+    setConfirmation({ ...confirmation, progress: currentFileProgress });
+  }, [currentFileProgress]);
+
   const uploadPicture = (file: File, filename: string) => {
     return new Promise((resolve, reject) => {
       const storageRef = storage.ref(filename);
@@ -82,6 +87,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('picture:', percentage);
           dispatch(updateProgress(file.name, Math.round(percentage)));
+          setCurrentFileProgress(percentage);
         },
         function error(err) {
           console.log(err);
@@ -92,6 +98,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
           storageRef.getDownloadURL().then(url => {
             console.log(url);
             dispatch(updateProgress(file.name, 100));
+            setCurrentFileProgress(100);
             resolve(url);
           });
         }
@@ -125,6 +132,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
+    console.log('conf', confirmation);
     const filename = `images/${uuid()}`;
     const thumbFilename = `images/${uuid()}`;
 
@@ -164,7 +172,6 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleUploadPicturesConfirmed = async () => {
     setUploadCancelled(false);
 
-    /*
     setConfirmation({
       open: true,
       topic: 'Upload',
@@ -174,7 +181,6 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       progress2: 0,
       handleCancel: handleUploadPicturesAbort
     });
-    */
 
     if (pictures) {
       await asyncForEach(
