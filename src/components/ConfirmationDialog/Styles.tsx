@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import breakPoints from '../../utils/breakPoints';
 
 export const BackDrop = styled.div`
   position: fixed;
@@ -16,6 +17,19 @@ export const FloatingContainer = styled.div`
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 1002;
+
+  ${breakPoints.mobileXL} {
+    top: 50%;
+    left: 0;
+    transform: translateX(0) translateY(-50%);
+    width: 100%;
+    padding: 0px 10px;
+  }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #eee;
 `;
 
@@ -33,12 +47,14 @@ export const Content = styled.div`
   padding: 20px;
   color: #333;
   line-height: 1;
+  background-color: #eee;
 `;
 
 export const ButtonArea = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 10px 10px 5px 10px;
+  background-color: #eee;
 `;
 
 export const Button = styled.button`
