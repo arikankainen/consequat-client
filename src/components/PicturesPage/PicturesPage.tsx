@@ -5,6 +5,7 @@ import { Photo } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
+import Confirmation from '../ConfirmationDialog/Confirmation';
 
 import {
   PictureListContainer,
@@ -84,6 +85,15 @@ const PicturesPage = () => {
 
   return (
     <PictureListContainer>
+
+      <Confirmation
+        open={true}
+        topic='Confirmation'
+        text='Delete all selected pictures?'
+        handleOk={handleMovePictures}
+        handleCancel={handleMovePictures}
+      />
+
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from './Modal';
+
 import {
   BackDrop,
   FloatingContainer,
@@ -11,21 +12,27 @@ import {
   ButtonArea
 } from './Styles';
 
-const Confirmation = () => {
-  const [isOpen, setIsOpen] = useState(true);
+interface ConfirmationProps {
+  open: boolean;
+  topic: string;
+  text: string;
+  handleOk: () => void;
+  handleCancel: () => void;
+}
 
+const Confirmation: React.FC<ConfirmationProps> = ({ open, topic, text, handleOk, handleCancel }) => {
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={open}>
       <BackDrop>
         <FloatingContainer>
           <Container>
-            <Topic>Confirmation</Topic>
+            <Topic>{topic}</Topic>
             <Content>
-              Are you sure you want to upload all pictures? Are you sure you want to upload all pictures? Are you sure you want to upload all pictures?
+              {text}
             </Content>
             <ButtonArea>
-              <WhiteButton onClick={() => setIsOpen(false)}>Cancel</WhiteButton>
-              <Button onClick={() => setIsOpen(false)}>OK</Button>
+              <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>
+              <Button onClick={handleOk}>OK</Button>
             </ButtonArea>
           </Container>
         </FloatingContainer>

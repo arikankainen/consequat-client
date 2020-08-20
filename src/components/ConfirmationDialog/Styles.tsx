@@ -35,13 +35,15 @@ export const Container = styled.div`
 `;
 
 export const Topic = styled.div`
-  padding: 15px;
+  padding: 15px 15px 12px 15px;
   color: #222;
   line-height: 1;
   text-align: center;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   background-color: #ddd;
+  border-bottom: 1px solid #ccc;
+  border-radius: 5px 5px 0px 0px;
 `;
 
 export const Content = styled.div`
@@ -56,6 +58,7 @@ export const ButtonArea = styled.div`
   justify-content: flex-end;
   padding: 10px 10px 5px 10px;
   background-color: #eee;
+  border-radius: 0px 0px 5px 5px;
 `;
 
 export const Button = styled.button`
