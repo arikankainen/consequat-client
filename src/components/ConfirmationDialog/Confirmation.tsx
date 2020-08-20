@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal';
 
 import {
@@ -12,12 +12,13 @@ import {
   ButtonArea
 } from './Styles';
 
-interface ConfirmationProps {
-  open: boolean;
-  topic: string;
-  text: string;
-  handleOk: () => void;
-  handleCancel: () => void;
+export interface ConfirmationProps {
+  open?: boolean;
+  topic?: string;
+  text?: string;
+  handleOk?: () => void;
+  handleCancel?: () => void;
+  progress?: number;
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({
@@ -25,20 +26,27 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   topic,
   text,
   handleOk,
-  handleCancel
+  handleCancel,
+  progress,
 }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  if (open && !isOpen) setIsOpen(true);
+  else if (!open && isOpen) setIsOpen(false);
+
   return (
-    <Modal isOpen={open}>
+    <Modal isOpen={isOpen}>
       <BackDrop>
         <FloatingContainer>
           <Container>
-            <Topic>{topic}</Topic>
+            <Topic>{topic || <>Confirmation</>}</Topic>
             <Content>
               {text}
+              {progress}
             </Content>
             <ButtonArea>
-              <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>
-              <Button onClick={handleOk}>OK</Button>
+              {handleCancel && <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>}
+              {handleOk && <Button onClick={handleOk}>OK</Button>}
             </ButtonArea>
           </Container>
         </FloatingContainer>

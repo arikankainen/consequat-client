@@ -5,7 +5,7 @@ import { Photo } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
-import Confirmation from '../ConfirmationDialog/Confirmation';
+import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
 
 import {
   PictureListContainer,
@@ -16,27 +16,11 @@ import {
   PictureListArea,
 } from '../PictureList/Styles';
 
-interface ConfirmationProps {
-  open: boolean;
-  topic: string;
-  text: string;
-  handleOk: () => void;
-  handleCancel: () => void;
-}
-
-const confirmationPropsDefault = {
-  open: false,
-  topic: '',
-  text: '',
-  handleOk: () => void 0,
-  handleCancel: () => void 0
-};
-
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
-  const [confirmation, setConfirmation] = useState<ConfirmationProps>(confirmationPropsDefault);
+  const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
