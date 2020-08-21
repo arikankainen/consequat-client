@@ -41,7 +41,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [uploadCancelled, setUploadCancelled] = useState<boolean>(false);
-  const [currentFileProgress, setCurrentFileProgress] = useState<number>(0);
+  const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
+  const [uploadCount, setUploadCount] = useState<number>(0);
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -73,9 +74,20 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   }, [pictureState]);
 
-  useEffect(() => {
-    setConfirmation({ ...confirmation, progress: currentFileProgress });
-  }, [currentFileProgress]);
+  const reportProgress = (filename: string, percentage: number) => {
+    dispatch(updateProgress(filename, percentage));
+    const remainingFiles = pictureState.pictures.length;
+    const percentageFiles = ((uploadCount - remainingFiles) / uploadCount) * 100;
+    const oneFilePercentage = 100 / uploadCount;
+
+    setConfirmation({
+      ...confirmation,
+      text: filename,
+      progress: percentage,
+      text2: `Picture ${uploadCount - remainingFiles + 1} of ${uploadCount}`,
+      progress2: percentageFiles + (percentage * (oneFilePercentage / 100)),
+    });
+  };
 
   const uploadPicture = (file: File, filename: string) => {
     return new Promise((resolve, reject) => {
@@ -84,10 +96,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
 
       task.on('state_changed',
         function progress(snapshot) {
-          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('picture:', percentage);
-          dispatch(updateProgress(file.name, Math.round(percentage)));
-          setCurrentFileProgress(percentage);
+          const percentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          reportProgress(file.name, percentage);
         },
         function error(err) {
           console.log(err);
@@ -96,9 +106,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
         function complete() {
           console.log('picture upload complete');
           storageRef.getDownloadURL().then(url => {
-            console.log(url);
-            dispatch(updateProgress(file.name, 100));
-            setCurrentFileProgress(100);
+            reportProgress(file.name, 100);
             resolve(url);
           });
         }
@@ -132,7 +140,6 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   };
 
   const doUpload = async (file: File) => {
-    console.log('conf', confirmation);
     const filename = `images/${uuid()}`;
     const thumbFilename = `images/${uuid()}`;
 
@@ -154,11 +161,41 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     dispatch(removePicture(file.name));
   };
 
-  async function asyncForEach(array: PictureWithData[], callback: Function) {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
+  const startNewUpload = () => {
+    if (pictureState.pictures.length > 0) {
+      const file = pictureState.pictures[0].picture;
+      reportProgress(file.name, 0);
+      doUpload(file);
     }
-  }
+  };
+
+  const handleUploadDoneOk = () => {
+    setConfirmation({});
+  };
+
+  const uploadDone = () => {
+    setConfirmation({
+      ...confirmation,
+      text: 'All pictures uploaded!',
+      handleOk: handleUploadDoneOk,
+      handleCancel: undefined,
+    });
+  };
+
+  useEffect(() => {
+    if (uploadInProgress && pictureState.pictures.length > 0) {
+      const uploadingAlready = pictureState.pictures.filter(p => p.progress > -1);
+
+      if (!uploadCancelled && uploadingAlready.length === 0) {
+        startNewUpload();
+      } else if (uploadCancelled) {
+        console.log('upload cancelled!');
+      }
+    } else if (uploadInProgress && pictureState.pictures.length === 0) {
+      setUploadInProgress(false);
+      uploadDone();
+    }
+  }, [pictureState, uploadInProgress]);
 
   const handleCancel = () => {
     setConfirmation({});
@@ -169,24 +206,20 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     setConfirmation({});
   };
 
-  const handleUploadPicturesConfirmed = async () => {
-    setUploadCancelled(false);
-
+  const handleUploadPicturesConfirmed = () => {
     setConfirmation({
       open: true,
       topic: 'Upload',
-      text: 'Uploading picture',
+      text: '...',
       progress: 0,
-      text2: 'Uploading picture',
+      text2: '...',
       progress2: 0,
       handleCancel: handleUploadPicturesAbort
     });
 
-    if (pictures) {
-      await asyncForEach(
-        pictures, async (pictureWithData: PictureWithData) => doUpload(pictureWithData.picture)
-      );
-    }
+    setUploadCount(pictureState.pictures.length);
+    setUploadCancelled(false);
+    setUploadInProgress(true);
   };
 
   const handleUploadPictures = () => {

@@ -28,11 +28,14 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 40px;
-  max-width: 600px;
+  width: 90%;
+  max-width: 500px;
   
+  /*
   ${breakPoints.mobileXL} {
     margin: 10px;
   }
+  */
 `;
 
 export const Topic = styled.div`
@@ -66,6 +69,7 @@ export const ButtonArea = styled.div`
 `;
 
 export const Button = styled.button`
+  min-width: 75px;
   margin: 10px 5px;
   padding: 5px 10px;
   background-color: var(--accent-color-2);
