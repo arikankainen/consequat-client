@@ -86,6 +86,11 @@ export const Button = styled.button`
   &:hover {
     background-color: var(--accent-color-2-hover);
   }
+
+  &:disabled {
+    background-color: var(--accent-color-2-disabled);
+    color: #000755;
+  }
 `;
 
 export const WhiteButton = styled(Button)`

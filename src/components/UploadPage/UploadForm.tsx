@@ -169,15 +169,20 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   };
 
-  const handleUploadDoneOk = () => {
-    setConfirmation({});
-  };
-
   const uploadDone = () => {
     setConfirmation({
       ...confirmation,
       text: 'All pictures uploaded!',
-      handleOk: handleUploadDoneOk,
+      handleOk: () => setConfirmation({}),
+      handleCancel: undefined,
+    });
+  };
+
+  const uploadAborted = () => {
+    setConfirmation({
+      ...confirmation,
+      text: 'Upload aborted!',
+      handleOk: () => setConfirmation({}),
       handleCancel: undefined,
     });
   };
@@ -186,25 +191,34 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     if (uploadInProgress && pictureState.pictures.length > 0) {
       const uploadingAlready = pictureState.pictures.filter(p => p.progress > -1);
 
-      if (!uploadCancelled && uploadingAlready.length === 0) {
-        startNewUpload();
-      } else if (uploadCancelled) {
-        console.log('upload cancelled!');
+      if (uploadingAlready.length === 0) {
+        if (!uploadCancelled) startNewUpload();
+        else uploadAborted();
       }
+
     } else if (uploadInProgress && pictureState.pictures.length === 0) {
       setUploadInProgress(false);
       uploadDone();
     }
-  }, [pictureState, uploadInProgress]);
-
-  const handleCancel = () => {
-    setConfirmation({});
-  };
+  }, [pictureState, uploadInProgress, uploadCancelled]);
 
   const handleUploadPicturesAbort = () => {
     setUploadCancelled(true);
-    setConfirmation({});
   };
+
+  useEffect(() => {
+    if (uploadCancelled) {
+      setConfirmation({
+        ...confirmation,
+        disableCancel: true,
+      });
+    } else {
+      setConfirmation({
+        ...confirmation,
+        disableCancel: false,
+      });
+    }
+  }, [uploadCancelled]);
 
   const handleUploadPicturesConfirmed = () => {
     setConfirmation({
@@ -232,7 +246,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       open: true,
       text,
       handleOk: handleUploadPicturesConfirmed,
-      handleCancel: handleCancel,
+      handleCancel: () => setConfirmation({}),
     });
   };
 

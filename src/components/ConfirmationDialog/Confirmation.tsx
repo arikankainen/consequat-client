@@ -25,6 +25,8 @@ export interface ConfirmationProps {
   progress2?: number;
   handleOk?: () => void;
   handleCancel?: () => void;
+  disableOk?: boolean;
+  disableCancel?: boolean;
 }
 
 const Confirmation: React.FC<ConfirmationProps> = (props) => {
@@ -36,6 +38,8 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
   const [progress2, setProgress2] = useState<number | undefined>(undefined);
   const [handleOk, setHandleOk] = useState<(() => void) | undefined>(undefined);
   const [handleCancel, setHandleCancel] = useState<(() => void) | undefined>(undefined);
+  const [disableOk, setDisableOk] = useState<boolean>(false);
+  const [disableCancel, setDisableCancel] = useState<boolean>(false);
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const update = (input: any, output: any, setter: Function) => {
@@ -57,6 +61,8 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
     update(props.text2, text2, setText2);
     update(props.progress, progress, setProgress);
     update(props.progress2, progress2, setProgress2);
+    update(props.disableOk, disableOk, setDisableOk);
+    update(props.disableCancel, disableCancel, setDisableCancel);
 
     updateFunction(props.handleOk, handleOk, setHandleOk);
     updateFunction(props.handleCancel, handleCancel, setHandleCancel);
@@ -115,17 +121,17 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
             <ButtonArea>
               {handleCancel && handleOk &&
                 <>
-                  <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>
-                  <Button onClick={handleOk}>OK</Button>
+                  <WhiteButton onClick={handleCancel} disabled={disableCancel}>Cancel</WhiteButton>
+                  <Button onClick={handleOk} disabled={disableOk}>OK</Button>
                 </>
               }
 
               {!handleCancel && handleOk &&
-                <Button onClick={handleOk}>OK</Button>
+                <Button onClick={handleOk} disabled={disableOk}>OK</Button>
               }
 
               {handleCancel && !handleOk &&
-                <Button onClick={handleCancel}>Cancel</Button>
+                <Button onClick={handleCancel} disabled={disableCancel}>Cancel</Button>
               }
             </ButtonArea>
           </Container>
