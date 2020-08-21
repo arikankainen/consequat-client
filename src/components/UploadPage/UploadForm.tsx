@@ -9,6 +9,7 @@ import Thumbnail from './Thumbnail';
 import InfoArea from './InfoArea';
 import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
+import InitialUploadForm from './InitialUploadForm';
 
 import {
   PictureWithData,
@@ -43,6 +44,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const [uploadCancelled, setUploadCancelled] = useState<boolean>(false);
   const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
   const [uploadCount, setUploadCount] = useState<number>(0);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -169,12 +171,20 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     }
   };
 
+  const uploadDoneClosed = () => {
+    setConfirmation({});
+
+    setTimeout(() => {
+      setUploadDialogOpen(false);
+    }, 500);
+  };
+
   const uploadDone = () => {
     setConfirmation({
       ...confirmation,
       topic: 'Upload completed',
       text: 'All files uploaded',
-      handleOk: () => setConfirmation({}),
+      handleOk: uploadDoneClosed,
       handleCancel: undefined,
     });
   };
@@ -183,7 +193,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
     setConfirmation({
       ...confirmation,
       topic: 'Upload aborted',
-      handleOk: () => setConfirmation({}),
+      handleOk: uploadDoneClosed,
       handleCancel: undefined,
     });
   };
@@ -232,6 +242,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
       handleCancel: handleUploadPicturesAbort
     });
 
+    setUploadDialogOpen(true);
     setUploadCount(pictureState.pictures.length);
     setUploadCancelled(false);
     setUploadInProgress(true);
@@ -275,6 +286,12 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
+
+  if (pictureState.pictures.length === 0 && !uploadDialogOpen) {
+    return (
+      <InitialUploadForm />
+    );
+  }
 
   return (
     <PictureListContainer>
