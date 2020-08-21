@@ -37,19 +37,19 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
   const [handleOk, setHandleOk] = useState<(() => void) | undefined>(undefined);
   const [handleCancel, setHandleCancel] = useState<(() => void) | undefined>(undefined);
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const update = (input: any, output: any, setter: Function) => {
     if (input !== undefined && output === undefined) setter(input);
     else if (input !== undefined && output !== undefined && input.toString() !== output.toString()) setter(input);
     else if (input === undefined && output !== undefined) setter(undefined);
   };
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const updateFunction = (input: any, output: any, setter: Function) => {
     if (input && !output) setter(() => input);
     else if (input && output && input.toString() !== output.toString()) setter(() => input);
     else if (!input && output) setter(undefined);
   };
-  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   if (props.open) {
     update(props.topic, topic, setTopic);

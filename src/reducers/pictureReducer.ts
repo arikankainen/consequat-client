@@ -102,11 +102,11 @@ export const pictureReducer = (state = initialState, action: Actions): PictureSt
         picture.picture.name === action.data.name
       );
       if (exist) return state;
-      
+
       return {
         pictures: [...state.pictures, {
           picture: action.data,
-          progress: 0,
+          progress: -1,
           selected: false,
         }]
       };
