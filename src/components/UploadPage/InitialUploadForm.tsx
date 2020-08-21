@@ -8,7 +8,7 @@ import {
   InitialUploadContainer,
   InitialUploadButton,
   InitialUploadFileButton
-} from './styles';
+} from './Styles';
 
 const InitialUploadForm = () => {
   const fileInput = useRef<HTMLInputElement>(null);

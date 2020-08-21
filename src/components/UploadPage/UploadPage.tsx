@@ -321,7 +321,6 @@ const UploadForm = () => {
           <Thumbnail
             key={file.picture.name}
             file={file.picture}
-            progress={file.progress}
             selected={file.selected}
           />
         )}

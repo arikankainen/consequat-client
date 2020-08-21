@@ -14,19 +14,16 @@ import {
   ThumbnailIconArea,
   ThumbnailNameArea,
   ThumbnailNameAreaText,
-  ThumbnailProgress
 } from '../PictureList/Styles';
 
 interface ThumbnailProps {
   file: File;
-  progress: number;
   selected: boolean;
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ file, progress, selected }) => {
+const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
   const pictureState = useSelector((state: RootState) => state.picture);
   const thumbnailImage = useRef<HTMLImageElement>(null);
-  const progressBar = useRef<HTMLProgressElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
@@ -77,13 +74,6 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, progress, selected }) => {
           {file.name}
         </ThumbnailNameAreaText>
       </ThumbnailNameArea>
-
-      {progress > 0 && <ThumbnailProgress
-        max='100'
-        ref={progressBar}
-        value={progress}
-        progress={progress}
-      />}
     </ThumbnailContainer>
   );
 };
