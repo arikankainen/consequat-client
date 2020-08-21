@@ -21,6 +21,9 @@ const PicturesPage = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
+  const [deleteInProgress, setDeleteInProgress] = useState<boolean>(false);
+  const [deleteCount, setDeleteCount] = useState<number>(0);
+  const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -34,20 +37,6 @@ const PicturesPage = () => {
       setPhotos(resultMe.data.me.photos);
     }
   }, [resultMe.data]);
-
-  const deletePhotoFromFirebase = (filename: string) => {
-    const storageRef = storage.ref(filename);
-
-    storageRef.delete().then(() => {
-      console.log('deleted successfully from firebase');
-    }).catch(() => {
-      console.log('error deleting from firebase');
-    });
-  };
-
-  const handleCancel = () => {
-    setConfirmation({});
-  };
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
@@ -69,25 +58,89 @@ const PicturesPage = () => {
     console.log('move', selection);
   };
 
-  const handleDeletePicturesOk = () => {
-    setConfirmation({});
+  const reportProgress = (filename: string, percentage: number) => {
+    setConfirmation({
+      ...confirmation,
+      text: filename,
+      progress: percentage,
+    });
+  };
 
-    selection.forEach(id => {
+  const deletePhotoFromFirebase = (filename: string) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = storage.ref(filename);
+
+      storageRef.delete().then(() => {
+        console.log('deleted successfully from firebase');
+        resolve('ok');
+      }).catch(() => {
+        console.log('error deleting from firebase');
+        reject('error');
+      });
+    });
+  };
+
+  const doDeletion = async (photo: Photo, id: string) => {
+    setDeletionInProgress(true);
+
+    try {
+      deletePhotoFromDb({ variables: { id } });
+    } catch (error) {
+      console.log(error);
+    }
+
+    await deletePhotoFromFirebase(photo.filename);
+    await deletePhotoFromFirebase(photo.thumbFilename);
+
+    setSelection(selection.slice(1));
+    setDeletionInProgress(false);
+  };
+
+  const startNewDeletion = () => {
+    if (selection.length > 0) {
+      const id = selection[0];
       const photo = photos.find(photo => photo.id === id);
 
-      if (photo) {
-        try {
-          deletePhotoFromDb({ variables: { id } });
-        } catch (error) {
-          console.log(error);
-        }
-
-        deletePhotoFromFirebase(photo.filename);
-        deletePhotoFromFirebase(photo.thumbFilename);
+      if (photo && photo.filename) {
+        const percent = Math.round(((deleteCount - selection.length) / deleteCount) * 100);
+        reportProgress(`Picture ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
+        doDeletion(photo, id);
       }
+    }
+  };
+
+  const deleteDone = () => {
+    setConfirmation({
+      ...confirmation,
+      topic: 'Delete completed',
+      text: 'All selected files deleted',
+      progress: 100,
+      handleOk: () => setConfirmation({}),
+      disableOk: false,
+    });
+  };
+
+  useEffect(() => {
+    if (deleteInProgress && selection.length > 0) {
+      if (!deletionInProgress) startNewDeletion();
+    } else if (deleteInProgress && selection.length === 0) {
+      setDeleteInProgress(false);
+      deleteDone();
+    }
+  }, [deleteInProgress, deletionInProgress]);
+
+  const handleDeletePicturesConfirmed = () => {
+    setConfirmation({
+      open: true,
+      topic: 'Deleting...',
+      text: '...',
+      progress: 0,
+      handleOk: () => setConfirmation({}),
+      disableOk: true,
     });
 
-    setSelection([]);
+    setDeleteCount(selection.length);
+    setDeleteInProgress(true);
   };
 
   const handleDeletePictures = () => {
@@ -99,8 +152,8 @@ const PicturesPage = () => {
     setConfirmation({
       open: true,
       text,
-      handleOk: handleDeletePicturesOk,
-      handleCancel: handleCancel,
+      handleOk: handleDeletePicturesConfirmed,
+      handleCancel: () => setConfirmation({}),
     });
   };
 

@@ -172,7 +172,8 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const uploadDone = () => {
     setConfirmation({
       ...confirmation,
-      text: 'All pictures uploaded!',
+      topic: 'Upload completed',
+      text: 'All files uploaded',
       handleOk: () => setConfirmation({}),
       handleCancel: undefined,
     });
@@ -181,7 +182,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const uploadAborted = () => {
     setConfirmation({
       ...confirmation,
-      text: 'Upload aborted!',
+      topic: 'Upload aborted',
       handleOk: () => setConfirmation({}),
       handleCancel: undefined,
     });
@@ -223,7 +224,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ pictures }) => {
   const handleUploadPicturesConfirmed = () => {
     setConfirmation({
       open: true,
-      topic: 'Upload',
+      topic: 'Uploading...',
       text: '...',
       progress: 0,
       text2: '...',

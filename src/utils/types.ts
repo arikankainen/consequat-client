@@ -11,7 +11,7 @@ export interface Photo {
   thumbUrl: string;
   filename: string;
   thumbFilename: string;
-  originalName: string;
+  originalFilename: string;
   name: string;
   description: string;
   dateAdded: Date;
