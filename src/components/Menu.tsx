@@ -67,7 +67,7 @@ const MenuItem = styled.li`
 const MenuLink = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 7px 20px;
   width: 100%;
   height: 100%;
   text-decoration: none;
@@ -98,14 +98,14 @@ const MenuTextContainer = styled.div`
 
 const MenuTextUpperText = styled.div`
   font-size: var(--default-font-size-bigger);
-  color: var(--default-font-color);
-  line-height: 1.1;
+  color: #ddd;
+  line-height: 1.2;
 `;
 
 const MenuTextLowerText = styled.div`
   font-size: var(--default-font-size);
-  color: var(--default-font-color-darker);
-  line-height: 1.1;
+  color: #aaa;
+  line-height: 1.2;
 `;
 
 interface Button {

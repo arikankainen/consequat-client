@@ -26,15 +26,16 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   padding: 6px 10px;
   border: 1px solid var(--accent-color-2);
   border-radius: var(--input-border-radius);
-  color: #eee;
+  color: #fff;
   background-color: var(--accent-color-2);
   font-size: var(--default-font-size);
+  font-weight: 300;
   line-height: 1;
   cursor: pointer;
 
   ${props => props.backColor === ButtonColor.white && css`
     border: 1px solid var(--accent-color-2);
-    color: var(--accent-color-2);
+    color: var(--accent-color-2-disabled);
     background-color: #eee;
   `}
 
@@ -65,6 +66,7 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   }
 
   &:hover {
+    border: 1px solid var(--accent-color-2-hover);
     background-color: var(--accent-color-2-hover);
 
     ${props => props.backColor === ButtonColor.white && css`

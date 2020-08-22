@@ -1,7 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import logoImage from '../../images/consequat_top2.png';
 import logoImageSmall from '../../images/consequat_o.png';
-import { LogoImage, LogoLink } from './Styles';
+import { Link } from 'react-router-dom';
+
+const LogoLink = styled(Link)`
+  height: 30px;
+`;
+
+const LogoImage = styled.picture`
+  height: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  & > img {
+    height: 30px;
+  }
+`;
 
 const Logo = () => {
   return (
