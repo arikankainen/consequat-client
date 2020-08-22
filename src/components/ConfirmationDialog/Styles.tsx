@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import breakPoints from '../../utils/breakPoints';
 
 export const BackDrop = styled.div`
   position: fixed;
@@ -30,12 +29,6 @@ export const Container = styled.div`
   margin: 40px;
   width: 90%;
   max-width: 500px;
-  
-  /*
-  ${breakPoints.mobileXL} {
-    margin: 10px;
-  }
-  */
 `;
 
 export const Topic = styled.div`
@@ -66,43 +59,6 @@ export const ButtonArea = styled.div`
   padding: 10px 10px 5px 10px;
   background-color: #eee;
   border-radius: 0px 0px 5px 5px;
-`;
-
-export const Button = styled.button`
-  min-width: 75px;
-  margin: 10px 5px;
-  padding: 5px 10px;
-  background-color: var(--accent-color-2);
-  border: none;
-  border-radius: var(--input-border-radius);
-  color: #eee;
-  font-size: var(--default-font-size);
-  cursor: pointer;
-
-  &:focus {
-    outline-width: 0;
-  }
-
-  &:hover {
-    background-color: var(--accent-color-2-hover);
-  }
-
-  &:disabled {
-    background-color: var(--accent-color-2-disabled);
-    color: #000755;
-  }
-`;
-
-export const WhiteButton = styled(Button)`
-  border: 1px solid var(--accent-color-2);
-  background-color: #eee;
-  color: var(--accent-color-2);
-
-  &:hover {
-    border: 1px solid var(--accent-color-2-hover);
-    background-color: #fff;
-    color: var(--accent-color-2-hover);
-  }
 `;
 
 export const ProgressContainer = styled.div`

@@ -16,19 +16,29 @@ export const PictureListToolBar = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   background-color: rgba(23, 23, 25, 0.9);
+
+  ${breakPoints.laptop} {
+    align-items: stretch;
+  }
 `;
 
 export const PictureListButtonGroups = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: ${breakPoints.laptopWidth};
+
+  ${breakPoints.laptop} {
+    width: auto;
+  }
 `;
 
 export const PictureListButtonGroup = styled.div`
   display: flex;
-  margin: 10px 15px;
+  margin: 0px 15px;
 
   ${breakPoints.laptop} {
     margin: 0px 5px;
@@ -83,15 +93,31 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
   }
 `;
 
+export const PictureListToolBarButtonText = styled.div`
+  margin-top: 1px;
+  margin-left: 7px;
+
+  ${breakPoints.mobileXL} {
+    display: none;
+  }
+`;
+
 export const PictureListToolBarButton = styled.button`
+  display: flex;
   margin: 10px 5px;
-  padding: 5px 10px;
+  padding: 7px 10px;
   background-color: var(--accent-color-2);
   border: none;
   border-radius: var(--input-border-radius);
   color: #eee;
   font-size: var(--default-font-size);
+  line-height: 1;
   cursor: pointer;
+
+  & > svg {
+    height: 16px;
+    color: #fff;
+  }
 
   &:focus {
     outline-width: 0;
@@ -105,6 +131,10 @@ export const PictureListToolBarButton = styled.button`
     background-color: var(--accent-color-2-disabled);
     color: #000755;
     /*cursor: wait;*/
+
+    & > svg {
+      color: #000755;
+    }
   }
 `;
 

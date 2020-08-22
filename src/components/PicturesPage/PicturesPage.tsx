@@ -6,13 +6,16 @@ import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
 import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
+import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
+import { ReactComponent as EditButton } from '../../images/button_edit.svg';
+import { ReactComponent as SelectButton } from '../../images/button_select.svg';
+import Button from '../Buttons/Button';
 
 import {
   PictureListContainer,
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
-  PictureListToolBarButton,
   PictureListArea,
 } from '../PictureList/Styles';
 
@@ -24,6 +27,7 @@ const PicturesPage = () => {
   const [deleteInProgress, setDeleteInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
+  const [allSelected, setAllSelected] = useState<boolean>(false);
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -37,6 +41,11 @@ const PicturesPage = () => {
       setPhotos(resultMe.data.me.photos);
     }
   }, [resultMe.data]);
+
+  useEffect(() => {
+    if (selection.length === photos.length && !allSelected) setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
+  }, [photos, selection]);
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
@@ -52,10 +61,6 @@ const PicturesPage = () => {
 
   const handleEditPictures = () => {
     console.log('edit', selection);
-  };
-
-  const handleMovePictures = () => {
-    console.log('move', selection);
   };
 
   const reportProgress = (filename: string, percentage: number) => {
@@ -158,8 +163,12 @@ const PicturesPage = () => {
   };
 
   const handleSelectAll = () => {
-    const all = photos.map(photo => photo.id);
-    setSelection(all);
+    if (!allSelected) {
+      const all = photos.map(photo => photo.id);
+      setSelection(all);
+    } else {
+      setSelection([]);
+    }
   };
 
   return (
@@ -169,36 +178,43 @@ const PicturesPage = () => {
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
-            <PictureListToolBarButton
+            <Button
               onClick={handleEditPictures}
+              text="Edit"
+              icon={EditButton}
               disabled={selection.length === 0}
-            >
-              Edit
-            </PictureListToolBarButton>
-            <PictureListToolBarButton
-              onClick={handleMovePictures}
-              disabled={selection.length === 0}
-            >
-              Move
-            </PictureListToolBarButton>
+            />
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            <PictureListToolBarButton
-              onClick={handleSelectAll}
-              disabled={photos.length === 0}
-            >
-              Select all
-            </PictureListToolBarButton>
+            {!allSelected
+              ?
+              <Button
+                onClick={handleSelectAll}
+                text="Select all"
+                icon={SelectButton}
+                disabled={photos.length === 0}
+                textRequired={true}
+              />
+              :
+              <Button
+                onClick={handleSelectAll}
+                text="Select none"
+                icon={SelectButton}
+                disabled={photos.length === 0}
+                textRequired={true}
+              />
+            }
+
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            <PictureListToolBarButton
+            <Button
               onClick={handleDeletePictures}
+              text="Delete"
+              icon={DeleteButton}
               disabled={selection.length === 0}
-            >
-              Delete
-            </PictureListToolBarButton>
+            />
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 

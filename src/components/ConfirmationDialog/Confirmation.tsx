@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from './ModalTest';
 import { CSSTransition } from 'react-transition-group';
+import Button, { ButtonColor } from '../Buttons/Button';
 
 import {
   BackDrop,
@@ -8,8 +9,6 @@ import {
   Container,
   Topic,
   Content,
-  Button,
-  WhiteButton,
   ButtonArea,
   ProgressContainer,
   Progress,
@@ -121,17 +120,39 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
             <ButtonArea>
               {handleCancel && handleOk &&
                 <>
-                  <WhiteButton onClick={handleCancel} disabled={disableCancel}>Cancel</WhiteButton>
-                  <Button onClick={handleOk} disabled={disableOk}>OK</Button>
+                  <Button
+                    onClick={handleCancel}
+                    text="Cancel"
+                    disabled={disableCancel}
+                    color={ButtonColor.white}
+                    width={75}
+                  />
+                  <Button
+                    onClick={handleOk}
+                    text="OK"
+                    disabled={disableOk}
+                    width={75}
+                  />
                 </>
               }
 
               {!handleCancel && handleOk &&
-                <Button onClick={handleOk} disabled={disableOk}>OK</Button>
+                <Button
+                  onClick={handleOk}
+                  text="OK"
+                  disabled={disableOk}
+                  width={75}
+                />
               }
 
               {handleCancel && !handleOk &&
-                <Button onClick={handleCancel} disabled={disableCancel}>Cancel</Button>
+                <Button
+                  onClick={handleCancel}
+                  text="Cancel"
+                  disabled={disableCancel}
+                  color={ButtonColor.white}
+                  width={75}
+                />
               }
             </ButtonArea>
           </Container>
