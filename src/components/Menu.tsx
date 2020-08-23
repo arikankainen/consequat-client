@@ -3,12 +3,6 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-const MenuContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex-grow: 1;
-`;
-
 export enum Direction {
   Left,
   Right,
@@ -49,6 +43,10 @@ const MenuButton = styled.div`
 
   &:hover {
     background-color: var(--navigation-bg-color-hover);
+
+    & > svg {
+      color: var(--icon-color-hover);
+    }
   }
 
   & > svg {
@@ -173,7 +171,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   };
 
   return (
-    <MenuContainer>
+    <>
       <MenuButton onClick={() => toggleMenu()}>
         <button.icon />
       </MenuButton>
@@ -185,7 +183,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
       >
         <MenuItems button={button} items={items} settings={settings} />
       </CSSTransition>
-    </MenuContainer>
+    </>
   );
 };
 

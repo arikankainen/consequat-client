@@ -10,13 +10,14 @@ import Logo from './Logo';
 import Menu, { Direction } from '../Menu';
 import Search from './Search';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import MenuButton from '../Buttons/MenuButton';
 
 import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
 import { ReactComponent as AccountIcon } from '../../images/menu_settings.svg';
 import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
+import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
 
 const HeaderContainer = styled.div`
   position: sticky;
@@ -32,30 +33,16 @@ const HeaderContainer = styled.div`
   z-index: 1000;
 `;
 
-const EdgeContainer = styled.div`
+const LeftContainer = styled.div`
   display: flex;
+  justify-content: flex-start;
   flex: 1 1 0%;
 `;
 
-const LoginLink = styled(Link)`
+const RightContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  text-decoration: none;
-  color: var(--accent-color-2);
-  padding-right: 10px;
-  padding-left: 10px;
-  font-size: var(--default-font-size-bigger);
-  font-weight: 600;
-  white-space: nowrap;
-
-  &:visited {
-    color: var(--accent-color-2);
-  }
-  &:hover {
-    color: var(--accent-color-2-hover);
-  }
-  
-  flex-grow: 1;
+  flex: 1 1 0%;
 `;
 
 const Header = () => {
@@ -126,20 +113,26 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <EdgeContainer>
+      <LeftContainer>
         <Logo />
-      </EdgeContainer>
+      </LeftContainer>
       <Search />
-      <EdgeContainer>
-        {loginState.loggedIn &&
+      <RightContainer>
+        {loginState.loggedIn
+          ?
           <Menu
             button={userMenuButton}
             items={userMenuItems}
             settings={userMenuSettings}
           />
+          :
+          <MenuButton
+            to='/login'
+            text='Login'
+            icon={LoginIcon}
+          />
         }
-        {!loginState.loggedIn && <LoginLink to='/login'>Log In</LoginLink>}
-      </EdgeContainer>
+      </RightContainer>
     </HeaderContainer>
   );
 };
