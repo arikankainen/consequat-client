@@ -150,7 +150,6 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
                   onClick={handleCancel}
                   text="Cancel"
                   disabled={disableCancel}
-                  color={ButtonColor.white}
                   width={75}
                 />
               }
