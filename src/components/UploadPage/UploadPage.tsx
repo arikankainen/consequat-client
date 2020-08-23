@@ -206,7 +206,7 @@ const UploadForm = () => {
       setUploadInProgress(false);
       uploadDone();
     }
-  }, [pictureState, uploadInProgress, uploadCancelled]);
+  }, [pictureState, uploadInProgress, uploadCancelled]); // eslint-disable-line
 
   const handleUploadPicturesAbort = () => {
     setUploadCancelled(true);
@@ -224,7 +224,7 @@ const UploadForm = () => {
         disableCancel: false,
       });
     }
-  }, [uploadCancelled]);
+  }, [uploadCancelled]); // eslint-disable-line
 
   const handleUploadPicturesConfirmed = () => {
     setConfirmation({

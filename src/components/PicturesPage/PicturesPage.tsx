@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { DELETE_PHOTO, ME } from '../../utils/queries';
-import { Photo } from '../../utils/types';
+import { Photo, Me } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
@@ -24,16 +24,36 @@ const PicturesPage = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
-  const [deleteInProgress, setDeleteInProgress] = useState<boolean>(false);
-  const [deleteCount, setDeleteCount] = useState<number>(0);
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
+  const [deleteCount, setDeleteCount] = useState<number>(0);
+  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
       console.log(error);
     },
-    refetchQueries: [{ query: ME }]
+    //refetchQueries: [{ query: ME }]
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: Me } | null = cache.readQuery({ query: ME });
+        if (existingCache) {
+          const idToDelete = response.data.deletePhoto.id;
+          console.log('existingCache', existingCache);
+          console.log('response', response.data);
+          const updatedPhotos = existingCache.me.photos.filter(p => p.id !== idToDelete);
+          const updatedCache = { ...existingCache, me: { ...existingCache.me, photos: updatedPhotos } };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache
+          });
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
   });
 
   useEffect(() => {
@@ -45,7 +65,7 @@ const PicturesPage = () => {
   useEffect(() => {
     if (selection.length === photos.length && !allSelected) setAllSelected(true);
     else if (selection.length !== photos.length && allSelected) setAllSelected(false);
-  }, [photos, selection]);
+  }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
@@ -86,7 +106,7 @@ const PicturesPage = () => {
   };
 
   const doDeletion = async (photo: Photo, id: string) => {
-    setDeletionInProgress(true);
+    setsingleDeletionInProgress(true);
 
     try {
       deletePhotoFromDb({ variables: { id } });
@@ -98,7 +118,7 @@ const PicturesPage = () => {
     await deletePhotoFromFirebase(photo.thumbFilename);
 
     setSelection(selection.slice(1));
-    setDeletionInProgress(false);
+    setsingleDeletionInProgress(false);
   };
 
   const startNewDeletion = () => {
@@ -126,13 +146,13 @@ const PicturesPage = () => {
   };
 
   useEffect(() => {
-    if (deleteInProgress && selection.length > 0) {
-      if (!deletionInProgress) startNewDeletion();
-    } else if (deleteInProgress && selection.length === 0) {
-      setDeleteInProgress(false);
+    if (deletionInProgress && selection.length > 0) {
+      if (!singleDeletionInProgress) startNewDeletion();
+    } else if (deletionInProgress && selection.length === 0) {
+      setDeletionInProgress(false);
       deleteDone();
     }
-  }, [deleteInProgress, deletionInProgress]);
+  }, [deletionInProgress, singleDeletionInProgress, selection.length]); // eslint-disable-line
 
   const handleDeletePicturesConfirmed = () => {
     setConfirmation({
@@ -145,7 +165,7 @@ const PicturesPage = () => {
     });
 
     setDeleteCount(selection.length);
-    setDeleteInProgress(true);
+    setDeletionInProgress(true);
   };
 
   const handleDeletePictures = () => {

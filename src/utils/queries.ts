@@ -60,6 +60,7 @@ export const ME = gql`
         originalFilename,
         name,
         description,
+        dateAdded,
         id
       },
       id

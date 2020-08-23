@@ -6,6 +6,15 @@ export interface LoggedUser {
   id: string;
 }
 
+export interface Me {
+  username: string;
+  email: string;
+  fullname: string;
+  isAdmin: boolean;
+  photos: Photo[];
+  id: string;
+}
+
 export interface Photo {
   mainUrl: string;
   thumbUrl: string;
