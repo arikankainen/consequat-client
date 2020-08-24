@@ -32,7 +32,6 @@ export const Container = styled.div`
 `;
 
 export const Topic = styled.h1`
-  margin-bottom: 10px;
   font-size: 24px;
   color: var(--accent-color-2);
   color: var(--accent-color-1);

@@ -9,7 +9,7 @@ import { LOGIN, ME } from '../../utils/queries';
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from './Inputs';
+import { TextInput, PasswordInput } from './Inputs';
 
 import {
   OuterContainer,
@@ -26,7 +26,7 @@ const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const loggingProgress = (logging: boolean): void => {
+  const loggingProgress = (logging: boolean) => {
     if (logging) {
       setDisabled(true);
       setButtonText('Logging in...');
@@ -110,18 +110,8 @@ const LoginPage = () => {
           onSubmit={handleSubmit}
         >
           <Form>
-            <TextInput
-              type="text"
-              name="username"
-              label="Username"
-              placeholder="Username"
-            />
-            <TextInput
-              type="text"
-              name="password"
-              label="Password"
-              placeholder="Password"
-            />
+            <TextInput name="username" label="Username" />
+            <PasswordInput name="password" label="Password" />
             <Button type="submit" disabled={disabled}>{buttonText}</Button>
             <QuestionArea>
               <QuestionLink to='/signup'>

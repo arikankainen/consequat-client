@@ -24,7 +24,7 @@ const Input = styled.input`
   text-align: center;
 
   &:focus {
-    outline-width: 0;
+    outline: none;
   }
 `;
 
@@ -34,8 +34,6 @@ const Error = styled.div`
 
 interface TextInputProps {
   name: string;
-  type: string;
-  placeholder: string;
   label: string;
 }
 
@@ -45,7 +43,21 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   return (
     <>
       <Label htmlFor={props.name}>{label}</Label>
-      <Input {...field} {...props} />
+      <Input type="text" {...field} {...props} />
+      {meta.touched && meta.error &&
+        <Error>{meta.error}</Error>
+      }
+    </>
+  );
+};
+
+export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <Label htmlFor={props.name}>{label}</Label>
+      <Input type="password" {...field} {...props} />
       {meta.touched && meta.error &&
         <Error>{meta.error}</Error>
       }
