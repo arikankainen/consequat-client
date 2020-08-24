@@ -8,9 +8,6 @@ import { setMessage, setError } from '../../reducers/notificationReducer';
 import storage from '../../utils/storage';
 import { LOGIN, ME } from '../../utils/queries';
 
-//import { Formik, Form, useField } from 'formik';
-//import * as Yup from 'yup';)
-
 import {
   OuterContainer,
   Container,
@@ -19,13 +16,13 @@ import {
   Button,
   QuestionArea,
   QuestionLink
-} from './Styles';
+}  from './Styles';
 
 const LoginPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>('Log in');
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch =  useDispatch();
 
   const username = useField('text', 'Username');
   const password = useField('password', 'Password');
@@ -74,7 +71,7 @@ const LoginPage = () => {
           id: resultMe.data.me.id
         }
       }));
-
+      
       dispatch(setMessage('Log in', `${resultMe.data.me.fullname} logged in successfully.`));
       history.replace('/');
     }
@@ -97,13 +94,13 @@ const LoginPage = () => {
       login({ variables: { username: username.value, password: password.value } });
     }
   };
-
+  
   return (
     <OuterContainer>
       <Container>
         <Topic>Log in</Topic>
         <form onSubmit={handleSubmit}>
-          <Input disabled={disabled} {...username} /><br />
+          <Input disabled={disabled} {...username}/><br />
           <Input disabled={disabled} {...password} /><br />
           <Button disabled={disabled} type='submit'>{buttonText}</Button>
           <QuestionArea>
