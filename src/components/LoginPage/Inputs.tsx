@@ -11,9 +11,9 @@ const Label = styled.label`
   color: #666;
   font-size: 13px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 `;
 
 const Icon = styled.div`
@@ -113,8 +113,8 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
   useEffect(() => {
-    console.log(meta, field);
-  }, [meta, field]);
+    console.log(field, meta);
+  }, [field, meta]);
 
   return (
     <>

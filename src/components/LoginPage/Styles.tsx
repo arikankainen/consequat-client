@@ -43,18 +43,17 @@ export const Button = styled.button`
   height: 30px;
   margin-top: 20px;
   background-color: var(--accent-color-2);
-  border: none;
+  border: 1px solid var(--navigation-bg-color);
   border-radius: var(--input-border-radius);
   color: #eee;
   font-size: var(--default-font-size);
   cursor: pointer;
 
-  /*
   &:focus {
-    outline-width: 0;
+    outline: none;
+    box-shadow: var(--focus);
   }
-  */
-  
+
   &:hover {
     background-color: var(--accent-color-2-hover);
   }
