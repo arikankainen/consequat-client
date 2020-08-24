@@ -38,24 +38,6 @@ export const Topic = styled.h1`
   text-transform: uppercase;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 30px;
-  margin-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: var(--input-bg-color);
-  border: none;
-  border-radius: var(--input-border-radius);
-  color: var(--input-color);
-  font-size: var(--default-font-size);
-  text-align: center;
-
-  &:focus {
-    outline-width: 0;
-  }
-`;
-
 export const Button = styled.button`
   width: 100%;
   height: 30px;
@@ -65,13 +47,14 @@ export const Button = styled.button`
   border-radius: var(--input-border-radius);
   color: #eee;
   font-size: var(--default-font-size);
-  font-weight: 600;
   cursor: pointer;
 
+  /*
   &:focus {
     outline-width: 0;
   }
-
+  */
+  
   &:hover {
     background-color: var(--accent-color-2-hover);
   }
