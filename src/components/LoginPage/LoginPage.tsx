@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useField from '../../utils/useField';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -8,8 +7,9 @@ import { setMessage, setError } from '../../reducers/notificationReducer';
 import storage from '../../utils/storage';
 import { LOGIN, ME } from '../../utils/queries';
 
-//import { Formik, Form, useField } from 'formik';
-//import * as Yup from 'yup';)
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { TextInput } from './Inputs';
 
 import {
   OuterContainer,
@@ -26,9 +26,6 @@ const LoginPage = () => {
   const [buttonText, setButtonText] = useState<string>('Log in');
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const username = useField('text', 'Username');
-  const password = useField('password', 'Password');
 
   const loggingProgress = (logging: boolean): void => {
     if (logging) {
@@ -85,33 +82,50 @@ const LoginPage = () => {
     e.preventDefault();
     loggingProgress(true);
 
-    if (!username.value) {
-      dispatch(setError('Error', 'Username and password required.'));
-      loggingProgress(false);
-    }
-    else if (!password.value) {
-      dispatch(setError('Error', 'Username and password required.'));
-      loggingProgress(false);
-    }
-    else {
-      login({ variables: { username: username.value, password: password.value } });
-    }
+    //login({ variables: { username: username.value, password: password.value } });
+  };
+
+  interface Values {
+    username: string;
+    password: string;
+  }
+
+  const initialValues: Values = {
+    username: '',
+    password: ''
   };
 
   return (
     <OuterContainer>
       <Container>
         <Topic>Log in</Topic>
-        <form onSubmit={handleSubmit}>
-          <Input disabled={disabled} {...username} /><br />
-          <Input disabled={disabled} {...password} /><br />
-          <Button disabled={disabled} type='submit'>{buttonText}</Button>
-          <QuestionArea>
-            <QuestionLink to='/signup'>
-              Not registered yet? Sign up!
-            </QuestionLink>
-          </QuestionArea>
-        </form>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values, actions) => {
+            console.log(values, actions);
+            alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+          }}
+        >
+          <Form>
+            <TextInput
+              type="text"
+              id="username"
+              name="username"
+              label="Username"
+              placeholder="Username"
+            />
+            <TextInput
+              type="text"
+              id="password"
+              name="password"
+              label="Password"
+              placeholder="Password"
+            />
+            <button type="submit">Log in</button>
+          </Form>
+
+        </Formik>
       </Container>
     </OuterContainer>
   );
