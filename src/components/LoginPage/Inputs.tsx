@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useField } from 'formik';
 import styled, { css } from 'styled-components';
 import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
@@ -9,6 +9,7 @@ const Label = styled.label`
   display: block;
   width: 100%;
   color: #666;
+  color: var(--accent-color-2);
   font-size: 13px;
   text-align: left;
   font-weight: 500;
@@ -47,12 +48,12 @@ const InputContainer = styled.div<InputContainerProps>`
   border: 1px solid var(--navigation-bg-color);
   border-radius: var(--input-border-radius);
 
-  ${props => props.focused && css`
-    box-shadow: 0px 0px 1px 1px blue;
-  `};
-
   ${props => props.error && css`
     box-shadow: 0px 0px 1px 1px var(--error-color);
+  `};
+
+  ${props => props.focused && css`
+    box-shadow: var(--focus);
   `};
 `;
 
@@ -111,11 +112,8 @@ const Error = styled.div<ErrorProps>`
 `;
 
 const PasswordIcon: React.FC<{ show: boolean }> = ({ show }) => {
-  return (
-    <>
-      {show ? <HidePasswordIcon /> : <ShowPasswordIcon />}
-    </>
-  );
+  if (show) return <HidePasswordIcon />;
+  else return <ShowPasswordIcon />;
 };
 
 interface TextInputProps {
@@ -125,17 +123,29 @@ interface TextInputProps {
 
 export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+  const [focused, setFocused] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFocus = () => {
+    setFocused(inputRef.current === document.activeElement);
+  };
 
   useEffect(() => {
-    console.log(field, meta);
+    handleFocus();
   }, [field, meta]);
 
   return (
     <>
-      <InputContainer focused={false} error={meta.touched && !!meta.error}>
+      <InputContainer focused={focused} error={meta.touched && !!meta.error}>
         <NameContainer>
           <Label htmlFor={props.name}>{label}</Label>
-          <Input type="text" {...field} {...props} />
+          <Input
+            type="text"
+            {...field}
+            {...props}
+            ref={inputRef}
+            onFocus={handleFocus}
+          />
         </NameContainer>
       </InputContainer>
       <Error error={meta.touched && !!meta.error}>
@@ -149,18 +159,33 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
 export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const [show, setShow] = useState<boolean>(false);
+  const [focused, setFocused] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handlePasswordIconClick = () => {
     setShow(!show);
   };
 
+  const handleFocus = () => {
+    setFocused(inputRef.current === document.activeElement);
+  };
+
+  useEffect(() => {
+    handleFocus();
+  }, [field, meta]);
+
   return (
     <>
-      <InputContainer focused={false} error={meta.touched && !!meta.error}>
+      <InputContainer focused={focused} error={meta.touched && !!meta.error}>
         <NameContainer>
           <Label htmlFor={props.name}>{label}</Label>
           <Input
-            type={show ? 'text' : 'password'} {...field} {...props} />
+            type={show ? 'text' : 'password'}
+            {...field}
+            {...props}
+            ref={inputRef}
+            onFocus={handleFocus}
+          />
         </NameContainer>
         <Icon onClick={handlePasswordIconClick}>
           <PasswordIcon show={show} />

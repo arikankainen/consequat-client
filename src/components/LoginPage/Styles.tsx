@@ -36,6 +36,7 @@ export const Topic = styled.h1`
   color: var(--accent-color-2);
   color: var(--accent-color-1);
   text-transform: uppercase;
+  font-weight: 300;
 `;
 
 export const Button = styled.button`
