@@ -101,6 +101,14 @@ const LoginPage = () => {
         <Topic>Log in</Topic>
         <Formik
           initialValues={initialValues}
+          validationSchema={Yup.object({
+            username: Yup.string()
+              .min(3, 'Must be at least 3 characters')
+              .required('Required'),
+            password: Yup.string()
+              .min(6, 'Must be at least 6 characters')
+              .required('Required')
+          })}
           onSubmit={(values, actions) => {
             console.log(values, actions);
             alert(JSON.stringify(values, null, 2));
@@ -122,7 +130,7 @@ const LoginPage = () => {
               label="Password"
               placeholder="Password"
             />
-            <button type="submit">Log in</button>
+            <Button type="submit">Log in</Button>
           </Form>
 
         </Formik>
