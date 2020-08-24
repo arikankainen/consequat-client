@@ -42,7 +42,7 @@ const GlobalStyles = createGlobalStyle`
     --progress-value: #666;
     --picturelist-header-bg-color: #eee;
     --picturelist-header-color: #222;
-
+    --error-color: #ff6666;
     --header-height: 60px;
   }
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
-import styled from 'styled-components';
-import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg'
-import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg'
+import styled, { css } from 'styled-components';
+import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
+import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg';
+import { ReactComponent as InfoIcon } from '../../images/information.svg';
 
 const Label = styled.label`
   display: block;
@@ -28,7 +29,12 @@ const Icon = styled.div`
   }
 `;
 
-const InputContainer = styled.div`
+interface InputContainerProps {
+  focused?: boolean;
+  error?: boolean;
+}
+
+const InputContainer = styled.div<InputContainerProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,8 +44,16 @@ const InputContainer = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   background-color: #eee;
-  border: none;
+  border: 1px solid var(--navigation-bg-color);
   border-radius: var(--input-border-radius);
+
+  ${props => props.focused && css`
+    box-shadow: 0px 0px 1px 1px blue;
+  `};
+
+  ${props => props.error && css`
+    box-shadow: 0px 0px 1px 1px var(--error-color);
+  `};
 `;
 
 const NameContainer = styled.div`
@@ -65,7 +79,21 @@ const Input = styled.input`
 `;
 
 const Error = styled.div`
-  color: #dd4444;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 5px;
+  color: var(--error-color);
+  line-height: 1;
+  font-size: 13px;
+  font-weight: 600;
+
+  & > svg {
+    margin-bottom: 3px;
+    margin-right: 5px;
+    height: 16px;
+    color: var(--error-color);
+  }
 `;
 
 const PasswordIcon: React.FC<{ show: boolean }> = ({ show }) => {
@@ -84,16 +112,23 @@ interface TextInputProps {
 export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
+  useEffect(() => {
+    console.log(meta, field);
+  }, [meta, field]);
+
   return (
     <>
-      <InputContainer>
+      <InputContainer focused={false} error={meta.touched && !!meta.error}>
         <NameContainer>
           <Label htmlFor={props.name}>{label}</Label>
           <Input type="text" {...field} {...props} />
         </NameContainer>
       </InputContainer>
       {meta.touched && meta.error &&
-        <Error>{meta.error}</Error>
+        <Error>
+          <InfoIcon />
+          {meta.error}
+        </Error>
       }
     </>
   );
@@ -109,17 +144,21 @@ export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => 
 
   return (
     <>
-      <InputContainer>
+      <InputContainer focused={false} error={meta.touched && !!meta.error}>
         <NameContainer>
           <Label htmlFor={props.name}>{label}</Label>
-          <Input type={show ? 'text' : 'password'} {...field} {...props} />
+          <Input
+            type={show ? 'text' : 'password'} {...field} {...props} />
         </NameContainer>
         <Icon onClick={handlePasswordIconClick}>
           <PasswordIcon show={show} />
         </Icon>
       </InputContainer>
       {meta.touched && meta.error &&
-        <Error>{meta.error}</Error>
+        <Error>
+          <InfoIcon />
+          {meta.error}
+        </Error>
       }
     </>
   );
