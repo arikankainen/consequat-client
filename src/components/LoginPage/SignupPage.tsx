@@ -81,16 +81,16 @@ const SignupPage = () => {
 
   const validation = Yup.object({
     username: Yup.string()
-      .min(3, 'Must be at least 3 characters')
-      .required('Required'),
+      .min(3, 'must be at least 3 characters')
+      .required('required'),
     email: Yup.string()
-      .email()
-      .required('Required'),
+      .email('must be valid e-mail')
+      .required('required'),
     fullname: Yup.string()
-      .required('Required'),
+      .required('required'),
     password: Yup.string()
-      .min(5, 'Must be at least 5 characters')
-      .required('Required')
+      .min(5, 'must be at least 5 characters')
+      .required('required')
   });
 
   return (
