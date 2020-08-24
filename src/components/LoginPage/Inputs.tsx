@@ -78,7 +78,11 @@ const Input = styled.input`
   }
 `;
 
-const Error = styled.div`
+interface ErrorProps {
+  error: boolean;
+}
+
+const Error = styled.div<ErrorProps>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -87,6 +91,16 @@ const Error = styled.div`
   line-height: 1;
   font-size: 13px;
   font-weight: 600;
+  overflow: hidden;
+  transition: max-height 0.1s ease, opacity 0.3s ease;
+
+  max-height: 0;
+  opacity: 0;
+
+  ${props => props.error && css`
+    max-height: 20px;
+    opacity: 1;
+  `};
 
   & > svg {
     margin-bottom: 3px;
@@ -124,12 +138,10 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
           <Input type="text" {...field} {...props} />
         </NameContainer>
       </InputContainer>
-      {meta.touched && meta.error &&
-        <Error>
-          <InfoIcon />
-          {meta.error}
-        </Error>
-      }
+      <Error error={meta.touched && !!meta.error}>
+        <InfoIcon />
+        {meta.error}
+      </Error>
     </>
   );
 };
@@ -154,12 +166,10 @@ export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => 
           <PasswordIcon show={show} />
         </Icon>
       </InputContainer>
-      {meta.touched && meta.error &&
-        <Error>
-          <InfoIcon />
-          {meta.error}
-        </Error>
-      }
+      <Error error={meta.touched && !!meta.error}>
+        <InfoIcon />
+        {meta.error}
+      </Error>
     </>
   );
 };

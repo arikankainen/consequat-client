@@ -44,7 +44,7 @@ const GlobalStyles = createGlobalStyle`
     --picturelist-header-color: #222;
     --error-color: #ff6666;
     --header-height: 60px;
-    --focus: 0px 0px 1px 1px var(--accent-color-2);
+    --focus: 0px 0px 0px 1px var(--accent-color-2);
   }
 
   * {
