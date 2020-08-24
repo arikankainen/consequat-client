@@ -87,11 +87,12 @@ const Error = styled.div<ErrorProps>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px 5px;
+  margin-top: 7px;
+  margin-left: 5px;
   color: var(--error-color);
   line-height: 1;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   overflow: hidden;
   transition: max-height 0.1s ease, opacity 0.3s ease;
 
@@ -104,7 +105,7 @@ const Error = styled.div<ErrorProps>`
   `};
 
   & > svg {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     margin-right: 5px;
     height: 16px;
     color: var(--error-color);
