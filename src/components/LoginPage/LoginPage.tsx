@@ -15,7 +15,6 @@ import {
   OuterContainer,
   Container,
   Topic,
-  Input,
   Button,
   QuestionArea,
   QuestionLink
@@ -77,23 +76,29 @@ const LoginPage = () => {
     }
   }, [resultMe.data]); // eslint-disable-line
 
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (values: FormValues) => {
     loggingProgress(true);
-
-    //login({ variables: { username: username.value, password: password.value } });
+    login({ variables: { username: values.username, password: values.password } });
   };
 
-  interface Values {
+  interface FormValues {
     username: string;
     password: string;
   }
 
-  const initialValues: Values = {
+  const initialValues: FormValues = {
     username: '',
     password: ''
   };
+
+  const validation = Yup.object({
+    username: Yup.string()
+      .min(3, 'Must be at least 3 characters')
+      .required('Required'),
+    password: Yup.string()
+      .min(5, 'Must be at least 5 characters')
+      .required('Required')
+  });
 
   return (
     <OuterContainer>
@@ -101,38 +106,29 @@ const LoginPage = () => {
         <Topic>Log in</Topic>
         <Formik
           initialValues={initialValues}
-          validationSchema={Yup.object({
-            username: Yup.string()
-              .min(3, 'Must be at least 3 characters')
-              .required('Required'),
-            password: Yup.string()
-              .min(6, 'Must be at least 6 characters')
-              .required('Required')
-          })}
-          onSubmit={(values, actions) => {
-            console.log(values, actions);
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }}
+          validationSchema={validation}
+          onSubmit={handleSubmit}
         >
           <Form>
             <TextInput
               type="text"
-              id="username"
               name="username"
               label="Username"
               placeholder="Username"
             />
             <TextInput
               type="text"
-              id="password"
               name="password"
               label="Password"
               placeholder="Password"
             />
-            <Button type="submit">Log in</Button>
+            <Button type="submit" disabled={disabled}>{buttonText}</Button>
+            <QuestionArea>
+              <QuestionLink to='/signup'>
+                Not registered yet? Sign up!
+              </QuestionLink>
+            </QuestionArea>
           </Form>
-
         </Formik>
       </Container>
     </OuterContainer>

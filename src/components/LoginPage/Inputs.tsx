@@ -35,7 +35,6 @@ const Error = styled.div`
 interface TextInputProps {
   name: string;
   type: string;
-  id: string;
   placeholder: string;
   label: string;
 }
@@ -45,7 +44,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
 
   return (
     <>
-      <Label htmlFor={props.id || props.name}>{label}</Label>
+      <Label htmlFor={props.name}>{label}</Label>
       <Input {...field} {...props} />
       {meta.touched && meta.error &&
         <Error>{meta.error}</Error>
