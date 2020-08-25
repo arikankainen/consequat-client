@@ -89,8 +89,6 @@ const PicturesPage = () => {
   };
 
   const handleEditPictures = () => {
-    console.log('edit', selection);
-    console.log('editphoto', editPhoto);
     setEditPhoto({
       open: true,
       photo: photos.find(photo => photo.id === selection[0]),

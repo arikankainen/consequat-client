@@ -11,7 +11,9 @@ import {
   Topic,
   Content,
   ButtonArea,
-  Text
+  InputContainer,
+  InputText,
+  Input
 } from './Styles';
 
 export interface EditPhotoProps {
@@ -26,8 +28,8 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
 
   if (props.open && !open) {
-    setOpen(true);
     setSavedProps(props);
+    setOpen(true);
   } else if (!props.open && open) {
     setOpen(false);
   }
@@ -55,7 +57,14 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
           <Container>
             <Topic>Edit photo</Topic>
             <Content>
-              <Text>Text</Text>
+              <InputContainer>
+                <InputText>Name</InputText>
+                <Input value={savedProps.photo?.name} spellCheck={false} />
+              </InputContainer>
+              <InputContainer>
+                <InputText>Description</InputText>
+                <Input value={savedProps.photo?.description} spellCheck={false} />
+              </InputContainer>
             </Content>
             <ButtonArea>
               {savedProps.handleCancel &&
