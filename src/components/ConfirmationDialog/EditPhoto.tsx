@@ -23,6 +23,18 @@ export interface EditPhotoProps {
   handleCancel?: () => void;
 }
 
+interface FormValues {
+  name: string;
+  description: string;
+}
+
+const initialValues: FormValues = {
+  name: '',
+  description: ''
+};
+
+const validation = Yup.object({});
+
 const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
@@ -34,21 +46,18 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     setOpen(false);
   }
 
+  if (props.photo) {
+    if (props.photo.name) initialValues.name = props.photo.name;
+    if (props.photo.description) initialValues.description = props.photo.description;
+  }
+
+  const handleCancel = () => {
+    if (savedProps.handleCancel) savedProps.handleCancel();
+  }
+
   const handleSubmit = (values: FormValues) => {
     console.log(values);
   };
-
-  interface FormValues {
-    name: string;
-    description: string;
-  }
-
-  const initialValues: FormValues = {
-    name: '',
-    description: ''
-  };
-
-  const validation = Yup.object({});
 
   return (
     <Modal>
@@ -62,36 +71,35 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         <BackDrop />
       </CSSTransition>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validation}
-        onSubmit={handleSubmit}
+      <CSSTransition
+        in={open}
+        timeout={300}
+        mountOnEnter
+        unmountOnExit
+        classNames='confirmation'
       >
-        <Form>
-          <CSSTransition
-            in={open}
-            timeout={300}
-            mountOnEnter
-            unmountOnExit
-            classNames='confirmation'
-          >
-            <FloatingContainer>
-              <Container>
+        <FloatingContainer>
+          <Container>
+            <Formik
+              initialValues={initialValues}
+              enableReinitialize={true}
+              validationSchema={validation}
+              onSubmit={handleSubmit}
+            >
+              <Form>
                 <Topic>Edit photo</Topic>
                 <Content>
                   <TextInput name="name" label="Name" />
                   <TextInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>
-                  {savedProps.handleCancel &&
-                    <Button
-                      text="Cancel"
-                      type="button"
-                      width={75}
-                      color={ButtonColor.white}
-                      onClick={savedProps.handleCancel}
-                    />
-                  }
+                  <Button
+                    text="Cancel"
+                    type="button"
+                    width={75}
+                    color={ButtonColor.white}
+                    onClick={handleCancel}
+                  />
                   <Button
                     text="Save"
                     type="submit"
@@ -100,11 +108,11 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                     onClick={() => void 0}
                   />
                 </ButtonArea>
-              </Container>
-            </FloatingContainer>
-          </CSSTransition>
-        </Form>
-      </Formik>
+              </Form>
+            </Formik>
+          </Container>
+        </FloatingContainer>
+      </CSSTransition>
     </Modal>
   );
 };

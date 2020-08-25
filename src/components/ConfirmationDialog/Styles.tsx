@@ -29,6 +29,8 @@ export const Container = styled.div`
   margin: 40px;
   width: 90%;
   max-width: 500px;
+  background-color: #eee;
+  border-radius: 5px;
 `;
 
 export const Topic = styled.div`

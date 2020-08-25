@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useField } from 'formik';
-import styled, { css } from 'styled-components';
-import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
-import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg';
-import { ReactComponent as InfoIcon } from '../../images/information.svg';
+import styled from 'styled-components';
 
 const InputContainer = styled.div`
   display: flex;
@@ -40,7 +37,7 @@ interface TextInputProps {
 }
 
 export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+  const [field] = useField(props);
 
   return (
     <>
@@ -49,6 +46,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
         <Input
           type="text"
           autoComplete="off"
+          spellCheck={false}
           {...field}
           {...props}
         />
