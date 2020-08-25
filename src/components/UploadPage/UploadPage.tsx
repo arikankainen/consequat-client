@@ -10,12 +10,18 @@ import InfoArea from './InfoArea';
 import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
 import InitialUploadForm from './InitialUploadForm';
+import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
+import { ReactComponent as SelectButton } from '../../images/button_select.svg';
+import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
+import { ReactComponent as AddButton } from '../../images/button_add.svg';
+import Button from '../Buttons/Button';
 
 import {
   addPicture,
   removePicture,
   removePictures,
-  updateProgress
+  updateProgress,
+  updateSelected
 } from '../../reducers/pictureReducer';
 
 import {
@@ -23,7 +29,6 @@ import {
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
-  PictureListToolBarButton,
   PictureListArea,
   UploadFileButton
 } from '../PictureList/Styles';
@@ -40,6 +45,7 @@ const UploadForm = () => {
   const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
   const [uploadCount, setUploadCount] = useState<number>(0);
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
+  const [allSelected, setAllSelected] = useState<boolean>(false);
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -68,6 +74,12 @@ const UploadForm = () => {
     }
     else {
       setSelectedFile(null);
+    }
+
+    if (count === pictureState.pictures.length) {
+      if (!allSelected) setAllSelected(true);
+    } else {
+      if (allSelected) setAllSelected(false);
     }
   }, [pictureState]);
 
@@ -288,6 +300,24 @@ const UploadForm = () => {
     );
   }
 
+  const handleSelectAll = () => {
+    if (!allSelected) {
+      pictureState.pictures.forEach(element => {
+        if (!element.selected) {
+          dispatch(updateSelected(element.picture.name, true));
+        }
+      });
+      setAllSelected(true);
+    } else {
+      pictureState.pictures.forEach(element => {
+        if (element.selected) {
+          dispatch(updateSelected(element.picture.name, false));
+        }
+      });
+      setAllSelected(false);
+    }
+  };
+
   return (
     <PictureListContainer>
       <Confirmation {...confirmation} />
@@ -295,17 +325,44 @@ const UploadForm = () => {
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
-            <PictureListToolBarButton onClick={handleAddPictures}>Add</PictureListToolBarButton>
-            {selectedCount === 0
+            <Button
+              onClick={handleAddPictures}
+              text="Add"
+              icon={AddButton}
+            />
+            <Button
+              onClick={handleUploadPictures}
+              text="Upload"
+              icon={UploadButton}
+              disabled={selectedCount === 0}
+            />
+          </PictureListButtonGroup>
+          <PictureListButtonGroup>
+            {!allSelected
               ?
-              <PictureListToolBarButton onClick={handleRemovePictures}>Remove all</PictureListToolBarButton>
+              <Button
+                onClick={handleSelectAll}
+                text="Select all"
+                icon={SelectButton}
+                textRequired={true}
+              />
               :
-              <PictureListToolBarButton onClick={handleRemovePictures}>Remove ({selectedCount})</PictureListToolBarButton>
+              <Button
+                onClick={handleSelectAll}
+                text="Select none"
+                icon={SelectButton}
+                textRequired={true}
+              />
             }
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            <PictureListToolBarButton onClick={handleUploadPictures}>Upload all</PictureListToolBarButton>
+            <Button
+              onClick={handleRemovePictures}
+              text="Remove"
+              icon={DeleteButton}
+              disabled={selectedCount === 0}
+            />
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 

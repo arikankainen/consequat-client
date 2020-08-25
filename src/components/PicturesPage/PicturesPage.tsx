@@ -225,7 +225,6 @@ const PicturesPage = () => {
                 textRequired={true}
               />
             }
-
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
