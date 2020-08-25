@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import { setError } from '../../reducers/notificationReducer';
 import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
@@ -22,7 +21,6 @@ interface ThumbnailProps {
 }
 
 const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
-  const pictureState = useSelector((state: RootState) => state.picture);
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -39,18 +37,8 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
       });
   }, [file]); //eslint-disable-line
 
-  const handleThumbnailClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    if (event.ctrlKey) {
-      dispatch(updateSelected(file.name, !selected));
-    }
-    else {
-      pictureState.pictures.forEach(element => {
-        if (element.selected) {
-          dispatch(updateSelected(element.picture.name, false));
-        }
-      });
-      dispatch(updateSelected(file.name, true));
-    }
+  const handleThumbnailClick = () => {
+    dispatch(updateSelected(file.name, !selected));
   };
 
   const handleCheckClick = () => {

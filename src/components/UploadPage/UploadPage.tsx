@@ -259,7 +259,7 @@ const UploadForm = () => {
     const count = pictureState.pictures.length;
     const text = count === 1 ?
       'Upload selected photo?' :
-      `Upload ${count} selected photos?`;
+      `Upload all ${count} photos?`;
 
     setConfirmation({
       open: true,
@@ -334,7 +334,7 @@ const UploadForm = () => {
               onClick={handleUploadPictures}
               text="Upload"
               icon={UploadButton}
-              disabled={selectedCount === 0}
+              disabled={pictureState.pictures.length === 0}
             />
           </PictureListButtonGroup>
           <PictureListButtonGroup>

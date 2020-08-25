@@ -76,7 +76,11 @@ const PicturesPage = () => {
   };
 
   const handleThumbnailClick = (id: string) => {
-    setSelection([id]);
+    if (selection.includes(id)) {
+      setSelection(selection.filter(s => s !== id));
+    } else {
+      setSelection(selection.concat(id));
+    }
   };
 
   const handleEditPictures = () => {
