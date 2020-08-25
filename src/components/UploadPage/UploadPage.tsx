@@ -93,7 +93,7 @@ const UploadForm = () => {
       ...confirmation,
       text: filename,
       progress: percentage,
-      text2: `Picture ${uploadCount - remainingFiles + 1} of ${uploadCount}`,
+      text2: `Photo ${uploadCount - remainingFiles + 1} of ${uploadCount}`,
       progress2: percentageFiles + (percentage * (oneFilePercentage / 100)),
     });
   };
@@ -183,7 +183,7 @@ const UploadForm = () => {
 
     setTimeout(() => {
       setUploadDialogOpen(false);
-    }, 500);
+    }, 300);
   };
 
   const uploadDone = () => {
@@ -196,7 +196,7 @@ const UploadForm = () => {
     });
 
     setTimeout(() => {
-      setConfirmation({});
+      uploadDoneClosed();
     }, 1000);
   };
 

@@ -132,7 +132,7 @@ const PicturesPage = () => {
 
       if (photo && photo.filename) {
         const percent = Math.round(((deleteCount - selection.length) / deleteCount) * 100);
-        reportProgress(`Picture ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
+        reportProgress(`Photo ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
         doDeletion(photo, id);
       }
     }
