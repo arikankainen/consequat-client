@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const useField = (type: string, placeholder: string) => {
+const useField = (type: string) => {
   const [value, setValue] = useState('');
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,7 +9,6 @@ const useField = (type: string, placeholder: string) => {
 
   return {
     type,
-    placeholder,
     value,
     onChange
   };

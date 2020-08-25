@@ -3,6 +3,9 @@ import Modal from './ModalTest';
 import { CSSTransition } from 'react-transition-group';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { Photo } from '../../utils/types';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { TextInput } from '../ConfirmationDialog/Inputs';
 
 import {
   BackDrop,
@@ -11,9 +14,6 @@ import {
   Topic,
   Content,
   ButtonArea,
-  InputContainer,
-  InputText,
-  Input
 } from './Styles';
 
 export interface EditPhotoProps {
@@ -34,6 +34,22 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     setOpen(false);
   }
 
+  const handleSubmit = (values: FormValues) => {
+    console.log(values);
+  };
+
+  interface FormValues {
+    name: string;
+    description: string;
+  }
+
+  const initialValues: FormValues = {
+    name: '',
+    description: ''
+  };
+
+  const validation = Yup.object({});
+
   return (
     <Modal>
       <CSSTransition
@@ -46,46 +62,49 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         <BackDrop />
       </CSSTransition>
 
-      <CSSTransition
-        in={open}
-        timeout={300}
-        mountOnEnter
-        unmountOnExit
-        classNames='confirmation'
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validation}
+        onSubmit={handleSubmit}
       >
-        <FloatingContainer>
-          <Container>
-            <Topic>Edit photo</Topic>
-            <Content>
-              <InputContainer>
-                <InputText>Name</InputText>
-                <Input value={savedProps.photo?.name} spellCheck={false} />
-              </InputContainer>
-              <InputContainer>
-                <InputText>Description</InputText>
-                <Input value={savedProps.photo?.description} spellCheck={false} />
-              </InputContainer>
-            </Content>
-            <ButtonArea>
-              {savedProps.handleCancel &&
-                <Button
-                  onClick={savedProps.handleCancel}
-                  text="Cancel"
-                  color={ButtonColor.white}
-                  width={75}
-                />
-              }
-              {savedProps.handleOk &&
-                <Button
-                  onClick={savedProps.handleOk}
-                  text="OK"
-                  width={75}
-                />
-              }
-            </ButtonArea>
-          </Container>
-        </FloatingContainer>
-      </CSSTransition>
+        <Form>
+          <CSSTransition
+            in={open}
+            timeout={300}
+            mountOnEnter
+            unmountOnExit
+            classNames='confirmation'
+          >
+            <FloatingContainer>
+              <Container>
+                <Topic>Edit photo</Topic>
+                <Content>
+                  <TextInput name="name" label="Name" />
+                  <TextInput name="description" label="Description" />
+                </Content>
+                <ButtonArea>
+                  {savedProps.handleCancel &&
+                    <Button
+                      text="Cancel"
+                      type="button"
+                      width={75}
+                      color={ButtonColor.white}
+                      onClick={savedProps.handleCancel}
+                    />
+                  }
+                  <Button
+                    text="Save"
+                    type="submit"
+                    width={75}
+                    disabled={false}
+                    onClick={() => void 0}
+                  />
+                </ButtonArea>
+              </Container>
+            </FloatingContainer>
+          </CSSTransition>
+        </Form>
+      </Formik>
     </Modal>
   );
 };

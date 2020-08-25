@@ -76,31 +76,3 @@ export const Progress = styled.div<ProgressProps> `
   width: ${props => props.progress}%;
   background-color: #55bb55;
 `;
-
-export const InputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 15px 0px 15px;
-`;
-
-export const InputText = styled.div`
-  margin-top: 7px;
-  width: 100px;
-  color: #222;
-  font-size: 14px;
-  line-height: 1;
-`;
-
-export const Input = styled.input`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  width: 100%;
-  color: #222;
-  font-size: 14px;
-  padding: 2px 6px 0px 6px;
-
-  &:focus {
-    outline: none;
-    border: 1px solid var(--accent-color-2);
-  }
-`;

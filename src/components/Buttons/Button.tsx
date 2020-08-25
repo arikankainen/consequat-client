@@ -120,11 +120,13 @@ interface ButtonProps {
   textRequired?: boolean;
   contentAlign?: ButtonContentAlign;
   onClick: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
   return (
     <ButtonContainer
+      type={props.type}
       disabled={props.disabled}
       width={props.width}
       contentAlign={props.contentAlign}
