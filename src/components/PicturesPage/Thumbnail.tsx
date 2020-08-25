@@ -27,6 +27,8 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   return (
     <ThumbnailContainer>
       <ThumbnailPicture
+        width="300"
+        height="300"
         onClick={() => handleThumbnailClick(photo.id)}
         src={photo.thumbUrl}
       />

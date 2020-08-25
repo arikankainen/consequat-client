@@ -5,7 +5,7 @@ import Button, { ButtonColor } from '../Buttons/Button';
 import { Photo } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from '../ConfirmationDialog/Inputs';
+import { TextInput, TextAreaInput } from '../ConfirmationDialog/Inputs';
 
 import {
   BackDrop,
@@ -90,7 +90,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                 <Topic>Edit photo</Topic>
                 <Content>
                   <TextInput name="name" label="Name" />
-                  <TextInput name="description" label="Description" />
+                  <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>
                   <Button

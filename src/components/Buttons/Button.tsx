@@ -36,7 +36,7 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   ${props => props.backColor === ButtonColor.white && css`
     border: 1px solid var(--accent-color-2);
     color: var(--accent-color-2-disabled);
-    background-color: #eee;
+    background-color: #fafafa;
   `}
 
   ${props => props.width && css`
@@ -62,7 +62,8 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   }
 
   &:focus {
-    outline-width: 0;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 122, 217, .4);
   }
 
   &:hover {
@@ -79,7 +80,7 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   &:disabled {
     border: 1px solid var(--accent-color-2-disabled);
     background-color: var(--accent-color-2-disabled);
-    color: #111155;
+    color: #000;
 
     & > svg {
       color: #111155;
@@ -120,7 +121,7 @@ interface ButtonProps {
   textRequired?: boolean;
   contentAlign?: ButtonContentAlign;
   onClick: () => void;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {

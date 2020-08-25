@@ -51,6 +51,8 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
         ref={thumbnailImage}
         onClick={handleThumbnailClick}
         src={placeholder}
+        width="300"
+        height="300"
       />
 
       <ThumbnailIconArea onClick={handleCheckClick} selected={selected}>

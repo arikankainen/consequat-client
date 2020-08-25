@@ -11,7 +11,8 @@ import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
 import InitialUploadForm from './InitialUploadForm';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
-import { ReactComponent as SelectButton } from '../../images/button_select.svg';
+import { ReactComponent as CheckButton } from '../../images/button_check.svg';
+import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import Button from '../Buttons/Button';
@@ -362,15 +363,15 @@ const UploadForm = () => {
               ?
               <Button
                 onClick={handleSelectAll}
-                text="Select all"
-                icon={SelectButton}
+                text="All"
+                icon={CheckButton}
                 textRequired={true}
               />
               :
               <Button
                 onClick={handleSelectAll}
-                text="Select none"
-                icon={SelectButton}
+                text="All"
+                icon={UncheckButton}
                 textRequired={true}
               />
             }

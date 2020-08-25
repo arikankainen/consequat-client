@@ -8,7 +8,8 @@ import { storage } from '../../firebase/firebase';
 import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
-import { ReactComponent as SelectButton } from '../../images/button_select.svg';
+import { ReactComponent as CheckButton } from '../../images/button_check.svg';
+import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
 
@@ -230,16 +231,16 @@ const PicturesPage = () => {
               ?
               <Button
                 onClick={handleSelectAll}
-                text="Select all"
-                icon={SelectButton}
+                text="All"
+                icon={CheckButton}
                 disabled={photos.length === 0}
                 textRequired={true}
               />
               :
               <Button
                 onClick={handleSelectAll}
-                text="Select none"
-                icon={SelectButton}
+                text="All"
+                icon={UncheckButton}
                 disabled={photos.length === 0}
                 textRequired={true}
               />

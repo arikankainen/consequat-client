@@ -35,7 +35,7 @@ export const Container = styled.div`
 
 export const Topic = styled.div`
   padding: 15px 15px 12px 15px;
-  color: #222;
+  color: #111;
   line-height: 1;
   text-align: center;
   font-size: 20px;
