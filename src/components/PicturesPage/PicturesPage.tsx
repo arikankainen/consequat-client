@@ -42,10 +42,19 @@ const PicturesPage = () => {
         const existingCache: { me: Me } | null = cache.readQuery({ query: ME });
         if (existingCache) {
           const idToDelete = response.data.deletePhoto.id;
+          const updatedPhotos = existingCache.me.photos.filter(p => p.id !== idToDelete);
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              photos: updatedPhotos
+            }
+          };
+
           console.log('existingCache', existingCache);
           console.log('response', response.data);
-          const updatedPhotos = existingCache.me.photos.filter(p => p.id !== idToDelete);
-          const updatedCache = { ...existingCache, me: { ...existingCache.me, photos: updatedPhotos } };
+          console.log('updatedCache', updatedCache);
 
           cache.writeQuery({
             query: ME,
