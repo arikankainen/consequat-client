@@ -81,7 +81,7 @@ const UploadForm = () => {
     } else {
       if (allSelected) setAllSelected(false);
     }
-  }, [pictureState]);
+  }, [pictureState]); // eslint-disable-line
 
   const reportProgress = (filename: string, percentage: number) => {
     dispatch(updateProgress(filename, percentage));
@@ -190,10 +190,14 @@ const UploadForm = () => {
     setConfirmation({
       ...confirmation,
       topic: 'Upload completed',
-      text: 'All files uploaded',
+      text: 'All photos uploaded',
       handleOk: uploadDoneClosed,
       handleCancel: undefined,
     });
+
+    setTimeout(() => {
+      setConfirmation({});
+    }, 1000);
   };
 
   const uploadAborted = () => {
@@ -273,7 +277,9 @@ const UploadForm = () => {
     if (fileInput.current !== null) fileInput.current.click();
   };
 
-  const handleRemovePictures = () => {
+  const handleRemovePicturesConfirmed = () => {
+    setConfirmation({});
+
     if (selectedCount === 0) {
       dispatch(removePictures());
     }
@@ -282,6 +288,20 @@ const UploadForm = () => {
         if (picture.selected) dispatch(removePicture(picture.picture.name));
       });
     }
+  };
+
+  const handleRemovePictures = () => {
+    const count = selectedCount;
+    const text = count === 1 ?
+      'Really remove selected photo from upload list?' :
+      `Really remove ${count} selected photos from upload list?`;
+
+    setConfirmation({
+      open: true,
+      text,
+      handleOk: handleRemovePicturesConfirmed,
+      handleCancel: () => setConfirmation({}),
+    });
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -142,11 +142,15 @@ const PicturesPage = () => {
     setConfirmation({
       ...confirmation,
       topic: 'Delete completed',
-      text: 'All selected files deleted',
+      text: 'All selected photos deleted',
       progress: 100,
       handleOk: () => setConfirmation({}),
       disableOk: false,
     });
+
+    setTimeout(() => {
+      setConfirmation({});
+    }, 1000);
   };
 
   useEffect(() => {
@@ -175,8 +179,8 @@ const PicturesPage = () => {
   const handleDeletePictures = () => {
     const count = selection.length;
     const text = count === 1 ?
-      'Really delete selected photo?' :
-      `Really delete ${count} selected photos?`;
+      'Really delete selected photo? It will be deleted permanently.' :
+      `Really delete ${count} selected photos? They will be deleted permanently.`;
 
     setConfirmation({
       open: true,
