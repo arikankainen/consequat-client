@@ -10,6 +10,7 @@ import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as SelectButton } from '../../images/button_select.svg';
 import Button from '../Buttons/Button';
+import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
 
 import {
   PictureListContainer,
@@ -24,6 +25,7 @@ const PicturesPage = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
+  const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
   const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
@@ -88,6 +90,13 @@ const PicturesPage = () => {
 
   const handleEditPictures = () => {
     console.log('edit', selection);
+    console.log('editphoto', editPhoto);
+    setEditPhoto({
+      open: true,
+      photo: photos.find(photo => photo.id === selection[0]),
+      handleOk: () => console.log('ok'),
+      handleCancel: () => setEditPhoto({})
+    });
   };
 
   const reportProgress = (filename: string, percentage: number) => {
@@ -205,6 +214,7 @@ const PicturesPage = () => {
   return (
     <PictureListContainer>
       <Confirmation {...confirmation} />
+      <EditPhoto {...editPhoto} />
 
       <PictureListToolBar>
         <PictureListButtonGroups>
@@ -213,7 +223,7 @@ const PicturesPage = () => {
               onClick={handleEditPictures}
               text="Edit"
               icon={EditButton}
-              disabled={selection.length === 0}
+              disabled={selection.length !== 1}
             />
           </PictureListButtonGroup>
 
