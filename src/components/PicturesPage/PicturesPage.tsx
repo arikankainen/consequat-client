@@ -245,9 +245,10 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
+        {photos.length > 0 &&
+          <PictureListHeader photos={photos} selection={selection} />
+        }
       </PictureListToolBar>
-
-      {photos.length > 0 && <PictureListHeader name="Uudet kuvat" />}
 
       <PictureListArea count={photos.length}>
         {photos.map(photo =>

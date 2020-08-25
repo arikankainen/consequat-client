@@ -15,6 +15,13 @@ const Container = styled.div`
   ${breakPoints.mobileXL} {
     flex-direction: column;
   }
+
+  width: ${breakPoints.laptopWidth};
+
+  ${breakPoints.laptop} {
+    width: auto;
+  }
+
 `;
 
 const TextBlock = styled.div`
@@ -39,7 +46,7 @@ interface InfoAreaProps {
 }
 
 const InfoArea: React.FC<InfoAreaProps> = ({ pictureCount, selectedCount, selectedFile }) => {
-  
+
   return (
     <Container>
       <TextBlock>
