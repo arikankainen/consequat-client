@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './ModalTest';
 import { CSSTransition } from 'react-transition-group';
 import Button, { ButtonColor } from '../Buttons/Button';
@@ -6,6 +6,8 @@ import { Photo } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput } from '../ConfirmationDialog/Inputs';
+import { EDIT_PHOTO } from '../../utils/queries';
+import { useMutation } from '@apollo/client';
 
 import {
   BackDrop,
@@ -14,6 +16,7 @@ import {
   Topic,
   Content,
   ButtonArea,
+  SavingText
 } from './Styles';
 
 export interface EditPhotoProps {
@@ -38,17 +41,26 @@ const validation = Yup.object({});
 const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
+  const [saving, setSaving] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
+
+  const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
   if (props.open && !open) {
     setSavedProps(props);
     setOpen(true);
+    setSaving(false);
   } else if (!props.open && open) {
     setOpen(false);
   }
 
   if (props.photo) {
-    if (props.photo.name) initialValues.name = props.photo.name;
-    if (props.photo.description) initialValues.description = props.photo.description;
+    initialValues.name = props.photo.name ? props.photo.name : '';
+    initialValues.description = props.photo.description ? props.photo.description : '';
   }
 
   const handleCancel = () => {
@@ -56,8 +68,33 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   };
 
   const handleSubmit = (values: FormValues) => {
-    console.log(values);
+    setMessage('Saving...');
+    setSaving(true);
+
+    if (props.photo) {
+      editPhoto({
+        variables: {
+          name: values.name,
+          description: values.description,
+          id: props.photo.id
+        }
+      });
+    }
   };
+
+  useEffect(() => {
+    if (editPhotoResponse.data && !editPhotoResponse.error) {
+      setTimeout(() => {
+        setMessage('');
+        handleCancel();
+      }, 300);
+    } else if (editPhotoResponse.error) {
+      console.log(editPhotoResponse);
+
+      setSaving(false);
+      setMessage('Error!');
+    }
+  }, [editPhotoResponse.data, editPhotoResponse.error]);
 
   return (
     <Modal>
@@ -93,6 +130,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                   <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>
+                  <SavingText>{message}</SavingText>
                   <Button
                     text="Cancel"
                     type="button"
@@ -104,7 +142,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                     text="Save"
                     type="submit"
                     width={75}
-                    disabled={false}
+                    disabled={saving}
                     onClick={() => void 0}
                   />
                 </ButtonArea>

@@ -78,3 +78,18 @@ export const Progress = styled.div<ProgressProps> `
   width: ${props => props.progress}%;
   background-color: #55bb55;
 `;
+
+export const SavingText = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 3px;
+  padding-left: 10px;
+  padding-right: 15px;
+  width: 100%;
+  color: var(--accent-color-2);
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  text-align: left;
+`;
