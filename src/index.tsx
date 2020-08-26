@@ -56,8 +56,22 @@ const client = new ApolloClient({
 });
 */
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    User: {
+      fields: {
+        photos: {
+          merge(_existing = [], incoming: any[]) { // eslint-disable-line
+            return [...incoming];
+          }
+        }
+      }
+    }
+  }
+});
+
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache,
   link: authLink.concat(httpLink)
 });
 

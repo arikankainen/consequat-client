@@ -56,8 +56,7 @@ const PHOTOS_DETAILS = gql`
     location,
     description,
     dateAdded,
-    album { id },
-    id
+    id,
   }
 `;
 
@@ -65,8 +64,7 @@ const ALBUM_DETAILS = gql`
   fragment AlbumDetails on Album {
     name,
     description,
-    photos { id },
-    id
+    id,
   }
 `;
 
@@ -78,12 +76,14 @@ export const ME = gql`
       fullname,
       isAdmin,
       photos {
-        ...PhotoDetails
+        ...PhotoDetails,
+        album { id },
       },
       albums {
-        ...AlbumDetails
+        ...AlbumDetails,
+        photos { id },
       }
-      id
+      id,
     }
   }
   ${PHOTOS_DETAILS}

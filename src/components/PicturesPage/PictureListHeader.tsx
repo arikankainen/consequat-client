@@ -4,36 +4,18 @@ import breakPoints from '../../utils/breakPoints';
 import { Photo } from '../../utils/types';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 8px;
-  
-  ${breakPoints.mobileXL} {
-    flex-direction: column;
-  }
 
   width: ${breakPoints.laptopWidth};
 
   ${breakPoints.laptop} {
     width: auto;
-  }
-`;
-
-const TextBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: hidden;
-  padding: 0px 10px;
-
-  ${breakPoints.laptop} {
-    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 `;
 
@@ -41,13 +23,17 @@ const Property = styled.div`
   color: #eee;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.2;
 `;
 
 const Value = styled.div`
-  margin-left: 10px;
+  margin-left: 15px;
   color: #ddd;
   font-size: 14px;
   font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.2;
 `;
 
 interface PictureListHeaderProps {
@@ -62,10 +48,10 @@ interface BlockProps {
 
 const Block: React.FC<BlockProps> = ({ name, value }) => {
   return (
-    <TextBlock>
+    <>
       <Property>{name}</Property>
       <Value>{value}</Value>
-    </TextBlock>
+    </>
   );
 };
 
