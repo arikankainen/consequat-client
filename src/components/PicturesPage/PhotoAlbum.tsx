@@ -47,13 +47,13 @@ const Edit = styled.div`
   margin-bottom: 2px;
 `;
 
-interface AlbumProps {
+interface PhotoAlbumProps {
   name: string;
   description?: string;
   onClick: () => void;
 }
 
-const Album: React.FC<AlbumProps> = ({ name, description, onClick }) => {
+const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ name, description, onClick }) => {
   return (
     <Container>
       <Content>
@@ -74,4 +74,4 @@ const Album: React.FC<AlbumProps> = ({ name, description, onClick }) => {
   );
 };
 
-export default Album;
+export default PhotoAlbum;

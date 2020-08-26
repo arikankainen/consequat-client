@@ -6,12 +6,13 @@ export interface LoggedUser {
   id: string;
 }
 
-export interface Me {
+export interface User {
   username: string;
   email: string;
   fullname: string;
   isAdmin: boolean;
   photos: Photo[];
+  albums: Album[];
   id: string;
 }
 
@@ -25,5 +26,13 @@ export interface Photo {
   location: string;
   description: string;
   dateAdded: Date;
+  id: string;
+}
+
+export interface Album {
+  name: string;
+  description: string;
+  user: User;
+  photos: Photo[];
   id: string;
 }

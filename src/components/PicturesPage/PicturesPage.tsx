@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { DELETE_PHOTO, ME } from '../../utils/queries';
-import { Photo, Me } from '../../utils/types';
+import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
@@ -12,7 +12,7 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
-import Album from './Album';
+import PhotoAlbum from './PhotoAlbum';
 
 import {
   PictureListContainer,
@@ -25,6 +25,7 @@ import {
 const PicturesPage = () => {
   const resultMe = useQuery(ME);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
@@ -40,7 +41,7 @@ const PicturesPage = () => {
     //refetchQueries: [{ query: ME }]
     update: (cache, response) => {
       try {
-        const existingCache: { me: Me } | null = cache.readQuery({ query: ME });
+        const existingCache: { me: User } | null = cache.readQuery({ query: ME });
         if (existingCache) {
           const idToDelete = response.data.deletePhoto.id;
           const updatedPhotos = existingCache.me.photos.filter(p => p.id !== idToDelete);
@@ -72,6 +73,7 @@ const PicturesPage = () => {
   useEffect(() => {
     if (resultMe.data) {
       setPhotos(resultMe.data.me.photos);
+      setAlbums(resultMe.data.me.albums);
     }
   }, [resultMe.data]);
 
@@ -272,7 +274,7 @@ const PicturesPage = () => {
         }
       </PictureListToolBar>
 
-      <Album
+      <PhotoAlbum
         name="Test Album"
         description="Album description"
         onClick={() => console.log('click')}
