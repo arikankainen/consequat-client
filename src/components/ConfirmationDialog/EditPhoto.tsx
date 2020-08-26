@@ -53,7 +53,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
 
   const handleCancel = () => {
     if (savedProps.handleCancel) savedProps.handleCancel();
-  }
+  };
 
   const handleSubmit = (values: FormValues) => {
     console.log(values);

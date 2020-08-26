@@ -45,6 +45,20 @@ export const SIGNUP = gql`
     }
 `;
 
+const PHOTOS_DETAILS = gql`
+  fragment PhotoDetails on Photo {
+    mainUrl,
+    thumbUrl,
+    filename,
+    thumbFilename,
+    originalFilename,
+    name,
+    description,
+    dateAdded,
+    id
+  }
+`;
+
 export const ME = gql`
   query me {
     me {
@@ -53,19 +67,12 @@ export const ME = gql`
       fullname,
       isAdmin,
       photos {
-        mainUrl,
-        thumbUrl,
-        filename,
-        thumbFilename,
-        originalFilename,
-        name,
-        description,
-        dateAdded,
-        id
+        ...PhotoDetails
       },
       id
     }
   }
+  ${PHOTOS_DETAILS}
 `;
 
 export const ADD_PHOTO = gql`
@@ -87,17 +94,27 @@ export const ADD_PHOTO = gql`
         name: $name,
         description: $description
       ) {
-        mainUrl,
-        thumbUrl,
-        filename,
-        thumbFilename,
-        originalFilename,
-        name,
-        description,
-        dateAdded,
-        id
+        ...PhotoDetails
       }
     }
+  ${PHOTOS_DETAILS}
+`;
+
+export const EDIT_PHOTO = gql`
+  mutation editPhoto(
+    $name: String!,
+    $description: String,
+    $id: ID!
+  ) {
+      editPhoto(
+        name: $name,
+        description: $description,
+        id: $id
+      ) {
+        ...PhotoDetails
+      }
+    }
+  ${PHOTOS_DETAILS}
 `;
 
 export const DELETE_PHOTO = gql`
@@ -107,15 +124,8 @@ export const DELETE_PHOTO = gql`
       deletePhoto(
         id: $id
       ) {
-        mainUrl,
-        thumbUrl,
-        filename,
-        thumbFilename,
-        originalFilename,
-        name,
-        description,
-        dateAdded,
-        id
+        ...PhotoDetails
       }
     }
+  ${PHOTOS_DETAILS}
 `;
