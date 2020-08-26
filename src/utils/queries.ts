@@ -60,6 +60,14 @@ const PHOTOS_DETAILS = gql`
   }
 `;
 
+const ALBUM_DETAILS = gql`
+  fragment AlbumDetails on Album {
+    name,
+    description,
+    id
+  }
+`;
+
 export const ME = gql`
   query me {
     me {
@@ -70,10 +78,14 @@ export const ME = gql`
       photos {
         ...PhotoDetails
       },
+      albums {
+        ...AlbumDetails
+      }
       id
     }
   }
   ${PHOTOS_DETAILS}
+  ${ALBUM_DETAILS}
 `;
 
 export const ADD_PHOTO = gql`
