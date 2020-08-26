@@ -22,6 +22,7 @@ export interface Photo {
   thumbFilename: string;
   originalFilename: string;
   name: string;
+  location: string;
   description: string;
   dateAdded: Date;
   id: string;

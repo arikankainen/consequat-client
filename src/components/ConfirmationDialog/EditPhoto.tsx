@@ -28,11 +28,13 @@ export interface EditPhotoProps {
 
 interface FormValues {
   name: string;
+  location: string;
   description: string;
 }
 
 const initialValues: FormValues = {
   name: '',
+  location: '',
   description: ''
 };
 
@@ -60,6 +62,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
 
   if (props.photo) {
     initialValues.name = props.photo.name ? props.photo.name : '';
+    initialValues.location = props.photo.location ? props.photo.location : '';
     initialValues.description = props.photo.description ? props.photo.description : '';
   }
 
@@ -75,6 +78,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
       editPhoto({
         variables: {
           name: values.name,
+          location: values.location,
           description: values.description,
           id: props.photo.id
         }
@@ -127,6 +131,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                 <Topic>Edit photo</Topic>
                 <Content>
                   <TextInput name="name" label="Name" />
+                  <TextInput name="location" label="Location" />
                   <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>

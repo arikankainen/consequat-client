@@ -53,6 +53,7 @@ const PHOTOS_DETAILS = gql`
     thumbFilename,
     originalFilename,
     name,
+    location,
     description,
     dateAdded,
     id
@@ -83,6 +84,7 @@ export const ADD_PHOTO = gql`
     $thumbFilename: String!
     $originalFilename: String!
     $name: String,
+    $location: String,
     $description: String
   ) {
       addPhoto(
@@ -92,6 +94,7 @@ export const ADD_PHOTO = gql`
         thumbFilename: $thumbFilename,
         originalFilename: $originalFilename,
         name: $name,
+        location: $location,
         description: $description
       ) {
         ...PhotoDetails
@@ -103,11 +106,13 @@ export const ADD_PHOTO = gql`
 export const EDIT_PHOTO = gql`
   mutation editPhoto(
     $name: String,
+    $location: String,
     $description: String,
     $id: ID!
   ) {
       editPhoto(
         name: $name,
+        location: $location,
         description: $description,
         id: $id
       ) {

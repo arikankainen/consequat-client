@@ -55,6 +55,20 @@ interface PictureListHeaderProps {
   selection: string[];
 }
 
+interface BlockProps {
+  name: string;
+  value: string | undefined | null;
+}
+
+const Block: React.FC<BlockProps> = ({ name, value }) => {
+  return (
+    <TextBlock>
+      <Property>{name}</Property>
+      <Value>{value}</Value>
+    </TextBlock>
+  );
+};
+
 export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, selection }) => {
   const selectedPhotos = photos.filter(photo => selection.includes(photo.id));
   const selectedPhoto = selectedPhotos.length === 1 ? selectedPhotos[0] : null;
@@ -67,29 +81,29 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, se
   const formatDate = (input: Date): string => {
     const date = new Date(Number(input));
     const customizedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    const customizedTime = `${date.getHours()}.${pad(date.getMinutes())}.${pad(date.getSeconds())}`;
+    const customizedTime = `${date.getHours()}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 
     return `${customizedDate} ${customizedTime}`;
   };
 
   return (
     <Container>
-      <TextBlock>
-        <Property>Name</Property>
-        <Value>{selectedPhoto && selectedPhoto.name}</Value>
-      </TextBlock>
-      <TextBlock>
-        <Property>Date added</Property>
-        <Value>
-          {selectedPhoto && selectedPhoto.dateAdded &&
-            formatDate(selectedPhoto.dateAdded)
-          }
-        </Value>
-      </TextBlock>
-      <TextBlock>
-        <Property>Description</Property>
-        <Value>{selectedPhoto && selectedPhoto.description}</Value>
-      </TextBlock>
+      <Block
+        name='Date added'
+        value={selectedPhoto && selectedPhoto.dateAdded && formatDate(selectedPhoto.dateAdded)}
+      />
+      <Block
+        name='Name'
+        value={selectedPhoto?.name}
+      />
+      <Block
+        name='Location'
+        value={selectedPhoto?.location}
+      />
+      <Block
+        name='Description'
+        value={selectedPhoto?.description}
+      />
     </Container>
   );
 };
