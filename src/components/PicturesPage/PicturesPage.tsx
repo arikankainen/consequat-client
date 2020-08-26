@@ -12,6 +12,7 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
+import Album from './Album';
 
 import {
   PictureListContainer,
@@ -271,6 +272,11 @@ const PicturesPage = () => {
         }
       </PictureListToolBar>
 
+      <Album
+        name="Test Album"
+        description="Album description"
+        onClick={() => console.log('click')}
+      />
       <PictureListArea count={photos.length}>
         {photos.map(photo =>
           <Thumbnail
