@@ -56,6 +56,7 @@ const PHOTOS_DETAILS = gql`
     location,
     description,
     dateAdded,
+    album { id },
     id
   }
 `;
@@ -64,6 +65,7 @@ const ALBUM_DETAILS = gql`
   fragment AlbumDetails on Album {
     name,
     description,
+    photos { id },
     id
   }
 `;
