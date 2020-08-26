@@ -94,7 +94,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
       setSaving(false);
       setMessage('Error!');
     }
-  }, [editPhotoResponse.data, editPhotoResponse.error]);
+  }, [editPhotoResponse.data, editPhotoResponse.error]); // eslint-disable-line
 
   return (
     <Modal>

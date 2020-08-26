@@ -82,7 +82,7 @@ export const ADD_PHOTO = gql`
     $filename: String!
     $thumbFilename: String!
     $originalFilename: String!
-    $name: String!,
+    $name: String,
     $description: String
   ) {
       addPhoto(
@@ -102,7 +102,7 @@ export const ADD_PHOTO = gql`
 
 export const EDIT_PHOTO = gql`
   mutation editPhoto(
-    $name: String!,
+    $name: String,
     $description: String,
     $id: ID!
   ) {
