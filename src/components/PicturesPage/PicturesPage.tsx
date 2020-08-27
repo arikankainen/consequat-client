@@ -13,6 +13,7 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import Button from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
 import PhotoAlbum from './PhotoAlbum';
+import TestComponent from './TestComponent';
 
 import {
   PictureListContainer,
@@ -306,6 +307,7 @@ const PicturesPage = () => {
           />
         )}
       </PictureListArea>
+      <TestComponent albums={albums} />
 
     </PictureListContainer>
   );

@@ -33,6 +33,6 @@ export interface Photo {
 export interface Album {
   name: string;
   description: string;
-  photos: { id: string }[];
+  photos: Photo[];
   id: string;
 }

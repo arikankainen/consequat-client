@@ -81,7 +81,9 @@ export const ME = gql`
       },
       albums {
         ...AlbumDetails,
-        photos { id },
+        photos {
+          ...PhotoDetails,
+        },
       }
       id,
     }
