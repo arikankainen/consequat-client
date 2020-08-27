@@ -5,7 +5,7 @@ import Button, { ButtonColor } from '../Buttons/Button';
 import { Photo, Album } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, TextAreaInput } from '../ConfirmationDialog/Inputs';
+import { TextInput, TextAreaInput, Select } from '../ConfirmationDialog/Inputs';
 import { EDIT_PHOTO } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 
@@ -68,7 +68,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     initialValues.location = props.photo.location ? props.photo.location : '';
     initialValues.description = props.photo.description ? props.photo.description : '';
 
-    if (props.albums) {
+    if (props.albums && props.photo.album) {
       const albumId = props.photo.album.id;
       const album = props.albums.find(album => album.id === albumId);
       initialValues.album = album?.name || '';
@@ -142,7 +142,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                 <Content>
                   <TextInput name="name" label="Name" />
                   <TextInput name="location" label="Location" />
-                  <TextInput name="album" label="Album" />
+                  <Select name="album" label="Album" albums={props.albums} />
                   <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>

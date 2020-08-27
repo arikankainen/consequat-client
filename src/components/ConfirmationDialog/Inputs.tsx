@@ -1,6 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 import styled from 'styled-components';
+import { Album } from '../../utils/types';
 
 const InputContainer = styled.div`
   display: flex;
@@ -90,6 +91,35 @@ export const TextAreaInput: React.FC<TextInputProps> = ({ label, ...props }) => 
           {...field}
           {...props}
         />
+      </InputContainer>
+    </>
+  );
+};
+
+interface SelectProps {
+  name: string;
+  label: string;
+  albums: Album[] | undefined;
+}
+
+export const Select: React.FC<SelectProps> = ({ label, ...props }) => {
+  const [field] = useField(props);
+
+  return (
+    <>
+      <InputContainer>
+        <Label htmlFor={props.name}>{label}</Label>
+        <select
+          autoComplete="off"
+          spellCheck={false}
+          {...field}
+          {...props}
+        >
+          {props.albums && props.albums.map(album =>
+            <option key={album.id} value={album.id}>{album.name}</option>
+          )}
+
+        </select>
       </InputContainer>
     </>
   );
