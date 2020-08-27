@@ -82,7 +82,6 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   };
 
   const handleSubmit = (values: FormValues) => {
-    console.log(values);
     setMessage('Saving...');
     setSaving(true);
 
