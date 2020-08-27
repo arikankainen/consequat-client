@@ -27,12 +27,12 @@ export interface Photo {
   description: string;
   dateAdded: Date;
   id: string;
+  album: { id: string }[];
 }
 
 export interface Album {
   name: string;
   description: string;
-  user: User;
-  photos: Photo[];
+  photos: { id: string }[];
   id: string;
 }

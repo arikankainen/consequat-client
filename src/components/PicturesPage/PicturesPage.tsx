@@ -72,8 +72,24 @@ const PicturesPage = () => {
 
   useEffect(() => {
     if (resultMe.data) {
-      setPhotos(resultMe.data.me.photos);
-      setAlbums(resultMe.data.me.albums);
+      const allPhotos: Photo[] = resultMe.data.me.photos;
+      const allAlbums: Album[] = resultMe.data.me.albums;
+
+      const initialAlbum: Album = {
+        name: 'Not in album',
+        description: 'Photos not belonging to any album yet',
+        photos: [],
+        id: '0',
+      };
+
+      initialAlbum.photos = allPhotos.filter(photo => photo.album === null);
+
+      console.log(allPhotos);
+      console.log(allAlbums);
+      console.log('i', initialAlbum);
+
+      setPhotos(allPhotos);
+      setAlbums([initialAlbum, ...allAlbums]);
     }
   }, [resultMe.data]);
 
