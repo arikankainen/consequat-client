@@ -52,7 +52,8 @@ interface PictureListAreaProps {
 export const PictureListArea = styled.div<PictureListAreaProps>`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /*grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));*/
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 2px;
   width: 100%;
   padding: 20px;
@@ -62,7 +63,7 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
     padding: 0px;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
-
+  
   /*
   ${breakPoints.mobileXL} {
     padding: 0px;

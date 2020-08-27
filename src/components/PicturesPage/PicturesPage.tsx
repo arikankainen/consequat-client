@@ -63,10 +63,6 @@ const PicturesPage = () => {
             }
           };
 
-          console.log('existingCache', existingCache);
-          console.log('response', response.data);
-          console.log('updatedCache', updatedCache);
-
           cache.writeQuery({
             query: ME,
             data: updatedCache
@@ -145,7 +141,6 @@ const PicturesPage = () => {
       const storageRef = storage.ref(filename);
 
       storageRef.delete().then(() => {
-        console.log('deleted successfully from firebase');
         resolve('ok');
       }).catch(() => {
         console.log('error deleting from firebase');

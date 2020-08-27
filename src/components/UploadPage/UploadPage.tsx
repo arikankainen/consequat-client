@@ -33,6 +33,7 @@ import {
   PictureListArea,
   UploadFileButton
 } from '../PictureList/Styles';
+import { useHistory } from 'react-router-dom';
 
 const UploadForm = () => {
   const pictureState = useSelector((state: RootState) => state.picture);
@@ -47,6 +48,7 @@ const UploadForm = () => {
   const [uploadCount, setUploadCount] = useState<number>(0);
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
+  const history = useHistory();
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
     onError: (error) => {
@@ -114,7 +116,6 @@ const UploadForm = () => {
           reject(err);
         },
         function complete() {
-          console.log('picture upload complete');
           storageRef.getDownloadURL().then(url => {
             reportProgress(file.name, 100);
             resolve(url);
@@ -130,18 +131,15 @@ const UploadForm = () => {
       const task = storageRef.put(file);
 
       task.on('state_changed',
-        function progress(snapshot) {
-          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('thumb:', percentage);
+        function progress() {
+          // empty
         },
         function error(err) {
           console.log(err);
           reject(err);
         },
         function complete() {
-          console.log('thumb upload complete');
           storageRef.getDownloadURL().then(url => {
-            console.log(url);
             resolve(url);
           });
         }
@@ -184,6 +182,7 @@ const UploadForm = () => {
 
     setTimeout(() => {
       setUploadDialogOpen(false);
+      history.replace('/pictures');
     }, 300);
   };
 
