@@ -39,18 +39,27 @@ const PicturesPage = () => {
     onError: (error) => {
       console.log(error);
     },
-    update: (cache, response) => { // TODO: remove photo from albums also
+    update: (cache, response) => {
       try {
         const existingCache: { me: User } | null = cache.readQuery({ query: ME });
         if (existingCache) {
-          const idToDelete = response.data.deletePhoto.id;
-          const updatedPhotos = existingCache.me.photos.filter(p => p.id !== idToDelete);
+          const id = response.data.deletePhoto.id;
+
+          const existingPhotos = existingCache.me.photos;
+          const updatedPhotos = existingPhotos.filter(p => p.id !== id);
+
+          const existingAlbums = existingCache.me.albums;
+          const updatedAlbums = existingAlbums.map(album => {
+            const filteredPhotos = album.photos.filter(p => p.id !== id);
+            return { ...album, photos: filteredPhotos };
+          });
 
           const updatedCache = {
             ...existingCache,
             me: {
               ...existingCache.me,
-              photos: updatedPhotos
+              photos: updatedPhotos,
+              albums: updatedAlbums,
             }
           };
 
@@ -83,10 +92,6 @@ const PicturesPage = () => {
       };
 
       initialAlbum.photos = allPhotos.filter(photo => photo.album === null);
-
-      console.log(allPhotos);
-      console.log(allAlbums);
-      console.log('i', initialAlbum);
 
       setPhotos(allPhotos);
       setAlbums([initialAlbum, ...allAlbums]);
