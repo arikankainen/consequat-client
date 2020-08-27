@@ -13,7 +13,7 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import Button from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
 import PhotoAlbum from './PhotoAlbum';
-import TestComponent from './TestComponent';
+import AlbumContainer from './AlbumContainer';
 
 import {
   PictureListContainer,
@@ -291,23 +291,26 @@ const PicturesPage = () => {
         }
       </PictureListToolBar>
 
-      <PhotoAlbum
-        name="Test Album"
-        description="Album description"
-        onClick={() => console.log('click')}
-      />
-      <PictureListArea count={photos.length}>
-        {photos.map(photo =>
-          <Thumbnail
-            key={photo.id}
-            photo={photo}
-            selected={selection.includes(photo.id)}
-            handleThumbnailClick={handleThumbnailClick}
-            handleCheckClick={handleCheckClick}
+      {albums.map(album =>
+        <AlbumContainer key={album.id}>
+          <PhotoAlbum
+            name={album.name}
+            description={album.description}
+            onClick={() => console.log('click')}
           />
-        )}
-      </PictureListArea>
-      <TestComponent albums={albums} />
+          <PictureListArea count={album.photos.length}>
+            {album.photos.map(photo =>
+              <Thumbnail
+                key={photo.id}
+                photo={photo}
+                selected={selection.includes(photo.id)}
+                handleThumbnailClick={handleThumbnailClick}
+                handleCheckClick={handleCheckClick}
+              />
+            )}
+          </PictureListArea>
+        </AlbumContainer>
+      )}
 
     </PictureListContainer>
   );
