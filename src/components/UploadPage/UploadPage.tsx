@@ -52,7 +52,7 @@ const UploadForm = () => {
     onError: (error) => {
       console.log(error);
     },
-    refetchQueries: [{ query: ME }]
+    refetchQueries: [{ query: ME }] // TODO: update cache manually
   });
 
   useEffect(() => {

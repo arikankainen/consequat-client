@@ -124,12 +124,14 @@ export const EDIT_PHOTO = gql`
     $name: String,
     $location: String,
     $description: String,
+    $album: String,
     $id: ID!
   ) {
       editPhoto(
         name: $name,
         location: $location,
         description: $description,
+        album: $album,
         id: $id
       ) {
         ...PhotoDetails

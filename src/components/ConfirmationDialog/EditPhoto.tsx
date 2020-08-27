@@ -6,7 +6,7 @@ import { Photo, Album } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput, Select } from '../ConfirmationDialog/Inputs';
-import { EDIT_PHOTO } from '../../utils/queries';
+import { EDIT_PHOTO, ME } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 
 import {
@@ -52,7 +52,8 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
     onError: (error) => {
       console.log(error);
-    }
+    },
+    refetchQueries: [{ query: ME }] // TODO: update cache manually
   });
 
   if (props.open && !open) {
@@ -71,7 +72,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     if (props.albums && props.photo.album) {
       const albumId = props.photo.album.id;
       const album = props.albums.find(album => album.id === albumId);
-      initialValues.album = album?.name || '';
+      initialValues.album = album?.id || '';
     }
   }
 
@@ -80,6 +81,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   };
 
   const handleSubmit = (values: FormValues) => {
+    console.log(values);
     setMessage('Saving...');
     setSaving(true);
 
@@ -88,7 +90,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         variables: {
           name: values.name,
           location: values.location,
-          album: values.album,
+          album: values.album !== '0' ? values.album : null,
           description: values.description,
           id: props.photo.id
         }
