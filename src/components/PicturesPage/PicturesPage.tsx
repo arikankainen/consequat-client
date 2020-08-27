@@ -39,8 +39,7 @@ const PicturesPage = () => {
     onError: (error) => {
       console.log(error);
     },
-    //refetchQueries: [{ query: ME }]
-    update: (cache, response) => {
+    update: (cache, response) => { // TODO: remove photo from albums also
       try {
         const existingCache: { me: User } | null = cache.readQuery({ query: ME });
         if (existingCache) {

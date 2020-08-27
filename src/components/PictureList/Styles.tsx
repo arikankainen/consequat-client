@@ -58,17 +58,19 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
   padding: 20px;
   padding-top: 0px;
 
-  ${breakPoints.laptop} {
+  ${breakPoints.laptopL} {
     padding: 0px;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 
+  /*
   ${breakPoints.mobileXL} {
     padding: 0px;
     ${props => props.count === 1 && css`
       grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     `}
   }
+  */
 `;
 
 export const PictureListToolBarButtonText = styled.div`

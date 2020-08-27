@@ -66,7 +66,17 @@ const cache = new InMemoryCache({
           }
         }
       }
+    },
+    Album: {
+      fields: {
+        photos: {
+          merge(_existing = [], incoming: any[]) { // eslint-disable-line
+            return [...incoming];
+          }
+        }
+      }
     }
+
   }
 });
 

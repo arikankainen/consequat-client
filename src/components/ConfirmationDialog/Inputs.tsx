@@ -36,6 +36,21 @@ const Input = styled.input`
   }
 `;
 
+const Select = styled.select`
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  color: #111;
+  font-size: 14px;
+  padding: 2px 2px 2px 2px;
+  line-height: 1;
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--accent-color-2);
+  }
+`;
+
 const TextArea = styled.textarea`
   background-color: #fff;
   border: 1px solid #ccc;
@@ -102,14 +117,14 @@ interface SelectProps {
   albums: Album[] | undefined;
 }
 
-export const Select: React.FC<SelectProps> = ({ label, ...props }) => {
+export const SelectInput: React.FC<SelectProps> = ({ label, ...props }) => {
   const [field] = useField(props);
 
   return (
     <>
       <InputContainer>
         <Label htmlFor={props.name}>{label}</Label>
-        <select
+        <Select
           autoComplete="off"
           spellCheck={false}
           {...field}
@@ -119,7 +134,7 @@ export const Select: React.FC<SelectProps> = ({ label, ...props }) => {
             <option key={album.id} value={album.id}>{album.name}</option>
           )}
 
-        </select>
+        </Select>
       </InputContainer>
     </>
   );
