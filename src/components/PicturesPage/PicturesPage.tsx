@@ -122,6 +122,7 @@ const PicturesPage = () => {
     setEditPhoto({
       open: true,
       photo: photos.find(photo => photo.id === selection[0]),
+      albums: albums,
       handleOk: () => console.log('ok'),
       handleCancel: () => setEditPhoto({})
     });

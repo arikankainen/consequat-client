@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from './ModalTest';
 import { CSSTransition } from 'react-transition-group';
 import Button, { ButtonColor } from '../Buttons/Button';
-import { Photo } from '../../utils/types';
+import { Photo, Album } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput } from '../ConfirmationDialog/Inputs';
@@ -22,6 +22,7 @@ import {
 export interface EditPhotoProps {
   open?: boolean;
   photo?: Photo;
+  albums?: Album[];
   handleOk?: () => void;
   handleCancel?: () => void;
 }
@@ -29,12 +30,14 @@ export interface EditPhotoProps {
 interface FormValues {
   name: string;
   location: string;
+  album: string;
   description: string;
 }
 
 const initialValues: FormValues = {
   name: '',
   location: '',
+  album: '',
   description: ''
 };
 
@@ -64,6 +67,12 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     initialValues.name = props.photo.name ? props.photo.name : '';
     initialValues.location = props.photo.location ? props.photo.location : '';
     initialValues.description = props.photo.description ? props.photo.description : '';
+
+    if (props.albums) {
+      const albumId = props.photo.album.id;
+      const album = props.albums.find(album => album.id === albumId);
+      initialValues.album = album?.name || '';
+    }
   }
 
   const handleCancel = () => {
@@ -79,6 +88,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         variables: {
           name: values.name,
           location: values.location,
+          album: values.album,
           description: values.description,
           id: props.photo.id
         }
@@ -132,6 +142,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                 <Content>
                   <TextInput name="name" label="Name" />
                   <TextInput name="location" label="Location" />
+                  <TextInput name="album" label="Album" />
                   <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>

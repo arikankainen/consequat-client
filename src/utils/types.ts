@@ -27,7 +27,7 @@ export interface Photo {
   description: string;
   dateAdded: Date;
   id: string;
-  album: { id: string }[];
+  album: { id: string };
 }
 
 export interface Album {
