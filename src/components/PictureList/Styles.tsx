@@ -17,7 +17,7 @@ export const PictureListContainer = styled.div`
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
   padding: 0px 40px;
-  
+
   ${breakPoints.laptop} {
     padding: 0px 0px;
   }
@@ -55,7 +55,7 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 2px;
+  gap: 5px;
   width: 100%;
   padding: 0px;
 `;
@@ -92,12 +92,12 @@ export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps> `
   justify-content: center;
   align-items: center;
   align-content: center;
-  top: 10px;
-  left: 10px;
-  width: 30px;
-  height: 30px;
+  top: 5px;
+  left: 5px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.7);
 
   ${props => props.selected && css`
@@ -106,7 +106,7 @@ export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps> `
   `}
 
   & > svg {
-    height: 30px;
+    height: 25px;
     color: #fff;
   }
 `;
@@ -122,7 +122,7 @@ export const ThumbnailNameArea = styled.div`
   right: 0;
   width: 100%;
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 export const ThumbnailNameAreaText = styled.div`
@@ -130,10 +130,7 @@ export const ThumbnailNameAreaText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff;
-  font-size: 12px;
-
-  ${breakPoints.laptop} {
-    font-size: 10px;
-  }
+  color: #ddd;
+  font-size: 10px;
+  line-height: 1;
 `;

@@ -6,7 +6,7 @@ import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 const Container = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 `;
 
 const Content = styled.div`
