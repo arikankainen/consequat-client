@@ -5,6 +5,7 @@ import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 
 import {
   ThumbnailContainer,
+  ThumbnailPlaceholder,
   ThumbnailPicture,
   ThumbnailIconArea,
   ThumbnailNameArea,
@@ -26,12 +27,13 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
 }) => {
   return (
     <ThumbnailContainer>
-      <ThumbnailPicture
-        width="300"
-        height="300"
-        onClick={() => handleThumbnailClick(photo.id)}
-        src={photo.thumbUrl}
-      />
+      <ThumbnailPlaceholder>
+        <ThumbnailPicture
+          onClick={() => handleThumbnailClick(photo.id)}
+          src={photo.thumbUrl}
+          onError={(e: React.InvalidEvent<HTMLImageElement>) => { e.target.style.display = 'none'; }}
+        />
+      </ThumbnailPlaceholder>
 
       <ThumbnailIconArea onClick={() => handleCheckClick(photo.id)} selected={selected}>
         {selected && <CheckedIcon />}

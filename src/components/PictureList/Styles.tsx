@@ -87,7 +87,18 @@ export const ThumbnailContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
+export const ThumbnailPlaceholder = styled.div`
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  position: relative;
+  background-color: #f7f7f7;
+`;
+
 export const ThumbnailPicture = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: rgba(255, 255, 255, 0.1);
   object-fit: cover;
   width: 100%;
@@ -113,17 +124,18 @@ export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps> `
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, .4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
 
   ${props => props.selected && css`
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 1);
   `}
 
   & > svg {
-    height: 25px;
-    color: #fff;
+    margin-top: 1px;
+    height: 14px;
+    color: #222;
   }
 `;
 

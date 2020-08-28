@@ -9,6 +9,7 @@ import placeholder from '../../images/placeholder.png';
 
 import {
   ThumbnailContainer,
+  ThumbnailPlaceholder,
   ThumbnailPicture,
   ThumbnailIconArea,
   ThumbnailNameArea,
@@ -47,13 +48,14 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
 
   return (
     <ThumbnailContainer ref={container}>
-      <ThumbnailPicture
-        ref={thumbnailImage}
-        onClick={handleThumbnailClick}
-        src={placeholder}
-        width="300"
-        height="300"
-      />
+      <ThumbnailPlaceholder>
+        <ThumbnailPicture
+          ref={thumbnailImage}
+          onClick={handleThumbnailClick}
+          src={placeholder}
+          onError={(e: React.InvalidEvent<HTMLImageElement>) => { e.target.style.display = 'none'; }}
+        />
+      </ThumbnailPlaceholder>
 
       <ThumbnailIconArea onClick={handleCheckClick} selected={selected}>
         {selected && <CheckedIcon />}

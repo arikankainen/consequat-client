@@ -70,7 +70,7 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 122, 217, .4);
+    box-shadow: 0 0 0 3px rgba(0, 122, 217, .2);
 
     ${props => props.backColor === ButtonColor.black && css`
       box-shadow: 0 0 0 3px rgba(255, 255, 255, .1);
