@@ -146,7 +146,7 @@ const RequiredText = styled.div<TextProps>`
 `;
 
 const OptionalText = styled(RequiredText)`
-  ${breakPoints.mobileXL} {
+  ${breakPoints.mobileM} {
     display: none;
   }
 `;

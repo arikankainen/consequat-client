@@ -17,13 +17,8 @@ export const PictureListContainer = styled.div`
   height: 100%;
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
-  padding: 0px 40px;
-  padding-top: 40px;
-  background-color: #f8f8f8;
-
-  ${breakPoints.tablet} {
-    padding: 0px 0px;
-  }
+  padding: 0px;
+  background-color: #f8f8fa;
 `;
 
 export const PictureListToolBar = styled.div`
