@@ -10,7 +10,7 @@ import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
-import Button from '../Buttons/Button';
+import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
 import PhotoAlbum from './PhotoAlbum';
 import AlbumContainer from './AlbumContainer';
@@ -254,6 +254,7 @@ const PicturesPage = () => {
                 text="Edit"
                 icon={EditButton}
                 disabled={selection.length !== 1}
+                color={ButtonColor.black}
               />
             </PictureListButtonGroup>
 
@@ -266,6 +267,7 @@ const PicturesPage = () => {
                   icon={CheckButton}
                   disabled={photos.length === 0}
                   textRequired={true}
+                  color={ButtonColor.black}
                 />
                 :
                 <Button
@@ -274,6 +276,7 @@ const PicturesPage = () => {
                   icon={UncheckButton}
                   disabled={photos.length === 0}
                   textRequired={true}
+                  color={ButtonColor.black}
                 />
               }
             </PictureListButtonGroup>
@@ -284,6 +287,7 @@ const PicturesPage = () => {
                 text="Delete"
                 icon={DeleteButton}
                 disabled={selection.length === 0}
+                color={ButtonColor.black}
               />
             </PictureListButtonGroup>
           </PictureListButtonGroups>

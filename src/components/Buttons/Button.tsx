@@ -5,6 +5,7 @@ import breakPoints from '../../utils/breakPoints';
 export enum ButtonColor {
   blue,
   white,
+  black,
 }
 
 export enum ButtonContentAlign {
@@ -39,6 +40,12 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     background-color: #fafafa;
   `}
 
+  ${props => props.backColor === ButtonColor.black && css`
+    border: 1px solid #444;
+    color: #ccc;
+    background-color: #111;
+  `}
+
   ${props => props.width && css`
     min-width: ${props.width}px;
   `}
@@ -64,6 +71,10 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 122, 217, .4);
+
+    ${props => props.backColor === ButtonColor.black && css`
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, .1);
+    `}
   }
 
   &:hover {
@@ -75,6 +86,12 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
       color: var(--accent-color-2-hover);
       background-color: #fff;
     `}
+
+    ${props => props.backColor === ButtonColor.black && css`
+      border: 1px solid #555;
+      color: #fff;
+      background-color: #222;
+    `}
   }
   
   &:disabled {
@@ -84,12 +101,22 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
 
     & > svg {
       color: #111155;
+
+      ${props => props.backColor === ButtonColor.black && css`
+        color: #666;
+      `}
     }
 
     ${props => props.backColor === ButtonColor.white && css`
       border: 1px solid #111155;
       color: #111155;
       background-color: #aaa;
+    `}
+
+    ${props => props.backColor === ButtonColor.black && css`
+      border: 1px solid #222;
+      color: #666;
+      background-color: #111;
     `}
   }
 `;
