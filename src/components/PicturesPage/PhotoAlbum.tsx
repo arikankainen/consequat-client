@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 100%;
 
   padding-top: 25px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   padding-left: 20px;
   padding-right: 20px;
 

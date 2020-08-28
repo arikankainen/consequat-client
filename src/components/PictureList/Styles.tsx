@@ -60,7 +60,11 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
   width: 100%;
   padding: 0px;
   background-color: #fff;
-  padding: 5px;
+  padding: 20px;
+
+  ${breakPoints.tablet} {
+    padding: 5px;
+  }
 `;
 
 export const UploadFileButton = styled.input`
@@ -72,7 +76,7 @@ export const ThumbnailContainer = styled.div`
   display: flex;
   flex-direction: column;
 	cursor: pointer;
-  border: 1px solid #000;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
 export const ThumbnailPicture = styled.img`
