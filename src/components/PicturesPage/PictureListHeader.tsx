@@ -1,20 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Photo } from '../../utils/types';
+import breakPoints from '../../utils/breakPoints';
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
-  padding: 0px 5px;
-  padding-bottom: 8px;
   width: 100%;
+  max-width: ${breakPoints.laptopLWidthNumber - 70}px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  ${breakPoints.tablet} {
+    padding: 0px 5px;
+    padding-bottom: 8px;
+  }
 `;
 
 const Property = styled.div`
   color: #eee;
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.4;
 `;
 
 const Value = styled.div`
@@ -24,7 +33,7 @@ const Value = styled.div`
   font-weight: 300;
   white-space: nowrap;
   overflow: hidden;
-  line-height: 1.2;
+  line-height: 1.4;
 `;
 
 interface PictureListHeaderProps {

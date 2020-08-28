@@ -17,11 +17,14 @@ export const PictureListContainer = styled.div`
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
   padding: 0px 40px;
+  padding-top: 40px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
 
-  ${breakPoints.laptop} {
+  ${breakPoints.tablet} {
     padding: 0px 0px;
+    border-radius: 0px;
   }
-  background-color: #f5f5f5;
 `;
 
 export const PictureListToolBar = styled.div`
@@ -34,7 +37,12 @@ export const PictureListToolBar = styled.div`
   align-items: center;
   width: 100%;
   background-color: rgba(23, 23, 25, 0.9);
-  padding: 0px 5px;
+  padding: 0px 35px;
+  padding-top: 10px;
+
+  ${breakPoints.tablet} {
+    padding: 0px 5px;
+  }
 `;
 
 export const PictureListButtonGroups = styled.div`
@@ -42,6 +50,7 @@ export const PictureListButtonGroups = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  max-width: ${breakPoints.laptopLWidthNumber - 70}px;
 `;
 
 export const PictureListButtonGroup = styled.div`
@@ -130,7 +139,7 @@ export const ThumbnailNameArea = styled.div`
   right: 0;
   width: 100%;
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export const ThumbnailNameAreaText = styled.div`
@@ -138,7 +147,7 @@ export const ThumbnailNameAreaText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #ddd;
+  color: #fff;
   font-size: 10px;
   line-height: 1;
 `;

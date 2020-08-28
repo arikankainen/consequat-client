@@ -14,8 +14,8 @@ const Container = styled.div`
   padding-left: 20px;
   padding-right: 20px;
 
-  ${breakPoints.laptop} {
-    padding-top: 10px;
+  ${breakPoints.tablet} {
+    padding-top: 15px;
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 5px;
@@ -32,7 +32,7 @@ const NameAndDescription = styled.div`
 
 const Name = styled.div`
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 300;
   color: #222;
   line-height: 1;
 `;
@@ -41,7 +41,7 @@ const Description = styled.div`
   padding-top: 5px;
   font-size: 14px;
   font-weight: 300;
-  color: #444;
+  color: #222;
   line-height: 1;
 `;
 

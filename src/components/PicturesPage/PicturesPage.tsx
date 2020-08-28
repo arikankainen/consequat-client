@@ -242,60 +242,60 @@ const PicturesPage = () => {
 
   return (
     <PictureListOuterContainer>
+      <PictureListToolBar>
+        <PictureListButtonGroups>
+          <PictureListButtonGroup>
+            <Button
+              onClick={handleEditPictures}
+              text="Edit"
+              icon={EditButton}
+              disabled={selection.length !== 1}
+              color={ButtonColor.black}
+            />
+          </PictureListButtonGroup>
+
+          <PictureListButtonGroup>
+            {!allSelected
+              ?
+              <Button
+                onClick={handleSelectAll}
+                text="All"
+                icon={CheckButton}
+                disabled={photos.length === 0}
+                textRequired={true}
+                color={ButtonColor.black}
+              />
+              :
+              <Button
+                onClick={handleSelectAll}
+                text="All"
+                icon={UncheckButton}
+                disabled={photos.length === 0}
+                textRequired={true}
+                color={ButtonColor.black}
+              />
+            }
+          </PictureListButtonGroup>
+
+          <PictureListButtonGroup>
+            <Button
+              onClick={handleDeletePictures}
+              text="Delete"
+              icon={DeleteButton}
+              disabled={selection.length === 0}
+              color={ButtonColor.black}
+            />
+          </PictureListButtonGroup>
+        </PictureListButtonGroups>
+
+        {photos.length > 0 &&
+          <PictureListHeader photos={photos} selection={selection} />
+        }
+      </PictureListToolBar>
+
       <PictureListContainer>
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
-
-        <PictureListToolBar>
-          <PictureListButtonGroups>
-            <PictureListButtonGroup>
-              <Button
-                onClick={handleEditPictures}
-                text="Edit"
-                icon={EditButton}
-                disabled={selection.length !== 1}
-                color={ButtonColor.black}
-              />
-            </PictureListButtonGroup>
-
-            <PictureListButtonGroup>
-              {!allSelected
-                ?
-                <Button
-                  onClick={handleSelectAll}
-                  text="All"
-                  icon={CheckButton}
-                  disabled={photos.length === 0}
-                  textRequired={true}
-                  color={ButtonColor.black}
-                />
-                :
-                <Button
-                  onClick={handleSelectAll}
-                  text="All"
-                  icon={UncheckButton}
-                  disabled={photos.length === 0}
-                  textRequired={true}
-                  color={ButtonColor.black}
-                />
-              }
-            </PictureListButtonGroup>
-
-            <PictureListButtonGroup>
-              <Button
-                onClick={handleDeletePictures}
-                text="Delete"
-                icon={DeleteButton}
-                disabled={selection.length === 0}
-                color={ButtonColor.black}
-              />
-            </PictureListButtonGroup>
-          </PictureListButtonGroups>
-
-          {photos.length > 0 && false &&
-            <PictureListHeader photos={photos} selection={selection} />
-          }
-        </PictureListToolBar>
 
         {albums.map(album =>
           <AlbumContainer key={album.id}>
