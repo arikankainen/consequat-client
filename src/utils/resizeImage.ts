@@ -1,4 +1,8 @@
-const resizeImage = (file: File, square: boolean, maxSize: number): Promise<Blob | null> => {
+const resizeImage = (
+  file: File,
+  square: boolean,
+  maxSize: number
+): Promise<Blob | null> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.src = URL.createObjectURL(file);
@@ -8,10 +12,13 @@ const resizeImage = (file: File, square: boolean, maxSize: number): Promise<Blob
       const inputHeight = image.height;
 
       const squareSize = inputWidth > inputHeight ? inputHeight : inputWidth;
-      const squareStartX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
-      const squareStartY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
+      const squareStartX =
+        inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
+      const squareStartY =
+        inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
 
-      const ratio = inputWidth > inputHeight ? maxSize / inputWidth : maxSize / inputHeight;
+      const ratio =
+        inputWidth > inputHeight ? maxSize / inputWidth : maxSize / inputHeight;
       const outputWidth = inputWidth * ratio;
       const outputHeight = inputHeight * ratio;
 
@@ -23,8 +30,30 @@ const resizeImage = (file: File, square: boolean, maxSize: number): Promise<Blob
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = 'high';
 
-      if (square) context.drawImage(image, squareStartX, squareStartY, squareSize, squareSize, 0, 0, maxSize, maxSize);
-      else context.drawImage(image, 0, 0, inputWidth, inputHeight, 0, 0, outputWidth, outputHeight);
+      if (square)
+        context.drawImage(
+          image,
+          squareStartX,
+          squareStartY,
+          squareSize,
+          squareSize,
+          0,
+          0,
+          maxSize,
+          maxSize
+        );
+      else
+        context.drawImage(
+          image,
+          0,
+          0,
+          inputWidth,
+          inputHeight,
+          0,
+          0,
+          outputWidth,
+          outputHeight
+        );
 
       canvas.toBlob((blob) => {
         resolve(blob);

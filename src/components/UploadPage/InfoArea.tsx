@@ -55,33 +55,24 @@ interface InfoAreaProps {
   selectedFile: File | null;
 }
 
-const InfoArea: React.FC<InfoAreaProps> = ({ pictureCount, selectedCount, selectedFile }) => {
-
+const InfoArea: React.FC<InfoAreaProps> = ({
+  pictureCount,
+  selectedCount,
+  selectedFile,
+}) => {
   return (
     <Container>
-      <Block
-        name='Selected'
-        value={selectedCount + ' of ' + pictureCount}
-      />
+      <Block name="Selected" value={selectedCount + ' of ' + pictureCount} />
 
-      {selectedFile !== null && selectedCount === 1 &&
-        <Block
-          name='Filename'
-          value={selectedFile.name}
-        />
-      }
-      {selectedCount === 0 &&
-        <Block
-          name='Filename'
-          value='No picture selected'
-        />
-      }
-      {selectedCount > 1 &&
-        <Block
-          name='Filename'
-          value='Multiple pictures selected'
-        />
-      }
+      {selectedFile !== null && selectedCount === 1 && (
+        <Block name="Filename" value={selectedFile.name} />
+      )}
+      {selectedCount === 0 && (
+        <Block name="Filename" value="No picture selected" />
+      )}
+      {selectedCount > 1 && (
+        <Block name="Filename" value="Multiple pictures selected" />
+      )}
     </Container>
   );
 };

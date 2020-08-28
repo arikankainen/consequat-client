@@ -7,7 +7,7 @@ let timeoutID: number | null = null;
 
 export enum NotificationType {
   Message,
-  Error
+  Error,
 }
 
 interface NotificationState {
@@ -19,7 +19,7 @@ interface NotificationState {
 const initialState: NotificationState = {
   notificationType: NotificationType.Message,
   topic: null,
-  text: null
+  text: null,
 };
 
 export const SET_NOTIFICATION = 'SET_NOTIFICATION';
@@ -34,7 +34,7 @@ type ThunkType = ThunkAction<void, RootState, unknown, Action<string>>;
 export const clearNotification = (): SetNotification => {
   return {
     type: SET_NOTIFICATION,
-    data: initialState
+    data: initialState,
   };
 };
 
@@ -43,8 +43,8 @@ export const setMessage = (topic: string, text: string): ThunkType => {
     clearTimeout(timeoutID);
     clearNotification();
   }
-  
-  return async dispatch => {
+
+  return async (dispatch) => {
     timeoutID = setTimeout(() => {
       dispatch(clearNotification());
     }, TIMEOUT);
@@ -54,8 +54,8 @@ export const setMessage = (topic: string, text: string): ThunkType => {
       data: {
         notificationType: NotificationType.Message,
         topic,
-        text
-      }
+        text,
+      },
     });
   };
 };
@@ -65,8 +65,8 @@ export const setError = (topic: string, text: string): ThunkType => {
     clearTimeout(timeoutID);
     clearNotification();
   }
-  
-  return async dispatch => {
+
+  return async (dispatch) => {
     timeoutID = setTimeout(() => {
       dispatch(clearNotification());
     }, TIMEOUT);
@@ -76,18 +76,21 @@ export const setError = (topic: string, text: string): ThunkType => {
       data: {
         notificationType: NotificationType.Error,
         topic,
-        text
-      }
+        text,
+      },
     });
   };
 };
 
-export const notificationReducer = (state = initialState, action: SetNotification): NotificationState => {
+export const notificationReducer = (
+  state = initialState,
+  action: SetNotification
+): NotificationState => {
   switch (action.type) {
     case SET_NOTIFICATION:
       return {
         ...state,
-        ...action.data
+        ...action.data,
       };
     default:
       return state;

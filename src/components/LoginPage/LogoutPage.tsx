@@ -14,14 +14,18 @@ const LogoutPage = () => {
 
   useEffect(() => {
     if (loginStatus && loginStatus.loggedIn) {
-      dispatch(setMessage('Log out', `${loginStatus.loggedUser?.fullname} logged out successfully.`));
+      dispatch(
+        setMessage(
+          'Log out',
+          `${loginStatus.loggedUser?.fullname} logged out successfully.`
+        )
+      );
       dispatch(clearLogin());
       storage.clearToken();
     }
 
     history.replace('/');
-
-  }, []);  // eslint-disable-line
+  }, []); // eslint-disable-line
 
   return null;
 };

@@ -8,7 +8,10 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, children }): ReactPortal | null => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  children,
+}): ReactPortal | null => {
   const element = document.createElement('div');
 
   useEffect(() => {
@@ -20,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, children }): ReactPortal | null =
   }, [element]);
 
   if (!isOpen) return null;
-  return (createPortal(<>{children}</>, element));
+  return createPortal(<>{children}</>, element);
 };
 
 export default Modal;

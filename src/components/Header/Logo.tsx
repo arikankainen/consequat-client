@@ -24,11 +24,11 @@ const LogoImage = styled.picture`
 
 const Logo = () => {
   return (
-    <LogoLink to='/'>
+    <LogoLink to="/">
       <LogoImage>
-        <source media='(max-width: 500px)' srcSet={logoImageSmall} />
-        <source media='(min-width: 501px)' srcSet={logoImage} />
-        <img src={logoImage} alt='consequat-logo' />
+        <source media="(max-width: 500px)" srcSet={logoImageSmall} />
+        <source media="(min-width: 501px)" srcSet={logoImage} />
+        <img src={logoImage} alt="consequat-logo" />
       </LogoImage>
     </LogoLink>
   );

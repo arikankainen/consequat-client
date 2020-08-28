@@ -5,7 +5,11 @@ import Button, { ButtonColor } from '../Buttons/Button';
 import { Photo, Album } from '../../utils/types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, TextAreaInput, SelectInput } from '../ConfirmationDialog/Inputs';
+import {
+  TextInput,
+  TextAreaInput,
+  SelectInput,
+} from '../ConfirmationDialog/Inputs';
 import { EDIT_PHOTO, ME } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 
@@ -16,7 +20,7 @@ import {
   Topic,
   Content,
   ButtonArea,
-  SavingText
+  SavingText,
 } from './Styles';
 
 export interface EditPhotoProps {
@@ -38,7 +42,7 @@ const initialValues: FormValues = {
   name: '',
   location: '',
   album: '',
-  description: ''
+  description: '',
 };
 
 const validation = Yup.object({});
@@ -53,7 +57,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     onError: (error) => {
       console.log(error);
     },
-    refetchQueries: [{ query: ME }] // TODO: update cache manually
+    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   if (props.open && !open) {
@@ -67,12 +71,14 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   if (props.photo) {
     initialValues.name = props.photo.name ? props.photo.name : '';
     initialValues.location = props.photo.location ? props.photo.location : '';
-    initialValues.description = props.photo.description ? props.photo.description : '';
+    initialValues.description = props.photo.description
+      ? props.photo.description
+      : '';
     initialValues.album = '';
 
     if (props.albums && props.photo.album) {
       const albumId = props.photo.album.id;
-      const album = props.albums.find(album => album.id === albumId);
+      const album = props.albums.find((album) => album.id === albumId);
       initialValues.album = album?.id || '';
     }
   }
@@ -92,8 +98,8 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
           location: values.location,
           album: values.album !== '0' ? values.album : null,
           description: values.description,
-          id: props.photo.id
-        }
+          id: props.photo.id,
+        },
       });
     }
   };
@@ -119,7 +125,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         timeout={300}
         mountOnEnter
         unmountOnExit
-        classNames='backdrop'
+        classNames="backdrop"
       >
         <BackDrop />
       </CSSTransition>
@@ -129,7 +135,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
         timeout={300}
         mountOnEnter
         unmountOnExit
-        classNames='confirmation'
+        classNames="confirmation"
       >
         <FloatingContainer>
           <Container>
@@ -144,7 +150,11 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
                 <Content>
                   <TextInput name="name" label="Name" />
                   <TextInput name="location" label="Location" />
-                  <SelectInput name="album" label="Album" albums={props.albums} />
+                  <SelectInput
+                    name="album"
+                    label="Album"
+                    albums={props.albums}
+                  />
                   <TextAreaInput name="description" label="Description" />
                 </Content>
                 <ButtonArea>

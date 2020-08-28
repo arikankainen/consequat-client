@@ -69,7 +69,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   buttonText,
   buttonIcon,
   buttonTextRequired,
-  onClick
+  onClick,
 }) => {
   return (
     <Container>

@@ -12,7 +12,7 @@ import {
   ButtonArea,
   ProgressContainer,
   Progress,
-  Text
+  Text,
 } from './Styles';
 
 export interface ConfirmationProps {
@@ -36,21 +36,29 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
   const [progress, setProgress] = useState<number | undefined>(undefined);
   const [progress2, setProgress2] = useState<number | undefined>(undefined);
   const [handleOk, setHandleOk] = useState<(() => void) | undefined>(undefined);
-  const [handleCancel, setHandleCancel] = useState<(() => void) | undefined>(undefined);
+  const [handleCancel, setHandleCancel] = useState<(() => void) | undefined>(
+    undefined
+  );
   const [disableOk, setDisableOk] = useState<boolean>(false);
   const [disableCancel, setDisableCancel] = useState<boolean>(false);
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const update = (input: any, output: any, setter: Function) => {
     if (input !== undefined && output === undefined) setter(input);
-    else if (input !== undefined && output !== undefined && input.toString() !== output.toString()) setter(input);
+    else if (
+      input !== undefined &&
+      output !== undefined &&
+      input.toString() !== output.toString()
+    )
+      setter(input);
     else if (input === undefined && output !== undefined) setter(undefined);
   };
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const updateFunction = (input: any, output: any, setter: Function) => {
     if (input && !output) setter(() => input);
-    else if (input && output && input.toString() !== output.toString()) setter(() => input);
+    else if (input && output && input.toString() !== output.toString())
+      setter(() => input);
     else if (!input && output) setter(undefined);
   };
 
@@ -71,8 +79,7 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
     setOpen(true);
     if (props.handleOk) setHandleOk(() => props.handleOk);
     if (props.handleCancel) setHandleCancel(() => props.handleCancel);
-  }
-  else if (!props.open && open) setOpen(false);
+  } else if (!props.open && open) setOpen(false);
 
   return (
     <Modal>
@@ -81,7 +88,7 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
         timeout={300}
         mountOnEnter
         unmountOnExit
-        classNames='backdrop'
+        classNames="backdrop"
       >
         <BackDrop />
       </CSSTransition>
@@ -91,34 +98,30 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
         timeout={300}
         mountOnEnter
         unmountOnExit
-        classNames='confirmation'
+        classNames="confirmation"
       >
         <FloatingContainer>
           <Container>
             <Topic>{topic || <>Confirmation</>}</Topic>
             <Content>
-              {text &&
-                <Text>{text}</Text>
-              }
+              {text && <Text>{text}</Text>}
 
-              {typeof progress !== 'undefined' &&
+              {typeof progress !== 'undefined' && (
                 <ProgressContainer>
                   <Progress progress={progress} />
                 </ProgressContainer>
-              }
+              )}
 
-              {text2 &&
-                <Text>{text2}</Text>
-              }
+              {text2 && <Text>{text2}</Text>}
 
-              {typeof progress2 !== 'undefined' &&
+              {typeof progress2 !== 'undefined' && (
                 <ProgressContainer>
                   <Progress progress={progress2} />
                 </ProgressContainer>
-              }
+              )}
             </Content>
             <ButtonArea>
-              {handleCancel && handleOk &&
+              {handleCancel && handleOk && (
                 <>
                   <Button
                     onClick={handleCancel}
@@ -134,25 +137,25 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
                     width={75}
                   />
                 </>
-              }
+              )}
 
-              {!handleCancel && handleOk &&
+              {!handleCancel && handleOk && (
                 <Button
                   onClick={handleOk}
                   text="OK"
                   disabled={disableOk}
                   width={75}
                 />
-              }
+              )}
 
-              {handleCancel && !handleOk &&
+              {handleCancel && !handleOk && (
                 <Button
                   onClick={handleCancel}
                   text="Cancel"
                   disabled={disableCancel}
                   width={75}
                 />
-              }
+              )}
             </ButtonArea>
           </Container>
         </FloatingContainer>

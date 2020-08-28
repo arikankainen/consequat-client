@@ -15,8 +15,9 @@ export const SiteContainer = styled.section<SiteContainerProps>`
   height: 100%;
   width: 100%;
 
-  ${props => props.picture
-    && css`
+  ${(props) =>
+    props.picture &&
+    css`
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;

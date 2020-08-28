@@ -3,7 +3,7 @@ import { ErrorNotification, SuccessNotification } from './Styles';
 
 export enum MessageType {
   Error,
-  Success
+  Success,
 }
 
 interface MessageProps {
@@ -13,19 +13,10 @@ interface MessageProps {
 
 const Message: React.FC<MessageProps> = ({ message, type }) => {
   if (type === MessageType.Error) {
-    return (
-      <ErrorNotification>
-        {message}
-      </ErrorNotification>
-    );
+    return <ErrorNotification>{message}</ErrorNotification>;
   }
 
-  return (
-    <SuccessNotification>
-      {message}
-    </SuccessNotification>
-  );
+  return <SuccessNotification>{message}</SuccessNotification>;
 };
-
 
 export default Message;

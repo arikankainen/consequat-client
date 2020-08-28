@@ -8,7 +8,9 @@ import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
 import InfoArea from './InfoArea';
 import resizeImage from '../../utils/resizeImage';
-import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
+import Confirmation, {
+  ConfirmationProps,
+} from '../ConfirmationDialog/Confirmation';
 import InitialUploadForm from './InitialUploadForm';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
@@ -24,7 +26,7 @@ import {
   removePicture,
   removePictures,
   updateProgress,
-  updateSelected
+  updateSelected,
 } from '../../reducers/pictureReducer';
 
 import {
@@ -34,7 +36,7 @@ import {
   PictureListButtonGroups,
   PictureListButtonGroup,
   PictureListArea,
-  UploadFileButton
+  UploadFileButton,
 } from '../PictureList/Styles';
 import { useHistory } from 'react-router-dom';
 
@@ -57,7 +59,7 @@ const UploadForm = () => {
     onError: (error) => {
       console.log(error);
     },
-    refetchQueries: [{ query: ME }] // TODO: update cache manually
+    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   useEffect(() => {
@@ -66,19 +68,18 @@ const UploadForm = () => {
 
   useEffect(() => {
     let count = 0;
-    pictureState.pictures.forEach(element => {
+    pictureState.pictures.forEach((element) => {
       if (element.selected) count++;
     });
     setSelectedCount(count);
 
     if (count === 1) {
-      pictureState.pictures.forEach(element => {
+      pictureState.pictures.forEach((element) => {
         if (element.selected) {
           setSelectedFile(element.picture);
         }
       });
-    }
-    else {
+    } else {
       setSelectedFile(null);
     }
 
@@ -92,7 +93,8 @@ const UploadForm = () => {
   const reportProgress = (filename: string, percentage: number) => {
     dispatch(updateProgress(filename, percentage));
     const remainingFiles = pictureState.pictures.length;
-    const percentageFiles = ((uploadCount - remainingFiles) / uploadCount) * 100;
+    const percentageFiles =
+      ((uploadCount - remainingFiles) / uploadCount) * 100;
     const oneFilePercentage = 100 / uploadCount;
 
     setConfirmation({
@@ -100,7 +102,7 @@ const UploadForm = () => {
       text: filename,
       progress: percentage,
       text2: `Photo ${uploadCount - remainingFiles + 1} of ${uploadCount}`,
-      progress2: percentageFiles + (percentage * (oneFilePercentage / 100)),
+      progress2: percentageFiles + percentage * (oneFilePercentage / 100),
     });
   };
 
@@ -109,9 +111,12 @@ const UploadForm = () => {
       const storageRef = storage.ref(filename);
       const task = storageRef.put(file);
 
-      task.on('state_changed',
+      task.on(
+        'state_changed',
         function progress(snapshot) {
-          const percentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          const percentage = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
           reportProgress(file.name, percentage);
         },
         function error(err) {
@@ -119,7 +124,7 @@ const UploadForm = () => {
           reject(err);
         },
         function complete() {
-          storageRef.getDownloadURL().then(url => {
+          storageRef.getDownloadURL().then((url) => {
             reportProgress(file.name, 100);
             resolve(url);
           });
@@ -133,7 +138,8 @@ const UploadForm = () => {
       const storageRef = storage.ref(filename);
       const task = storageRef.put(file);
 
-      task.on('state_changed',
+      task.on(
+        'state_changed',
         function progress() {
           // empty
         },
@@ -142,7 +148,7 @@ const UploadForm = () => {
           reject(err);
         },
         function complete() {
-          storageRef.getDownloadURL().then(url => {
+          storageRef.getDownloadURL().then((url) => {
             resolve(url);
           });
         }
@@ -156,7 +162,8 @@ const UploadForm = () => {
 
     const resized = await resizeImage(file, true, 500);
     const mainUrl = await uploadPicture(file, filename);
-    const thumbUrl = (resized != null) ? await uploadThumb(resized, thumbFilename) : '';
+    const thumbUrl =
+      resized != null ? await uploadThumb(resized, thumbFilename) : '';
 
     addPhotoToDb({
       variables: {
@@ -165,8 +172,8 @@ const UploadForm = () => {
         filename,
         thumbFilename,
         originalFilename: file.name,
-        name: file.name
-      }
+        name: file.name,
+      },
     });
 
     dispatch(removePicture(file.name));
@@ -214,13 +221,14 @@ const UploadForm = () => {
 
   useEffect(() => {
     if (uploadInProgress && pictureState.pictures.length > 0) {
-      const uploadingAlready = pictureState.pictures.filter(p => p.progress > -1);
+      const uploadingAlready = pictureState.pictures.filter(
+        (p) => p.progress > -1
+      );
 
       if (uploadingAlready.length === 0) {
         if (!uploadCancelled) startNewUpload();
         else uploadAborted();
       }
-
     } else if (uploadInProgress && pictureState.pictures.length === 0) {
       setUploadInProgress(false);
       uploadDone();
@@ -253,7 +261,7 @@ const UploadForm = () => {
       progress: 0,
       text2: '...',
       progress2: 0,
-      handleCancel: handleUploadPicturesAbort
+      handleCancel: handleUploadPicturesAbort,
     });
 
     setUploadDialogOpen(true);
@@ -264,9 +272,8 @@ const UploadForm = () => {
 
   const handleUploadPictures = () => {
     const count = pictureState.pictures.length;
-    const text = count === 1 ?
-      'Upload selected photo?' :
-      `Upload all ${count} photos?`;
+    const text =
+      count === 1 ? 'Upload selected photo?' : `Upload all ${count} photos?`;
 
     setConfirmation({
       open: true,
@@ -285,9 +292,8 @@ const UploadForm = () => {
 
     if (selectedCount === 0) {
       dispatch(removePictures());
-    }
-    else {
-      pictureState.pictures.forEach(picture => {
+    } else {
+      pictureState.pictures.forEach((picture) => {
         if (picture.selected) dispatch(removePicture(picture.picture.name));
       });
     }
@@ -295,9 +301,10 @@ const UploadForm = () => {
 
   const handleRemovePictures = () => {
     const count = selectedCount;
-    const text = count === 1 ?
-      'Really remove selected photo from upload list?' :
-      `Really remove ${count} selected photos from upload list?`;
+    const text =
+      count === 1
+        ? 'Really remove selected photo from upload list?'
+        : `Really remove ${count} selected photos from upload list?`;
 
     setConfirmation({
       open: true,
@@ -309,7 +316,9 @@ const UploadForm = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
+      Array.from(event.target.files).forEach((file) =>
+        dispatch(addPicture(file))
+      );
     }
   };
 
@@ -318,21 +327,19 @@ const UploadForm = () => {
   };
 
   if (pictureState.pictures.length === 0 && !uploadDialogOpen) {
-    return (
-      <InitialUploadForm />
-    );
+    return <InitialUploadForm />;
   }
 
   const handleSelectAll = () => {
     if (!allSelected) {
-      pictureState.pictures.forEach(element => {
+      pictureState.pictures.forEach((element) => {
         if (!element.selected) {
           dispatch(updateSelected(element.picture.name, true));
         }
       });
       setAllSelected(true);
     } else {
-      pictureState.pictures.forEach(element => {
+      pictureState.pictures.forEach((element) => {
         if (element.selected) {
           dispatch(updateSelected(element.picture.name, false));
         }
@@ -354,8 +361,7 @@ const UploadForm = () => {
             />
           </PictureListButtonGroup>
           <PictureListButtonGroup>
-            {!allSelected
-              ?
+            {!allSelected ? (
               <Button
                 onClick={handleSelectAll}
                 text="Select all"
@@ -363,7 +369,7 @@ const UploadForm = () => {
                 textRequired={true}
                 color={ButtonColor.black}
               />
-              :
+            ) : (
               <Button
                 onClick={handleSelectAll}
                 text="Deselect all"
@@ -371,7 +377,7 @@ const UploadForm = () => {
                 textRequired={true}
                 color={ButtonColor.black}
               />
-            }
+            )}
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
@@ -397,31 +403,31 @@ const UploadForm = () => {
 
         <AlbumContainer>
           <PhotoAlbum
-            name='Upload list'
-            description='Photos to be uploaded'
-            buttonText='Upload'
+            name="Upload list"
+            description="Photos to be uploaded"
+            buttonText="Upload"
             buttonTextRequired={true}
             buttonIcon={UploadButton}
             onClick={handleUploadPictures}
           />
           <PictureListArea count={pictureState.pictures.length}>
-            {pictureState.pictures.map(file =>
+            {pictureState.pictures.map((file) => (
               <Thumbnail
                 key={file.picture.name}
                 file={file.picture}
                 selected={file.selected}
               />
-            )}
+            ))}
           </PictureListArea>
         </AlbumContainer>
 
         <form onSubmit={handleSubmit}>
           <UploadFileButton
-            type='file'
+            type="file"
             ref={fileInput}
             onChange={handleFileChange}
             multiple
-            accept='image/*'
+            accept="image/*"
           />
         </form>
       </PictureListContainer>

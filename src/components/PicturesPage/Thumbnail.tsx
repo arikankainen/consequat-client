@@ -23,7 +23,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   photo,
   selected,
   handleThumbnailClick,
-  handleCheckClick
+  handleCheckClick,
 }) => {
   return (
     <ThumbnailContainer>
@@ -31,20 +31,22 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         <ThumbnailPicture
           onClick={() => handleThumbnailClick(photo.id)}
           src={photo.thumbUrl}
-          onError={(e: React.InvalidEvent<HTMLImageElement>) => { e.target.style.display = 'none'; }}
+          onError={(e: React.InvalidEvent<HTMLImageElement>) => {
+            e.target.style.display = 'none';
+          }}
         />
       </ThumbnailPlaceholder>
 
-      <ThumbnailIconArea onClick={() => handleCheckClick(photo.id)} selected={selected}>
+      <ThumbnailIconArea
+        onClick={() => handleCheckClick(photo.id)}
+        selected={selected}
+      >
         {selected && <CheckedIcon />}
       </ThumbnailIconArea>
 
       <ThumbnailNameArea>
-        <ThumbnailNameAreaText>
-          {photo.name}
-        </ThumbnailNameAreaText>
+        <ThumbnailNameAreaText>{photo.name}</ThumbnailNameAreaText>
       </ThumbnailNameArea>
-
     </ThumbnailContainer>
   );
 };

@@ -39,7 +39,7 @@ const Search = () => {
   return (
     <SearchContainer>
       <SearchIcon />
-      <Input placeholder='Search photos' />
+      <Input placeholder="Search photos" />
     </SearchContainer>
   );
 };

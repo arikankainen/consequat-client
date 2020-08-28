@@ -25,8 +25,8 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `bearer ${token}` : null
-    }
+      authorization: token ? `bearer ${token}` : null,
+    },
   };
 });
 
@@ -61,28 +61,29 @@ const cache = new InMemoryCache({
     User: {
       fields: {
         photos: {
-          merge(_existing = [], incoming: any[]) { // eslint-disable-line
+          merge(_existing = [], incoming: any[]) {
+            // eslint-disable-line
             return [...incoming];
-          }
-        }
-      }
+          },
+        },
+      },
     },
     Album: {
       fields: {
         photos: {
-          merge(_existing = [], incoming: any[]) { // eslint-disable-line
+          merge(_existing = [], incoming: any[]) {
+            // eslint-disable-line
             return [...incoming];
-          }
-        }
-      }
-    }
-
-  }
+          },
+        },
+      },
+    },
+  },
 });
 
 const client = new ApolloClient({
   cache,
-  link: authLink.concat(httpLink)
+  link: authLink.concat(httpLink),
 });
 
 ReactDOM.render(

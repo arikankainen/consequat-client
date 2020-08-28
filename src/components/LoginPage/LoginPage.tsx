@@ -17,7 +17,7 @@ import {
   Topic,
   Button,
   QuestionArea,
-  QuestionLink
+  QuestionLink,
 } from './Styles';
 
 const LoginPage = () => {
@@ -30,8 +30,7 @@ const LoginPage = () => {
     if (logging) {
       setDisabled(true);
       setButtonText('Logging in...');
-    }
-    else {
+    } else {
       setDisabled(false);
       setButtonText('Log in');
     }
@@ -42,11 +41,11 @@ const LoginPage = () => {
       console.log(error.graphQLErrors[0].message);
       loggingProgress(false);
       dispatch(setError('Error', 'Invalid username or password.'));
-    }
+    },
   });
 
   const [me, resultMe] = useLazyQuery(ME, {
-    fetchPolicy: 'no-cache'
+    fetchPolicy: 'no-cache',
   });
 
   useEffect(() => {
@@ -55,30 +54,39 @@ const LoginPage = () => {
       storage.setToken(token);
       me();
     }
-  }, [resultLogin.data, history]);  // eslint-disable-line
+  }, [resultLogin.data, history]); // eslint-disable-line
 
   useEffect(() => {
     if (resultMe.data) {
-      dispatch(updateLogin({
-        loggedIn: true,
-        loggedToken: storage.getToken(),
-        loggedUser: {
-          username: resultMe.data.me.username,
-          email: resultMe.data.me.email,
-          fullname: resultMe.data.me.fullname,
-          isAdmin: resultMe.data.me.isAdmin,
-          id: resultMe.data.me.id
-        }
-      }));
+      dispatch(
+        updateLogin({
+          loggedIn: true,
+          loggedToken: storage.getToken(),
+          loggedUser: {
+            username: resultMe.data.me.username,
+            email: resultMe.data.me.email,
+            fullname: resultMe.data.me.fullname,
+            isAdmin: resultMe.data.me.isAdmin,
+            id: resultMe.data.me.id,
+          },
+        })
+      );
 
-      dispatch(setMessage('Log in', `${resultMe.data.me.fullname} logged in successfully.`));
+      dispatch(
+        setMessage(
+          'Log in',
+          `${resultMe.data.me.fullname} logged in successfully.`
+        )
+      );
       history.replace('/');
     }
   }, [resultMe.data]); // eslint-disable-line
 
   const handleSubmit = (values: FormValues) => {
     loggingProgress(true);
-    login({ variables: { username: values.username, password: values.password } });
+    login({
+      variables: { username: values.username, password: values.password },
+    });
   };
 
   interface FormValues {
@@ -88,7 +96,7 @@ const LoginPage = () => {
 
   const initialValues: FormValues = {
     username: '',
-    password: ''
+    password: '',
   };
 
   const validation = Yup.object({
@@ -97,7 +105,7 @@ const LoginPage = () => {
       .required('required'),
     password: Yup.string()
       .min(5, 'must be at least 5 characters')
-      .required('required')
+      .required('required'),
   });
 
   return (
@@ -112,9 +120,11 @@ const LoginPage = () => {
           <Form>
             <TextInput name="username" label="Username" />
             <PasswordInput name="password" label="Password" />
-            <Button type="submit" disabled={disabled}>{buttonText}</Button>
+            <Button type="submit" disabled={disabled}>
+              {buttonText}
+            </Button>
             <QuestionArea>
-              <QuestionLink to='/signup'>
+              <QuestionLink to="/signup">
                 Not registered yet? Sign up!
               </QuestionLink>
             </QuestionArea>

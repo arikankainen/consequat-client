@@ -18,17 +18,19 @@ const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   padding: 0px 0px;
   background-color: var(--navigation-bg-color);
 
-  ${props => props.direction === Direction.Right
-    && css`
+  ${(props) =>
+    props.direction === Direction.Right &&
+    css`
       right: 0px;
   `}
 
-  ${props => props.direction === Direction.Left
-    && css`
+  ${(props) =>
+    props.direction === Direction.Left &&
+    css`
       left: 0px;
   `}
 
-  top: ${props => props.top};
+  top: ${(props) => props.top};
 `;
 
 const MenuButton = styled.div`
@@ -133,8 +135,7 @@ interface MenuProps {
 const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
   return (
     <MenuItemsContainer top={settings.top} direction={settings.direction}>
-
-      {items.map(item => {
+      {items.map((item) => {
         return (
           <MenuItem key={item.text}>
             <MenuLink to={item.link}>
@@ -147,7 +148,6 @@ const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
           </MenuItem>
         );
       })}
-
     </MenuItemsContainer>
   );
 };

@@ -113,7 +113,7 @@ interface ThumbnailIconAreaProps {
   selected: boolean;
 }
 
-export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps> `
+export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -127,7 +127,9 @@ export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps> `
   background-color: rgba(255, 255, 255, .4);
   border: 1px solid rgba(0, 0, 0, 0.4);
 
-  ${props => props.selected && css`
+  ${(props) =>
+    props.selected &&
+    css`
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 1);
   `}

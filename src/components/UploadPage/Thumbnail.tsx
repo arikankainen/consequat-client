@@ -27,15 +27,17 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    resizeImage(file, true, 500)
-      .then(blob => {
+    resizeImage(file, true, 500).then(
+      (blob) => {
         if (thumbnailImage.current) {
           thumbnailImage.current.src = URL.createObjectURL(blob);
         }
-      }, () => {
+      },
+      () => {
         dispatch(removePicture(file.name));
         dispatch(setError('Error', `Cannot read file '${file.name}'.`));
-      });
+      }
+    );
   }, [file]); //eslint-disable-line
 
   const handleThumbnailClick = () => {
@@ -53,7 +55,9 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
           ref={thumbnailImage}
           onClick={handleThumbnailClick}
           src={placeholder}
-          onError={(e: React.InvalidEvent<HTMLImageElement>) => { e.target.style.display = 'none'; }}
+          onError={(e: React.InvalidEvent<HTMLImageElement>) => {
+            e.target.style.display = 'none';
+          }}
         />
       </ThumbnailPlaceholder>
 
@@ -62,9 +66,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
       </ThumbnailIconArea>
 
       <ThumbnailNameArea>
-        <ThumbnailNameAreaText>
-          {file.name}
-        </ThumbnailNameAreaText>
+        <ThumbnailNameAreaText>{file.name}</ThumbnailNameAreaText>
       </ThumbnailNameArea>
     </ThumbnailContainer>
   );

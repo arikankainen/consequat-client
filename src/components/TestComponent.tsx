@@ -10,32 +10,36 @@ function TestComponent() {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(updateLogin({
-      loggedIn: true,
-      loggedToken: 'ffsdfsafsafsafsdaf',
-      loggedUser: {
-        username: 'user',
-        email: 'user@mail.com',
-        fullname: 'Normal User',
-        isAdmin: false,
-        id: 'fdsfsdfaslkfjasdflkjsalkdfjsadlfkjs'
-      }
-    }));
+    dispatch(
+      updateLogin({
+        loggedIn: true,
+        loggedToken: 'ffsdfsafsafsafsdaf',
+        loggedUser: {
+          username: 'user',
+          email: 'user@mail.com',
+          fullname: 'Normal User',
+          isAdmin: false,
+          id: 'fdsfsdfaslkfjasdflkjsalkdfjsadlfkjs',
+        },
+      })
+    );
   };
 
   const handleClickThunk = () => {
     console.log('handle');
-    dispatch(updateLoginThunk({
-      loggedIn: true,
-      loggedToken: '534k5ljlk4231kj5lk35',
-      loggedUser: {
-        username: 'admin',
-        email: 'admin@mail.com',
-        fullname: 'Administrator',
-        isAdmin: true,
-        id: '5345o43k2lö5432j5lk4j53kl'
-      }
-    }));
+    dispatch(
+      updateLoginThunk({
+        loggedIn: true,
+        loggedToken: '534k5ljlk4231kj5lk35',
+        loggedUser: {
+          username: 'admin',
+          email: 'admin@mail.com',
+          fullname: 'Administrator',
+          isAdmin: true,
+          id: '5345o43k2lö5432j5lk4j53kl',
+        },
+      })
+    );
   };
 
   if (result.loading) {

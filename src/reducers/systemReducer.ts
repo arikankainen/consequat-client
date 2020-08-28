@@ -12,7 +12,7 @@ interface SystemState {
 const initialState: SystemState = {
   loggedIn: false,
   loggedToken: null,
-  loggedUser: null
+  loggedUser: null,
 };
 
 export const UPDATE_LOGIN = 'UPDATE_LOGIN';
@@ -25,29 +25,34 @@ export interface UpdateLogin {
 export const updateLogin = (data: SystemState): UpdateLogin => {
   return {
     type: UPDATE_LOGIN,
-    data: data
+    data: data,
   };
 };
 
 export const clearLogin = (): UpdateLogin => {
   return {
     type: UPDATE_LOGIN,
-    data: initialState
+    data: initialState,
   };
 };
 
 export const updateLoginThunk = (
   data: SystemState
-): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
   dispatch(updateLogin(data));
 };
 
-export const systemReducer = (state = initialState, action: UpdateLogin): SystemState => {
+export const systemReducer = (
+  state = initialState,
+  action: UpdateLogin
+): SystemState => {
   switch (action.type) {
     case UPDATE_LOGIN:
       return {
         ...state,
-        ...action.data
+        ...action.data,
       };
     default:
       return state;

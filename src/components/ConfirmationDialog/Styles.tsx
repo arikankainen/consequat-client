@@ -72,9 +72,9 @@ interface ProgressProps {
   progress: number;
 }
 
-export const Progress = styled.div<ProgressProps> `
+export const Progress = styled.div<ProgressProps>`
   height: 100%;
-  width: ${props => props.progress}%;
+  width: ${(props) => props.progress}%;
   background-color: #55bb55;
 `;
 

@@ -60,17 +60,19 @@ const Header = () => {
 
   useEffect(() => {
     if (resultMe.data) {
-      dispatch(updateLogin({
-        loggedIn: true,
-        loggedToken: storage.getToken(),
-        loggedUser: {
-          username: resultMe.data.me.username,
-          email: resultMe.data.me.email,
-          fullname: resultMe.data.me.fullname,
-          isAdmin: resultMe.data.me.isAdmin,
-          id: resultMe.data.me.id
-        }
-      }));
+      dispatch(
+        updateLogin({
+          loggedIn: true,
+          loggedToken: storage.getToken(),
+          loggedUser: {
+            username: resultMe.data.me.username,
+            email: resultMe.data.me.email,
+            fullname: resultMe.data.me.fullname,
+            isAdmin: resultMe.data.me.isAdmin,
+            id: resultMe.data.me.id,
+          },
+        })
+      );
     }
   }, [resultMe.data]); // eslint-disable-line
 
@@ -125,20 +127,15 @@ const Header = () => {
       </LeftContainer>
       <Search />
       <RightContainer>
-        {loginState.loggedIn
-          ?
+        {loginState.loggedIn ? (
           <Menu
             button={userMenuButton}
             items={userMenuItems}
             settings={userMenuSettings}
           />
-          :
-          <MenuButton
-            to='/login'
-            text='Login'
-            icon={LoginIcon}
-          />
-        }
+        ) : (
+          <MenuButton to="/login" text="Login" icon={LoginIcon} />
+        )}
       </RightContainer>
     </HeaderContainer>
   );

@@ -15,7 +15,7 @@ interface PictureState {
 }
 
 const initialState: PictureState = {
-  pictures: []
+  pictures: [],
 };
 
 export interface AddPicture {
@@ -49,23 +49,23 @@ export interface UpdateSelected {
 }
 
 type Actions =
-  AddPicture |
-  RemovePicture |
-  Clear |
-  UpdateProgress |
-  UpdateSelected;
+  | AddPicture
+  | RemovePicture
+  | Clear
+  | UpdateProgress
+  | UpdateSelected;
 
 export const addPicture = (picture: File): AddPicture => {
   return {
     type: ADD_PICTURE,
-    data: picture
+    data: picture,
   };
 };
 
 export const removePicture = (picture: string): RemovePicture => {
   return {
     type: REMOVE_PICTURE,
-    data: picture
+    data: picture,
   };
 };
 
@@ -75,66 +75,80 @@ export const removePictures = (): Clear => {
   };
 };
 
-export const updateProgress = (filename: string, progress: number): UpdateProgress => {
+export const updateProgress = (
+  filename: string,
+  progress: number
+): UpdateProgress => {
   return {
     type: UPDATE_PROGRESS,
     data: {
       filename,
-      progress
-    }
+      progress,
+    },
   };
 };
 
-export const updateSelected = (filename: string, selected: boolean): UpdateSelected => {
+export const updateSelected = (
+  filename: string,
+  selected: boolean
+): UpdateSelected => {
   return {
     type: UPDATE_SELECTED,
     data: {
       filename,
-      selected
-    }
+      selected,
+    },
   };
 };
 
-export const pictureReducer = (state = initialState, action: Actions): PictureState => {
+export const pictureReducer = (
+  state = initialState,
+  action: Actions
+): PictureState => {
   switch (action.type) {
     case ADD_PICTURE:
-      const exist = state.pictures.find(picture =>
-        picture.picture.name === action.data.name
+      const exist = state.pictures.find(
+        (picture) => picture.picture.name === action.data.name
       );
       if (exist) return state;
 
       return {
-        pictures: [...state.pictures, {
-          picture: action.data,
-          progress: -1,
-          selected: false,
-        }]
+        pictures: [
+          ...state.pictures,
+          {
+            picture: action.data,
+            progress: -1,
+            selected: false,
+          },
+        ],
       };
     case REMOVE_PICTURE:
       return {
-        pictures: [...state.pictures].filter(picture => picture.picture.name !== action.data)
+        pictures: [...state.pictures].filter(
+          (picture) => picture.picture.name !== action.data
+        ),
       };
     case CLEAR:
       return {
-        ...initialState
+        ...initialState,
       };
     case UPDATE_PROGRESS:
       return {
-        pictures: [...state.pictures].map(picture => {
+        pictures: [...state.pictures].map((picture) => {
           if (picture.picture.name === action.data.filename) {
             picture.progress = action.data.progress;
           }
           return picture;
-        })
+        }),
       };
     case UPDATE_SELECTED:
       return {
-        pictures: [...state.pictures].map(picture => {
+        pictures: [...state.pictures].map((picture) => {
           if (picture.picture.name === action.data.filename) {
             picture.selected = action.data.selected;
           }
           return picture;
-        })
+        }),
       };
     default:
       return state;

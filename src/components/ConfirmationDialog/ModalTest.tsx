@@ -5,7 +5,7 @@ interface Modal {
 }
 
 const Modal: React.FC<Modal> = ({ children }) => {
-  return (<>{children}</>);
+  return <>{children}</>;
 };
 
 export default Modal;

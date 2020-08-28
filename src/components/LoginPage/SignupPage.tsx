@@ -15,7 +15,7 @@ import {
   Topic,
   Button,
   QuestionArea,
-  QuestionLink
+  QuestionLink,
 } from './Styles';
 
 const SignupPage = () => {
@@ -28,8 +28,7 @@ const SignupPage = () => {
     if (logging) {
       setDisabled(true);
       setButtonText('Signing up...');
-    }
-    else {
+    } else {
       setDisabled(false);
       setButtonText('Sign up');
     }
@@ -40,17 +39,20 @@ const SignupPage = () => {
       console.log(error.graphQLErrors[0].message);
       signingProgress(false);
       dispatch(setError('Error', 'Something went wrong...'));
-    }
+    },
   });
 
   useEffect(() => {
     if (resultSignup.data) {
-      dispatch(setMessage(
-        'Sign up', `${resultSignup.data?.createUser.fullname} signed up successfully! Please log in.`
-      ));
+      dispatch(
+        setMessage(
+          'Sign up',
+          `${resultSignup.data?.createUser.fullname} signed up successfully! Please log in.`
+        )
+      );
       history.replace('/login');
     }
-  }, [resultSignup.data, history]);  // eslint-disable-line
+  }, [resultSignup.data, history]); // eslint-disable-line
 
   const handleSubmit = (values: FormValues) => {
     signingProgress(true);
@@ -60,8 +62,8 @@ const SignupPage = () => {
         username: values.username,
         email: values.email,
         fullname: values.fullname,
-        password: values.password
-      }
+        password: values.password,
+      },
     });
   };
 
@@ -76,21 +78,18 @@ const SignupPage = () => {
     username: '',
     email: '',
     fullname: '',
-    password: ''
+    password: '',
   };
 
   const validation = Yup.object({
     username: Yup.string()
       .min(3, 'must be at least 3 characters')
       .required('required'),
-    email: Yup.string()
-      .email('must be valid e-mail')
-      .required('required'),
-    fullname: Yup.string()
-      .required('required'),
+    email: Yup.string().email('must be valid e-mail').required('required'),
+    fullname: Yup.string().required('required'),
     password: Yup.string()
       .min(5, 'must be at least 5 characters')
-      .required('required')
+      .required('required'),
   });
 
   return (
@@ -107,9 +106,11 @@ const SignupPage = () => {
             <TextInput name="fullname" label="Full name" />
             <TextInput name="email" label="E-mail" />
             <PasswordInput name="password" label="Password" />
-            <Button type="submit" disabled={disabled}>{buttonText}</Button>
+            <Button type="submit" disabled={disabled}>
+              {buttonText}
+            </Button>
             <QuestionArea>
-              <QuestionLink to='/login'>
+              <QuestionLink to="/login">
                 Already registered? Log in.
               </QuestionLink>
             </QuestionArea>

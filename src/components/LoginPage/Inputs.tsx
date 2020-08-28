@@ -48,11 +48,15 @@ const InputContainer = styled.div<InputContainerProps>`
   border: 1px solid var(--navigation-bg-color);
   border-radius: var(--input-border-radius);
 
-  ${props => props.error && css`
+  ${(props) =>
+    props.error &&
+    css`
     box-shadow: 0px 0px 1px 1px var(--error-color);
   `};
 
-  ${props => props.focused && css`
+  ${(props) =>
+    props.focused &&
+    css`
     box-shadow: var(--focus);
   `};
 `;
@@ -99,7 +103,9 @@ const Error = styled.div<ErrorProps>`
   max-height: 0;
   opacity: 0;
 
-  ${props => props.error && css`
+  ${(props) =>
+    props.error &&
+    css`
     max-height: 20px;
     opacity: 1;
   `};
@@ -157,7 +163,10 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   );
 };
 
-export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => {
+export const PasswordInput: React.FC<TextInputProps> = ({
+  label,
+  ...props
+}) => {
   const [field, meta] = useField(props);
   const [show, setShow] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);

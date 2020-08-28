@@ -43,13 +43,15 @@ const IconContainer = styled.div<IconContainerProps>`
       height: 40px;
       margin-right: 20px;
       
-      ${props => props.type === NotificationType.Message
-        && css`
+      ${(props) =>
+        props.type === NotificationType.Message &&
+        css`
         color: var(--color-success);
       `}
 
-      ${props => props.type === NotificationType.Error
-        && css`
+      ${(props) =>
+        props.type === NotificationType.Error &&
+        css`
         color: var(--color-error);
       `}
     }
@@ -88,8 +90,7 @@ const Notification = () => {
     if (open) {
       setOpen(false);
     }
-  }
-  else if (!open) {
+  } else if (!open) {
     setTopic(notification.topic);
     setText(notification.text);
     setType(notification.notificationType);
@@ -108,20 +109,20 @@ const Notification = () => {
       timeout={300}
       mountOnEnter
       unmountOnExit
-      classNames='notification'
+      classNames="notification"
     >
       <Container onClick={handleClick}>
         <MessageBox>
           <IconContainer type={type}>
-            {type === NotificationType.Message ? <MessageIcon /> : <ErrorIcon />}
+            {type === NotificationType.Message ? (
+              <MessageIcon />
+            ) : (
+              <ErrorIcon />
+            )}
           </IconContainer>
           <ContentContainer>
-            <Topic>
-              {topic}
-            </Topic>
-            <Body>
-              {text}
-            </Body>
+            <Topic>{topic}</Topic>
+            <Body>{text}</Body>
           </ContentContainer>
         </MessageBox>
       </Container>

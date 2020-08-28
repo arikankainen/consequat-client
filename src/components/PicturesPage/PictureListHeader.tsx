@@ -55,8 +55,11 @@ interface PictureListHeaderProps {
   selection: string[];
 }
 
-export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, selection }) => {
-  const selectedPhotos = photos.filter(photo => selection.includes(photo.id));
+export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
+  photos,
+  selection,
+}) => {
+  const selectedPhotos = photos.filter((photo) => selection.includes(photo.id));
   const selectedPhoto = selectedPhotos.length === 1 ? selectedPhotos[0] : null;
 
   const pad = (input: number): string => {
@@ -66,8 +69,12 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, se
 
   const formatDate = (input: Date): string => {
     const date = new Date(Number(input));
-    const customizedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    const customizedTime = `${date.getHours()}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    const customizedDate = `${date.getDate()}.${
+      date.getMonth() + 1
+    }.${date.getFullYear()}`;
+    const customizedTime = `${date.getHours()}:${pad(date.getMinutes())}:${pad(
+      date.getSeconds()
+    )}`;
 
     return `${customizedDate} ${customizedTime}`;
   };
@@ -75,21 +82,16 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, se
   return (
     <Container>
       <Block
-        name='Date added'
-        value={selectedPhoto && selectedPhoto.dateAdded && formatDate(selectedPhoto.dateAdded)}
+        name="Date added"
+        value={
+          selectedPhoto &&
+          selectedPhoto.dateAdded &&
+          formatDate(selectedPhoto.dateAdded)
+        }
       />
-      <Block
-        name='Name'
-        value={selectedPhoto?.name}
-      />
-      <Block
-        name='Location'
-        value={selectedPhoto?.location}
-      />
-      <Block
-        name='Description'
-        value={selectedPhoto?.description}
-      />
+      <Block name="Name" value={selectedPhoto?.name} />
+      <Block name="Location" value={selectedPhoto?.location} />
+      <Block name="Description" value={selectedPhoto?.description} />
     </Container>
   );
 };

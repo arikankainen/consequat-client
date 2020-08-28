@@ -34,27 +34,37 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   line-height: 1;
   cursor: pointer;
 
-  ${props => props.backColor === ButtonColor.white && css`
+  ${(props) =>
+    props.backColor === ButtonColor.white &&
+    css`
     border: 1px solid var(--accent-color-2);
     color: var(--accent-color-2-disabled);
     background-color: #fafafa;
   `}
 
-  ${props => props.backColor === ButtonColor.black && css`
+  ${(props) =>
+    props.backColor === ButtonColor.black &&
+    css`
     border: 1px solid #444;
     color: #ccc;
     background-color: #111;
   `}
 
-  ${props => props.width && css`
+  ${(props) =>
+    props.width &&
+    css`
     min-width: ${props.width}px;
   `}
 
-  ${props => props.contentAlign === ButtonContentAlign.left && css`
+  ${(props) =>
+    props.contentAlign === ButtonContentAlign.left &&
+    css`
     justify-content: flex-start;
   `}
 
-  ${props => props.contentAlign === ButtonContentAlign.right && css`
+  ${(props) =>
+    props.contentAlign === ButtonContentAlign.right &&
+    css`
     justify-content: flex-end;
   `}
 
@@ -63,7 +73,9 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     height: 16px;
     color: #fff;
 
-    ${props => props.backColor === ButtonColor.white && css`
+    ${(props) =>
+      props.backColor === ButtonColor.white &&
+      css`
       color: var(--accent-color-2-hover);
     `}
   }
@@ -72,7 +84,9 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 122, 217, .2);
 
-    ${props => props.backColor === ButtonColor.black && css`
+    ${(props) =>
+      props.backColor === ButtonColor.black &&
+      css`
       box-shadow: 0 0 0 3px rgba(255, 255, 255, .1);
     `}
   }
@@ -81,13 +95,17 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     border: 1px solid var(--accent-color-2-hover);
     background-color: var(--accent-color-2-hover);
 
-    ${props => props.backColor === ButtonColor.white && css`
+    ${(props) =>
+      props.backColor === ButtonColor.white &&
+      css`
       border: 1px solid var(--accent-color-2-hover);
       color: var(--accent-color-2-hover);
       background-color: #fff;
     `}
 
-    ${props => props.backColor === ButtonColor.black && css`
+    ${(props) =>
+      props.backColor === ButtonColor.black &&
+      css`
       border: 1px solid #555;
       color: #fff;
       background-color: #222;
@@ -102,18 +120,24 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     & > svg {
       color: #111155;
 
-      ${props => props.backColor === ButtonColor.black && css`
+      ${(props) =>
+        props.backColor === ButtonColor.black &&
+        css`
         color: #666;
       `}
     }
 
-    ${props => props.backColor === ButtonColor.white && css`
+    ${(props) =>
+      props.backColor === ButtonColor.white &&
+      css`
       border: 1px solid #111155;
       color: #111155;
       background-color: #aaa;
     `}
 
-    ${props => props.backColor === ButtonColor.black && css`
+    ${(props) =>
+      props.backColor === ButtonColor.black &&
+      css`
       border: 1px solid #222;
       color: #666;
       background-color: #111;
@@ -128,7 +152,9 @@ interface TextProps {
 const RequiredText = styled.div<TextProps>`
   margin-top: 1px;
 
-  ${props => props.icon && css`
+  ${(props) =>
+    props.icon &&
+    css`
     margin-left: 8px;
   `}
 `;
@@ -161,17 +187,15 @@ const Button: React.FC<ButtonProps> = (props) => {
       backColor={props.color}
       onClick={props.onClick}
     >
-      {props.icon &&
-        <props.icon />
-      }
+      {props.icon && <props.icon />}
 
-      {props.text && ((props.textRequired || !props.icon) || props.width) &&
+      {props.text && (props.textRequired || !props.icon || props.width) && (
         <RequiredText icon={!!props.icon}>{props.text}</RequiredText>
-      }
+      )}
 
-      {props.text && ((!props.textRequired && props.icon) && !props.width) &&
+      {props.text && !props.textRequired && props.icon && !props.width && (
         <OptionalText icon={!!props.icon}>{props.text}</OptionalText>
-      }
+      )}
     </ButtonContainer>
   );
 };

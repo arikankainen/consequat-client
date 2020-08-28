@@ -5,7 +5,9 @@ import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
-import Confirmation, { ConfirmationProps } from '../ConfirmationDialog/Confirmation';
+import Confirmation, {
+  ConfirmationProps,
+} from '../ConfirmationDialog/Confirmation';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
@@ -33,7 +35,9 @@ const PicturesPage = () => {
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
-  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
+  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<
+    boolean
+  >(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
@@ -42,16 +46,18 @@ const PicturesPage = () => {
     },
     update: (cache, response) => {
       try {
-        const existingCache: { me: User } | null = cache.readQuery({ query: ME });
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
         if (existingCache) {
           const id = response.data.deletePhoto.id;
 
           const existingPhotos = existingCache.me.photos;
-          const updatedPhotos = existingPhotos.filter(p => p.id !== id);
+          const updatedPhotos = existingPhotos.filter((p) => p.id !== id);
 
           const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.map(album => {
-            const filteredPhotos = album.photos.filter(p => p.id !== id);
+          const updatedAlbums = existingAlbums.map((album) => {
+            const filteredPhotos = album.photos.filter((p) => p.id !== id);
             return { ...album, photos: filteredPhotos };
           });
 
@@ -61,19 +67,18 @@ const PicturesPage = () => {
               ...existingCache.me,
               photos: updatedPhotos,
               albums: updatedAlbums,
-            }
+            },
           };
 
           cache.writeQuery({
             query: ME,
-            data: updatedCache
+            data: updatedCache,
           });
         }
-
       } catch (error) {
         console.log(error);
       }
-    }
+    },
   });
 
   useEffect(() => {
@@ -88,7 +93,7 @@ const PicturesPage = () => {
         id: '0',
       };
 
-      initialAlbum.photos = allPhotos.filter(photo => photo.album === null);
+      initialAlbum.photos = allPhotos.filter((photo) => photo.album === null);
 
       setPhotos(allPhotos);
       setAlbums([initialAlbum, ...allAlbums]);
@@ -96,13 +101,15 @@ const PicturesPage = () => {
   }, [resultMe.data]);
 
   useEffect(() => {
-    if (selection.length === photos.length && !allSelected) setAllSelected(true);
-    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
+    if (selection.length === photos.length && !allSelected)
+      setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected)
+      setAllSelected(false);
   }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
-      setSelection(selection.filter(value => value !== id));
+      setSelection(selection.filter((value) => value !== id));
     } else {
       setSelection(selection.concat(id));
     }
@@ -122,10 +129,10 @@ const PicturesPage = () => {
   const handleEditPictures = () => {
     setEditPhoto({
       open: true,
-      photo: photos.find(photo => photo.id === selection[0]),
+      photo: photos.find((photo) => photo.id === selection[0]),
       albums: albums,
       handleOk: () => console.log('ok'),
-      handleCancel: () => setEditPhoto({})
+      handleCancel: () => setEditPhoto({}),
     });
   };
 
@@ -141,12 +148,15 @@ const PicturesPage = () => {
     return new Promise((resolve, reject) => {
       const storageRef = storage.ref(filename);
 
-      storageRef.delete().then(() => {
-        resolve('ok');
-      }).catch(() => {
-        console.log('error deleting from firebase');
-        reject('error');
-      });
+      storageRef
+        .delete()
+        .then(() => {
+          resolve('ok');
+        })
+        .catch(() => {
+          console.log('error deleting from firebase');
+          reject('error');
+        });
     });
   };
 
@@ -169,11 +179,16 @@ const PicturesPage = () => {
   const startNewDeletion = () => {
     if (selection.length > 0) {
       const id = selection[0];
-      const photo = photos.find(photo => photo.id === id);
+      const photo = photos.find((photo) => photo.id === id);
 
       if (photo && photo.filename) {
-        const percent = Math.round(((deleteCount - selection.length) / deleteCount) * 100);
-        reportProgress(`Photo ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
+        const percent = Math.round(
+          ((deleteCount - selection.length) / deleteCount) * 100
+        );
+        reportProgress(
+          `Photo ${deleteCount - selection.length + 1} of ${deleteCount}`,
+          percent
+        );
         doDeletion(photo, id);
       }
     }
@@ -219,9 +234,10 @@ const PicturesPage = () => {
 
   const handleDeletePictures = () => {
     const count = selection.length;
-    const text = count === 1 ?
-      'Really delete selected photo? It will be deleted permanently.' :
-      `Really delete ${count} selected photos? They will be deleted permanently.`;
+    const text =
+      count === 1
+        ? 'Really delete selected photo? It will be deleted permanently.'
+        : `Really delete ${count} selected photos? They will be deleted permanently.`;
 
     setConfirmation({
       open: true,
@@ -233,7 +249,7 @@ const PicturesPage = () => {
 
   const handleSelectAll = () => {
     if (!allSelected) {
-      const all = photos.map(photo => photo.id);
+      const all = photos.map((photo) => photo.id);
       setSelection(all);
     } else {
       setSelection([]);
@@ -255,8 +271,7 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            {!allSelected
-              ?
+            {!allSelected ? (
               <Button
                 onClick={handleSelectAll}
                 text="Select all"
@@ -265,7 +280,7 @@ const PicturesPage = () => {
                 textRequired={true}
                 color={ButtonColor.black}
               />
-              :
+            ) : (
               <Button
                 onClick={handleSelectAll}
                 text="Deselect all"
@@ -274,7 +289,7 @@ const PicturesPage = () => {
                 textRequired={true}
                 color={ButtonColor.black}
               />
-            }
+            )}
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
@@ -288,16 +303,16 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
-        {photos.length > 0 &&
+        {photos.length > 0 && (
           <PictureListHeader photos={photos} selection={selection} />
-        }
+        )}
       </PictureListToolBar>
 
       <PictureListContainer>
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
 
-        {albums.map(album =>
+        {albums.map((album) => (
           <AlbumContainer key={album.id}>
             <PhotoAlbum
               name={album.name}
@@ -305,7 +320,7 @@ const PicturesPage = () => {
               onClick={() => console.log('click')}
             />
             <PictureListArea count={album.photos.length}>
-              {album.photos.map(photo =>
+              {album.photos.map((photo) => (
                 <Thumbnail
                   key={photo.id}
                   photo={photo}
@@ -313,11 +328,10 @@ const PicturesPage = () => {
                   handleThumbnailClick={handleThumbnailClick}
                   handleCheckClick={handleCheckClick}
                 />
-              )}
+              ))}
             </PictureListArea>
           </AlbumContainer>
-        )}
-
+        ))}
       </PictureListContainer>
     </PictureListOuterContainer>
   );

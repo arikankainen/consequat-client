@@ -23,8 +23,7 @@ const App = () => {
     location.pathname === '/'
   ) {
     if (!back) setBack(true);
-  }
-  else {
+  } else {
     if (back) setBack(false);
   }
 
@@ -35,31 +34,29 @@ const App = () => {
 
       <Main>
         <Switch>
-
-          <Route path='/login'>
+          <Route path="/login">
             <LoginPage />
           </Route>
 
-          <Route path='/signup'>
+          <Route path="/signup">
             <SignupPage />
           </Route>
 
-          <Route path='/logout'>
+          <Route path="/logout">
             <LogoutPage />
           </Route>
 
-          <Route path='/upload'>
+          <Route path="/upload">
             <UploadPage />
           </Route>
 
-          <Route path='/pictures'>
+          <Route path="/pictures">
             <PicturesPage />
           </Route>
 
-          <Route path='/'>
+          <Route path="/">
             <MainPage />
           </Route>
-
         </Switch>
       </Main>
 
