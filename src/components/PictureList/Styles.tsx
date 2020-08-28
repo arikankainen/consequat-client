@@ -6,6 +6,7 @@ export const PictureListOuterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 export const PictureListContainer = styled.div`
@@ -19,11 +20,9 @@ export const PictureListContainer = styled.div`
   padding: 0px 40px;
   padding-top: 40px;
   background-color: #f8f8f8;
-  border-radius: 5px;
 
   ${breakPoints.tablet} {
     padding: 0px 0px;
-    border-radius: 0px;
   }
 `;
 

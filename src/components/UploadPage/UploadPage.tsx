@@ -15,7 +15,9 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
-import Button from '../Buttons/Button';
+import Button, { ButtonColor } from '../Buttons/Button';
+import PhotoAlbum from '../PicturesPage/PhotoAlbum';
+import AlbumContainer from '../PicturesPage/AlbumContainer';
 
 import {
   addPicture,
@@ -26,6 +28,7 @@ import {
 } from '../../reducers/pictureReducer';
 
 import {
+  PictureListOuterContainer,
   PictureListContainer,
   PictureListToolBar,
   PictureListButtonGroups,
@@ -314,11 +317,13 @@ const UploadForm = () => {
     event.preventDefault();
   };
 
+  /*  TODO: Poista kommentti!
   if (pictureState.pictures.length === 0 && !uploadDialogOpen) {
     return (
       <InitialUploadForm />
     );
   }
+  */
 
   const handleSelectAll = () => {
     if (!allSelected) {
@@ -339,9 +344,7 @@ const UploadForm = () => {
   };
 
   return (
-    <PictureListContainer>
-      <Confirmation {...confirmation} />
-
+    <PictureListOuterContainer>
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
@@ -349,12 +352,7 @@ const UploadForm = () => {
               onClick={handleAddPictures}
               text="Add"
               icon={AddButton}
-            />
-            <Button
-              onClick={handleUploadPictures}
-              text="Upload"
-              icon={UploadButton}
-              disabled={pictureState.pictures.length === 0}
+              color={ButtonColor.black}
             />
           </PictureListButtonGroup>
           <PictureListButtonGroup>
@@ -362,16 +360,18 @@ const UploadForm = () => {
               ?
               <Button
                 onClick={handleSelectAll}
-                text="All"
+                text="Select all"
                 icon={CheckButton}
                 textRequired={true}
+                color={ButtonColor.black}
               />
               :
               <Button
                 onClick={handleSelectAll}
-                text="All"
+                text="Deselect all"
                 icon={UncheckButton}
                 textRequired={true}
+                color={ButtonColor.black}
               />
             }
           </PictureListButtonGroup>
@@ -382,6 +382,7 @@ const UploadForm = () => {
               text="Remove"
               icon={DeleteButton}
               disabled={selectedCount === 0}
+              color={ButtonColor.black}
             />
           </PictureListButtonGroup>
         </PictureListButtonGroups>
@@ -393,26 +394,40 @@ const UploadForm = () => {
         />
       </PictureListToolBar>
 
-      <PictureListArea count={pictureState.pictures.length}>
-        {pictureState.pictures.map(file =>
-          <Thumbnail
-            key={file.picture.name}
-            file={file.picture}
-            selected={file.selected}
-          />
-        )}
-      </PictureListArea>
+      <PictureListContainer>
+        <Confirmation {...confirmation} />
 
-      <form onSubmit={handleSubmit}>
-        <UploadFileButton
-          type='file'
-          ref={fileInput}
-          onChange={handleFileChange}
-          multiple
-          accept='image/*'
-        />
-      </form>
-    </PictureListContainer>
+        <AlbumContainer>
+          <PhotoAlbum
+            name='Upload list'
+            description='Photos to be uploaded'
+            buttonText='Upload'
+            buttonTextRequired={true}
+            buttonIcon={UploadButton}
+            onClick={handleUploadPictures}
+          />
+          <PictureListArea count={pictureState.pictures.length}>
+            {pictureState.pictures.map(file =>
+              <Thumbnail
+                key={file.picture.name}
+                file={file.picture}
+                selected={file.selected}
+              />
+            )}
+          </PictureListArea>
+        </AlbumContainer>
+
+        <form onSubmit={handleSubmit}>
+          <UploadFileButton
+            type='file'
+            ref={fileInput}
+            onChange={handleFileChange}
+            multiple
+            accept='image/*'
+          />
+        </form>
+      </PictureListContainer>
+    </PictureListOuterContainer>
   );
 };
 

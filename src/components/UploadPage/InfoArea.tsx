@@ -3,41 +3,51 @@ import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
   width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 8px;
-  
-  ${breakPoints.mobileXL} {
-    flex-direction: column;
+  max-width: ${breakPoints.laptopLWidthNumber - 70}px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  ${breakPoints.tablet} {
+    padding: 0px 5px;
+    padding-bottom: 8px;
   }
-
-  width: ${breakPoints.laptopWidth};
-
-  ${breakPoints.laptop} {
-    width: auto;
-  }
-
 `;
 
-const TextBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  line-height: 1.3;
+const Property = styled.div`
+  color: #eee;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+`;
+
+const Value = styled.div`
+  margin-left: 15px;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 300;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: hidden;
-  padding: 0px 10px;
-
-  ${breakPoints.laptop} {
-    padding: 0px;
-  }
+  line-height: 1.4;
 `;
+
+interface BlockProps {
+  name: string;
+  value: string | undefined | null;
+}
+
+const Block: React.FC<BlockProps> = ({ name, value }) => {
+  return (
+    <>
+      <Property>{name}</Property>
+      <Value>{value}</Value>
+    </>
+  );
+};
 
 interface InfoAreaProps {
   pictureCount: number;
@@ -49,13 +59,29 @@ const InfoArea: React.FC<InfoAreaProps> = ({ pictureCount, selectedCount, select
 
   return (
     <Container>
-      <TextBlock>
-        {selectedCount}/{pictureCount} selected
-      </TextBlock>
+      <Block
+        name='Selected'
+        value={selectedCount + ' of ' + pictureCount}
+      />
 
-      {selectedFile !== null && selectedCount === 1 && <TextBlock>{selectedFile.name}</TextBlock>}
-      {selectedCount === 0 && <TextBlock>No picture selected</TextBlock>}
-      {selectedCount > 1 && <TextBlock>Multiple pictures</TextBlock>}
+      {selectedFile !== null && selectedCount === 1 &&
+        <Block
+          name='Filename'
+          value={selectedFile.name}
+        />
+      }
+      {selectedCount === 0 &&
+        <Block
+          name='Filename'
+          value='No picture selected'
+        />
+      }
+      {selectedCount > 1 &&
+        <Block
+          name='Filename'
+          value='Multiple pictures selected'
+        />
+      }
     </Container>
   );
 };

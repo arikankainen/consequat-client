@@ -36,11 +36,6 @@ const Value = styled.div`
   line-height: 1.4;
 `;
 
-interface PictureListHeaderProps {
-  photos: Photo[];
-  selection: string[];
-}
-
 interface BlockProps {
   name: string;
   value: string | undefined | null;
@@ -54,6 +49,11 @@ const Block: React.FC<BlockProps> = ({ name, value }) => {
     </>
   );
 };
+
+interface PictureListHeaderProps {
+  photos: Photo[];
+  selection: string[];
+}
 
 export const PictureListHeader: React.FC<PictureListHeaderProps> = ({ photos, selection }) => {
   const selectedPhotos = photos.filter(photo => selection.includes(photo.id));

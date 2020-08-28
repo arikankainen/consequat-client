@@ -259,7 +259,7 @@ const PicturesPage = () => {
               ?
               <Button
                 onClick={handleSelectAll}
-                text="All"
+                text="Select all"
                 icon={CheckButton}
                 disabled={photos.length === 0}
                 textRequired={true}
@@ -268,7 +268,7 @@ const PicturesPage = () => {
               :
               <Button
                 onClick={handleSelectAll}
-                text="All"
+                text="Deselect all"
                 icon={UncheckButton}
                 disabled={photos.length === 0}
                 textRequired={true}

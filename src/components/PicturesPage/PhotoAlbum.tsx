@@ -57,10 +57,20 @@ const Edit = styled.div`
 interface PhotoAlbumProps {
   name: string;
   description?: string;
+  buttonText?: string;
+  buttonIcon?: React.FunctionComponent;
+  buttonTextRequired?: boolean;
   onClick: () => void;
 }
 
-const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ name, description, onClick }) => {
+const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
+  name,
+  description,
+  buttonText,
+  buttonIcon,
+  buttonTextRequired,
+  onClick
+}) => {
   return (
     <Container>
       <NameAndDescription>
@@ -69,10 +79,11 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ name, description, onClick }) =
       </NameAndDescription>
       <Edit>
         <Button
-          text='Edit'
+          text={buttonText || 'Edit'}
           onClick={onClick}
           color={ButtonColor.white}
-          icon={EditButton}
+          icon={buttonIcon || EditButton}
+          textRequired={buttonTextRequired}
         />
       </Edit>
     </Container>
