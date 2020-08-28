@@ -1,12 +1,26 @@
 import styled, { css } from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
+export const PictureListOuterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
 export const PictureListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100%;
+  width: 100%;
+  max-width: ${breakPoints.laptopLWidth};
+  padding: 0px 40px;
+  
+  ${breakPoints.laptop} {
+    padding: 0px 0px;
+  }
 `;
 
 export const PictureListToolBar = styled.div`
@@ -19,30 +33,18 @@ export const PictureListToolBar = styled.div`
   align-items: center;
   width: 100%;
   background-color: rgba(23, 23, 25, 0.9);
-
-  ${breakPoints.laptop} {
-    align-items: stretch;
-  }
+  padding: 0px 5px;
 `;
 
 export const PictureListButtonGroups = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: ${breakPoints.laptopWidth};
-
-  ${breakPoints.laptop} {
-    width: auto;
-  }
+  width: 100%;
 `;
 
 export const PictureListButtonGroup = styled.div`
   display: flex;
-  margin: 0px 15px;
-
-  ${breakPoints.laptop} {
-    margin: 0px 5px;
-  }
 `;
 
 interface PictureListAreaProps {
@@ -52,71 +54,10 @@ interface PictureListAreaProps {
 export const PictureListArea = styled.div<PictureListAreaProps>`
   position: relative;
   display: grid;
-  /*grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));*/
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 2px;
   width: 100%;
-  padding: 20px;
-  padding-top: 0px;
-
-  ${breakPoints.laptopL} {
-    padding: 0px;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  }
-  
-  /*
-  ${breakPoints.mobileXL} {
-    padding: 0px;
-    ${props => props.count === 1 && css`
-      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-    `}
-  }
-  */
-`;
-
-export const PictureListToolBarButtonText = styled.div`
-  margin-top: 1px;
-  margin-left: 7px;
-
-  ${breakPoints.mobileXL} {
-    display: none;
-  }
-`;
-
-export const PictureListToolBarButton = styled.button`
-  display: flex;
-  margin: 10px 5px;
-  padding: 7px 10px;
-  background-color: var(--accent-color-2);
-  border: none;
-  border-radius: var(--input-border-radius);
-  color: #eee;
-  font-size: var(--default-font-size);
-  line-height: 1;
-  cursor: pointer;
-
-  & > svg {
-    height: 16px;
-    color: #fff;
-  }
-
-  &:focus {
-    outline-width: 0;
-  }
-
-  &:hover {
-    background-color: var(--accent-color-2-hover);
-  }
-  
-  &:disabled {
-    background-color: var(--accent-color-2-disabled);
-    color: #000755;
-    /*cursor: wait;*/
-
-    & > svg {
-      color: #000755;
-    }
-  }
+  padding: 0px;
 `;
 
 export const UploadFileButton = styled.input`

@@ -1,22 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import breakPoints from '../../utils/breakPoints';
 import { Photo } from '../../utils/types';
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0px 5px;
   padding-bottom: 8px;
-
-  width: ${breakPoints.laptopWidth};
-
-  ${breakPoints.laptop} {
-    width: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+  width: 100%;
 `;
 
 const Property = styled.div`
