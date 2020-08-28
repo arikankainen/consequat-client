@@ -317,13 +317,11 @@ const UploadForm = () => {
     event.preventDefault();
   };
 
-  /*  TODO: Poista kommentti!
   if (pictureState.pictures.length === 0 && !uploadDialogOpen) {
     return (
       <InitialUploadForm />
     );
   }
-  */
 
   const handleSelectAll = () => {
     if (!allSelected) {

@@ -29,29 +29,28 @@ export const Container = styled.div`
   margin: 40px;
   width: 90%;
   max-width: 500px;
-  background-color: #eee;
+  background-color: #fff;
   border-radius: 5px;
 `;
 
 export const Topic = styled.div`
-  padding: 15px 15px 12px 15px;
+  padding: 20px 20px 10px 20px;
   color: #111;
   line-height: 1;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 500;
-  background-color: #ddd;
-  border-bottom: 1px solid #ccc;
+  text-align: left;
+  font-size: 24px;
+  font-weight: 300;
+  background-color: #fff;
   border-radius: 5px 5px 0px 0px;
 `;
 
 export const Content = styled.div`
-  background-color: #eee;
+  background-color: #fff;
 `;
 
 export const Text = styled.div`
   padding: 20px 20px 10px 20px;
-  color: #333;
+  color: #000;
   line-height: 1;
 `;
 
@@ -59,7 +58,7 @@ export const ButtonArea = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 10px 10px 5px 10px;
-  background-color: #eee;
+  background-color: #fff;
   border-radius: 0px 0px 5px 5px;
 `;
 

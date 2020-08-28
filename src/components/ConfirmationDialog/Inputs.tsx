@@ -6,7 +6,7 @@ import { Album } from '../../utils/types';
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 15px 15px 0px 15px;
+  margin: 15px 15px 0px 5px;
 `;
 
 const Label = styled.label`
@@ -14,7 +14,7 @@ const Label = styled.label`
   margin-top: 7px;
   margin-right: 10px;
   width: 100px;
-  color: #111;
+  color: #000;
   font-size: 14px;
   line-height: 1;
   text-align: right;
@@ -25,7 +25,7 @@ const Input = styled.input`
   background-color: #fff;
   border: 1px solid #ccc;
   width: 100%;
-  color: #111;
+  color: #000;
   font-size: 14px;
   padding: 2px 6px 2px 6px;
   line-height: 1;
