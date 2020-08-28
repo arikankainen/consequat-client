@@ -8,13 +8,20 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 50px;
-  margin-bottom: 5px;
+
+  padding-top: 25px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   ${breakPoints.laptop} {
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 5px;
   }
+
+  background-color: #fff;
 `;
 
 const NameAndDescription = styled.div`
@@ -26,7 +33,7 @@ const NameAndDescription = styled.div`
 const Name = styled.div`
   font-size: 24px;
   font-weight: 600;
-  color: #fff;
+  color: #222;
   line-height: 1;
 `;
 
@@ -34,7 +41,7 @@ const Description = styled.div`
   padding-top: 5px;
   font-size: 14px;
   font-weight: 300;
-  color: #ddd;
+  color: #444;
   line-height: 1;
 `;
 
@@ -64,7 +71,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ name, description, onClick }) =
         <Button
           text='Edit'
           onClick={onClick}
-          color={ButtonColor.black}
+          color={ButtonColor.white}
           icon={EditButton}
         />
       </Edit>

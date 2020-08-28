@@ -21,6 +21,7 @@ export const PictureListContainer = styled.div`
   ${breakPoints.laptop} {
     padding: 0px 0px;
   }
+  background-color: #f5f5f5;
 `;
 
 export const PictureListToolBar = styled.div`
@@ -58,6 +59,8 @@ export const PictureListArea = styled.div<PictureListAreaProps>`
   gap: 5px;
   width: 100%;
   padding: 0px;
+  background-color: #fff;
+  padding: 5px;
 `;
 
 export const UploadFileButton = styled.input`
@@ -69,6 +72,7 @@ export const ThumbnailContainer = styled.div`
   display: flex;
   flex-direction: column;
 	cursor: pointer;
+  border: 1px solid #000;
 `;
 
 export const ThumbnailPicture = styled.img`
