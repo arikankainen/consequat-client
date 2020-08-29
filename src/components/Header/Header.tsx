@@ -7,7 +7,7 @@ import { updateLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
 import { ME } from '../../utils/queries';
 import Logo from './Logo';
-import Menu, { Direction } from '../Menu';
+import Menu, { Direction } from '../Menu/Menu';
 import Search from './Search';
 import MenuButton from '../Buttons/MenuButton';
 

@@ -73,21 +73,21 @@ const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 
-
   .usermenu-enter {
     opacity: 0;
-    /*transform: translateX(300px) scale(0.2);*/
     transform: scale(0.2);
   }
+
   .usermenu-enter-active {
     opacity: 1;
-    /*transform: translateX(0) scale(1);*/
     transform: scale(1);
     transition: opacity 300ms, transform 300ms;
   }
+
   .usermenu-exit {
     opacity: 1;
   }
+
   .usermenu-exit-active {
     opacity: 0;
     transform: scale(0.9);
@@ -98,14 +98,17 @@ const GlobalStyles = createGlobalStyle`
     opacity: 0;
     transform: translateY(-300px) scale(0.2);
   }
+
   .notification-enter-active {
     opacity: 1;
     transform: translateY(0) scale(1);
     transition: opacity 300ms, transform 300ms;
   }
+
   .notification-exit {
     opacity: 1;
   }
+
   .notification-exit-active {
     opacity: 0;
     transform: scale(0.9);
@@ -115,13 +118,16 @@ const GlobalStyles = createGlobalStyle`
   .backdrop-enter {
     opacity: 0;
   }
+
   .backdrop-enter-active {
     opacity: 1;
     transition: opacity 300ms;
   }
+
   .backdrop-exit {
     opacity: 1;
   }
+
   .backdrop-exit-active {
     opacity: 0;
     transition: opacity 300ms;
@@ -131,20 +137,22 @@ const GlobalStyles = createGlobalStyle`
     opacity: 0;
     transform: scale(0.9);
   }
+
   .dialog-enter-active {
     opacity: 1;
     transform: scale(1);
     transition: opacity 300ms, transform 300ms;
   }
+
   .dialog-exit {
     opacity: 1;
   }
+
   .dialog-exit-active {
     opacity: 0;
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
   }
-
 `;
 
 export default GlobalStyles;

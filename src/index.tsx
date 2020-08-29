@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import GlobalStyles from './components/GlobalStyles';
+import GlobalStyles from './components/Misc/GlobalStyles';
 
 const authLink = setContext((_, { headers }) => {
   const token = storage.getToken();
@@ -61,8 +61,8 @@ const cache = new InMemoryCache({
     User: {
       fields: {
         photos: {
+          // eslint-disable-next-line
           merge(_existing = [], incoming: any[]) {
-            // eslint-disable-line
             return [...incoming];
           },
         },
@@ -71,8 +71,8 @@ const cache = new InMemoryCache({
     Album: {
       fields: {
         photos: {
+          // eslint-disable-next-line
           merge(_existing = [], incoming: any[]) {
-            // eslint-disable-line
             return [...incoming];
           },
         },
