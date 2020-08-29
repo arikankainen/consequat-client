@@ -35,6 +35,7 @@ const Input = styled.input`
   }
 `;
 
+// TODO: missing focus indicator
 const Search = () => {
   return (
     <SearchContainer>

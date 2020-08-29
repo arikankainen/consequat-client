@@ -1,8 +1,8 @@
 import React from 'react';
-import { FooterContainer } from './Styles';
+import { FooterContainer } from './style';
 
-const Header = () => {
+const Footer = () => {
   return <FooterContainer>Consequat &copy; 2020 Ari Kankainen</FooterContainer>;
 };
 
-export default Header;
+export default Footer;

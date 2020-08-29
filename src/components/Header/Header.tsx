@@ -9,7 +9,6 @@ import { ME } from '../../utils/queries';
 import Logo from './Logo';
 import Menu, { Direction } from '../Menu';
 import Search from './Search';
-import styled from 'styled-components';
 import MenuButton from '../Buttons/MenuButton';
 
 import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
@@ -19,44 +18,18 @@ import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as AlbumsIcon } from '../../images/menu_album.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
-
-const HeaderContainer = styled.div`
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--header-height);
-  min-height: var(--header-height);
-  background-color: var(--navigation-bg-color);
-  padding-left: 10px;
-  padding-right: 10px;
-  z-index: 1000;
-`;
-
-const LeftContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex: 1 1 0%;
-`;
-
-const RightContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex: 1 1 0%;
-`;
+import { HeaderContainer, LeftContainer, RightContainer } from './style';
 
 const Header = () => {
   const loginState = useSelector((state: RootState) => state.system);
   const dispatch = useDispatch();
-
   const [me, resultMe] = useLazyQuery(ME);
 
   useEffect(() => {
     if (!loginState.loggedIn && storage.getToken()) {
       me();
     }
-  }, [loginState, me]);
+  }, [loginState]); // eslint-disable-line
 
   useEffect(() => {
     if (resultMe.data) {
