@@ -8,9 +8,7 @@ import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
 import InfoArea from './InfoArea';
 import resizeImage from '../../utils/resizeImage';
-import Confirmation, {
-  ConfirmationProps,
-} from '../ConfirmationDialog/Confirmation';
+import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import InitialUploadForm from './InitialUploadForm';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';

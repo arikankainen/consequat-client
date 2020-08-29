@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-const ButtonContainer = styled(Link)`
+const Container = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,9 +34,9 @@ interface MenuButtonProps {
 
 const MenuButton: React.FC<MenuButtonProps> = (props) => {
   return (
-    <ButtonContainer to={props.to}>
+    <Container to={props.to}>
       <props.icon />
-    </ButtonContainer>
+    </Container>
   );
 };
 

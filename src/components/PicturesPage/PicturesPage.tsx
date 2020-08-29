@@ -5,15 +5,13 @@ import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from './Thumbnail';
 import { PictureListHeader } from './PictureListHeader';
 import { storage } from '../../firebase/firebase';
-import Confirmation, {
-  ConfirmationProps,
-} from '../ConfirmationDialog/Confirmation';
+import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
-import EditPhoto, { EditPhotoProps } from '../ConfirmationDialog/EditPhoto';
+import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
 import PhotoAlbum from './PhotoAlbum';
 import AlbumContainer from './AlbumContainer';
 

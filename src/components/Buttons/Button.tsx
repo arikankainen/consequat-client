@@ -14,13 +14,13 @@ export enum ButtonContentAlign {
   right,
 }
 
-interface ButtonContainerProps {
+interface ContainerProps {
   width?: number;
   contentAlign?: ButtonContentAlign;
   backColor?: ButtonColor;
 }
 
-const ButtonContainer = styled.button<ButtonContainerProps>`
+const Container = styled.button<ContainerProps>`
   display: flex;
   justify-content: center;
   margin: 10px 5px;
@@ -165,7 +165,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = (props) => {
   return (
-    <ButtonContainer
+    <Container
       type={props.type}
       disabled={props.disabled}
       width={props.width}
@@ -182,7 +182,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       {props.text && !props.textRequired && props.icon && !props.width && (
         <OptionalText icon={!!props.icon}>{props.text}</OptionalText>
       )}
-    </ButtonContainer>
+    </Container>
   );
 };
 
