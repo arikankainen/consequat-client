@@ -1,17 +1,17 @@
 import React from 'react';
-import Modal from './Modal';
+import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { ConfirmationProps } from './Confirmation';
 
 import {
-  Container,
-  Topic,
-  Content,
-  ButtonArea,
+  DialogContainer,
+  DialogTopic,
+  DialogContent,
+  DialogButtonArea,
   ProgressContainer,
   Progress,
   Text,
-} from './styles';
+} from './style';
 
 const ConfirmationDialog: React.FC<ConfirmationProps> = ({
   open,
@@ -26,11 +26,11 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
   handleCancel,
 }) => {
   return (
-    <Modal open={open}>
-      <Container>
-        <Topic>{topic || <>Confirmation</>}</Topic>
+    <BaseDialog open={open}>
+      <DialogContainer>
+        <DialogTopic>{topic || <>Confirmation</>}</DialogTopic>
 
-        <Content>
+        <DialogContent>
           {text && <Text>{text}</Text>}
 
           {typeof progress !== 'undefined' && (
@@ -46,9 +46,9 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
               <Progress progress={progress2} />
             </ProgressContainer>
           )}
-        </Content>
+        </DialogContent>
 
-        <ButtonArea>
+        <DialogButtonArea>
           {handleCancel && handleOk && (
             <>
               <Button
@@ -84,9 +84,9 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
               width={75}
             />
           )}
-        </ButtonArea>
-      </Container>
-    </Modal>
+        </DialogButtonArea>
+      </DialogContainer>
+    </BaseDialog>
   );
 };
 

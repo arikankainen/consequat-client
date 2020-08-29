@@ -1,13 +1,13 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { BackDrop, FloatingContainer } from './styles';
+import { BackDrop, FloatingDialogContainer } from './style';
 
-interface Props {
+interface BaseDialogProps {
   open?: boolean;
   children: JSX.Element;
 }
 
-const Modal: React.FC<Props> = ({ open, children }) => {
+const BaseDialog: React.FC<BaseDialogProps> = ({ open, children }) => {
   return (
     <>
       <CSSTransition
@@ -27,10 +27,10 @@ const Modal: React.FC<Props> = ({ open, children }) => {
         unmountOnExit
         classNames="dialog"
       >
-        <FloatingContainer>{children}</FloatingContainer>
+        <FloatingDialogContainer>{children}</FloatingDialogContainer>
       </CSSTransition>
     </>
   );
 };
 
-export default Modal;
+export default BaseDialog;

@@ -43,28 +43,35 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
-  if (props.open && !open) {
-    setSavedProps(props);
-    setOpen(true);
-    setSaving(false);
-  } else if (!props.open && open) {
-    setOpen(false);
-  }
-
-  if (props.photo) {
-    initialValues.name = props.photo.name ? props.photo.name : '';
-    initialValues.location = props.photo.location ? props.photo.location : '';
-    initialValues.description = props.photo.description
-      ? props.photo.description
-      : '';
-    initialValues.album = '';
-
-    if (props.albums && props.photo.album) {
-      const albumId = props.photo.album.id;
-      const album = props.albums.find((album) => album.id === albumId);
-      initialValues.album = album?.id || '';
+  useEffect(() => {
+    if (props.open) {
+      setSavedProps(props);
+      setOpen(true);
+      setSaving(false);
+    } else {
+      setOpen(false);
     }
-  }
+  }, [props]); // eslint-disable-line
+
+  useEffect(() => {
+    if (savedProps.photo) {
+      initialValues.name = savedProps.photo.name ? savedProps.photo.name : '';
+      initialValues.location = savedProps.photo.location
+        ? savedProps.photo.location
+        : '';
+      initialValues.description = savedProps.photo.description
+        ? savedProps.photo.description
+        : '';
+
+      if (savedProps.albums && savedProps.photo.album) {
+        const albumId = savedProps.photo.album.id;
+        const album = savedProps.albums.find((album) => album.id === albumId);
+        initialValues.album = album?.id || '';
+      } else {
+        initialValues.album = '';
+      }
+    }
+  }, [savedProps]); // eslint-disable-line
 
   const handleCancel = () => {
     if (savedProps.handleCancel) savedProps.handleCancel();
@@ -74,14 +81,14 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     setMessage('Saving...');
     setSaving(true);
 
-    if (props.photo) {
+    if (savedProps.photo) {
       editPhoto({
         variables: {
           name: values.name,
           location: values.location,
           album: values.album !== '0' ? values.album : null,
           description: values.description,
-          id: props.photo.id,
+          id: savedProps.photo.id,
         },
       });
     }
@@ -104,7 +111,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   return (
     <EditPhotoDialog
       open={open}
-      albums={props.albums}
+      albums={savedProps.albums}
       message={message}
       saving={saving}
       initialValues={initialValues}

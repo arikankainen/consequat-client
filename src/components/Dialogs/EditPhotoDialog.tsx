@@ -2,11 +2,17 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Album } from '../../utils/types';
-import Modal from './Modal';
+import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues } from './EditPhoto';
 import { TextInput, TextAreaInput, SelectInput } from './Inputs';
-import { Container, Topic, Content, ButtonArea, SavingText } from './styles';
+import {
+  DialogContainer,
+  DialogTopic,
+  DialogContent,
+  DialogButtonArea,
+  SavingIndicator,
+} from './style';
 
 export interface Props {
   open: boolean;
@@ -30,8 +36,8 @@ const EditPhotoDialog: React.FC<Props> = ({
   validation,
 }) => {
   return (
-    <Modal open={open}>
-      <Container>
+    <BaseDialog open={open}>
+      <DialogContainer>
         <Formik
           initialValues={initialValues}
           enableReinitialize={true}
@@ -39,15 +45,15 @@ const EditPhotoDialog: React.FC<Props> = ({
           onSubmit={handleSubmit}
         >
           <Form>
-            <Topic>Edit photo</Topic>
-            <Content>
+            <DialogTopic>Edit photo</DialogTopic>
+            <DialogContent>
               <TextInput name="name" label="Name" />
               <TextInput name="location" label="Location" />
               <SelectInput name="album" label="Album" albums={albums} />
               <TextAreaInput name="description" label="Description" />
-            </Content>
-            <ButtonArea>
-              <SavingText>{message}</SavingText>
+            </DialogContent>
+            <DialogButtonArea>
+              <SavingIndicator>{message}</SavingIndicator>
               <Button
                 text="Cancel"
                 type="button"
@@ -62,11 +68,11 @@ const EditPhotoDialog: React.FC<Props> = ({
                 disabled={saving}
                 onClick={() => void 0}
               />
-            </ButtonArea>
+            </DialogButtonArea>
           </Form>
         </Formik>
-      </Container>
-    </Modal>
+      </DialogContainer>
+    </BaseDialog>
   );
 };
 
