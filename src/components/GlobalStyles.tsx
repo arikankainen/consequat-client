@@ -127,19 +127,19 @@ const GlobalStyles = createGlobalStyle`
     transition: opacity 300ms;
   }
 
-  .confirmation-enter {
+  .dialog-enter {
     opacity: 0;
     transform: scale(0.9);
   }
-  .confirmation-enter-active {
+  .dialog-enter-active {
     opacity: 1;
     transform: scale(1);
     transition: opacity 300ms, transform 300ms;
   }
-  .confirmation-exit {
+  .dialog-exit {
     opacity: 1;
   }
-  .confirmation-exit-active {
+  .dialog-exit-active {
     opacity: 0;
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
