@@ -1,20 +1,6 @@
 import React from 'react';
 import { Photo } from '../../utils/types';
-import { Property, Value, Container } from './style';
-
-interface InfoBlockProps {
-  name: string;
-  value: string | undefined | null;
-}
-
-const InfoBlock: React.FC<InfoBlockProps> = ({ name, value }) => {
-  return (
-    <>
-      <Property>{name}</Property>
-      <Value>{value}</Value>
-    </>
-  );
-};
+import ListHeader from '../ListHeader/ListHeader';
 
 interface PictureListHeaderProps {
   photos: Photo[];
@@ -46,18 +32,28 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
   };
 
   return (
-    <Container>
-      <InfoBlock
-        name="Date added"
-        value={
-          selectedPhoto &&
-          selectedPhoto.dateAdded &&
-          formatDate(selectedPhoto.dateAdded)
-        }
-      />
-      <InfoBlock name="Name" value={selectedPhoto?.name} />
-      <InfoBlock name="Location" value={selectedPhoto?.location} />
-      <InfoBlock name="Description" value={selectedPhoto?.description} />
-    </Container>
+    <ListHeader
+      items={[
+        {
+          name: 'Date added',
+          value:
+            selectedPhoto &&
+            selectedPhoto.dateAdded &&
+            formatDate(selectedPhoto.dateAdded),
+        },
+        {
+          name: 'Name',
+          value: selectedPhoto?.name,
+        },
+        {
+          name: 'Location',
+          value: selectedPhoto?.location,
+        },
+        {
+          name: 'Description',
+          value: selectedPhoto?.description,
+        },
+      ]}
+    />
   );
 };

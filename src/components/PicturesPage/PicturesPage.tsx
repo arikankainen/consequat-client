@@ -299,9 +299,7 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
-        {photos.length > 0 && (
-          <PictureListHeader photos={photos} selection={selection} />
-        )}
+        <PictureListHeader photos={photos} selection={selection} />
       </PictureListToolBar>
 
       <PictureListContainer>

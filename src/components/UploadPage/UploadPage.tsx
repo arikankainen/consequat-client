@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_PHOTO, ME } from '../../utils/queries';
 import { v1 as uuid } from 'uuid';
 import UploadThumbnail from './UploadThumbnail';
-import PhotoInfoArea from '../PhotoInfoArea/PhotoInfoArea';
+import UploadListHeader from '../UploadListHeader/UploadListHeader';
 import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import InitialUpload from '../InitialUpload/InitialUpload';
@@ -388,7 +388,7 @@ const UploadForm = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
-        <PhotoInfoArea
+        <UploadListHeader
           pictureCount={pictureCount}
           selectedCount={selectedCount}
           selectedFile={selectedFile}
