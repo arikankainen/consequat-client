@@ -18,7 +18,7 @@ import {
   Button,
   QuestionArea,
   QuestionLink,
-} from './Styles';
+} from './style';
 
 const LoginPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);

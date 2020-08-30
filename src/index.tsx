@@ -15,7 +15,7 @@ import { setContext } from '@apollo/link-context';
 //import { WebSocketLink } from '@apollo/link-ws';
 
 import { Provider } from 'react-redux';
-import App from './App';
+import App from './components/App/App';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from './components/Misc/GlobalStyles';

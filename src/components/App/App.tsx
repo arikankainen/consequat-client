@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { SiteContainer, Main } from './components/Styles';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import { SiteContainer, Main } from './style';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
-import Notification from './components/Notification';
-import MainPage from './components/MainPage/MainPage';
-import LoginPage from './components/LoginPage/LoginPage';
-import LogoutPage from './components/LoginPage/LogoutPage';
-import SignupPage from './components/LoginPage/SignupPage';
-import UploadPage from './components/UploadPage/UploadPage';
-import PicturesPage from './components/PicturesPage/PicturesPage';
+import Notification from '../Notification/Notification';
+import MainPage from '../MainPage/MainPage';
+import LoginPage from '../LoginPage/LoginPage';
+import LogoutPage from '../LoginPage/LogoutPage';
+import SignupPage from '../LoginPage/SignupPage';
+import UploadPage from '../UploadPage/UploadPage';
+import PicturesPage from '../PicturesPage/PicturesPage';
 
 const App = () => {
   const location = useLocation();

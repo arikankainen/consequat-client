@@ -14,7 +14,6 @@ const Label = styled.label`
   text-align: left;
   font-weight: 500;
   line-height: 1;
-  /*text-transform: uppercase;*/
 `;
 
 const Icon = styled.div`

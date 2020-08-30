@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { DELETE_PHOTO, ME } from '../../utils/queries';
 import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from './Thumbnail';
-import { PictureListHeader } from './PictureListHeader';
+import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import { storage } from '../../firebase/firebase';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
@@ -22,7 +22,7 @@ import {
   PictureListButtonGroups,
   PictureListButtonGroup,
   PictureListArea,
-} from '../PictureList/Styles';
+} from '../PictureList/style';
 
 const PicturesPage = () => {
   const resultMe = useQuery(ME);

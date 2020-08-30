@@ -14,7 +14,7 @@ import {
   ThumbnailIconArea,
   ThumbnailNameArea,
   ThumbnailNameAreaText,
-} from '../PictureList/Styles';
+} from '../PictureList/style';
 
 interface ThumbnailProps {
   file: File;

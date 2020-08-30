@@ -6,10 +6,10 @@ import { useMutation } from '@apollo/client';
 import { ADD_PHOTO, ME } from '../../utils/queries';
 import { v1 as uuid } from 'uuid';
 import Thumbnail from './Thumbnail';
-import InfoArea from './InfoArea';
+import PhotoInfoArea from '../PhotoInfoArea/PhotoInfoArea';
 import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
-import InitialUploadForm from './InitialUploadForm';
+import InitialUpload from '../InitialUpload/InitialUpload';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
@@ -35,7 +35,7 @@ import {
   PictureListButtonGroup,
   PictureListArea,
   UploadFileButton,
-} from '../PictureList/Styles';
+} from '../PictureList/style';
 import { useHistory } from 'react-router-dom';
 
 const UploadForm = () => {
@@ -325,7 +325,7 @@ const UploadForm = () => {
   };
 
   if (pictureState.pictures.length === 0 && !uploadDialogOpen) {
-    return <InitialUploadForm />;
+    return <InitialUpload />;
   }
 
   const handleSelectAll = () => {
@@ -389,7 +389,7 @@ const UploadForm = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
-        <InfoArea
+        <PhotoInfoArea
           pictureCount={pictureCount}
           selectedCount={selectedCount}
           selectedFile={selectedFile}

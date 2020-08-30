@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorNotification, SuccessNotification } from './Styles';
+import { ErrorNotification, SuccessNotification } from './style';
 
 export enum MessageType {
   Error,

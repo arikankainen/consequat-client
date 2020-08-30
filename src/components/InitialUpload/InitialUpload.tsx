@@ -8,9 +8,9 @@ import {
   InitialUploadContainer,
   InitialUploadButton,
   InitialUploadFileButton,
-} from './Styles';
+} from './style';
 
-const InitialUploadForm = () => {
+const InitialUpload = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
@@ -52,4 +52,4 @@ const InitialUploadForm = () => {
   );
 };
 
-export default InitialUploadForm;
+export default InitialUpload;
