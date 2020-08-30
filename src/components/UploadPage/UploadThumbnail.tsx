@@ -3,25 +3,18 @@ import { useDispatch } from 'react-redux';
 import { setError } from '../../reducers/notificationReducer';
 import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
-
-import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
 import placeholder from '../../images/placeholder.png';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
-import {
-  ThumbnailContainer,
-  ThumbnailPlaceholder,
-  ThumbnailPicture,
-  ThumbnailIconArea,
-  ThumbnailNameArea,
-  ThumbnailNameAreaText,
-} from '../PictureList/style';
-
-interface ThumbnailProps {
+interface UploadThumbnailProps {
   file: File;
   selected: boolean;
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
+const UploadThumbnail: React.FC<UploadThumbnailProps> = ({
+  file,
+  selected,
+}) => {
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -49,27 +42,16 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ file, selected }) => {
   };
 
   return (
-    <ThumbnailContainer ref={container}>
-      <ThumbnailPlaceholder>
-        <ThumbnailPicture
-          ref={thumbnailImage}
-          onClick={handleThumbnailClick}
-          src={placeholder}
-          onError={(e: React.InvalidEvent<HTMLImageElement>) => {
-            e.target.style.display = 'none';
-          }}
-        />
-      </ThumbnailPlaceholder>
-
-      <ThumbnailIconArea onClick={handleCheckClick} selected={selected}>
-        {selected && <CheckedIcon />}
-      </ThumbnailIconArea>
-
-      <ThumbnailNameArea>
-        <ThumbnailNameAreaText>{file.name}</ThumbnailNameAreaText>
-      </ThumbnailNameArea>
-    </ThumbnailContainer>
+    <Thumbnail
+      src={placeholder}
+      name={file.name}
+      selected={selected}
+      handleIconClick={handleCheckClick}
+      handleThumbnailClick={handleThumbnailClick}
+      containerRef={container}
+      thumbnailRef={thumbnailImage}
+    />
   );
 };
 
-export default Thumbnail;
+export default UploadThumbnail;

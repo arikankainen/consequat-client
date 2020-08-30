@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { storage } from '../../firebase/firebase';
 import { useMutation } from '@apollo/client';
 import { ADD_PHOTO, ME } from '../../utils/queries';
 import { v1 as uuid } from 'uuid';
-import Thumbnail from './Thumbnail';
+import UploadThumbnail from './UploadThumbnail';
 import PhotoInfoArea from '../PhotoInfoArea/PhotoInfoArea';
 import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
@@ -36,7 +37,6 @@ import {
   PictureListArea,
   UploadFileButton,
 } from '../PictureList/style';
-import { useHistory } from 'react-router-dom';
 
 const UploadForm = () => {
   const pictureState = useSelector((state: RootState) => state.picture);
@@ -410,7 +410,7 @@ const UploadForm = () => {
           />
           <PictureListArea count={pictureState.pictures.length}>
             {pictureState.pictures.map((file) => (
-              <Thumbnail
+              <UploadThumbnail
                 key={file.picture.name}
                 file={file.picture}
                 selected={file.selected}

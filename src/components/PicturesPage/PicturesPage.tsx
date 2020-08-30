@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { DELETE_PHOTO, ME } from '../../utils/queries';
 import { Photo, User, Album } from '../../utils/types';
-import Thumbnail from './Thumbnail';
+import Thumbnail from '../Thumbnail/Thumbnail';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import { storage } from '../../firebase/firebase';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
@@ -321,10 +321,11 @@ const PicturesPage = () => {
               {album.photos.map((photo) => (
                 <Thumbnail
                   key={photo.id}
-                  photo={photo}
+                  src={photo.thumbUrl}
+                  name={photo.name}
                   selected={selection.includes(photo.id)}
-                  handleThumbnailClick={handleThumbnailClick}
-                  handleCheckClick={handleCheckClick}
+                  handleThumbnailClick={() => handleThumbnailClick(photo.id)}
+                  handleIconClick={() => handleCheckClick(photo.id)}
                 />
               ))}
             </PictureListArea>
