@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
-export const Container = styled.div`
+export const AlbumContainer = styled.div`
+  width: 100%;
+  margin-bottom: 40px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
+`;
+
+export const TopicContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -49,4 +55,19 @@ export const Edit = styled.div`
   margin-top: 2px;
   margin-bottom: 2px;
   margin: 0px;
+`;
+
+export const PictureListArea = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 5px;
+  width: 100%;
+  padding: 0px;
+  background-color: #fff;
+  padding: 20px;
+
+  ${breakPoints.tablet} {
+    padding: 5px;
+  }
 `;

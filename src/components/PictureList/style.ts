@@ -51,25 +51,6 @@ export const PictureListButtonGroup = styled.div`
   display: flex;
 `;
 
-interface PictureListAreaProps {
-  count: number;
-}
-
-export const PictureListArea = styled.div<PictureListAreaProps>`
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 5px;
-  width: 100%;
-  padding: 0px;
-  background-color: #fff;
-  padding: 20px;
-
-  ${breakPoints.tablet} {
-    padding: 5px;
-  }
-`;
-
 export const UploadFileButton = styled.input`
   display: none;
 `;

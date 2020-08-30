@@ -17,8 +17,7 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
-import PhotoAlbumTopic from '../PhotoAlbumTopic/PhotoAlbumTopic';
-import AlbumContainer from '../PicturesPage/AlbumContainer';
+import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 
 import {
   addPicture,
@@ -34,7 +33,6 @@ import {
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
-  PictureListArea,
   UploadFileButton,
 } from '../PictureList/style';
 
@@ -358,6 +356,7 @@ const UploadForm = () => {
               color={ButtonColor.black}
             />
           </PictureListButtonGroup>
+
           <PictureListButtonGroup>
             {!allSelected ? (
               <Button
@@ -399,16 +398,15 @@ const UploadForm = () => {
       <PictureListContainer>
         <Confirmation {...confirmation} />
 
-        <AlbumContainer>
-          <PhotoAlbumTopic
-            name="Upload list"
-            description="Photos to be uploaded"
-            buttonText="Upload"
-            buttonTextRequired={true}
-            buttonIcon={UploadButton}
-            onClick={handleUploadPictures}
-          />
-          <PictureListArea count={pictureState.pictures.length}>
+        <PhotoAlbum
+          name="Upload list"
+          description="Photos to be uploaded"
+          buttonText="Upload"
+          buttonTextRequired={true}
+          buttonIcon={UploadButton}
+          onClick={handleUploadPictures}
+        >
+          <>
             {pictureState.pictures.map((file) => (
               <UploadThumbnail
                 key={file.picture.name}
@@ -416,8 +414,8 @@ const UploadForm = () => {
                 selected={file.selected}
               />
             ))}
-          </PictureListArea>
-        </AlbumContainer>
+          </>
+        </PhotoAlbum>
 
         <form onSubmit={handleSubmit}>
           <UploadFileButton

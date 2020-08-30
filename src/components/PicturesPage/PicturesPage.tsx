@@ -12,8 +12,7 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
-import PhotoAlbumTopic from '../PhotoAlbumTopic/PhotoAlbumTopic';
-import AlbumContainer from './AlbumContainer';
+import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 
 import {
   PictureListOuterContainer,
@@ -21,7 +20,6 @@ import {
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
-  PictureListArea,
 } from '../PictureList/style';
 
 const PicturesPage = () => {
@@ -311,13 +309,13 @@ const PicturesPage = () => {
         <EditPhoto {...editPhoto} />
 
         {albums.map((album) => (
-          <AlbumContainer key={album.id}>
-            <PhotoAlbumTopic
-              name={album.name}
-              description={album.description}
-              onClick={() => console.log('click')}
-            />
-            <PictureListArea count={album.photos.length}>
+          <PhotoAlbum
+            key={album.id}
+            name={album.name}
+            description={album.description}
+            onClick={() => console.log('album button click')}
+          >
+            <>
               {album.photos.map((photo) => (
                 <Thumbnail
                   key={photo.id}
@@ -328,8 +326,8 @@ const PicturesPage = () => {
                   handleIconClick={() => handleCheckClick(photo.id)}
                 />
               ))}
-            </PictureListArea>
-          </AlbumContainer>
+            </>
+          </PhotoAlbum>
         ))}
       </PictureListContainer>
     </PictureListOuterContainer>
