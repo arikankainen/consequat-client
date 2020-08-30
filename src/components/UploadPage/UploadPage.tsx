@@ -16,7 +16,7 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
-import PhotoAlbum from '../PicturesPage/PhotoAlbum';
+import PhotoAlbumTopic from '../PhotoAlbumTopic/PhotoAlbumTopic';
 import AlbumContainer from '../PicturesPage/AlbumContainer';
 
 import {
@@ -400,7 +400,7 @@ const UploadForm = () => {
         <Confirmation {...confirmation} />
 
         <AlbumContainer>
-          <PhotoAlbum
+          <PhotoAlbumTopic
             name="Upload list"
             description="Photos to be uploaded"
             buttonText="Upload"

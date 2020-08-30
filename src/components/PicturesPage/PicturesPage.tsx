@@ -12,7 +12,7 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
-import PhotoAlbum from './PhotoAlbum';
+import PhotoAlbumTopic from '../PhotoAlbumTopic/PhotoAlbumTopic';
 import AlbumContainer from './AlbumContainer';
 
 import {
@@ -312,7 +312,7 @@ const PicturesPage = () => {
 
         {albums.map((album) => (
           <AlbumContainer key={album.id}>
-            <PhotoAlbum
+            <PhotoAlbumTopic
               name={album.name}
               description={album.description}
               onClick={() => console.log('click')}
