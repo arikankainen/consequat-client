@@ -66,6 +66,12 @@ const cache = new InMemoryCache({
             return [...incoming];
           },
         },
+        albums: {
+          // eslint-disable-next-line
+          merge(_existing = [], incoming: any[]) {
+            return [...incoming];
+          },
+        },
       },
     },
     Album: {

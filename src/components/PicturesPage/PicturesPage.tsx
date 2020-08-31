@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { DELETE_PHOTO, ME } from '../../utils/queries';
+import { DELETE_PHOTO, DELETE_ALBUM, ME } from '../../utils/queries';
 import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
@@ -40,7 +40,7 @@ const PicturesPage = () => {
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
-      console.log(error);
+      logger.error(error);
     },
     update: (cache, response) => {
       try {
@@ -74,7 +74,41 @@ const PicturesPage = () => {
           });
         }
       } catch (error) {
-        console.log(error);
+        logger.error(error);
+      }
+    },
+  });
+
+  const [deleteAlbumFromDb] = useMutation(DELETE_ALBUM, {
+    onError: (error) => {
+      logger.error(error);
+    },
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
+        if (existingCache) {
+          const id = response.data.deleteAlbum.id;
+
+          const existingAlbums = existingCache.me.albums;
+          const updatedAlbums = existingAlbums.filter((album) => album.id !== id);
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              albums: updatedAlbums,
+            },
+          };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache,
+          });
+        }
+      } catch (error) {
+        logger.error(error);
       }
     },
   });
@@ -290,6 +324,44 @@ const PicturesPage = () => {
     });
   };
 
+  const handleDeleteAlbumConfirmed = (id: string, name: string) => {
+    setConfirmation({
+      open: true,
+      topic: 'Deleting...',
+      text: `Deleting '${name}'`,
+      handleOk: () => setConfirmation({}),
+      disableOk: true,
+    });
+
+    let errors = false;
+    try {
+      deleteAlbumFromDb({ variables: { id } });
+    } catch (error) {
+      errors = true;
+      logger.error(`Error deleting album '${name}' from database`);
+    }
+
+    if (!errors) setConfirmation({});
+    else {
+      setConfirmation({
+        open: true,
+        topic: 'Failed',
+        text: `Deletion of '${name}' failed`,
+        handleOk: () => setConfirmation({}),
+        disableOk: false,
+      });
+    }
+  };
+
+  const handleDeleteAlbum = (id: string, name: string) => {
+    setConfirmation({
+      open: true,
+      text: `Really delete album '${name}'? It will be deleted permanently.`,
+      handleOk: () => handleDeleteAlbumConfirmed(id, name),
+      handleCancel: () => setConfirmation({}),
+    });
+  };
+
   const handleSelectAll = () => {
     if (!allSelected) {
       const all = photos.map((photo) => photo.id);
@@ -359,7 +431,11 @@ const PicturesPage = () => {
             key={album.id}
             name={album.name}
             description={album.description}
-            onClick={() => handleEditAlbum(album.id)}
+            isEmpty={album.photos.length === 0}
+            editButtonVisible={album.id !== '0'}
+            deleteButtonVisible={album.photos.length === 0}
+            onEditClick={() => handleEditAlbum(album.id)}
+            onDeleteClick={() => handleDeleteAlbum(album.id, album.name)}
           >
             <>
               {album.photos.map((photo) => (

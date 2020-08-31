@@ -71,3 +71,11 @@ export const PictureListArea = styled.div`
     padding: 5px;
   }
 `;
+
+export const EmptyText = styled.div`
+  color: #999;
+
+  ${breakPoints.tablet} {
+    padding: 5px;
+  }
+`;

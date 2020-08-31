@@ -48,6 +48,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
       setSavedProps(props);
       setOpen(true);
       setSaving(false);
+      setMessage('');
     } else {
       setOpen(false);
     }

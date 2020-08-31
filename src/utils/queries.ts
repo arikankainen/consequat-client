@@ -169,3 +169,16 @@ export const EDIT_ALBUM = gql`
     }
   ${ALBUM_DETAILS}
 `;
+
+export const DELETE_ALBUM = gql`
+  mutation deleteAlbum(
+    $id: ID!
+  ) {
+      deleteAlbum(
+        id: $id
+      ) {
+        ...AlbumDetails
+      }
+    }
+  ${ALBUM_DETAILS}
+`;

@@ -43,6 +43,7 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
       setSavedProps(props);
       setOpen(true);
       setSaving(false);
+      setMessage('');
     } else {
       setOpen(false);
     }
