@@ -13,6 +13,7 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
+import logger from '../../utils/logger';
 
 import {
   PictureListOuterContainer,
@@ -31,10 +32,9 @@ const PicturesPage = () => {
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
-  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<
-    boolean
-  >(false);
+  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
+  const [deletionError, setDeletionError] = useState<string>('');
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -97,10 +97,8 @@ const PicturesPage = () => {
   }, [resultMe.data]);
 
   useEffect(() => {
-    if (selection.length === photos.length && !allSelected)
-      setAllSelected(true);
-    else if (selection.length !== photos.length && allSelected)
-      setAllSelected(false);
+    if (selection.length === photos.length && !allSelected) setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
   }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
@@ -127,7 +125,7 @@ const PicturesPage = () => {
       open: true,
       photo: photos.find((photo) => photo.id === selection[0]),
       albums: albums,
-      handleOk: () => console.log('ok'),
+      handleOk: () => void 0,
       handleCancel: () => setEditPhoto({}),
     });
   };
@@ -149,26 +147,55 @@ const PicturesPage = () => {
         .then(() => {
           resolve('ok');
         })
-        .catch(() => {
-          console.log('error deleting from firebase');
-          reject('error');
+        .catch((error) => {
+          reject(error);
         });
     });
   };
 
   const doDeletion = async (photo: Photo, id: string) => {
     setsingleDeletionInProgress(true);
+    const allowedError = 'storage/object-not-found';
+    let errors = false;
 
     try {
-      deletePhotoFromDb({ variables: { id } });
+      await deletePhotoFromFirebase(photo.filename);
     } catch (error) {
-      console.log(error);
+      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
+
+      if (error.code !== allowedError) {
+        errors = true;
+        const message = `Error deleting ${photo.name}`;
+        setDeletionError(message);
+      }
     }
 
-    await deletePhotoFromFirebase(photo.filename);
-    await deletePhotoFromFirebase(photo.thumbFilename);
+    if (!errors) {
+      try {
+        await deletePhotoFromFirebase(photo.thumbFilename);
+      } catch (error) {
+        logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
 
-    setSelection(selection.slice(1));
+        if (error.code !== allowedError) {
+          errors = true;
+          const message = `Error deleting thumbnail for ${photo.name}`;
+          setDeletionError(message);
+        }
+      }
+    }
+
+    if (!errors) {
+      try {
+        deletePhotoFromDb({ variables: { id } });
+      } catch (error) {
+        errors = true;
+
+        const message = `Error deleting database entry for ${photo.name}`;
+        setDeletionError(message);
+      }
+    }
+
+    if (!errors) setSelection(selection.slice(1));
     setsingleDeletionInProgress(false);
   };
 
@@ -178,41 +205,49 @@ const PicturesPage = () => {
       const photo = photos.find((photo) => photo.id === id);
 
       if (photo && photo.filename) {
-        const percent = Math.round(
-          ((deleteCount - selection.length) / deleteCount) * 100
-        );
-        reportProgress(
-          `Photo ${deleteCount - selection.length + 1} of ${deleteCount}`,
-          percent
-        );
+        const percent = Math.round(((deleteCount - selection.length) / deleteCount) * 100);
+        reportProgress(`Photo ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
         doDeletion(photo, id);
       }
     }
   };
 
   const deleteDone = () => {
-    setConfirmation({
-      ...confirmation,
-      topic: 'Delete completed',
-      text: 'All selected photos deleted',
-      progress: 100,
-      handleOk: () => setConfirmation({}),
-      disableOk: false,
-    });
+    if (deletionError) {
+      setConfirmation({
+        ...confirmation,
+        topic: 'Delete failed',
+        text: deletionError,
+        handleOk: () => setConfirmation({}),
+        disableOk: false,
+      });
+    } else {
+      setConfirmation({
+        ...confirmation,
+        topic: 'Delete completed',
+        text: 'All selected photos deleted',
+        progress: 100,
+        handleOk: () => setConfirmation({}),
+        disableOk: false,
+      });
 
-    setTimeout(() => {
-      setConfirmation({});
-    }, 1000);
+      setTimeout(() => {
+        setConfirmation({});
+      }, 1000);
+    }
   };
 
   useEffect(() => {
-    if (deletionInProgress && selection.length > 0) {
+    if (deletionError) {
+      setDeletionInProgress(false);
+      deleteDone();
+    } else if (deletionInProgress && selection.length > 0) {
       if (!singleDeletionInProgress) startNewDeletion();
     } else if (deletionInProgress && selection.length === 0) {
       setDeletionInProgress(false);
       deleteDone();
     }
-  }, [deletionInProgress, singleDeletionInProgress, selection.length]); // eslint-disable-line
+  }, [deletionInProgress, singleDeletionInProgress, selection.length, deletionError]); // eslint-disable-line
 
   const handleDeletePicturesConfirmed = () => {
     setConfirmation({
@@ -224,6 +259,7 @@ const PicturesPage = () => {
       disableOk: true,
     });
 
+    setDeletionError('');
     setDeleteCount(selection.length);
     setDeletionInProgress(true);
   };
