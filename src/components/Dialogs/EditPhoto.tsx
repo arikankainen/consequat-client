@@ -56,12 +56,8 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   useEffect(() => {
     if (savedProps.photo) {
       initialValues.name = savedProps.photo.name ? savedProps.photo.name : '';
-      initialValues.location = savedProps.photo.location
-        ? savedProps.photo.location
-        : '';
-      initialValues.description = savedProps.photo.description
-        ? savedProps.photo.description
-        : '';
+      initialValues.location = savedProps.photo.location ? savedProps.photo.location : '';
+      initialValues.description = savedProps.photo.description ? savedProps.photo.description : '';
 
       if (savedProps.albums && savedProps.photo.album) {
         const albumId = savedProps.photo.album.id;
@@ -111,6 +107,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   return (
     <EditPhotoDialog
       open={open}
+      dateAdded={savedProps.photo?.dateAdded}
       albums={savedProps.albums}
       message={message}
       saving={saving}

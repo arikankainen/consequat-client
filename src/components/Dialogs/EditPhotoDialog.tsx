@@ -5,7 +5,8 @@ import { Album } from '../../utils/types';
 import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues } from './EditPhoto';
-import { TextInput, TextAreaInput, SelectInput } from './Inputs';
+import formatDate from '../../utils/formatDate';
+import { UncontrolledInput, TextInput, TextAreaInput, SelectInput } from './Inputs';
 import {
   DialogContainer,
   DialogTopic,
@@ -16,6 +17,7 @@ import {
 
 export interface Props {
   open: boolean;
+  dateAdded: Date | undefined;
   handleSubmit: (values: FormValues) => void;
   handleCancel: () => void;
   albums?: Album[];
@@ -27,6 +29,7 @@ export interface Props {
 
 const EditPhotoDialog: React.FC<Props> = ({
   open,
+  dateAdded,
   handleSubmit,
   handleCancel,
   albums,
@@ -47,6 +50,7 @@ const EditPhotoDialog: React.FC<Props> = ({
           <Form>
             <DialogTopic>Edit photo</DialogTopic>
             <DialogContent>
+              <UncontrolledInput label="Added" value={formatDate(dateAdded)} />
               <TextInput name="name" label="Name" />
               <TextInput name="location" label="Location" />
               <SelectInput name="album" label="Album" albums={albums} />

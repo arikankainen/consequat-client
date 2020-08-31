@@ -111,7 +111,7 @@ export const InputContainer = styled.div`
 
 export const Label = styled.label`
   display: block;
-  margin-top: 7px;
+  margin-top: 8px;
   margin-right: 10px;
   width: 100px;
   color: #000;
@@ -119,6 +119,15 @@ export const Label = styled.label`
   line-height: 1;
   text-align: right;
   font-weight: 400;
+`;
+
+export const DummyInput = styled.div`
+  background-color: #fff;
+  width: 100%;
+  color: #000;
+  font-size: 14px;
+  padding: 8px 7px 7px 7px;
+  line-height: 1;
 `;
 
 export const Input = styled.input`
@@ -142,7 +151,7 @@ export const Select = styled.select`
   width: 100%;
   color: #111;
   font-size: 14px;
-  padding: 2px 2px 2px 2px;
+  padding: 1px 2px 2px 2px;
   line-height: 1;
 
   &:focus {
@@ -159,7 +168,7 @@ export const TextArea = styled.textarea`
   min-height: 50px;
   color: #111;
   font-size: 14px;
-  padding: 7px 6px;
+  padding: 6px 6px;
   line-height: 1.2;
   resize: vertical;
 
