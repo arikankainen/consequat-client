@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import breakPoints from '../../utils/breakPoints';
 
 export const BackDrop = styled.div`
   position: fixed;
@@ -29,8 +30,16 @@ export const DialogContainer = styled.div`
   margin: 40px;
   width: 90%;
   max-width: 500px;
+  max-height: 100vh;
+  overflow-y: auto;
   background-color: #fff;
   border-radius: 5px;
+
+  ${breakPoints.mobileL} {
+    width: 100%;
+    margin: 0px;
+    border-radius: 0;
+  }
 `;
 
 export const DialogTopic = styled.div`
@@ -46,6 +55,7 @@ export const DialogTopic = styled.div`
 
 export const DialogContent = styled.div`
   background-color: #fff;
+  overflow: auto;
 `;
 
 export const DialogButtonArea = styled.div`
