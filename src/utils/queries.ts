@@ -45,7 +45,7 @@ export const SIGNUP = gql`
     }
 `;
 
-const PHOTOS_DETAILS = gql`
+const PHOTO_DETAILS = gql`
   fragment PhotoDetails on Photo {
     mainUrl,
     thumbUrl,
@@ -88,7 +88,7 @@ export const ME = gql`
       id,
     }
   }
-  ${PHOTOS_DETAILS}
+  ${PHOTO_DETAILS}
   ${ALBUM_DETAILS}
 `;
 
@@ -116,7 +116,7 @@ export const ADD_PHOTO = gql`
         ...PhotoDetails
       }
     }
-  ${PHOTOS_DETAILS}
+  ${PHOTO_DETAILS}
 `;
 
 export const EDIT_PHOTO = gql`
@@ -137,7 +137,7 @@ export const EDIT_PHOTO = gql`
         ...PhotoDetails
       }
     }
-  ${PHOTOS_DETAILS}
+  ${PHOTO_DETAILS}
 `;
 
 export const DELETE_PHOTO = gql`
@@ -150,5 +150,22 @@ export const DELETE_PHOTO = gql`
         ...PhotoDetails
       }
     }
-  ${PHOTOS_DETAILS}
+  ${PHOTO_DETAILS}
+`;
+
+export const EDIT_ALBUM = gql`
+  mutation editAlbum(
+    $name: String!,
+    $description: String,
+    $id: ID!
+  ) {
+      editAlbum(
+        name: $name,
+        description: $description,
+        id: $id
+      ) {
+        ...AlbumDetails
+      }
+    }
+  ${ALBUM_DETAILS}
 `;

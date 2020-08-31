@@ -12,6 +12,7 @@ import { ReactComponent as CheckButton } from '../../images/button_check.svg';
 import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
+import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
 
@@ -30,6 +31,7 @@ const PicturesPage = () => {
   const [selection, setSelection] = useState<string[]>([]);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
+  const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
   const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
@@ -118,6 +120,15 @@ const PicturesPage = () => {
     }
     */
     setSelection([id]);
+  };
+
+  const handleEditAlbum = (id: string) => {
+    setEditAlbum({
+      open: true,
+      album: albums.find((album) => album.id === id),
+      handleOk: () => void 0,
+      handleCancel: () => setEditAlbum({}),
+    });
   };
 
   const handleEditPictures = () => {
@@ -341,13 +352,14 @@ const PicturesPage = () => {
       <PictureListContainer>
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
+        <EditAlbum {...editAlbum} />
 
         {albums.map((album) => (
           <PhotoAlbum
             key={album.id}
             name={album.name}
             description={album.description}
-            onClick={() => console.log('album button click')}
+            onClick={() => handleEditAlbum(album.id)}
           >
             <>
               {album.photos.map((photo) => (

@@ -35,7 +35,7 @@ export const DialogContainer = styled.div`
   background-color: #fff;
   border-radius: 5px;
 
-  ${breakPoints.mobileL} {
+  ${breakPoints.mobileXL} {
     width: 100%;
     margin: 0px;
     border-radius: 0;
