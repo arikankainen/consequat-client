@@ -489,6 +489,7 @@ const PicturesPage = () => {
             key={album.id}
             name={album.name}
             description={album.description}
+            isNotRealAlbum={album.id === '0'}
             isEmpty={album.photos.length === 0}
             editButtonVisible={album.id !== '0'}
             deleteButtonVisible={album.photos.length === 0}

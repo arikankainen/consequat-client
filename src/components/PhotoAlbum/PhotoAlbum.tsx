@@ -19,6 +19,7 @@ interface PhotoAlbumProps {
   name: string;
   description?: string;
   buttonTextRequired?: boolean;
+  isNotRealAlbum?: boolean;
   isEmpty?: boolean;
   onUploadClick?: () => void;
   onEditClick?: () => void;
@@ -33,6 +34,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   name,
   description,
   buttonTextRequired,
+  isNotRealAlbum,
   isEmpty,
   onUploadClick,
   onEditClick,
@@ -42,6 +44,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   editButtonVisible,
   children,
 }) => {
+  if (isEmpty && isNotRealAlbum) return null;
   return (
     <AlbumContainer>
       <TopicContainer>
@@ -79,7 +82,9 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           )}
         </Edit>
       </TopicContainer>
-      <PictureListArea>{!isEmpty ? children : <EmptyText>No photos</EmptyText>}</PictureListArea>
+      <PictureListArea>
+        {!isEmpty ? children : <EmptyText>No photos</EmptyText>}
+      </PictureListArea>
     </AlbumContainer>
   );
 };
