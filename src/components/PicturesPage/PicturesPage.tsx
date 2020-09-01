@@ -313,22 +313,27 @@ const PicturesPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (deletionError) {
-      setDeletionInProgress(false);
-      deleteDone();
-    } else if (deletionInProgress && selection.length > 0) {
-      if (!singleDeletionInProgress) startNewDeletion();
-    } else if (deletionInProgress && selection.length === 0) {
-      setDeletionInProgress(false);
-      deleteDone();
-    }
-  }, [
-    deletionInProgress,
-    singleDeletionInProgress,
-    selection.length,
-    deletionError,
-  ]); // eslint-disable-line
+  useEffect(
+    () => {
+      if (deletionError) {
+        setDeletionInProgress(false);
+        deleteDone();
+      } else if (deletionInProgress && selection.length > 0) {
+        if (!singleDeletionInProgress) startNewDeletion();
+      } else if (deletionInProgress && selection.length === 0) {
+        setDeletionInProgress(false);
+        deleteDone();
+      }
+    },
+    /* eslint-disable */
+    [
+      deletionInProgress,
+      singleDeletionInProgress,
+      selection.length,
+      deletionError,
+    ]
+  );
+  /* eslint-enable */
 
   const handleDeletePicturesConfirmed = () => {
     setConfirmation({

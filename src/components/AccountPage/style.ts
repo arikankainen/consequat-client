@@ -26,6 +26,14 @@ export const TopicArea = styled.div`
   width: 100%;
   background-color: #fff;
   box-shadow: var(--default-box-shadow);
+
+  ${breakPoints.tablet} {
+    padding: 20px;
+  }
+
+  ${breakPoints.mobileXL} {
+    padding: 15px;
+  }
 `;
 
 export const Topic = styled.h1`
@@ -51,6 +59,11 @@ export const BoxContainer = styled.div`
 
   ${breakPoints.tablet} {
     flex-direction: column;
+    padding: 10px;
+  }
+
+  ${breakPoints.mobileXL} {
+    padding: 10px 0px;
   }
 `;
 
@@ -62,6 +75,15 @@ export const Box = styled.div`
   box-shadow: var(--default-box-shadow);
   padding: 20px;
   margin: 20px;
+
+  ${breakPoints.tablet} {
+    margin: 10px;
+  }
+
+  ${breakPoints.mobileXL} {
+    padding: 15px;
+    margin: 10px 0px;
+  }
 `;
 
 export const BoxTopic = styled.h3`
@@ -88,6 +110,12 @@ export const SettingText = styled.div`
 export const SettingValue = styled.div`
   color: #666;
   font-size: 16px;
+  line-height: 1.3;
+`;
+
+export const SettingDescription = styled.div`
+  color: #666;
+  font-size: 13px;
   line-height: 1.3;
 `;
 

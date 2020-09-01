@@ -1,13 +1,13 @@
 import React from 'react';
 import { SettingContainer, SettingText, SettingValue, Link } from './style';
 
-interface SettingProps {
+interface TextSettingProps {
   name: string;
   value: string;
   onClick?: () => void;
 }
 
-const Setting: React.FC<SettingProps> = ({
+const TextSetting: React.FC<TextSettingProps> = ({
   name,
   value,
   onClick: onValueClick,
@@ -26,4 +26,4 @@ const Setting: React.FC<SettingProps> = ({
   );
 };
 
-export default Setting;
+export default TextSetting;
