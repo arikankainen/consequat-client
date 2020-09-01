@@ -88,7 +88,8 @@ const UploadForm = () => {
   const reportProgress = (filename: string, percentage: number) => {
     dispatch(updateProgress(filename, percentage));
     const remainingFiles = pictureState.pictures.length;
-    const percentageFiles = ((uploadCount - remainingFiles) / uploadCount) * 100;
+    const percentageFiles =
+      ((uploadCount - remainingFiles) / uploadCount) * 100;
     const oneFilePercentage = 100 / uploadCount;
 
     setConfirmation({
@@ -108,7 +109,9 @@ const UploadForm = () => {
       task.on(
         'state_changed',
         function progress(snapshot) {
-          const percentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          const percentage = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
           reportProgress(file.name, percentage);
         },
         function error(err) {
@@ -154,7 +157,8 @@ const UploadForm = () => {
 
     const resized = await resizeImage(file, true, 500);
     const mainUrl = await uploadPicture(file, filename);
-    const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
+    const thumbUrl =
+      resized != null ? await uploadThumb(resized, thumbFilename) : '';
 
     addPhotoToDb({
       variables: {
@@ -212,7 +216,9 @@ const UploadForm = () => {
 
   useEffect(() => {
     if (uploadInProgress && pictureState.pictures.length > 0) {
-      const uploadingAlready = pictureState.pictures.filter((p) => p.progress > -1);
+      const uploadingAlready = pictureState.pictures.filter(
+        (p) => p.progress > -1
+      );
 
       if (uploadingAlready.length === 0) {
         if (!uploadCancelled) startNewUpload();
@@ -261,7 +267,7 @@ const UploadForm = () => {
 
   const handleUploadPictures = () => {
     const count = pictureState.pictures.length;
-    const text = count === 1 ? 'Upload selected photo?' : `Upload all ${count} photos?`;
+    const text = count === 1 ? 'Upload photo?' : `Upload all ${count} photos?`;
 
     setConfirmation({
       open: true,
@@ -304,7 +310,9 @@ const UploadForm = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) => dispatch(addPicture(file)));
+      Array.from(event.target.files).forEach((file) =>
+        dispatch(addPicture(file))
+      );
     }
   };
 

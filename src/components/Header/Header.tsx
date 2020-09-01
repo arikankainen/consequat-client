@@ -15,7 +15,6 @@ import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
 import { ReactComponent as AccountIcon } from '../../images/menu_settings.svg';
 import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
-import { ReactComponent as AlbumsIcon } from '../../images/menu_album.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
 import { HeaderContainer, LeftContainer, RightContainer } from './style';
@@ -61,12 +60,6 @@ const Header = () => {
       subText: 'Browse your own pictures',
       link: '/pictures',
       icon: PicturesIcon,
-    },
-    {
-      text: 'Albums',
-      subText: 'Manage your photo albums',
-      link: '/albums',
-      icon: AlbumsIcon,
     },
     {
       text: 'Account',

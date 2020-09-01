@@ -43,7 +43,7 @@ export const DialogContainer = styled.div`
 `;
 
 export const DialogTopic = styled.div`
-  padding: 20px 20px 10px 20px;
+  padding: 25px 20px 10px 20px;
   color: #111;
   line-height: 1;
   text-align: left;
