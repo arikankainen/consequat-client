@@ -72,7 +72,7 @@ export const BoxTopic = styled.h3`
   line-height: 1;
 `;
 
-export const Setting = styled.div`
+export const SettingContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Setting from './Setting';
 import {
   OuterContainer,
   Container,
@@ -8,9 +9,6 @@ import {
   Box,
   BoxTopic,
   BoxContainer,
-  Setting,
-  SettingText,
-  SettingValue,
 } from './style';
 
 const AccountPage = () => {
@@ -25,21 +23,12 @@ const AccountPage = () => {
         <BoxContainer>
           <Box>
             <BoxTopic>Personal information</BoxTopic>
-            <Setting>
-              <SettingText>Username</SettingText>
-              <SettingValue>admin</SettingValue>
-            </Setting>
-            <Setting>
-              <SettingText>Email</SettingText>
-              <SettingValue>admin@mail.com</SettingValue>
-            </Setting>
+            <Setting name="Username" value="admin" />
+            <Setting name="Email" value="admin@mail.com" />
           </Box>
           <Box>
             <BoxTopic>Preferences</BoxTopic>
-            <Setting>
-              <SettingText>Setting</SettingText>
-              <SettingValue>Value</SettingValue>
-            </Setting>
+            <Setting name="Setting" value="value" />
           </Box>
         </BoxContainer>
       </Container>
