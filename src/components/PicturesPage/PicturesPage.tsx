@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { DELETE_PHOTO, DELETE_ALBUM, ME } from '../../utils/queries';
 import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import { storage } from '../../firebase/firebase';
+import { addPicture } from '../../reducers/pictureReducer';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
+import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import { ReactComponent as AlbumButton } from '../../images/button_album.svg';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
@@ -16,6 +20,7 @@ import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
 import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
+import { InitialUploadFileButton } from '../InitialUpload/style';
 
 import {
   PictureListOuterContainer,
@@ -35,9 +40,14 @@ const PicturesPage = () => {
   const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
-  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(false);
+  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<
+    boolean
+  >(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const [deletionError, setDeletionError] = useState<string>('');
+  const fileInput = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -93,7 +103,9 @@ const PicturesPage = () => {
           const id = response.data.deleteAlbum.id;
 
           const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.filter((album) => album.id !== id);
+          const updatedAlbums = existingAlbums.filter(
+            (album) => album.id !== id
+          );
 
           const updatedCache = {
             ...existingCache,
@@ -134,8 +146,10 @@ const PicturesPage = () => {
   }, [resultMe.data]);
 
   useEffect(() => {
-    if (selection.length === photos.length && !allSelected) setAllSelected(true);
-    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
+    if (selection.length === photos.length && !allSelected)
+      setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected)
+      setAllSelected(false);
   }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
@@ -216,7 +230,9 @@ const PicturesPage = () => {
     try {
       await deletePhotoFromFirebase(photo.filename);
     } catch (error) {
-      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
+      logger.error(
+        `Error deleting ${photo.filename} from firebase: ${error.code}`
+      );
 
       if (error.code !== allowedError) {
         errors = true;
@@ -229,7 +245,9 @@ const PicturesPage = () => {
       try {
         await deletePhotoFromFirebase(photo.thumbFilename);
       } catch (error) {
-        logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
+        logger.error(
+          `Error deleting ${photo.filename} from firebase: ${error.code}`
+        );
 
         if (error.code !== allowedError) {
           errors = true;
@@ -260,8 +278,13 @@ const PicturesPage = () => {
       const photo = photos.find((photo) => photo.id === id);
 
       if (photo && photo.filename) {
-        const percent = Math.round(((deleteCount - selection.length) / deleteCount) * 100);
-        reportProgress(`Photo ${deleteCount - selection.length + 1} of ${deleteCount}`, percent);
+        const percent = Math.round(
+          ((deleteCount - selection.length) / deleteCount) * 100
+        );
+        reportProgress(
+          `Photo ${deleteCount - selection.length + 1} of ${deleteCount}`,
+          percent
+        );
         doDeletion(photo, id);
       }
     }
@@ -302,7 +325,12 @@ const PicturesPage = () => {
       setDeletionInProgress(false);
       deleteDone();
     }
-  }, [deletionInProgress, singleDeletionInProgress, selection.length, deletionError]); // eslint-disable-line
+  }, [
+    deletionInProgress,
+    singleDeletionInProgress,
+    selection.length,
+    deletionError,
+  ]); // eslint-disable-line
 
   const handleDeletePicturesConfirmed = () => {
     setConfirmation({
@@ -381,11 +409,44 @@ const PicturesPage = () => {
     }
   };
 
+  const handleAddPictures = () => {
+    if (fileInput.current !== null) fileInput.current.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      Array.from(event.target.files).forEach((file) =>
+        dispatch(addPicture(file))
+      );
+      history.push('/upload');
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <PictureListOuterContainer>
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
+            <form onSubmit={handleSubmit}>
+              <Button
+                onClick={handleAddPictures}
+                text="Add"
+                icon={AddButton}
+                color={ButtonColor.black}
+              />
+              <InitialUploadFileButton
+                type="file"
+                ref={fileInput}
+                onChange={handleFileChange}
+                multiple
+                accept=".jpg,.jpeg,.png,.gif"
+              />
+            </form>
+
             <Button
               onClick={handleEditPictures}
               text="Edit"
