@@ -145,10 +145,18 @@ const RequiredText = styled.div<TextProps>`
   `}
 `;
 
-const OptionalText = styled(RequiredText)`
-  ${breakPoints.mobileM} {
-    display: none;
-  }
+interface OptionalTextProps {
+  breakPoint?: string;
+}
+
+const OptionalText = styled(RequiredText)<OptionalTextProps>`
+  ${(props) =>
+    props.breakPoint &&
+    css`
+      @media screen and (max-width: ${props.breakPoint}) {
+        display: none;  
+      }
+  `}
 `;
 
 interface ButtonProps {
@@ -158,6 +166,7 @@ interface ButtonProps {
   width?: number;
   disabled?: boolean;
   textRequired?: boolean;
+  breakPoint?: string;
   contentAlign?: ButtonContentAlign;
   onClick: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
@@ -180,7 +189,9 @@ const Button: React.FC<ButtonProps> = (props) => {
       )}
 
       {props.text && !props.textRequired && props.icon && !props.width && (
-        <OptionalText icon={!!props.icon}>{props.text}</OptionalText>
+        <OptionalText breakPoint={props.breakPoint} icon={!!props.icon}>
+          {props.text}
+        </OptionalText>
       )}
     </Container>
   );

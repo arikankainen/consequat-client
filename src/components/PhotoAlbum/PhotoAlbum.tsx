@@ -18,7 +18,6 @@ import {
 interface PhotoAlbumProps {
   name: string;
   description?: string;
-  buttonTextRequired?: boolean;
   isNotRealAlbum?: boolean;
   isEmpty?: boolean;
   onUploadClick?: () => void;
@@ -33,7 +32,6 @@ interface PhotoAlbumProps {
 const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   name,
   description,
-  buttonTextRequired,
   isNotRealAlbum,
   isEmpty,
   onUploadClick,
@@ -59,7 +57,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onUploadClick || (() => void 0)}
               color={ButtonColor.white}
               icon={UploadButton}
-              textRequired={buttonTextRequired}
+              breakPoint="290px"
             />
           )}
           {editButtonVisible && (
@@ -68,7 +66,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onEditClick || (() => void 0)}
               color={ButtonColor.white}
               icon={EditButton}
-              textRequired={buttonTextRequired}
+              breakPoint="400px"
             />
           )}
           {deleteButtonVisible && (
@@ -77,7 +75,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onDeleteClick || (() => void 0)}
               color={ButtonColor.white}
               icon={DeleteButton}
-              textRequired={buttonTextRequired}
+              breakPoint="400px"
             />
           )}
         </Edit>

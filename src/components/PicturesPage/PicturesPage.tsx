@@ -437,6 +437,7 @@ const PicturesPage = () => {
                 text="Add"
                 icon={AddButton}
                 color={ButtonColor.black}
+                breakPoint="400px"
               />
               <InitialUploadFileButton
                 type="file"
@@ -453,6 +454,7 @@ const PicturesPage = () => {
               icon={EditButton}
               disabled={selection.length !== 1}
               color={ButtonColor.black}
+              breakPoint="400px"
             />
           </PictureListButtonGroup>
 
@@ -462,6 +464,7 @@ const PicturesPage = () => {
               text="Create album"
               icon={AlbumButton}
               color={ButtonColor.black}
+              breakPoint="320px"
             />
           </PictureListButtonGroup>
 
@@ -472,6 +475,7 @@ const PicturesPage = () => {
               icon={DeleteButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
+              breakPoint="450px"
             />
           </PictureListButtonGroup>
         </PictureListButtonGroups>

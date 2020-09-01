@@ -352,6 +352,7 @@ const UploadForm = () => {
               text="Add"
               icon={AddButton}
               color={ButtonColor.black}
+              breakPoint="280px"
             />
           </PictureListButtonGroup>
 
@@ -361,16 +362,16 @@ const UploadForm = () => {
                 onClick={handleSelectAll}
                 text="Select all"
                 icon={CheckButton}
-                textRequired={true}
                 color={ButtonColor.black}
+                breakPoint="265px"
               />
             ) : (
               <Button
                 onClick={handleSelectAll}
                 text="Deselect all"
                 icon={UncheckButton}
-                textRequired={true}
                 color={ButtonColor.black}
+                breakPoint="265px"
               />
             )}
           </PictureListButtonGroup>
@@ -382,6 +383,7 @@ const UploadForm = () => {
               icon={DeleteButton}
               disabled={selectedCount === 0}
               color={ButtonColor.black}
+              breakPoint="340px"
             />
           </PictureListButtonGroup>
         </PictureListButtonGroups>
@@ -399,7 +401,6 @@ const UploadForm = () => {
         <PhotoAlbum
           name="Upload list"
           description="Photos to be uploaded"
-          buttonTextRequired={true}
           uploadButtonVisible={true}
           onUploadClick={handleUploadPictures}
         >
