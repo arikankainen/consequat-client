@@ -90,3 +90,12 @@ export const SettingValue = styled.div`
   font-size: 16px;
   line-height: 1.3;
 `;
+
+export const Link = styled.span`
+  color: var(--accent-color-2);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent-color-2-hover);
+  }
+`;

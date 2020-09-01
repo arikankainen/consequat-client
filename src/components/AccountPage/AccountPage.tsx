@@ -12,6 +12,10 @@ import {
 } from './style';
 
 const AccountPage = () => {
+  const handlePasswordClick = () => {
+    console.log('passwordClick');
+  };
+
   return (
     <OuterContainer>
       <Container>
@@ -25,6 +29,11 @@ const AccountPage = () => {
             <BoxTopic>Personal information</BoxTopic>
             <Setting name="Username" value="admin" />
             <Setting name="Email" value="admin@mail.com" />
+            <Setting
+              name="Password"
+              value="change password"
+              onClick={handlePasswordClick}
+            />
           </Box>
           <Box>
             <BoxTopic>Preferences</BoxTopic>
