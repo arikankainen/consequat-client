@@ -17,7 +17,12 @@ import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
-import { HeaderContainer, LeftContainer, RightContainer } from './style';
+import {
+  HeaderContainer,
+  HeaderInnerContainer,
+  LeftContainer,
+  RightContainer,
+} from './style';
 
 const Header = () => {
   const loginState = useSelector((state: RootState) => state.system);
@@ -82,27 +87,28 @@ const Header = () => {
 
   const userMenuSettings = {
     classNames: 'usermenu',
-    top: '60px',
     direction: Direction.Right,
   };
 
   return (
     <HeaderContainer>
-      <LeftContainer>
-        <Logo />
-      </LeftContainer>
-      <Search />
-      <RightContainer>
-        {loginState.loggedIn ? (
-          <Menu
-            button={userMenuButton}
-            items={userMenuItems}
-            settings={userMenuSettings}
-          />
-        ) : (
-          <MenuButton to="/login" text="Login" icon={LoginIcon} />
-        )}
-      </RightContainer>
+      <HeaderInnerContainer>
+        <LeftContainer>
+          <Logo />
+        </LeftContainer>
+        <Search />
+        <RightContainer>
+          {loginState.loggedIn ? (
+            <Menu
+              button={userMenuButton}
+              items={userMenuItems}
+              settings={userMenuSettings}
+            />
+          ) : (
+            <MenuButton to="/login" text="Login" icon={LoginIcon} />
+          )}
+        </RightContainer>
+      </HeaderInnerContainer>
     </HeaderContainer>
   );
 };

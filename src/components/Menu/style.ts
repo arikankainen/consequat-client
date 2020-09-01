@@ -1,30 +1,39 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Direction } from './Menu';
+import breakPoints from '../../utils/breakPoints';
 
 interface MenuItemsContainerProps {
-  top: string;
   direction: Direction;
 }
 
 export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   position: absolute;
+  width: 300px;
   padding: 0px 0px;
   background-color: var(--navigation-bg-color);
 
   ${(props) =>
     props.direction === Direction.Right &&
     css`
-      right: 0px;
+      right: -10px;
   `}
 
   ${(props) =>
     props.direction === Direction.Left &&
     css`
-      left: 0px;
+      left: -10px;
   `}
 
-  top: ${(props) => props.top};
+  top: 50px;
+
+  ${breakPoints.mobileL} {
+    width: 100vw;
+  }
+`;
+
+export const MenuButtonContainer = styled.div`
+  position: relative;
 `;
 
 export const MenuButton = styled.div`

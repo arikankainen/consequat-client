@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { MenuItems } from './MenuItems';
-import { MenuButton } from './style';
+import { MenuButton, MenuButtonContainer } from './style';
 
 export enum Direction {
   Left,
@@ -22,7 +22,6 @@ interface Item {
 
 interface Settings {
   classNames: string;
-  top: string;
   direction: Direction;
 }
 
@@ -51,7 +50,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   };
 
   return (
-    <>
+    <MenuButtonContainer>
       <MenuButton onClick={() => toggleMenu()}>
         <button.icon />
       </MenuButton>
@@ -63,7 +62,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
       >
         <MenuItems button={button} items={items} settings={settings} />
       </CSSTransition>
-    </>
+    </MenuButtonContainer>
   );
 };
 

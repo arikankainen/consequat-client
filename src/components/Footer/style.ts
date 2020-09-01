@@ -6,8 +6,8 @@ export const FooterContainer = styled.div`
   align-items: center;
   height: 50px;
   min-height: 50px;
-  background-color: var(--footer-bg-color);
+  background-color: #000;
   padding-left: 20px;
   padding-right: 20px;
-  color: #666;
+  color: #888;
 `;

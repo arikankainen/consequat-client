@@ -11,7 +11,7 @@ const SearchContainer = styled.div`
   margin-left: 10px;
   margin-right: 10px;
   padding-left: 15px;
-  height: var(--button-size);
+  height: 34px;
   border-radius: var(--input-border-radius);
   background-color: var(--input-bg-color);
 
@@ -29,13 +29,15 @@ const Input = styled.input`
   border: none;
   color: var(--input-color);
   font-size: var(--default-font-size);
+  padding-top: 1px;
+  line-height: 1;
 
   &:focus {
     outline-width: 0;
   }
 `;
 
-// TODO: missing focus indicator
+// TODO: add focus indicator
 const Search = () => {
   return (
     <SearchContainer>

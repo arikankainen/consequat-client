@@ -30,6 +30,7 @@ export const PictureListToolBar = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: ${breakPoints.laptopLWidth};
   background-color: rgba(23, 23, 25, 0.9);
   padding: 0px 35px;
   padding-top: 10px;

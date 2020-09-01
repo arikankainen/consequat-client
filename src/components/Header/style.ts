@@ -1,17 +1,26 @@
 import styled from 'styled-components';
+import breakPoints from '../../utils/breakPoints';
 
 export const HeaderContainer = styled.div`
   position: sticky;
   top: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background-color: var(--navigation-bg-color);
+`;
+
+export const HeaderInnerContainer = styled.div`
+  display: flex;
   justify-content: space-between;
   align-items: center;
   height: var(--header-height);
-  min-height: var(--header-height);
-  background-color: var(--navigation-bg-color);
   padding-left: 10px;
   padding-right: 10px;
-  z-index: 1000;
+  min-height: var(--header-height);
+  max-width: ${breakPoints.laptopLWidth};
+  width: 100%;
 `;
 
 export const LeftContainer = styled.div`

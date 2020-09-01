@@ -12,7 +12,7 @@ import {
 
 export const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
   return (
-    <MenuItemsContainer top={settings.top} direction={settings.direction}>
+    <MenuItemsContainer direction={settings.direction}>
       {items.map((item) => {
         return (
           <MenuItem key={item.text}>

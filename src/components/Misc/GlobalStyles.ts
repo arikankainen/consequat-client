@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   :root {
     --bg-color: rgb(23, 23, 25);
+    --bg-color: rgb(50, 50, 55);
     --bg-color-active: #191920;
     --accent-color-1: #c37f1d;
     --accent-color-2: #007ad9;
@@ -19,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
     --navigation-bg-color: #232325;
     --navigation-bg-color: #303032;
     --navigation-bg-color: rgba(38, 38, 40, 0.9);
+    --navigation-bg-color: rgb(0, 0, 0);
     --navigation-bg-color-hover: #303032;
     --footer-bg-color: rgba(0, 0, 0, 0.8);
     --navigation-bg-color-hover: rgba(255, 255, 255, 0.1);
@@ -34,8 +36,8 @@ const GlobalStyles = createGlobalStyle`
     --color-success-hover: #5bc360;
     --color-error: #be2b2b;
     --color-inprogress: #c3c22a;
-    --input-bg-color: #c9c9cf;
-    --input-color: #222;
+    --input-bg-color: #333;
+    --input-color: #ccc;
     --image-color: #555558;
     --image-size: 140px;
     --progress-back: rgba(0, 0, 0, 0.5);
