@@ -13,8 +13,6 @@ import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import { ReactComponent as AlbumButton } from '../../images/button_album.svg';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
-import { ReactComponent as CheckButton } from '../../images/button_check.svg';
-import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
 import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
 import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
@@ -398,15 +396,6 @@ const PicturesPage = () => {
       handleOk: () => handleDeleteAlbumConfirmed(id, name),
       handleCancel: () => setConfirmation({}),
     });
-  };
-
-  const handleSelectAll = () => {
-    if (!allSelected) {
-      const all = photos.map((photo) => photo.id);
-      setSelection(all);
-    } else {
-      setSelection([]);
-    }
   };
 
   const handleAddPictures = () => {
