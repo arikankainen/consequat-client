@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import * as Yup from 'yup';
 import logger from '../../utils/logger';
-import { EDIT_ALBUM, ME } from '../../utils/queries';
+import { EDIT_ALBUM, CREATE_ALBUM, ME } from '../../utils/queries';
 import { Album } from '../../utils/types';
 import EditAlbumDialog from './EditAlbumDialog';
 
@@ -16,11 +16,15 @@ const initialValues: FormValues = {
   description: '',
 };
 
-const validation = Yup.object({});
+const validation = Yup.object({
+  name: Yup.string()
+    .min(3, 'Must be at least 3 characters')
+    .required('Name required'),
+});
 
 export interface EditAlbumProps {
   open?: boolean;
-  album?: Album;
+  album?: Album | null;
   handleOk?: () => void;
   handleCancel?: () => void;
 }
@@ -32,6 +36,13 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   const [message, setMessage] = useState<string>('');
 
   const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
+    onError: (error) => {
+      logger.error(error);
+    },
+    refetchQueries: [{ query: ME }], // TODO: update cache manually
+  });
+
+  const [createAlbum, createAlbumResponse] = useMutation(CREATE_ALBUM, {
     onError: (error) => {
       logger.error(error);
     },
@@ -52,7 +63,12 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   useEffect(() => {
     if (savedProps.album) {
       initialValues.name = savedProps.album.name ? savedProps.album.name : '';
-      initialValues.description = savedProps.album.description ? savedProps.album.description : '';
+      initialValues.description = savedProps.album.description
+        ? savedProps.album.description
+        : '';
+    } else {
+      initialValues.name = '';
+      initialValues.description = '';
     }
   }, [savedProps]); // eslint-disable-line
 
@@ -72,6 +88,13 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
           id: savedProps.album.id,
         },
       });
+    } else {
+      createAlbum({
+        variables: {
+          name: values.name,
+          description: values.description,
+        },
+      });
     }
   };
 
@@ -89,9 +112,24 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
     }
   }, [editAlbumResponse.data, editAlbumResponse.error]); // eslint-disable-line
 
+  useEffect(() => {
+    if (createAlbumResponse.data && !createAlbumResponse.error) {
+      setTimeout(() => {
+        setMessage('');
+        handleCancel();
+      }, 300);
+    } else if (createAlbumResponse.error) {
+      logger.error(createAlbumResponse);
+
+      setSaving(false);
+      setMessage('Error!');
+    }
+  }, [createAlbumResponse.data, createAlbumResponse.error]); // eslint-disable-line
+
   return (
     <EditAlbumDialog
       open={open}
+      createNew={savedProps.album === null}
       message={message}
       saving={saving}
       initialValues={initialValues}

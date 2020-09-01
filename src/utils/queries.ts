@@ -153,6 +153,21 @@ export const DELETE_PHOTO = gql`
   ${PHOTO_DETAILS}
 `;
 
+export const CREATE_ALBUM = gql`
+  mutation createAlbum(
+    $name: String!,
+    $description: String,
+  ) {
+      createAlbum(
+        name: $name,
+        description: $description,
+      ) {
+        ...AlbumDetails
+      }
+    }
+  ${ALBUM_DETAILS}
+`;
+
 export const EDIT_ALBUM = gql`
   mutation editAlbum(
     $name: String!,

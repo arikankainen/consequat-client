@@ -15,6 +15,7 @@ import {
 
 export interface Props {
   open: boolean;
+  createNew: boolean;
   handleSubmit: (values: FormValues) => void;
   handleCancel: () => void;
   saving: boolean;
@@ -25,6 +26,7 @@ export interface Props {
 
 const EditAlbumDialog: React.FC<Props> = ({
   open,
+  createNew,
   handleSubmit,
   handleCancel,
   message,
@@ -42,7 +44,7 @@ const EditAlbumDialog: React.FC<Props> = ({
           onSubmit={handleSubmit}
         >
           <Form>
-            <DialogTopic>Edit album</DialogTopic>
+            <DialogTopic>{createNew ? <>Create album</> : <>Edit album</>}</DialogTopic>
             <DialogContent>
               <TextInput name="name" label="Name" />
               <TextAreaInput name="description" label="Description" />

@@ -20,7 +20,11 @@ const initialValues: FormValues = {
   description: '',
 };
 
-const validation = Yup.object({});
+const validation = Yup.object({
+  name: Yup.string()
+    .min(3, 'Must be at least 3 characters')
+    .required('Name required'),
+});
 
 export interface EditPhotoProps {
   open?: boolean;
@@ -57,8 +61,12 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   useEffect(() => {
     if (savedProps.photo) {
       initialValues.name = savedProps.photo.name ? savedProps.photo.name : '';
-      initialValues.location = savedProps.photo.location ? savedProps.photo.location : '';
-      initialValues.description = savedProps.photo.description ? savedProps.photo.description : '';
+      initialValues.location = savedProps.photo.location
+        ? savedProps.photo.location
+        : '';
+      initialValues.description = savedProps.photo.description
+        ? savedProps.photo.description
+        : '';
 
       if (savedProps.albums && savedProps.photo.album) {
         const albumId = savedProps.photo.album.id;

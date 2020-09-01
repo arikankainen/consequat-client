@@ -1,14 +1,25 @@
 import React from 'react';
 import { useField } from 'formik';
 import { Album } from '../../utils/types';
-import { InputContainer, Label, DummyInput, Input, TextArea, Select } from './style';
+import {
+  InputContainer,
+  Label,
+  DummyInput,
+  Input,
+  TextArea,
+  Select,
+  Error,
+} from './style';
 
 interface UncontrolledInputProps {
   label: string;
   value: string;
 }
 
-export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({ label, value }) => {
+export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({
+  label,
+  value,
+}) => {
   return (
     <InputContainer>
       <Label>{label}</Label>
@@ -23,13 +34,23 @@ interface TextInputProps {
 }
 
 export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
-  const [field] = useField(props);
+  const [field, meta] = useField(props);
 
   return (
-    <InputContainer>
-      <Label htmlFor={props.name}>{label}</Label>
-      <Input type="text" autoComplete="off" spellCheck={false} {...field} {...props} />
-    </InputContainer>
+    <>
+      <InputContainer>
+        <Label htmlFor={props.name}>{label}</Label>
+        <Input
+          type="text"
+          autoComplete="off"
+          spellCheck={false}
+          {...field}
+          {...props}
+          error={meta.touched && !!meta.error}
+        />
+      </InputContainer>
+      <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+    </>
   );
 };
 
@@ -38,7 +59,10 @@ interface TextAreaInputProps {
   label: string;
 }
 
-export const TextAreaInput: React.FC<TextAreaInputProps> = ({ label, ...props }) => {
+export const TextAreaInput: React.FC<TextAreaInputProps> = ({
+  label,
+  ...props
+}) => {
   const [field] = useField(props);
 
   return (
@@ -55,7 +79,10 @@ interface SelectInputProps {
   albums: Album[] | undefined;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ label, ...props }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({
+  label,
+  ...props
+}) => {
   const [field] = useField(props);
 
   return (

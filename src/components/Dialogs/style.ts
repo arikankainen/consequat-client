@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
 export const BackDrop = styled.div`
@@ -130,7 +130,11 @@ export const DummyInput = styled.div`
   line-height: 1;
 `;
 
-export const Input = styled.input`
+interface InputProps {
+  error?: boolean;
+}
+
+export const Input = styled.input<InputProps>`
   background-color: #fff;
   border: 1px solid #ccc;
   width: 100%;
@@ -143,6 +147,12 @@ export const Input = styled.input`
     outline: none;
     border: 1px solid var(--accent-color-2);
   }
+
+  ${(props) =>
+    props.error &&
+    css`
+      border: 1px solid var(--error-color);
+  `}
 `;
 
 export const Select = styled.select`
@@ -176,4 +186,33 @@ export const TextArea = styled.textarea`
     outline: none;
     border: 1px solid var(--accent-color-2);
   }
+`;
+
+interface ErrorProps {
+  error: boolean;
+}
+
+export const Error = styled.div<ErrorProps>`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 20px;
+  color: var(--error-color);
+  line-height: 1;
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.1s ease, opacity 0.3s ease, margin 0.1s ease;
+
+  ${(props) =>
+    props.error &&
+    css`
+      margin-top: 7px;
+      max-height: 20px;
+      opacity: 1;
+  `};
 `;

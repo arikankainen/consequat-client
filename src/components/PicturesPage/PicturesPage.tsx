@@ -6,6 +6,7 @@ import Thumbnail from '../Thumbnail/Thumbnail';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import { storage } from '../../firebase/firebase';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
+import { ReactComponent as AlbumButton } from '../../images/button_album.svg';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as CheckButton } from '../../images/button_check.svg';
@@ -154,6 +155,15 @@ const PicturesPage = () => {
     }
     */
     setSelection([id]);
+  };
+
+  const handleCreateAlbum = () => {
+    setEditAlbum({
+      open: true,
+      album: null,
+      handleOk: () => void 0,
+      handleCancel: () => setEditAlbum({}),
+    });
   };
 
   const handleEditAlbum = (id: string) => {
@@ -386,25 +396,12 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
-            {!allSelected ? (
-              <Button
-                onClick={handleSelectAll}
-                text="Select all"
-                icon={CheckButton}
-                disabled={photos.length === 0}
-                textRequired={true}
-                color={ButtonColor.black}
-              />
-            ) : (
-              <Button
-                onClick={handleSelectAll}
-                text="Deselect all"
-                icon={UncheckButton}
-                disabled={photos.length === 0}
-                textRequired={true}
-                color={ButtonColor.black}
-              />
-            )}
+            <Button
+              onClick={handleCreateAlbum}
+              text="Create album"
+              icon={AlbumButton}
+              color={ButtonColor.black}
+            />
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>

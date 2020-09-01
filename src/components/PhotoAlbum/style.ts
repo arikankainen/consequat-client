@@ -31,6 +31,7 @@ export const NameAndDescription = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 10px;
 `;
 
 export const Name = styled.div`

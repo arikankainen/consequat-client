@@ -50,13 +50,13 @@ const InputContainer = styled.div<InputContainerProps>`
   ${(props) =>
     props.error &&
     css`
-    box-shadow: 0px 0px 1px 1px var(--error-color);
+      box-shadow: 0px 0px 1px 1px var(--error-color);
   `};
 
   ${(props) =>
     props.focused &&
     css`
-    box-shadow: var(--focus);
+      box-shadow: var(--focus);
   `};
 `;
 
