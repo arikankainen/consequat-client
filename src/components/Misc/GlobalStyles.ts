@@ -17,8 +17,6 @@ const GlobalStyles = createGlobalStyle`
     --default-font-size-bigger: 18px;
     --default-font-size: 16px;
     --default-font-size-smaller: 14px;
-    --navigation-bg-color: #232325;
-    --navigation-bg-color: #303032;
     --navigation-bg-color: rgba(38, 38, 40, 0.9);
     --navigation-bg-color: rgb(0, 0, 0);
     --navigation-bg-color-hover: #303032;

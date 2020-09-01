@@ -11,7 +11,8 @@ export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   position: absolute;
   width: 300px;
   padding: 0px 0px;
-  background-color: var(--navigation-bg-color);
+  background-color: #fff;
+  box-shadow: var(--default-box-shadow);
 
   ${(props) =>
     props.direction === Direction.Right &&
@@ -47,7 +48,7 @@ export const MenuButton = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--navigation-bg-color-hover);
+    background-color: var(--menu-bg-color-hover);
 
     & > svg {
       color: var(--icon-color-hover);
@@ -64,7 +65,7 @@ export const MenuItem = styled.li`
   display: flex;
   align-items: center;
   list-style: none;
-  border-top: 1px solid #111;
+  border-bottom: 1px solid #eee;
 `;
 
 export const MenuLink = styled(Link)`
@@ -102,12 +103,12 @@ export const MenuTextContainer = styled.div`
 
 export const MenuTextUpperText = styled.div`
   font-size: var(--default-font-size-bigger);
-  color: #ddd;
+  color: #000;
   line-height: 1.2;
 `;
 
 export const MenuTextLowerText = styled.div`
   font-size: var(--default-font-size);
-  color: #aaa;
+  color: #666;
   line-height: 1.2;
 `;
