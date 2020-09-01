@@ -4,7 +4,7 @@ import breakPoints from '../../utils/breakPoints';
 export const AlbumContainer = styled.div`
   width: 100%;
   margin-bottom: 40px;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
+  box-shadow: var(--default-box-shadow);
 `;
 
 export const TopicContainer = styled.div`

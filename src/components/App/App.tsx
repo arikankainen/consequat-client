@@ -12,6 +12,7 @@ import LogoutPage from '../LoginPage/LogoutPage';
 import SignupPage from '../LoginPage/SignupPage';
 import UploadPage from '../UploadPage/UploadPage';
 import PicturesPage from '../PicturesPage/PicturesPage';
+import AccountPage from '../AccountPage/AccountPage';
 
 const App = () => {
   const location = useLocation();
@@ -52,6 +53,10 @@ const App = () => {
 
           <Route path="/pictures">
             <PicturesPage />
+          </Route>
+
+          <Route path="/account">
+            <AccountPage />
           </Route>
 
           <Route path="/">
