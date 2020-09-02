@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
 import * as Yup from 'yup';
-import logger from '../../utils/logger';
-import { EDIT_ALBUM, CREATE_ALBUM, ME } from '../../utils/queries';
 import { Album } from '../../utils/types';
 import EditAlbumDialog from './EditAlbumDialog';
+import useSaveAlbum, { ResponseStatus } from '../../hooks/useSaveAlbum';
 
 export interface FormValues {
   name: string;
@@ -34,20 +32,7 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   const [savedProps, setSavedProps] = useState<EditAlbumProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-
-  const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
-    onError: (error) => {
-      logger.error(error);
-    },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
-  });
-
-  const [createAlbum, createAlbumResponse] = useMutation(CREATE_ALBUM, {
-    onError: (error) => {
-      logger.error(error);
-    },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
-  });
+  const { response, save } = useSaveAlbum();
 
   useEffect(() => {
     if (props.open) {
@@ -58,7 +43,7 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
     } else {
       setOpen(false);
     }
-  }, [props]); // eslint-disable-line
+  }, [props]);
 
   useEffect(() => {
     if (savedProps.album) {
@@ -70,7 +55,7 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
       initialValues.name = '';
       initialValues.description = '';
     }
-  }, [savedProps]); // eslint-disable-line
+  }, [savedProps]);
 
   const handleCancel = () => {
     if (savedProps.handleCancel) savedProps.handleCancel();
@@ -81,50 +66,28 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
     setSaving(true);
 
     if (savedProps.album) {
-      editAlbum({
-        variables: {
-          name: values.name,
-          description: values.description,
-          id: savedProps.album.id,
-        },
+      save({
+        name: values.name,
+        description: values.description,
+        id: savedProps.album.id,
       });
     } else {
-      createAlbum({
-        variables: {
-          name: values.name,
-          description: values.description,
-        },
+      save({
+        name: values.name,
+        description: values.description,
       });
     }
   };
 
   useEffect(() => {
-    if (editAlbumResponse.data && !editAlbumResponse.error) {
-      setTimeout(() => {
-        setMessage('');
-        handleCancel();
-      }, 300);
-    } else if (editAlbumResponse.error) {
-      logger.error(editAlbumResponse);
-
-      setSaving(false);
+    if (response.status === ResponseStatus.ready) {
+      setMessage('');
+      handleCancel();
+    } else if (response.status === ResponseStatus.error) {
       setMessage('Error!');
-    }
-  }, [editAlbumResponse.data, editAlbumResponse.error]); // eslint-disable-line
-
-  useEffect(() => {
-    if (createAlbumResponse.data && !createAlbumResponse.error) {
-      setTimeout(() => {
-        setMessage('');
-        handleCancel();
-      }, 300);
-    } else if (createAlbumResponse.error) {
-      logger.error(createAlbumResponse);
-
       setSaving(false);
-      setMessage('Error!');
     }
-  }, [createAlbumResponse.data, createAlbumResponse.error]); // eslint-disable-line
+  }, [response.status]); // eslint-disable-line
 
   return (
     <EditAlbumDialog
