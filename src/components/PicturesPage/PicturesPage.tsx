@@ -18,7 +18,7 @@ import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
 import { InitialUploadFileButton } from '../InitialUpload/style';
-import useDeleteManyPhotos, { DeletePhotosStatus } from '../../hooks/useDeleteManyPhotos';
+import useDeleteQueue, { QueueStatus } from '../../hooks/useDeleteQueue';
 
 import {
   PictureListOuterContainer,
@@ -37,11 +37,11 @@ const PicturesPage = () => {
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
   const [allSelected, setAllSelected] = useState<boolean>(false);
+  const [queueStarted, setQueueStarted] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [deleteStarted, setDeleteStarted] = useState(false);
-  const deleteManyPhotos = useDeleteManyPhotos();
+  const deleteQueue = useDeleteQueue();
 
   const [deleteAlbumFromDb] = useMutation(DELETE_ALBUM, {
     onError: (error) => {
@@ -203,65 +203,73 @@ const PicturesPage = () => {
   };
 
   useEffect(() => {
-    if (!deleteStarted) return;
+    if (!queueStarted) return;
 
-    const status = deleteManyPhotos.response.status;
-    const response = deleteManyPhotos.response;
+    const status = deleteQueue.response.status;
+    const response = deleteQueue.response;
+    const text = `Photo ${response.currentFile} of ${response.totalFiles}`;
+    const progress = response.progress;
 
-    if (status === DeletePhotosStatus.running) {
-      const text = `Photo ${response.currentFile} of ${response.totalFiles}`;
-      const progress = response.progress;
+    switch (status) {
+      case QueueStatus.running:
+        setConfirmation({
+          open: true,
+          topic: 'Deleting...',
+          text,
+          progress,
+          handleOk: () => setConfirmation({}),
+          handleCancel: () => deleteQueue.abort(),
+          disableOk: true,
+          disableCancel: false,
+        });
+        break;
 
-      setConfirmation({
-        open: true,
-        topic: 'Deleting...',
-        text,
-        progress,
-        handleOk: () => setConfirmation({}),
-        disableOk: true,
-        handleCancel: () => deleteManyPhotos.abort(),
-      });
-    } else if (status === DeletePhotosStatus.ready) {
-      setConfirmation({
-        open: true,
-        topic: 'Delete completed',
-        text: 'All selected photos deleted.',
-        progress: 100,
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-        disableCancel: true,
-      });
-      setDeleteStarted(false);
-      setSelection([]);
-    } else if (status === DeletePhotosStatus.error) {
-      setConfirmation({
-        open: true,
-        topic: 'Delete failed',
-        text: 'An error occurred while deleting.',
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-        disableCancel: true,
-      });
-      setDeleteStarted(false);
-      setSelection([]);
-    } else if (status === DeletePhotosStatus.aborted) {
-      setConfirmation({
-        open: true,
-        topic: 'Delete aborted',
-        text: 'Deletion of photos was aborted successfully.',
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-        disableCancel: true,
-      });
-      setDeleteStarted(false);
-      setSelection([]);
+      case QueueStatus.ready:
+        setQueueStarted(false);
+        setSelection([]);
+        setConfirmation({
+          open: true,
+          topic: 'Delete completed',
+          text: 'All selected photos deleted.',
+          progress: 100,
+          handleOk: () => setConfirmation({}),
+          disableOk: false,
+          disableCancel: true,
+        });
+        break;
+
+      case QueueStatus.error:
+        setQueueStarted(false);
+        setSelection([]);
+        setConfirmation({
+          open: true,
+          topic: 'Delete failed',
+          text: 'An error occurred while deleting.',
+          handleOk: () => setConfirmation({}),
+          disableOk: false,
+          disableCancel: true,
+        });
+        break;
+
+      case QueueStatus.aborted:
+        setQueueStarted(false);
+        setSelection([]);
+        setConfirmation({
+          open: true,
+          topic: 'Delete aborted',
+          text: 'Deletion was aborted. Some photos may have been deleted.',
+          handleOk: () => setConfirmation({}),
+          disableOk: false,
+          disableCancel: true,
+        });
+        break;
     }
-  }, [deleteManyPhotos.response, deleteStarted]);
+  }, [deleteQueue.response, queueStarted]);
 
   const beginDeletePhotos = () => {
-    deleteManyPhotos.reset();
-    setDeleteStarted(true);
-    deleteManyPhotos.execute(selection, photos);
+    deleteQueue.reset();
+    setQueueStarted(true);
+    deleteQueue.execute(selection, photos);
   };
 
   const handleDeletePhotos = () => {

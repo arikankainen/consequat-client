@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useDeletePhoto, { DeletePhotoStatus } from './useDeletePhoto';
 import { Photo } from '../utils/types';
 
-export enum DeletePhotosStatus {
+export enum QueueStatus {
   idle,
   running,
   ready,
@@ -10,30 +10,30 @@ export enum DeletePhotosStatus {
   aborted,
 }
 
-interface DeletePhotosResponse {
-  status: DeletePhotosStatus;
+interface Return {
+  response: Response;
+  execute: (selected: string[], photos: Photo[]) => void;
+  abort: () => void;
+  reset: () => void;
+}
+
+interface Response {
+  status: QueueStatus;
   progress: number;
   currentFile: number;
   totalFiles: number;
 }
 
 const initialResponse = {
-  status: DeletePhotosStatus.idle,
+  status: QueueStatus.idle,
   progress: 0,
   currentFile: 0,
   totalFiles: 0,
 };
 
-interface DeleteManyPhotosReturn {
-  response: DeletePhotosResponse;
-  execute: (selected: string[], photos: Photo[]) => void;
-  abort: () => void;
-  reset: () => void;
-}
-
-const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
-  const [response, setResponse] = useState<DeletePhotosResponse>(initialResponse);
-  const [status, setStatus] = useState<DeletePhotosStatus>(DeletePhotosStatus.idle);
+const useDeleteQueue = (): Return => {
+  const [response, setResponse] = useState<Response>(initialResponse);
+  const [status, setStatus] = useState<QueueStatus>(QueueStatus.idle);
   const [progress, setProgress] = useState(0);
   const [currentFile, setCurrentFile] = useState(0);
   const [totalFiles, setTotalFiles] = useState(0);
@@ -57,12 +57,12 @@ const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
   }, [photos, totalFiles]);
 
   useEffect(() => {
-    if (status !== DeletePhotosStatus.running) return;
+    if (status !== QueueStatus.running) return;
 
     if (photos && photos.length > 0) {
       setCurrentPhoto(photos[0]);
     } else {
-      setStatus(DeletePhotosStatus.ready);
+      setStatus(QueueStatus.ready);
     }
   }, [photos, status]);
 
@@ -82,7 +82,7 @@ const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
       setAlreadySliced(true);
       setPhotos(photos.slice(1));
     } else if (deleteResponse.status === DeletePhotoStatus.error) {
-      setStatus(DeletePhotosStatus.error);
+      setStatus(QueueStatus.error);
     }
   }, [deleteResponse.status, alreadySliced, photos]);
 
@@ -90,7 +90,7 @@ const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
     if (!selected || !photos) return;
 
     const selectedPhotos = photos.filter((photo) => selected.includes(photo.id));
-    setStatus(DeletePhotosStatus.running);
+    setStatus(QueueStatus.running);
     setTotalFiles(selectedPhotos.length);
     setPhotos(selectedPhotos);
   };
@@ -102,7 +102,7 @@ const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
 
   const abort = () => {
     setAborted(true);
-    setStatus(DeletePhotosStatus.aborted);
+    setStatus(QueueStatus.aborted);
   };
 
   return {
@@ -113,4 +113,4 @@ const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
   };
 };
 
-export default useDeleteManyPhotos;
+export default useDeleteQueue;

@@ -25,7 +25,7 @@ const Confirmation: React.FC<ConfirmationProps> = (props) => {
     } else {
       setOpen(false);
     }
-  }, [props]); // eslint-disable-line
+  }, [props]);
 
   return (
     <ConfirmationDialog
