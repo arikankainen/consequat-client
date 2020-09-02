@@ -4,16 +4,16 @@ import { Photo } from '../utils/types';
 import { EDIT_PHOTO, ME } from '../utils/queries';
 import logger from '../utils/logger';
 
-export enum PhotoResponseStatus {
+export enum SavePhotoStatus {
   idle,
   saving,
   ready,
   error,
 }
 
-interface PhotoResponse {
+interface SavePhotoResponse {
   data: Photo | null | undefined;
-  status: PhotoResponseStatus;
+  status: SavePhotoStatus;
 }
 
 interface SavePhoto {
@@ -26,11 +26,11 @@ interface SavePhoto {
 
 const initialResponse = {
   data: undefined,
-  status: PhotoResponseStatus.idle,
+  status: SavePhotoStatus.idle,
 };
 
-const useSavePhoto = (): [PhotoResponse, (photo: SavePhoto) => void] => {
-  const [response, setResponse] = useState<PhotoResponse>(initialResponse);
+const useSavePhoto = (): [SavePhotoResponse, (photo: SavePhoto) => void] => {
+  const [response, setResponse] = useState<SavePhotoResponse>(initialResponse);
 
   const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
     onError: (error) => {
@@ -44,7 +44,7 @@ const useSavePhoto = (): [PhotoResponse, (photo: SavePhoto) => void] => {
 
     setResponse({
       data: undefined,
-      status: PhotoResponseStatus.saving,
+      status: SavePhotoStatus.saving,
     });
 
     editPhoto({
@@ -62,14 +62,14 @@ const useSavePhoto = (): [PhotoResponse, (photo: SavePhoto) => void] => {
     if (editPhotoResponse.data && !editPhotoResponse.error) {
       setResponse({
         data: editPhotoResponse.data.editPhoto,
-        status: PhotoResponseStatus.ready,
+        status: SavePhotoStatus.ready,
       });
     } else if (editPhotoResponse.error) {
       logger.error(editPhotoResponse.error);
 
       setResponse({
         data: undefined,
-        status: PhotoResponseStatus.error,
+        status: SavePhotoStatus.error,
       });
     }
   }, [editPhotoResponse.data, editPhotoResponse.error]);

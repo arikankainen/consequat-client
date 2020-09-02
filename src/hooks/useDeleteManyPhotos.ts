@@ -1,34 +1,34 @@
 import { useState, useEffect } from 'react';
-import useDeletePhoto, { PhotoResponseStatus } from './useDeletePhoto';
+import useDeletePhoto, { DeletePhotoStatus } from './useDeletePhoto';
 import { Photo } from '../utils/types';
 
-export enum ResponseStatus {
+export enum DeletePhotosStatus {
   idle,
   running,
   ready,
   error,
 }
 
-interface Response {
-  status: ResponseStatus;
+interface DeletePhotosResponse {
+  status: DeletePhotosStatus;
   progress: number;
   currentFile: number;
   totalFiles: number;
 }
 
 const initialResponse = {
-  status: ResponseStatus.idle,
+  status: DeletePhotosStatus.idle,
   progress: 0,
   currentFile: 0,
   totalFiles: 0,
 };
 
 const useDeleteManyPhotos = (): [
-  Response,
+  DeletePhotosResponse,
   (selected: string[], photos: Photo[]) => void
 ] => {
-  const [response, setResponse] = useState<Response>(initialResponse);
-  const [status, setStatus] = useState<ResponseStatus>(ResponseStatus.idle);
+  const [response, setResponse] = useState<DeletePhotosResponse>(initialResponse);
+  const [status, setStatus] = useState<DeletePhotosStatus>(DeletePhotosStatus.idle);
   const [progress, setProgress] = useState(0);
   const [currentFile, setCurrentFile] = useState(0);
   const [totalFiles, setTotalFiles] = useState(0);
@@ -51,12 +51,12 @@ const useDeleteManyPhotos = (): [
   }, [photos, totalFiles]);
 
   useEffect(() => {
-    if (status !== ResponseStatus.running) return;
+    if (status !== DeletePhotosStatus.running) return;
 
     if (photos && photos.length > 0) {
       setCurrentPhoto(photos[0]);
     } else {
-      setStatus(ResponseStatus.ready);
+      setStatus(DeletePhotosStatus.ready);
     }
   }, [photos, status]);
 
@@ -70,11 +70,11 @@ const useDeleteManyPhotos = (): [
   useEffect(() => {
     if (alreadySliced) return;
 
-    if (deleteResponse.status === PhotoResponseStatus.ready) {
+    if (deleteResponse.status === DeletePhotoStatus.ready) {
       setAlreadySliced(true);
       setPhotos(photos.slice(1));
-    } else if (deleteResponse.status === PhotoResponseStatus.error) {
-      setStatus(ResponseStatus.error);
+    } else if (deleteResponse.status === DeletePhotoStatus.error) {
+      setStatus(DeletePhotosStatus.error);
     }
   }, [deleteResponse.status, alreadySliced, photos]);
 
@@ -82,7 +82,7 @@ const useDeleteManyPhotos = (): [
     if (!selected || !photos) return;
 
     const selectedPhotos = photos.filter((photo) => selected.includes(photo.id));
-    setStatus(ResponseStatus.running);
+    setStatus(DeletePhotosStatus.running);
     setTotalFiles(selectedPhotos.length);
     setPhotos(selectedPhotos);
   };

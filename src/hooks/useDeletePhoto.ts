@@ -20,25 +20,25 @@ const deleteFromFirebase = (filename: string) => {
   });
 };
 
-export enum PhotoResponseStatus {
+export enum DeletePhotoStatus {
   idle,
   deleting,
   ready,
   error,
 }
 
-interface PhotoResponse {
+interface DeletePhotoResponse {
   data: Photo | null | undefined;
-  status: PhotoResponseStatus;
+  status: DeletePhotoStatus;
 }
 
 const initialResponse = {
   data: undefined,
-  status: PhotoResponseStatus.idle,
+  status: DeletePhotoStatus.idle,
 };
 
-const useDeletePhoto = (): [PhotoResponse, (photo: Photo) => void] => {
-  const [response, setResponse] = useState<PhotoResponse>(initialResponse);
+const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
+  const [response, setResponse] = useState<DeletePhotoResponse>(initialResponse);
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -86,7 +86,7 @@ const useDeletePhoto = (): [PhotoResponse, (photo: Photo) => void] => {
 
     setResponse({
       data: undefined,
-      status: PhotoResponseStatus.deleting,
+      status: DeletePhotoStatus.deleting,
     });
 
     const allowedError = 'storage/object-not-found';
@@ -94,14 +94,12 @@ const useDeletePhoto = (): [PhotoResponse, (photo: Photo) => void] => {
     try {
       await deleteFromFirebase(photo.filename);
     } catch (error) {
-      logger.error(
-        `Error deleting ${photo.filename} from firebase: ${error.code}`
-      );
+      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
 
       if (error.code !== allowedError) {
         setResponse({
           data: undefined,
-          status: PhotoResponseStatus.error,
+          status: DeletePhotoStatus.error,
         });
         return;
       }
@@ -110,14 +108,12 @@ const useDeletePhoto = (): [PhotoResponse, (photo: Photo) => void] => {
     try {
       await deleteFromFirebase(photo.thumbFilename);
     } catch (error) {
-      logger.error(
-        `Error deleting ${photo.thumbFilename} from firebase: ${error.code}`
-      );
+      logger.error(`Error deleting ${photo.thumbFilename} from firebase: ${error.code}`);
 
       if (error.code !== allowedError) {
         setResponse({
           data: undefined,
-          status: PhotoResponseStatus.error,
+          status: DeletePhotoStatus.error,
         });
         return;
       }
@@ -130,14 +126,14 @@ const useDeletePhoto = (): [PhotoResponse, (photo: Photo) => void] => {
     if (deleteFromDbResponse.data && !deleteFromDbResponse.error) {
       setResponse({
         data: deleteFromDbResponse.data.editPhoto,
-        status: PhotoResponseStatus.ready,
+        status: DeletePhotoStatus.ready,
       });
     } else if (deleteFromDbResponse.error) {
       logger.error(deleteFromDbResponse.error);
 
       setResponse({
         data: undefined,
-        status: PhotoResponseStatus.error,
+        status: DeletePhotoStatus.error,
       });
     }
   }, [deleteFromDbResponse.data, deleteFromDbResponse.error]);

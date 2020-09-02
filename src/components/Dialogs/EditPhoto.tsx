@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
-import useSavePhoto, { PhotoResponseStatus } from '../../hooks/useSavePhoto';
+import useSavePhoto, { SavePhotoStatus } from '../../hooks/useSavePhoto';
 
 export interface FormValues {
   name: string;
@@ -19,9 +19,7 @@ const initialValues: FormValues = {
 };
 
 const validation = Yup.object({
-  name: Yup.string()
-    .min(3, 'Must be at least 3 characters')
-    .required('Name required'),
+  name: Yup.string().min(3, 'Must be at least 3 characters').required('Name required'),
 });
 
 export interface EditPhotoProps {
@@ -53,9 +51,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   useEffect(() => {
     if (savedProps.photo) {
       initialValues.name = savedProps.photo.name ? savedProps.photo.name : '';
-      initialValues.location = savedProps.photo.location
-        ? savedProps.photo.location
-        : '';
+      initialValues.location = savedProps.photo.location ? savedProps.photo.location : '';
       initialValues.description = savedProps.photo.description
         ? savedProps.photo.description
         : '';
@@ -90,10 +86,10 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   };
 
   useEffect(() => {
-    if (photoResponse.status === PhotoResponseStatus.ready) {
+    if (photoResponse.status === SavePhotoStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (photoResponse.status === PhotoResponseStatus.error) {
+    } else if (photoResponse.status === SavePhotoStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }

@@ -19,7 +19,7 @@ import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
 import { InitialUploadFileButton } from '../InitialUpload/style';
-import useDeleteManyPhotos, { ResponseStatus } from '../../hooks/useDeleteManyPhotos';
+import useDeleteManyPhotos, { DeletePhotosStatus } from '../../hooks/useDeleteManyPhotos';
 
 import {
   PictureListOuterContainer,

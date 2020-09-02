@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Album } from '../../utils/types';
 import EditAlbumDialog from './EditAlbumDialog';
-import useSaveAlbum, { AlbumResponseStatus } from '../../hooks/useSaveAlbum';
+import useSaveAlbum, { SaveAlbumStatus } from '../../hooks/useSaveAlbum';
 
 export interface FormValues {
   name: string;
@@ -15,9 +15,7 @@ const initialValues: FormValues = {
 };
 
 const validation = Yup.object({
-  name: Yup.string()
-    .min(3, 'Must be at least 3 characters')
-    .required('Name required'),
+  name: Yup.string().min(3, 'Must be at least 3 characters').required('Name required'),
 });
 
 export interface EditAlbumProps {
@@ -80,10 +78,10 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   };
 
   useEffect(() => {
-    if (albumResponse.status === AlbumResponseStatus.ready) {
+    if (albumResponse.status === SaveAlbumStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (albumResponse.status === AlbumResponseStatus.error) {
+    } else if (albumResponse.status === SaveAlbumStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
