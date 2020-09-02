@@ -19,6 +19,9 @@ import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
 import { InitialUploadFileButton } from '../InitialUpload/style';
+import useDeleteManyPhotos, {
+  ResponseStatus,
+} from '../../hooks/useDeleteManyPhotos';
 
 import {
   PictureListOuterContainer,
@@ -46,6 +49,7 @@ const PicturesPage = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [photoResponse, photoDeleteMany] = useDeleteManyPhotos();
 
   const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
@@ -412,12 +416,21 @@ const PicturesPage = () => {
       Array.from(event.target.files).forEach((file) =>
         dispatch(addPicture(file))
       );
+
       history.push('/upload');
     }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  };
+
+  useEffect(() => {
+    console.log(photoResponse.status);
+  }, [photoResponse.status]);
+
+  const handleTest = () => {
+    photoDeleteMany(selection, photos);
   };
 
   return (
@@ -447,6 +460,13 @@ const PicturesPage = () => {
               text="Edit"
               icon={EditButton}
               disabled={selection.length !== 1}
+              color={ButtonColor.black}
+              breakPoint="400px"
+            />
+            <Button // TODO: nappi vaan testiä varten
+              onClick={handleTest}
+              text="DeleteTest"
+              icon={DeleteButton}
               color={ButtonColor.black}
               breakPoint="400px"
             />
