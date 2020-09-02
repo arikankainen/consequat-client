@@ -4,16 +4,16 @@ import { Album } from '../utils/types';
 import { EDIT_ALBUM, CREATE_ALBUM, ME } from '../utils/queries';
 import logger from '../utils/logger';
 
-export enum ResponseStatus {
+export enum AlbumResponseStatus {
   idle,
   saving,
   ready,
   error,
 }
 
-interface Response {
+interface AlbumResponse {
   data: Album | null | undefined;
-  status: ResponseStatus;
+  status: AlbumResponseStatus;
 }
 
 interface SaveAlbum {
@@ -24,11 +24,11 @@ interface SaveAlbum {
 
 const initialResponse = {
   data: undefined,
-  status: ResponseStatus.idle,
+  status: AlbumResponseStatus.idle,
 };
 
-const useSaveAlbum = (): [Response, (album: SaveAlbum) => void] => {
-  const [response, setResponse] = useState<Response>(initialResponse);
+const useSaveAlbum = (): [AlbumResponse, (album: SaveAlbum) => void] => {
+  const [response, setResponse] = useState<AlbumResponse>(initialResponse);
 
   const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
     onError: (error) => {
@@ -45,12 +45,12 @@ const useSaveAlbum = (): [Response, (album: SaveAlbum) => void] => {
   });
 
   const save = (album: SaveAlbum | null | undefined) => {
+    if (!album) return;
+
     setResponse({
       data: undefined,
-      status: ResponseStatus.saving,
+      status: AlbumResponseStatus.saving,
     });
-
-    if (!album) return;
 
     if (album.id) {
       editAlbum({
@@ -74,14 +74,14 @@ const useSaveAlbum = (): [Response, (album: SaveAlbum) => void] => {
     if (editAlbumResponse.data && !editAlbumResponse.error) {
       setResponse({
         data: editAlbumResponse.data.editAlbum,
-        status: ResponseStatus.ready,
+        status: AlbumResponseStatus.ready,
       });
     } else if (editAlbumResponse.error) {
       logger.error(editAlbumResponse.error);
 
       setResponse({
         data: undefined,
-        status: ResponseStatus.error,
+        status: AlbumResponseStatus.error,
       });
     }
   }, [editAlbumResponse.data, editAlbumResponse.error]);
@@ -90,14 +90,14 @@ const useSaveAlbum = (): [Response, (album: SaveAlbum) => void] => {
     if (createAlbumResponse.data && !createAlbumResponse.error) {
       setResponse({
         data: createAlbumResponse.data.editAlbum,
-        status: ResponseStatus.ready,
+        status: AlbumResponseStatus.ready,
       });
     } else if (createAlbumResponse.error) {
       logger.error(createAlbumResponse.error);
 
       setResponse({
         data: undefined,
-        status: ResponseStatus.error,
+        status: AlbumResponseStatus.error,
       });
     }
   }, [createAlbumResponse.data, createAlbumResponse.error]);

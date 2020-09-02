@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
 import * as Yup from 'yup';
-import logger from '../../utils/logger';
-import { EDIT_PHOTO, ME } from '../../utils/queries';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
+import useSavePhoto, { PhotoResponseStatus } from '../../hooks/useSavePhoto';
 
 export interface FormValues {
   name: string;
@@ -39,13 +37,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-
-  const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
-    onError: (error) => {
-      logger.error(error);
-    },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
-  });
+  const [photoResponse, photoSave] = useSavePhoto();
 
   useEffect(() => {
     if (props.open) {
@@ -56,7 +48,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     } else {
       setOpen(false);
     }
-  }, [props]); // eslint-disable-line
+  }, [props]);
 
   useEffect(() => {
     if (savedProps.photo) {
@@ -87,31 +79,25 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     setSaving(true);
 
     if (savedProps.photo) {
-      editPhoto({
-        variables: {
-          name: values.name,
-          location: values.location,
-          album: values.album !== '0' ? values.album : null,
-          description: values.description,
-          id: savedProps.photo.id,
-        },
+      photoSave({
+        name: values.name,
+        location: values.location,
+        album: values.album !== '0' ? values.album : null,
+        description: values.description,
+        id: savedProps.photo.id,
       });
     }
   };
 
   useEffect(() => {
-    if (editPhotoResponse.data && !editPhotoResponse.error) {
-      setTimeout(() => {
-        setMessage('');
-        handleCancel();
-      }, 300);
-    } else if (editPhotoResponse.error) {
-      logger.error(editPhotoResponse);
-
-      setSaving(false);
+    if (photoResponse.status === PhotoResponseStatus.ready) {
+      setMessage('');
+      handleCancel();
+    } else if (photoResponse.status === PhotoResponseStatus.error) {
       setMessage('Error!');
+      setSaving(false);
     }
-  }, [editPhotoResponse.data, editPhotoResponse.error]); // eslint-disable-line
+  }, [photoResponse.status]); // eslint-disable-line
 
   return (
     <EditPhotoDialog

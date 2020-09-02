@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Album } from '../../utils/types';
 import EditAlbumDialog from './EditAlbumDialog';
-import useSaveAlbum, { ResponseStatus } from '../../hooks/useSaveAlbum';
+import useSaveAlbum, { AlbumResponseStatus } from '../../hooks/useSaveAlbum';
 
 export interface FormValues {
   name: string;
@@ -80,10 +80,10 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   };
 
   useEffect(() => {
-    if (albumResponse.status === ResponseStatus.ready) {
+    if (albumResponse.status === AlbumResponseStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (albumResponse.status === ResponseStatus.error) {
+    } else if (albumResponse.status === AlbumResponseStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
