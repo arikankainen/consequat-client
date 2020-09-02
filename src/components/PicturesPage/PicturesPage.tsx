@@ -2,11 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { DELETE_PHOTO, DELETE_ALBUM, ME } from '../../utils/queries';
+import { DELETE_ALBUM, ME } from '../../utils/queries';
 import { Photo, User, Album } from '../../utils/types';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
-import { storage } from '../../firebase/firebase';
 import { addPicture } from '../../reducers/pictureReducer';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
@@ -37,58 +36,12 @@ const PicturesPage = () => {
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
-  const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
-  const [deleteCount, setDeleteCount] = useState<number>(0);
-  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(
-    false
-  );
   const [allSelected, setAllSelected] = useState<boolean>(false);
-  const [deletionError, setDeletionError] = useState<string>('');
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const [photoResponse, photoDeleteMany] = useDeleteManyPhotos();
-
-  const [deletePhotoFromDb] = useMutation(DELETE_PHOTO, {
-    onError: (error) => {
-      logger.error(error);
-    },
-    update: (cache, response) => {
-      try {
-        const existingCache: { me: User } | null = cache.readQuery({
-          query: ME,
-        });
-        if (existingCache) {
-          const id = response.data.deletePhoto.id;
-
-          const existingPhotos = existingCache.me.photos;
-          const updatedPhotos = existingPhotos.filter((p) => p.id !== id);
-
-          const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.map((album) => {
-            const filteredPhotos = album.photos.filter((p) => p.id !== id);
-            return { ...album, photos: filteredPhotos };
-          });
-
-          const updatedCache = {
-            ...existingCache,
-            me: {
-              ...existingCache.me,
-              photos: updatedPhotos,
-              albums: updatedAlbums,
-            },
-          };
-
-          cache.writeQuery({
-            query: ME,
-            data: updatedCache,
-          });
-        }
-      } catch (error) {
-        logger.error(error);
-      }
-    },
-  });
+  const [deleteStarted, setDeleteStarted] = useState(false);
 
   const [deleteAlbumFromDb] = useMutation(DELETE_ALBUM, {
     onError: (error) => {
@@ -195,165 +148,6 @@ const PicturesPage = () => {
     });
   };
 
-  const reportProgress = (filename: string, percentage: number) => {
-    setConfirmation({
-      ...confirmation,
-      text: filename,
-      progress: percentage,
-    });
-  };
-
-  const deletePhotoFromFirebase = (filename: string) => {
-    return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(filename);
-
-      storageRef
-        .delete()
-        .then(() => {
-          resolve('ok');
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
-
-  const doDeletion = async (photo: Photo, id: string) => {
-    setsingleDeletionInProgress(true);
-    const allowedError = 'storage/object-not-found';
-    let errors = false;
-
-    try {
-      await deletePhotoFromFirebase(photo.filename);
-    } catch (error) {
-      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
-
-      if (error.code !== allowedError) {
-        errors = true;
-        const message = `Error deleting ${photo.name}`;
-        setDeletionError(message);
-      }
-    }
-
-    if (!errors) {
-      try {
-        await deletePhotoFromFirebase(photo.thumbFilename);
-      } catch (error) {
-        logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
-
-        if (error.code !== allowedError) {
-          errors = true;
-          const message = `Error deleting thumbnail for ${photo.name}`;
-          setDeletionError(message);
-        }
-      }
-    }
-
-    if (!errors) {
-      try {
-        deletePhotoFromDb({ variables: { id } });
-      } catch (error) {
-        errors = true;
-
-        const message = `Error deleting database entry for ${photo.name}`;
-        setDeletionError(message);
-      }
-    }
-
-    if (!errors) setSelection(selection.slice(1));
-    setsingleDeletionInProgress(false);
-  };
-
-  const startNewDeletion = () => {
-    if (selection.length > 0) {
-      const id = selection[0];
-      const photo = photos.find((photo) => photo.id === id);
-
-      if (photo && photo.filename) {
-        const percent = Math.round(
-          ((deleteCount - selection.length) / deleteCount) * 100
-        );
-        reportProgress(
-          `Photo ${deleteCount - selection.length + 1} of ${deleteCount}`,
-          percent
-        );
-        doDeletion(photo, id);
-      }
-    }
-  };
-
-  const deleteDone = () => {
-    if (deletionError) {
-      setConfirmation({
-        ...confirmation,
-        topic: 'Delete failed',
-        text: deletionError,
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-      });
-    } else {
-      setConfirmation({
-        ...confirmation,
-        topic: 'Delete completed',
-        text: 'All selected photos deleted',
-        progress: 100,
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-      });
-
-      setTimeout(() => {
-        setConfirmation({});
-      }, 1000);
-    }
-  };
-
-  useEffect(
-    () => {
-      if (deletionError) {
-        setDeletionInProgress(false);
-        deleteDone();
-      } else if (deletionInProgress && selection.length > 0) {
-        if (!singleDeletionInProgress) startNewDeletion();
-      } else if (deletionInProgress && selection.length === 0) {
-        setDeletionInProgress(false);
-        deleteDone();
-      }
-    },
-    /* eslint-disable */
-    [deletionInProgress, singleDeletionInProgress, selection.length, deletionError]
-  );
-  /* eslint-enable */
-
-  const handleDeletePicturesConfirmed = () => {
-    setConfirmation({
-      open: true,
-      topic: 'Deleting...',
-      text: '...',
-      progress: 0,
-      handleOk: () => setConfirmation({}),
-      disableOk: true,
-    });
-
-    setDeletionError('');
-    setDeleteCount(selection.length);
-    setDeletionInProgress(true);
-  };
-
-  const handleDeletePictures = () => {
-    const count = selection.length;
-    const text =
-      count === 1
-        ? 'Really delete selected photo? It will be deleted permanently.'
-        : `Really delete ${count} selected photos? They will be deleted permanently.`;
-
-    setConfirmation({
-      open: true,
-      text,
-      handleOk: handleDeletePicturesConfirmed,
-      handleCancel: () => setConfirmation({}),
-    });
-  };
-
   const handleDeleteAlbumConfirmed = (id: string, name: string) => {
     setConfirmation({
       open: true,
@@ -409,11 +203,55 @@ const PicturesPage = () => {
   };
 
   useEffect(() => {
-    console.log(photoResponse);
-  }, [photoResponse]);
+    if (!deleteStarted) return;
 
-  const handleTest = () => {
+    const status = photoResponse.status;
+    if (status === DeletePhotosStatus.running) {
+      const text = `Photo ${photoResponse.currentFile} of ${photoResponse.totalFiles}`;
+      const progress = photoResponse.progress;
+
+      setConfirmation({
+        open: true,
+        topic: 'Deleting...',
+        text,
+        progress,
+        handleOk: () => setConfirmation({}),
+        disableOk: true,
+      });
+    } else if (
+      status === DeletePhotosStatus.ready ||
+      status === DeletePhotosStatus.error
+    ) {
+      setConfirmation({
+        open: true,
+        topic: 'Delete completed',
+        text: 'All selected photos deleted',
+        progress: 100,
+        handleOk: () => setConfirmation({}),
+        disableOk: false,
+      });
+      setDeleteStarted(false);
+    }
+  }, [photoResponse, deleteStarted]);
+
+  const beginDeletePhotos = () => {
+    setDeleteStarted(true);
     photoDeleteMany(selection, photos);
+  };
+
+  const handleDeletePhotos = () => {
+    const count = selection.length;
+    const text =
+      count === 1
+        ? 'Really delete selected photo? It will be deleted permanently.'
+        : `Really delete ${count} selected photos? They will be deleted permanently.`;
+
+    setConfirmation({
+      open: true,
+      text,
+      handleOk: beginDeletePhotos,
+      handleCancel: () => setConfirmation({}),
+    });
   };
 
   return (
@@ -446,13 +284,6 @@ const PicturesPage = () => {
               color={ButtonColor.black}
               breakPoint="400px"
             />
-            <Button // TODO: nappi vaan testiä varten
-              onClick={handleTest}
-              text="DeleteTest"
-              icon={DeleteButton}
-              color={ButtonColor.black}
-              breakPoint="400px"
-            />
           </PictureListButtonGroup>
 
           <PictureListButtonGroup>
@@ -467,7 +298,7 @@ const PicturesPage = () => {
 
           <PictureListButtonGroup>
             <Button
-              onClick={handleDeletePictures}
+              onClick={handleDeletePhotos}
               text="Delete"
               icon={DeleteButton}
               disabled={selection.length === 0}
