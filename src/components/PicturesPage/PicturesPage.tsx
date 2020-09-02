@@ -44,7 +44,7 @@ const PicturesPage = () => {
   const deleteQueue = useDeleteQueue();
 
   const [deleteAlbumFromDb] = useMutation(DELETE_ALBUM, {
-    onError: (error) => {
+    onError: error => {
       logger.error(error);
     },
     update: (cache, response) => {
@@ -56,7 +56,7 @@ const PicturesPage = () => {
           const id = response.data.deleteAlbum.id;
 
           const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.filter((album) => album.id !== id);
+          const updatedAlbums = existingAlbums.filter(album => album.id !== id);
 
           const updatedCache = {
             ...existingCache,
@@ -89,7 +89,7 @@ const PicturesPage = () => {
         id: '0',
       };
 
-      initialAlbum.photos = allPhotos.filter((photo) => photo.album === null);
+      initialAlbum.photos = allPhotos.filter(photo => photo.album === null);
 
       setPhotos(allPhotos);
       setAlbums([initialAlbum, ...allAlbums]);
@@ -103,7 +103,7 @@ const PicturesPage = () => {
 
   const handleCheckClick = (id: string) => {
     if (selection.includes(id)) {
-      setSelection(selection.filter((value) => value !== id));
+      setSelection(selection.filter(value => value !== id));
     } else {
       setSelection(selection.concat(id));
     }
@@ -132,7 +132,7 @@ const PicturesPage = () => {
   const handleEditAlbum = (id: string) => {
     setEditAlbum({
       open: true,
-      album: albums.find((album) => album.id === id),
+      album: albums.find(album => album.id === id),
       handleOk: () => void 0,
       handleCancel: () => setEditAlbum({}),
     });
@@ -141,7 +141,7 @@ const PicturesPage = () => {
   const handleEditPictures = () => {
     setEditPhoto({
       open: true,
-      photo: photos.find((photo) => photo.id === selection[0]),
+      photo: photos.find(photo => photo.id === selection[0]),
       albums: albums,
       handleOk: () => void 0,
       handleCancel: () => setEditPhoto({}),
@@ -192,7 +192,7 @@ const PicturesPage = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) => dispatch(addPicture(file)));
+      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
 
       history.push('/upload');
     }
@@ -264,7 +264,7 @@ const PicturesPage = () => {
         });
         break;
     }
-  }, [deleteQueue.response, queueStarted]);
+  }, [deleteQueue.response, queueStarted]); // eslint-disable-line
 
   const beginDeletePhotos = () => {
     deleteQueue.reset();
@@ -349,7 +349,7 @@ const PicturesPage = () => {
         <EditPhoto {...editPhoto} />
         <EditAlbum {...editAlbum} />
 
-        {albums.map((album) => (
+        {albums.map(album => (
           <PhotoAlbum
             key={album.id}
             name={album.name}
@@ -362,7 +362,7 @@ const PicturesPage = () => {
             onDeleteClick={() => handleDeleteAlbum(album.id, album.name)}
           >
             <>
-              {album.photos.map((photo) => (
+              {album.photos.map(photo => (
                 <Thumbnail
                   key={photo.id}
                   src={photo.thumbUrl}
