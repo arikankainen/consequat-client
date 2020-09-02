@@ -32,7 +32,7 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   const [savedProps, setSavedProps] = useState<EditAlbumProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const { response, save } = useSaveAlbum();
+  const [albumResponse, albumSave] = useSaveAlbum();
 
   useEffect(() => {
     if (props.open) {
@@ -66,13 +66,13 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
     setSaving(true);
 
     if (savedProps.album) {
-      save({
+      albumSave({
         name: values.name,
         description: values.description,
         id: savedProps.album.id,
       });
     } else {
-      save({
+      albumSave({
         name: values.name,
         description: values.description,
       });
@@ -80,14 +80,14 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   };
 
   useEffect(() => {
-    if (response.status === ResponseStatus.ready) {
+    if (albumResponse.status === ResponseStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (response.status === ResponseStatus.error) {
+    } else if (albumResponse.status === ResponseStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
-  }, [response.status]); // eslint-disable-line
+  }, [albumResponse.status]); // eslint-disable-line
 
   return (
     <EditAlbumDialog

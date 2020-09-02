@@ -27,7 +27,7 @@ const initialResponse = {
   status: ResponseStatus.idle,
 };
 
-const useSaveAlbum = () => {
+const useSaveAlbum = (): [Response, (album: SaveAlbum) => void] => {
   const [response, setResponse] = useState<Response>(initialResponse);
 
   const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
@@ -102,7 +102,7 @@ const useSaveAlbum = () => {
     }
   }, [createAlbumResponse.data, createAlbumResponse.error]);
 
-  return { response, save };
+  return [response, save];
 };
 
 export default useSaveAlbum;
