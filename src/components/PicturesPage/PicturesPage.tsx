@@ -19,9 +19,7 @@ import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import logger from '../../utils/logger';
 import { InitialUploadFileButton } from '../InitialUpload/style';
-import useDeleteManyPhotos, {
-  ResponseStatus,
-} from '../../hooks/useDeleteManyPhotos';
+import useDeleteManyPhotos, { ResponseStatus } from '../../hooks/useDeleteManyPhotos';
 
 import {
   PictureListOuterContainer,
@@ -41,9 +39,9 @@ const PicturesPage = () => {
   const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
   const [deletionInProgress, setDeletionInProgress] = useState<boolean>(false);
   const [deleteCount, setDeleteCount] = useState<number>(0);
-  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<
-    boolean
-  >(false);
+  const [singleDeletionInProgress, setsingleDeletionInProgress] = useState<boolean>(
+    false
+  );
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const [deletionError, setDeletionError] = useState<string>('');
   const fileInput = useRef<HTMLInputElement>(null);
@@ -105,9 +103,7 @@ const PicturesPage = () => {
           const id = response.data.deleteAlbum.id;
 
           const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.filter(
-            (album) => album.id !== id
-          );
+          const updatedAlbums = existingAlbums.filter((album) => album.id !== id);
 
           const updatedCache = {
             ...existingCache,
@@ -148,10 +144,8 @@ const PicturesPage = () => {
   }, [resultMe.data]);
 
   useEffect(() => {
-    if (selection.length === photos.length && !allSelected)
-      setAllSelected(true);
-    else if (selection.length !== photos.length && allSelected)
-      setAllSelected(false);
+    if (selection.length === photos.length && !allSelected) setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
   }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
@@ -232,9 +226,7 @@ const PicturesPage = () => {
     try {
       await deletePhotoFromFirebase(photo.filename);
     } catch (error) {
-      logger.error(
-        `Error deleting ${photo.filename} from firebase: ${error.code}`
-      );
+      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
 
       if (error.code !== allowedError) {
         errors = true;
@@ -247,9 +239,7 @@ const PicturesPage = () => {
       try {
         await deletePhotoFromFirebase(photo.thumbFilename);
       } catch (error) {
-        logger.error(
-          `Error deleting ${photo.filename} from firebase: ${error.code}`
-        );
+        logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
 
         if (error.code !== allowedError) {
           errors = true;
@@ -330,12 +320,7 @@ const PicturesPage = () => {
       }
     },
     /* eslint-disable */
-    [
-      deletionInProgress,
-      singleDeletionInProgress,
-      selection.length,
-      deletionError,
-    ]
+    [deletionInProgress, singleDeletionInProgress, selection.length, deletionError]
   );
   /* eslint-enable */
 
@@ -413,9 +398,7 @@ const PicturesPage = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) =>
-        dispatch(addPicture(file))
-      );
+      Array.from(event.target.files).forEach((file) => dispatch(addPicture(file)));
 
       history.push('/upload');
     }
@@ -426,8 +409,8 @@ const PicturesPage = () => {
   };
 
   useEffect(() => {
-    console.log(photoResponse.status);
-  }, [photoResponse.status]);
+    console.log(photoResponse);
+  }, [photoResponse]);
 
   const handleTest = () => {
     photoDeleteMany(selection, photos);

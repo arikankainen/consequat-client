@@ -10,63 +10,80 @@ export enum ResponseStatus {
 }
 
 interface Response {
-  data: string | undefined;
   status: ResponseStatus;
+  progress: number;
+  currentFile: number;
+  totalFiles: number;
 }
 
 const initialResponse = {
-  data: undefined,
   status: ResponseStatus.idle,
+  progress: 0,
+  currentFile: 0,
+  totalFiles: 0,
 };
 
 const useDeleteManyPhotos = (): [
   Response,
   (selected: string[], photos: Photo[]) => void
 ] => {
-  const [totalPhotos, setTotalPhotos] = useState(0);
+  const [response, setResponse] = useState<Response>(initialResponse);
+  const [status, setStatus] = useState<ResponseStatus>(ResponseStatus.idle);
+  const [progress, setProgress] = useState(0);
+  const [currentFile, setCurrentFile] = useState(0);
+  const [totalFiles, setTotalFiles] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(undefined);
-  const [response, setResponse] = useState<Response>(initialResponse);
   const [deleteResponse, deletePhoto] = useDeletePhoto();
+  const [alreadySliced, setAlreadySliced] = useState(false);
 
   useEffect(() => {
+    setResponse({ status, progress, currentFile, totalFiles });
+  }, [status, progress, currentFile, totalFiles]);
+
+  useEffect(() => {
+    if (!photos || !totalFiles) return;
+
+    const percent = Math.round(((totalFiles - photos.length) / totalFiles) * 100);
+    const current = photos.length > 0 ? totalFiles - photos.length + 1 : totalFiles;
+    setProgress(percent);
+    setCurrentFile(current);
+  }, [photos, totalFiles]);
+
+  useEffect(() => {
+    if (status !== ResponseStatus.running) return;
+
     if (photos && photos.length > 0) {
       setCurrentPhoto(photos[0]);
-      console.log('setCurrentPhoto', photos[0]);
-    } else if (photos.length === 0 && response.status === ResponseStatus.running) {
-      setResponse({
-        data: undefined,
-        status: ResponseStatus.ready,
-      });
+    } else {
+      setStatus(ResponseStatus.ready);
     }
-  }, [photos]);
+  }, [photos, status]);
 
   useEffect(() => {
     if (currentPhoto) {
+      setAlreadySliced(false);
       deletePhoto(currentPhoto);
-      console.log('deletePhoto', currentPhoto);
     }
-  }, [currentPhoto]);
+  }, [currentPhoto]); // eslint-disable-line
 
   useEffect(() => {
-    if (deleteResponse.status == PhotoResponseStatus.ready) {
+    if (alreadySliced) return;
+
+    if (deleteResponse.status === PhotoResponseStatus.ready) {
+      setAlreadySliced(true);
       setPhotos(photos.slice(1));
-      console.log(photos.slice(1));
-    } else if (deleteResponse.status == PhotoResponseStatus.error) {
-      console.log('error');
+    } else if (deleteResponse.status === PhotoResponseStatus.error) {
+      setStatus(ResponseStatus.error);
     }
-  }, [deleteResponse.status]);
+  }, [deleteResponse.status, alreadySliced, photos]);
 
   const deleteManyPhotos = (selected: string[], photos: Photo[]) => {
     if (!selected || !photos) return;
 
-    setResponse({
-      data: undefined,
-      status: ResponseStatus.running,
-    });
-
     const selectedPhotos = photos.filter((photo) => selected.includes(photo.id));
-    setTotalPhotos(selectedPhotos.length);
+    setStatus(ResponseStatus.running);
+    setTotalFiles(selectedPhotos.length);
     setPhotos(selectedPhotos);
   };
 
