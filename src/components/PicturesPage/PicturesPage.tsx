@@ -214,7 +214,7 @@ const PicturesPage = () => {
       case QueueStatus.running:
         setConfirmation({
           open: true,
-          topic: 'Deleting...',
+          topic: 'Deleting photos...',
           text,
           progress,
           handleOk: () => setConfirmation({}),
