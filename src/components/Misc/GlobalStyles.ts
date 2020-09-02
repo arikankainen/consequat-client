@@ -3,9 +3,10 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   :root {
     --bg-color: rgb(23, 23, 25);
-    --bg-color: rgb(50, 50, 55);
+    --bg-color: rgb(40, 40, 43);
     --bg-color-active: #191920;
     --accent-color-1: #c37f1d;
+    --accent-color-1: #d68b1e;
     --accent-color-2: #007ad9;
     --accent-color-2-hover: #398ff2;
     --accent-color-2-disabled: #00449b;
@@ -18,10 +19,10 @@ const GlobalStyles = createGlobalStyle`
     --default-font-size: 16px;
     --default-font-size-smaller: 14px;
     --navigation-bg-color: rgba(38, 38, 40, 0.9);
-    --navigation-bg-color: rgb(0, 0, 0);
+    --navigation-bg-color: #111;
     --navigation-bg-color-hover: #303032;
     --footer-bg-color: rgba(0, 0, 0, 0.8);
-    --navigation-bg-color-hover: rgba(255, 255, 255, 0.1);
+    --navigation-bg-color-hover: rgba(255, 255, 255, 0.2);
     --navigation-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     --input-border-radius: 3px;
     --icon-color: #007ad9;

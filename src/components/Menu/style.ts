@@ -48,7 +48,7 @@ export const MenuButton = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--menu-bg-color-hover);
+    background-color: var(--navigation-bg-color-hover);
 
     & > svg {
       color: var(--icon-color-hover);
@@ -84,6 +84,12 @@ export const MenuLink = styled(Link)`
   &:hover {
     color: var(--default-font-color);
     background-color: var(--navigation-bg-color-hover);
+    background-color: rgba(0, 122, 217, .07);
+    background-color: rgba(10, 10, 0, .05);
+
+    & > svg {
+      color: var(--accent-color-2-hover);
+    }
   }
 
   & > svg {
@@ -92,7 +98,7 @@ export const MenuLink = styled(Link)`
     color: var(--icon-color);
   }
 
-  transition: all 200ms linear;
+  transition: all 200ms ease;
 `;
 
 export const MenuTextContainer = styled.div`
@@ -108,7 +114,7 @@ export const MenuTextUpperText = styled.div`
 `;
 
 export const MenuTextLowerText = styled.div`
-  font-size: var(--default-font-size);
-  color: #666;
+  font-size: 15px;
+  color: #777;
   line-height: 1.2;
 `;
