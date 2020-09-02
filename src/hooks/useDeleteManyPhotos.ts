@@ -7,6 +7,7 @@ export enum DeletePhotosStatus {
   running,
   ready,
   error,
+  aborted,
 }
 
 interface DeletePhotosResponse {
@@ -23,10 +24,14 @@ const initialResponse = {
   totalFiles: 0,
 };
 
-const useDeleteManyPhotos = (): [
-  DeletePhotosResponse,
-  (selected: string[], photos: Photo[]) => void
-] => {
+interface DeleteManyPhotosReturn {
+  response: DeletePhotosResponse;
+  execute: (selected: string[], photos: Photo[]) => void;
+  abort: () => void;
+  reset: () => void;
+}
+
+const useDeleteManyPhotos = (): DeleteManyPhotosReturn => {
   const [response, setResponse] = useState<DeletePhotosResponse>(initialResponse);
   const [status, setStatus] = useState<DeletePhotosStatus>(DeletePhotosStatus.idle);
   const [progress, setProgress] = useState(0);
@@ -36,6 +41,7 @@ const useDeleteManyPhotos = (): [
   const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(undefined);
   const [deleteResponse, deletePhoto] = useDeletePhoto();
   const [alreadySliced, setAlreadySliced] = useState(false);
+  const [aborted, setAborted] = useState(false);
 
   useEffect(() => {
     setResponse({ status, progress, currentFile, totalFiles });
@@ -61,11 +67,13 @@ const useDeleteManyPhotos = (): [
   }, [photos, status]);
 
   useEffect(() => {
+    if (aborted) return;
+
     if (currentPhoto) {
       setAlreadySliced(false);
       deletePhoto(currentPhoto);
     }
-  }, [currentPhoto]); // eslint-disable-line
+  }, [currentPhoto, aborted]); // eslint-disable-line
 
   useEffect(() => {
     if (alreadySliced) return;
@@ -78,7 +86,7 @@ const useDeleteManyPhotos = (): [
     }
   }, [deleteResponse.status, alreadySliced, photos]);
 
-  const deleteManyPhotos = (selected: string[], photos: Photo[]) => {
+  const execute = (selected: string[], photos: Photo[]) => {
     if (!selected || !photos) return;
 
     const selectedPhotos = photos.filter((photo) => selected.includes(photo.id));
@@ -87,7 +95,22 @@ const useDeleteManyPhotos = (): [
     setPhotos(selectedPhotos);
   };
 
-  return [response, deleteManyPhotos];
+  const reset = () => {
+    setResponse(initialResponse);
+    setAborted(false);
+  };
+
+  const abort = () => {
+    setAborted(true);
+    setStatus(DeletePhotosStatus.aborted);
+  };
+
+  return {
+    response,
+    execute,
+    abort,
+    reset,
+  };
 };
 
 export default useDeleteManyPhotos;

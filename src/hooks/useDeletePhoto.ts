@@ -43,6 +43,10 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_PHOTO, {
     onError: (error) => {
       logger.error(error);
+      setResponse({
+        data: undefined,
+        status: DeletePhotoStatus.error,
+      });
     },
     update: (cache, response) => {
       try {
