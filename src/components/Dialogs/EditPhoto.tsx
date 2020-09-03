@@ -30,12 +30,12 @@ export interface EditPhotoProps {
   handleCancel?: () => void;
 }
 
-const EditPhoto: React.FC<EditPhotoProps> = (props) => {
+const EditPhoto: React.FC<EditPhotoProps> = props => {
   const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const [photoResponse, photoSave] = useSavePhoto();
+  const savePhoto = useSavePhoto();
 
   useEffect(() => {
     if (props.open) {
@@ -58,7 +58,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
 
       if (savedProps.albums && savedProps.photo.album) {
         const albumId = savedProps.photo.album.id;
-        const album = savedProps.albums.find((album) => album.id === albumId);
+        const album = savedProps.albums.find(album => album.id === albumId);
         initialValues.album = album?.id || '';
       } else {
         initialValues.album = '';
@@ -75,7 +75,7 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
     setSaving(true);
 
     if (savedProps.photo) {
-      photoSave({
+      savePhoto.execute({
         name: values.name,
         location: values.location,
         album: values.album !== '0' ? values.album : null,
@@ -86,14 +86,14 @@ const EditPhoto: React.FC<EditPhotoProps> = (props) => {
   };
 
   useEffect(() => {
-    if (photoResponse.status === SavePhotoStatus.ready) {
+    if (savePhoto.response.status === SavePhotoStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (photoResponse.status === SavePhotoStatus.error) {
+    } else if (savePhoto.response.status === SavePhotoStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
-  }, [photoResponse.status]); // eslint-disable-line
+  }, [savePhoto.response.status]); // eslint-disable-line
 
   return (
     <EditPhotoDialog

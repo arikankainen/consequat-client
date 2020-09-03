@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import useUploadPhoto, { UploadPhotoStatus } from './useUploadPhoto';
-import { Photo } from '../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { removePicture } from '../reducers/pictureReducer';
@@ -15,7 +14,7 @@ export enum QueueStatus {
 
 interface Return {
   response: Response;
-  execute: (selected: string[], photos: Photo[]) => void;
+  execute: () => void;
   abort: () => void;
   reset: () => void;
 }
@@ -79,7 +78,7 @@ const useUploadQueue = (): Return => {
     if (!photo) return;
 
     if (photo.progress > -1) setFileProgress(photo.progress);
-  }, [pictureState.pictures]);
+  }, [pictureState.pictures, currentName]);
 
   useEffect(() => {
     if (status !== QueueStatus.running) return;

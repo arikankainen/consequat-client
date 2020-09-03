@@ -2,13 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
-import { storage } from '../../firebase/firebase';
-import { useMutation } from '@apollo/client';
-import { ADD_PHOTO, ME } from '../../utils/queries';
-import { v1 as uuid } from 'uuid';
 import UploadThumbnail from './UploadThumbnail';
 import UploadListHeader from '../UploadListHeader/UploadListHeader';
-import resizeImage from '../../utils/resizeImage';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import InitialUpload from '../InitialUpload/InitialUpload';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
@@ -17,12 +12,12 @@ import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
+import useUploadQueue, { QueueStatus } from '../../hooks/useUploadQueue';
 
 import {
   addPicture,
   removePicture,
   removePictures,
-  updateProgress,
   updateSelected,
 } from '../../reducers/pictureReducer';
 
@@ -43,19 +38,11 @@ const UploadForm = () => {
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
-  const [uploadCancelled, setUploadCancelled] = useState<boolean>(false);
-  const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
-  const [uploadCount, setUploadCount] = useState<number>(0);
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const history = useHistory();
-
-  const [addPhotoToDb] = useMutation(ADD_PHOTO, {
-    onError: error => {
-      console.log(error);
-    },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
-  });
+  const uploadQueue = useUploadQueue();
+  const [queueStarted, setQueueStarted] = useState(false);
 
   useEffect(() => {
     setPictureCount(pictureState.pictures.length);
@@ -85,100 +72,7 @@ const UploadForm = () => {
     }
   }, [pictureState]); // eslint-disable-line
 
-  const reportProgress = (filename: string, percentage: number) => {
-    dispatch(updateProgress(filename, percentage));
-    const remainingFiles = pictureState.pictures.length;
-    const percentageFiles = ((uploadCount - remainingFiles) / uploadCount) * 100;
-    const oneFilePercentage = 100 / uploadCount;
-
-    setConfirmation({
-      ...confirmation,
-      text: filename,
-      progress: percentage,
-      text2: `Photo ${uploadCount - remainingFiles + 1} of ${uploadCount}`,
-      progress2: percentageFiles + percentage * (oneFilePercentage / 100),
-    });
-  };
-
-  const uploadPicture = (file: File, filename: string) => {
-    return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(filename);
-      const task = storageRef.put(file);
-
-      task.on(
-        'state_changed',
-        function progress(snapshot) {
-          const percentage = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          reportProgress(file.name, percentage);
-        },
-        function error(err) {
-          console.log(err);
-          reject(err);
-        },
-        function complete() {
-          storageRef.getDownloadURL().then(url => {
-            reportProgress(file.name, 100);
-            resolve(url);
-          });
-        }
-      );
-    });
-  };
-
-  const uploadThumb = (file: Blob, filename: string) => {
-    return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(filename);
-      const task = storageRef.put(file);
-
-      task.on(
-        'state_changed',
-        function progress() {
-          // empty
-        },
-        function error(err) {
-          console.log(err);
-          reject(err);
-        },
-        function complete() {
-          storageRef.getDownloadURL().then(url => {
-            resolve(url);
-          });
-        }
-      );
-    });
-  };
-
-  const doUpload = async (file: File) => {
-    const filename = `images/${uuid()}`;
-    const thumbFilename = `images/${uuid()}`;
-
-    const resized = await resizeImage(file, true, 500);
-    const mainUrl = await uploadPicture(file, filename);
-    const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
-
-    addPhotoToDb({
-      variables: {
-        mainUrl: mainUrl,
-        thumbUrl: thumbUrl,
-        filename,
-        thumbFilename,
-        originalFilename: file.name,
-        name: file.name,
-      },
-    });
-
-    dispatch(removePicture(file.name));
-  };
-
-  const startNewUpload = () => {
-    if (pictureState.pictures.length > 0) {
-      const file = pictureState.pictures[0].picture;
-      reportProgress(file.name, 0);
-      doUpload(file);
-    }
-  };
+  /* *************************** */
 
   const uploadDoneClosed = () => {
     setConfirmation({});
@@ -189,77 +83,72 @@ const UploadForm = () => {
     }, 300);
   };
 
-  const uploadDone = () => {
-    setConfirmation({
-      ...confirmation,
-      topic: 'Upload completed',
-      text: 'All photos uploaded',
-      handleOk: uploadDoneClosed,
-      handleCancel: undefined,
-    });
-
-    setTimeout(() => {
-      uploadDoneClosed();
-    }, 1000);
-  };
-
-  const uploadAborted = () => {
-    setConfirmation({
-      ...confirmation,
-      topic: 'Upload aborted',
-      handleOk: uploadDoneClosed,
-      handleCancel: undefined,
-    });
-  };
-
   useEffect(() => {
-    if (uploadInProgress && pictureState.pictures.length > 0) {
-      const uploadingAlready = pictureState.pictures.filter(p => p.progress > -1);
+    if (!queueStarted) return;
 
-      if (uploadingAlready.length === 0) {
-        if (!uploadCancelled) startNewUpload();
-        else uploadAborted();
-      }
-    } else if (uploadInProgress && pictureState.pictures.length === 0) {
-      setUploadInProgress(false);
-      uploadDone();
+    const status = uploadQueue.response.status;
+    const response = uploadQueue.response;
+    const text = response.currentName;
+    const text2 = `Photo ${response.currentFile} of ${response.totalFiles}`;
+    const progress = response.fileProgress;
+    const progress2 = response.totalProgress;
+
+    switch (status) {
+      case QueueStatus.running:
+        setConfirmation({
+          open: true,
+          topic: 'Uploading photos...',
+          text,
+          progress,
+          text2,
+          progress2,
+          handleCancel: () => uploadQueue.abort(),
+        });
+        break;
+
+      case QueueStatus.ready:
+        setQueueStarted(false);
+        setConfirmation({
+          open: true,
+          topic: 'Upload completed',
+          text: 'All photos uploaded.',
+          progress,
+          text2,
+          progress2,
+          handleOk: uploadDoneClosed,
+        });
+        break;
+
+      case QueueStatus.error:
+        setQueueStarted(false);
+        setConfirmation({
+          open: true,
+          topic: 'Upload failed',
+          text: 'An error occurred while uploading.',
+          handleOk: () => setConfirmation({}),
+        });
+        break;
+
+      case QueueStatus.aborted:
+        setQueueStarted(false);
+        setConfirmation({
+          open: true,
+          topic: 'Upload aborted',
+          text: 'Upload was aborted. Some photos may not have been uploaded.',
+          handleOk: () => setConfirmation({}),
+        });
+        break;
     }
-  }, [pictureState, uploadInProgress, uploadCancelled]); // eslint-disable-line
+  }, [uploadQueue.response, queueStarted]); // eslint-disable-line
 
-  const handleUploadPicturesAbort = () => {
-    setUploadCancelled(true);
-  };
-
-  useEffect(() => {
-    if (uploadCancelled) {
-      setConfirmation({
-        ...confirmation,
-        disableCancel: true,
-      });
-    } else {
-      setConfirmation({
-        ...confirmation,
-        disableCancel: false,
-      });
-    }
-  }, [uploadCancelled]); // eslint-disable-line
-
-  const handleUploadPicturesConfirmed = () => {
-    setConfirmation({
-      open: true,
-      topic: 'Uploading...',
-      text: '...',
-      progress: 0,
-      text2: '...',
-      progress2: 0,
-      handleCancel: handleUploadPicturesAbort,
-    });
-
+  const beginUploadPictures = () => {
+    uploadQueue.reset();
+    setQueueStarted(true);
     setUploadDialogOpen(true);
-    setUploadCount(pictureState.pictures.length);
-    setUploadCancelled(false);
-    setUploadInProgress(true);
+    uploadQueue.execute();
   };
+
+  /* *************************** */
 
   const handleUploadPictures = () => {
     const count = pictureState.pictures.length;
@@ -268,7 +157,7 @@ const UploadForm = () => {
     setConfirmation({
       open: true,
       text,
-      handleOk: handleUploadPicturesConfirmed,
+      handleOk: beginUploadPictures,
       handleCancel: () => setConfirmation({}),
     });
   };

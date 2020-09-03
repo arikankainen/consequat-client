@@ -27,7 +27,7 @@ const initialResponse = {
 const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
   const [response, setResponse] = useState<UploadPhotoResponse>(initialResponse);
   const [uploadedFilename, setUploadedFilename] = useState('');
-  const [photoResponse, photoSave] = useSavePhoto();
+  const savePhoto = useSavePhoto();
   const dispatch = useDispatch();
 
   const uploadPicture = (file: File, filename: string) => {
@@ -81,19 +81,21 @@ const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
   };
 
   useEffect(() => {
-    if (photoResponse.status === SavePhotoStatus.ready) {
+    if (savePhoto.response.status === SavePhotoStatus.ready) {
       dispatch(removePicture(uploadedFilename));
+
+      savePhoto.reset();
       setResponse({
         data: undefined,
         status: UploadPhotoStatus.ready,
       });
-    } else if (photoResponse.status === SavePhotoStatus.error) {
+    } else if (savePhoto.response.status === SavePhotoStatus.error) {
       setResponse({
         data: undefined,
         status: UploadPhotoStatus.error,
       });
     }
-  }, [photoResponse.status]);
+  }, [savePhoto.response.status, uploadedFilename]); // eslint-disable-line
 
   const uploadPhoto = async (file: File) => {
     if (!file) return;
@@ -112,7 +114,7 @@ const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
       const mainUrl = await uploadPicture(file, filename);
       const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
 
-      photoSave({
+      savePhoto.execute({
         mainUrl: mainUrl as string,
         thumbUrl: thumbUrl as string,
         filename,

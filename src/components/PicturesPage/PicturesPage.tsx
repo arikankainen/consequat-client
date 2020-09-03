@@ -146,10 +146,7 @@ const PicturesPage = () => {
           topic: 'Deleting photos...',
           text,
           progress,
-          handleOk: () => setConfirmation({}),
           handleCancel: () => deleteQueue.abort(),
-          disableOk: true,
-          disableCancel: false,
         });
         break;
 
@@ -162,8 +159,6 @@ const PicturesPage = () => {
           text: 'All selected photos deleted.',
           progress: 100,
           handleOk: () => setConfirmation({}),
-          disableOk: false,
-          disableCancel: true,
         });
         break;
 
@@ -175,8 +170,6 @@ const PicturesPage = () => {
           topic: 'Delete failed',
           text: 'An error occurred while deleting.',
           handleOk: () => setConfirmation({}),
-          disableOk: false,
-          disableCancel: true,
         });
         break;
 
@@ -188,8 +181,6 @@ const PicturesPage = () => {
           topic: 'Delete aborted',
           text: 'Deletion was aborted. Some photos may have been deleted.',
           handleOk: () => setConfirmation({}),
-          disableOk: false,
-          disableCancel: true,
         });
         break;
     }

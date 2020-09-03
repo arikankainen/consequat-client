@@ -11,6 +11,12 @@ export enum SavePhotoStatus {
   error,
 }
 
+interface Return {
+  response: SavePhotoResponse;
+  execute: (photo: SavePhoto | null | undefined) => void;
+  reset: () => void;
+}
+
 interface SavePhotoResponse {
   data: Photo | null | undefined;
   status: SavePhotoStatus;
@@ -34,7 +40,7 @@ const initialResponse = {
   status: SavePhotoStatus.idle,
 };
 
-const useSavePhoto = (): [SavePhotoResponse, (photo: SavePhoto) => void] => {
+const useSavePhoto = (): Return => {
   const [response, setResponse] = useState<SavePhotoResponse>(initialResponse);
 
   const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
@@ -50,38 +56,6 @@ const useSavePhoto = (): [SavePhotoResponse, (photo: SavePhoto) => void] => {
     },
     refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
-
-  const save = (photo: SavePhoto | null | undefined) => {
-    if (!photo) return;
-
-    setResponse({
-      data: undefined,
-      status: SavePhotoStatus.saving,
-    });
-
-    if (photo.id) {
-      editPhoto({
-        variables: {
-          name: photo.name,
-          location: photo.location,
-          album: photo.album,
-          description: photo.description,
-          id: photo.id,
-        },
-      });
-    } else {
-      addPhoto({
-        variables: {
-          mainUrl: photo.mainUrl,
-          thumbUrl: photo.thumbUrl,
-          filename: photo.filename,
-          thumbFilename: photo.thumbFilename,
-          originalFilename: photo.originalFilename,
-          name: photo.name,
-        },
-      });
-    }
-  };
 
   useEffect(() => {
     if (editPhotoResponse.data && !editPhotoResponse.error) {
@@ -115,7 +89,50 @@ const useSavePhoto = (): [SavePhotoResponse, (photo: SavePhoto) => void] => {
     }
   }, [addPhotoResponse.data, addPhotoResponse.error]);
 
-  return [response, save];
+  const execute = (photo: SavePhoto | null | undefined) => {
+    if (!photo) return;
+
+    setResponse({
+      data: undefined,
+      status: SavePhotoStatus.saving,
+    });
+
+    if (photo.id) {
+      editPhoto({
+        variables: {
+          name: photo.name,
+          location: photo.location,
+          album: photo.album,
+          description: photo.description,
+          id: photo.id,
+        },
+      });
+    } else {
+      addPhoto({
+        variables: {
+          mainUrl: photo.mainUrl,
+          thumbUrl: photo.thumbUrl,
+          filename: photo.filename,
+          thumbFilename: photo.thumbFilename,
+          originalFilename: photo.originalFilename,
+          name: photo.name,
+        },
+      });
+    }
+  };
+
+  const reset = () => {
+    setResponse({
+      data: undefined,
+      status: SavePhotoStatus.idle,
+    });
+  };
+
+  return {
+    response,
+    execute,
+    reset,
+  };
 };
 
 export default useSavePhoto;
