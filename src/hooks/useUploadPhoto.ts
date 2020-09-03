@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import resizeImage from '../utils/resizeImage';
 import { v1 as uuid } from 'uuid';
 import useSavePhoto, { SavePhotoStatus } from './useSavePhoto';
-
 import { removePicture, updateProgress } from '../reducers/pictureReducer';
 
 export enum UploadPhotoStatus {
