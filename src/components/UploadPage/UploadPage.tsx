@@ -51,7 +51,7 @@ const UploadForm = () => {
   const history = useHistory();
 
   const [addPhotoToDb] = useMutation(ADD_PHOTO, {
-    onError: (error) => {
+    onError: error => {
       console.log(error);
     },
     refetchQueries: [{ query: ME }], // TODO: update cache manually
@@ -63,13 +63,13 @@ const UploadForm = () => {
 
   useEffect(() => {
     let count = 0;
-    pictureState.pictures.forEach((element) => {
+    pictureState.pictures.forEach(element => {
       if (element.selected) count++;
     });
     setSelectedCount(count);
 
     if (count === 1) {
-      pictureState.pictures.forEach((element) => {
+      pictureState.pictures.forEach(element => {
         if (element.selected) {
           setSelectedFile(element.picture);
         }
@@ -88,8 +88,7 @@ const UploadForm = () => {
   const reportProgress = (filename: string, percentage: number) => {
     dispatch(updateProgress(filename, percentage));
     const remainingFiles = pictureState.pictures.length;
-    const percentageFiles =
-      ((uploadCount - remainingFiles) / uploadCount) * 100;
+    const percentageFiles = ((uploadCount - remainingFiles) / uploadCount) * 100;
     const oneFilePercentage = 100 / uploadCount;
 
     setConfirmation({
@@ -119,7 +118,7 @@ const UploadForm = () => {
           reject(err);
         },
         function complete() {
-          storageRef.getDownloadURL().then((url) => {
+          storageRef.getDownloadURL().then(url => {
             reportProgress(file.name, 100);
             resolve(url);
           });
@@ -143,7 +142,7 @@ const UploadForm = () => {
           reject(err);
         },
         function complete() {
-          storageRef.getDownloadURL().then((url) => {
+          storageRef.getDownloadURL().then(url => {
             resolve(url);
           });
         }
@@ -157,8 +156,7 @@ const UploadForm = () => {
 
     const resized = await resizeImage(file, true, 500);
     const mainUrl = await uploadPicture(file, filename);
-    const thumbUrl =
-      resized != null ? await uploadThumb(resized, thumbFilename) : '';
+    const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
 
     addPhotoToDb({
       variables: {
@@ -216,9 +214,7 @@ const UploadForm = () => {
 
   useEffect(() => {
     if (uploadInProgress && pictureState.pictures.length > 0) {
-      const uploadingAlready = pictureState.pictures.filter(
-        (p) => p.progress > -1
-      );
+      const uploadingAlready = pictureState.pictures.filter(p => p.progress > -1);
 
       if (uploadingAlready.length === 0) {
         if (!uploadCancelled) startNewUpload();
@@ -287,7 +283,7 @@ const UploadForm = () => {
     if (selectedCount === 0) {
       dispatch(removePictures());
     } else {
-      pictureState.pictures.forEach((picture) => {
+      pictureState.pictures.forEach(picture => {
         if (picture.selected) dispatch(removePicture(picture.picture.name));
       });
     }
@@ -310,9 +306,7 @@ const UploadForm = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) =>
-        dispatch(addPicture(file))
-      );
+      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
     }
   };
 
@@ -326,14 +320,14 @@ const UploadForm = () => {
 
   const handleSelectAll = () => {
     if (!allSelected) {
-      pictureState.pictures.forEach((element) => {
+      pictureState.pictures.forEach(element => {
         if (!element.selected) {
           dispatch(updateSelected(element.picture.name, true));
         }
       });
       setAllSelected(true);
     } else {
-      pictureState.pictures.forEach((element) => {
+      pictureState.pictures.forEach(element => {
         if (element.selected) {
           dispatch(updateSelected(element.picture.name, false));
         }
@@ -405,7 +399,7 @@ const UploadForm = () => {
           onUploadClick={handleUploadPictures}
         >
           <>
-            {pictureState.pictures.map((file) => (
+            {pictureState.pictures.map(file => (
               <UploadThumbnail
                 key={file.picture.name}
                 file={file.picture}
