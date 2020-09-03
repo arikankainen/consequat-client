@@ -14,6 +14,12 @@ export enum UploadPhotoStatus {
   error,
 }
 
+interface Return {
+  response: UploadPhotoResponse;
+  execute: (file: File) => void;
+  reset: () => void;
+}
+
 interface UploadPhotoResponse {
   data: Photo | null | undefined;
   status: UploadPhotoStatus;
@@ -24,7 +30,7 @@ const initialResponse = {
   status: UploadPhotoStatus.idle,
 };
 
-const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
+const useUploadPhoto = (): Return => {
   const [response, setResponse] = useState<UploadPhotoResponse>(initialResponse);
   const [uploadedFilename, setUploadedFilename] = useState('');
   const savePhoto = useSavePhoto();
@@ -97,7 +103,7 @@ const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
     }
   }, [savePhoto.response.status, uploadedFilename]); // eslint-disable-line
 
-  const uploadPhoto = async (file: File) => {
+  const execute = async (file: File) => {
     if (!file) return;
 
     setResponse({
@@ -130,7 +136,14 @@ const useUploadPhoto = (): [UploadPhotoResponse, (file: File) => void] => {
     }
   };
 
-  return [response, uploadPhoto];
+  const reset = () => {
+    setResponse({
+      data: undefined,
+      status: UploadPhotoStatus.idle,
+    });
+  };
+
+  return { response, execute, reset };
 };
 
 export default useUploadPhoto;

@@ -128,11 +128,7 @@ const useSavePhoto = (): Return => {
     });
   };
 
-  return {
-    response,
-    execute,
-    reset,
-  };
+  return { response, execute, reset };
 };
 
 export default useSavePhoto;

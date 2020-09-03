@@ -5,26 +5,17 @@ import { DELETE_PHOTO, ME } from '../utils/queries';
 import logger from '../utils/logger';
 import { storage } from '../firebase/firebase';
 
-const deleteFromFirebase = (filename: string) => {
-  return new Promise((resolve, reject) => {
-    const storageRef = storage.ref(filename);
-
-    storageRef
-      .delete()
-      .then(() => {
-        resolve('ok');
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
-};
-
 export enum DeletePhotoStatus {
   idle,
   deleting,
   ready,
   error,
+}
+
+interface Return {
+  response: DeletePhotoResponse;
+  execute: (photo: Photo) => void;
+  reset: () => void;
 }
 
 interface DeletePhotoResponse {
@@ -37,7 +28,7 @@ const initialResponse = {
   status: DeletePhotoStatus.idle,
 };
 
-const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
+const useDeletePhoto = (): Return => {
   const [response, setResponse] = useState<DeletePhotoResponse>(initialResponse);
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_PHOTO, {
@@ -85,7 +76,38 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
     },
   });
 
-  const deleteFromBoth = async (photo: Photo) => {
+  const deleteFromFirebase = (filename: string) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = storage.ref(filename);
+
+      storageRef
+        .delete()
+        .then(() => {
+          resolve('ok');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  useEffect(() => {
+    if (deleteFromDbResponse.data && !deleteFromDbResponse.error) {
+      setResponse({
+        data: deleteFromDbResponse.data.deletePhoto,
+        status: DeletePhotoStatus.ready,
+      });
+    } else if (deleteFromDbResponse.error) {
+      logger.error(deleteFromDbResponse.error);
+
+      setResponse({
+        data: undefined,
+        status: DeletePhotoStatus.error,
+      });
+    }
+  }, [deleteFromDbResponse.data, deleteFromDbResponse.error]);
+
+  const execute = async (photo: Photo) => {
     if (!photo) return;
 
     setResponse({
@@ -126,23 +148,14 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
     deleteFromDb({ variables: { id: photo.id } });
   };
 
-  useEffect(() => {
-    if (deleteFromDbResponse.data && !deleteFromDbResponse.error) {
-      setResponse({
-        data: deleteFromDbResponse.data.deletePhoto,
-        status: DeletePhotoStatus.ready,
-      });
-    } else if (deleteFromDbResponse.error) {
-      logger.error(deleteFromDbResponse.error);
+  const reset = () => {
+    setResponse({
+      data: undefined,
+      status: DeletePhotoStatus.idle,
+    });
+  };
 
-      setResponse({
-        data: undefined,
-        status: DeletePhotoStatus.error,
-      });
-    }
-  }, [deleteFromDbResponse.data, deleteFromDbResponse.error]);
-
-  return [response, deleteFromBoth];
+  return { response, execute, reset };
 };
 
 export default useDeletePhoto;

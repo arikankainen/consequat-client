@@ -11,6 +11,12 @@ export enum SaveAlbumStatus {
   error,
 }
 
+interface Return {
+  response: SaveAlbumResponse;
+  execute: (album: SaveAlbum) => void;
+  reset: () => void;
+}
+
 interface SaveAlbumResponse {
   data: Album | null | undefined;
   status: SaveAlbumStatus;
@@ -27,48 +33,22 @@ const initialResponse = {
   status: SaveAlbumStatus.idle,
 };
 
-const useSaveAlbum = (): [SaveAlbumResponse, (album: SaveAlbum) => void] => {
+const useSaveAlbum = (): Return => {
   const [response, setResponse] = useState<SaveAlbumResponse>(initialResponse);
 
   const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
-    onError: (error) => {
+    onError: error => {
       logger.error(error);
     },
     refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   const [createAlbum, createAlbumResponse] = useMutation(CREATE_ALBUM, {
-    onError: (error) => {
+    onError: error => {
       logger.error(error);
     },
     refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
-
-  const save = (album: SaveAlbum | null | undefined) => {
-    if (!album) return;
-
-    setResponse({
-      data: undefined,
-      status: SaveAlbumStatus.saving,
-    });
-
-    if (album.id) {
-      editAlbum({
-        variables: {
-          name: album.name,
-          description: album.description,
-          id: album.id,
-        },
-      });
-    } else {
-      createAlbum({
-        variables: {
-          name: album.name,
-          description: album.description,
-        },
-      });
-    }
-  };
 
   useEffect(() => {
     if (editAlbumResponse.data && !editAlbumResponse.error) {
@@ -102,7 +82,40 @@ const useSaveAlbum = (): [SaveAlbumResponse, (album: SaveAlbum) => void] => {
     }
   }, [createAlbumResponse.data, createAlbumResponse.error]);
 
-  return [response, save];
+  const execute = (album: SaveAlbum | null | undefined) => {
+    if (!album) return;
+
+    setResponse({
+      data: undefined,
+      status: SaveAlbumStatus.saving,
+    });
+
+    if (album.id) {
+      editAlbum({
+        variables: {
+          name: album.name,
+          description: album.description,
+          id: album.id,
+        },
+      });
+    } else {
+      createAlbum({
+        variables: {
+          name: album.name,
+          description: album.description,
+        },
+      });
+    }
+  };
+
+  const reset = () => {
+    setResponse({
+      data: undefined,
+      status: SaveAlbumStatus.idle,
+    });
+  };
+
+  return { response, execute, reset };
 };
 
 export default useSaveAlbum;

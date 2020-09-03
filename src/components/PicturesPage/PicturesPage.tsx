@@ -42,7 +42,7 @@ const PicturesPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const deleteQueue = useDeleteQueue();
-  const [deleteAlbumResponse, deleteAlbum] = useDeleteAlbum();
+  const deleteAlbum = useDeleteAlbum();
 
   useEffect(() => {
     if (resultMe.data) {
@@ -208,7 +208,7 @@ const PicturesPage = () => {
   };
 
   useEffect(() => {
-    const status = deleteAlbumResponse.status;
+    const status = deleteAlbum.response.status;
 
     switch (status) {
       case DeleteAlbumStatus.ready:
@@ -229,7 +229,7 @@ const PicturesPage = () => {
         });
         break;
     }
-  }, [deleteAlbumResponse.status]);
+  }, [deleteAlbum.response.status]);
 
   const beginDeleteAlbum = (album: Album) => {
     setConfirmation({
@@ -240,7 +240,7 @@ const PicturesPage = () => {
       disableOk: true,
     });
 
-    deleteAlbum(album);
+    deleteAlbum.execute(album);
   };
 
   const handleDeleteAlbum = (album: Album) => {

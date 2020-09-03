@@ -39,7 +39,7 @@ const useDeleteQueue = (): Return => {
   const [totalFiles, setTotalFiles] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(undefined);
-  const [deleteResponse, deletePhoto] = useDeletePhoto();
+  const deletePhoto = useDeletePhoto();
 
   useEffect(() => {
     setResponse({ status, progress, currentFile, totalFiles });
@@ -67,16 +67,16 @@ const useDeleteQueue = (): Return => {
   useEffect(() => {
     if (status === QueueStatus.aborted || !currentPhoto) return;
 
-    deletePhoto(currentPhoto);
+    deletePhoto.execute(currentPhoto);
   }, [currentPhoto]); // eslint-disable-line
 
   useEffect(() => {
-    if (deleteResponse.status === DeletePhotoStatus.ready) {
+    if (deletePhoto.response.status === DeletePhotoStatus.ready) {
       setPhotos(p => p.slice(1));
-    } else if (deleteResponse.status === DeletePhotoStatus.error) {
+    } else if (deletePhoto.response.status === DeletePhotoStatus.error) {
       setStatus(QueueStatus.error);
     }
-  }, [deleteResponse.status]);
+  }, [deletePhoto.response.status]);
 
   const execute = (selected: string[], photos: Photo[]) => {
     if (!selected || !photos) return;

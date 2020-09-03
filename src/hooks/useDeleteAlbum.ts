@@ -11,6 +11,12 @@ export enum DeleteAlbumStatus {
   error,
 }
 
+interface Return {
+  response: DeleteAlbumResponse;
+  execute: (album: Album) => void;
+  reset: () => void;
+}
+
 interface DeleteAlbumResponse {
   data: Album | null | undefined;
   status: DeleteAlbumStatus;
@@ -21,7 +27,7 @@ const initialResponse = {
   status: DeleteAlbumStatus.idle,
 };
 
-const useDeleteAlbum = (): [DeleteAlbumResponse, (album: Album) => void] => {
+const useDeleteAlbum = (): Return => {
   const [response, setResponse] = useState<DeleteAlbumResponse>(initialResponse);
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_ALBUM, {
@@ -58,17 +64,6 @@ const useDeleteAlbum = (): [DeleteAlbumResponse, (album: Album) => void] => {
     },
   });
 
-  const deleteAlbum = async (album: Album) => {
-    if (!album) return;
-
-    setResponse({
-      data: undefined,
-      status: DeleteAlbumStatus.deleting,
-    });
-
-    deleteFromDb({ variables: { id: album.id } });
-  };
-
   useEffect(() => {
     if (deleteFromDbResponse.data && !deleteFromDbResponse.error) {
       setResponse({
@@ -85,7 +80,25 @@ const useDeleteAlbum = (): [DeleteAlbumResponse, (album: Album) => void] => {
     }
   }, [deleteFromDbResponse.data, deleteFromDbResponse.error]);
 
-  return [response, deleteAlbum];
+  const execute = async (album: Album) => {
+    if (!album) return;
+
+    setResponse({
+      data: undefined,
+      status: DeleteAlbumStatus.deleting,
+    });
+
+    deleteFromDb({ variables: { id: album.id } });
+  };
+
+  const reset = () => {
+    setResponse({
+      data: undefined,
+      status: DeleteAlbumStatus.idle,
+    });
+  };
+
+  return { response, execute, reset };
 };
 
 export default useDeleteAlbum;

@@ -25,12 +25,12 @@ export interface EditAlbumProps {
   handleCancel?: () => void;
 }
 
-const EditAlbum: React.FC<EditAlbumProps> = (props) => {
+const EditAlbum: React.FC<EditAlbumProps> = props => {
   const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<EditAlbumProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const [albumResponse, albumSave] = useSaveAlbum();
+  const saveAlbum = useSaveAlbum();
 
   useEffect(() => {
     if (props.open) {
@@ -64,13 +64,13 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
     setSaving(true);
 
     if (savedProps.album) {
-      albumSave({
+      saveAlbum.execute({
         name: values.name,
         description: values.description,
         id: savedProps.album.id,
       });
     } else {
-      albumSave({
+      saveAlbum.execute({
         name: values.name,
         description: values.description,
       });
@@ -78,14 +78,14 @@ const EditAlbum: React.FC<EditAlbumProps> = (props) => {
   };
 
   useEffect(() => {
-    if (albumResponse.status === SaveAlbumStatus.ready) {
+    if (saveAlbum.response.status === SaveAlbumStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (albumResponse.status === SaveAlbumStatus.error) {
+    } else if (saveAlbum.response.status === SaveAlbumStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
-  }, [albumResponse.status]); // eslint-disable-line
+  }, [saveAlbum.response.status]); // eslint-disable-line
 
   return (
     <EditAlbumDialog

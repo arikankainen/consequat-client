@@ -48,7 +48,7 @@ const useUploadQueue = (): Return => {
   const [totalFiles, setTotalFiles] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState<File | null>(null);
   const [currentName, setCurrentName] = useState('');
-  const [uploadResponse, uploadPhoto] = useUploadPhoto();
+  const uploadPhoto = useUploadPhoto();
 
   useEffect(() => {
     setResponse({
@@ -94,16 +94,16 @@ const useUploadQueue = (): Return => {
   useEffect(() => {
     if (status === QueueStatus.aborted || !currentPhoto) return;
 
-    uploadPhoto(currentPhoto);
+    uploadPhoto.execute(currentPhoto);
   }, [currentPhoto]);
 
   useEffect(() => {
-    if (uploadResponse.status === UploadPhotoStatus.ready) {
+    if (uploadPhoto.response.status === UploadPhotoStatus.ready) {
       dispatch(removePicture(currentName));
-    } else if (uploadResponse.status === UploadPhotoStatus.error) {
+    } else if (uploadPhoto.response.status === UploadPhotoStatus.error) {
       setStatus(QueueStatus.error);
     }
-  }, [uploadResponse.status]);
+  }, [uploadPhoto.response.status]);
 
   const execute = () => {
     if (pictureState.pictures.length === 0) return;
