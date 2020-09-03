@@ -14,7 +14,7 @@ const deleteFromFirebase = (filename: string) => {
       .then(() => {
         resolve('ok');
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error);
       });
   });
@@ -41,7 +41,7 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
   const [response, setResponse] = useState<DeletePhotoResponse>(initialResponse);
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_PHOTO, {
-    onError: (error) => {
+    onError: error => {
       logger.error(error);
       setResponse({
         data: undefined,
@@ -57,11 +57,11 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
           const id = response.data.deletePhoto.id;
 
           const existingPhotos = existingCache.me.photos;
-          const updatedPhotos = existingPhotos.filter((p) => p.id !== id);
+          const updatedPhotos = existingPhotos.filter(p => p.id !== id);
 
           const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.map((album) => {
-            const filteredPhotos = album.photos.filter((p) => p.id !== id);
+          const updatedAlbums = existingAlbums.map(album => {
+            const filteredPhotos = album.photos.filter(p => p.id !== id);
             return { ...album, photos: filteredPhotos };
           });
 
@@ -129,7 +129,7 @@ const useDeletePhoto = (): [DeletePhotoResponse, (photo: Photo) => void] => {
   useEffect(() => {
     if (deleteFromDbResponse.data && !deleteFromDbResponse.error) {
       setResponse({
-        data: deleteFromDbResponse.data.editPhoto,
+        data: deleteFromDbResponse.data.deletePhoto,
         status: DeletePhotoStatus.ready,
       });
     } else if (deleteFromDbResponse.error) {

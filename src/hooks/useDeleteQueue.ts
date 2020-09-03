@@ -65,9 +65,9 @@ const useDeleteQueue = (): Return => {
   }, [photos, status]);
 
   useEffect(() => {
-    if (status === QueueStatus.aborted) return;
+    if (status === QueueStatus.aborted || !currentPhoto) return;
 
-    if (currentPhoto) deletePhoto(currentPhoto);
+    deletePhoto(currentPhoto);
   }, [currentPhoto]); // eslint-disable-line
 
   useEffect(() => {

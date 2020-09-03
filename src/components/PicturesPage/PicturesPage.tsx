@@ -1,24 +1,24 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
-import { DELETE_ALBUM, ME } from '../../utils/queries';
-import { Photo, User, Album } from '../../utils/types';
-import Thumbnail from '../Thumbnail/Thumbnail';
-import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
+import { useQuery } from '@apollo/client';
+import { ME } from '../../utils/queries';
+import { Photo, Album } from '../../utils/types';
 import { addPicture } from '../../reducers/pictureReducer';
+import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
+import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
+import useDeleteQueue, { QueueStatus } from '../../hooks/useDeleteQueue';
+import useDeleteAlbum, { DeleteAlbumStatus } from '../../hooks/useDeleteAlbum';
 import Confirmation, { ConfirmationProps } from '../Dialogs/Confirmation';
 import { ReactComponent as AddButton } from '../../images/button_add.svg';
 import { ReactComponent as AlbumButton } from '../../images/button_album.svg';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import Button, { ButtonColor } from '../Buttons/Button';
-import EditPhoto, { EditPhotoProps } from '../Dialogs/EditPhoto';
-import EditAlbum, { EditAlbumProps } from '../Dialogs/EditAlbum';
 import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
-import logger from '../../utils/logger';
 import { InitialUploadFileButton } from '../InitialUpload/style';
-import useDeleteQueue, { QueueStatus } from '../../hooks/useDeleteQueue';
+import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
 import {
   PictureListOuterContainer,
@@ -42,40 +42,7 @@ const PicturesPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const deleteQueue = useDeleteQueue();
-
-  const [deleteAlbumFromDb] = useMutation(DELETE_ALBUM, {
-    onError: error => {
-      logger.error(error);
-    },
-    update: (cache, response) => {
-      try {
-        const existingCache: { me: User } | null = cache.readQuery({
-          query: ME,
-        });
-        if (existingCache) {
-          const id = response.data.deleteAlbum.id;
-
-          const existingAlbums = existingCache.me.albums;
-          const updatedAlbums = existingAlbums.filter(album => album.id !== id);
-
-          const updatedCache = {
-            ...existingCache,
-            me: {
-              ...existingCache.me,
-              albums: updatedAlbums,
-            },
-          };
-
-          cache.writeQuery({
-            query: ME,
-            data: updatedCache,
-          });
-        }
-      } catch (error) {
-        logger.error(error);
-      }
-    },
-  });
+  const [deleteAlbumResponse, deleteAlbum] = useDeleteAlbum();
 
   useEffect(() => {
     if (resultMe.data) {
@@ -145,44 +112,6 @@ const PicturesPage = () => {
       albums: albums,
       handleOk: () => void 0,
       handleCancel: () => setEditPhoto({}),
-    });
-  };
-
-  const handleDeleteAlbumConfirmed = (id: string, name: string) => {
-    setConfirmation({
-      open: true,
-      topic: 'Deleting...',
-      text: `Deleting '${name}'`,
-      handleOk: () => setConfirmation({}),
-      disableOk: true,
-    });
-
-    let errors = false;
-    try {
-      deleteAlbumFromDb({ variables: { id } });
-    } catch (error) {
-      errors = true;
-      logger.error(`Error deleting album '${name}' from database`);
-    }
-
-    if (!errors) setConfirmation({});
-    else {
-      setConfirmation({
-        open: true,
-        topic: 'Failed',
-        text: `Deletion of '${name}' failed`,
-        handleOk: () => setConfirmation({}),
-        disableOk: false,
-      });
-    }
-  };
-
-  const handleDeleteAlbum = (id: string, name: string) => {
-    setConfirmation({
-      open: true,
-      text: `Really delete album '${name}'? It will be deleted permanently.`,
-      handleOk: () => handleDeleteAlbumConfirmed(id, name),
-      handleCancel: () => setConfirmation({}),
     });
   };
 
@@ -287,6 +216,51 @@ const PicturesPage = () => {
     });
   };
 
+  useEffect(() => {
+    const status = deleteAlbumResponse.status;
+
+    switch (status) {
+      case DeleteAlbumStatus.ready:
+        setConfirmation({
+          open: true,
+          topic: 'Delete completed',
+          text: 'Album deleted.',
+          handleOk: () => setConfirmation({}),
+        });
+        break;
+
+      case DeleteAlbumStatus.error:
+        setConfirmation({
+          open: true,
+          topic: 'Delete failed',
+          text: 'An error occurred while deleting.',
+          handleOk: () => setConfirmation({}),
+        });
+        break;
+    }
+  }, [deleteAlbumResponse.status]);
+
+  const beginDeleteAlbum = (album: Album) => {
+    setConfirmation({
+      open: true,
+      topic: 'Deleting album...',
+      text: album.name,
+      handleOk: () => void 0,
+      disableOk: true,
+    });
+
+    deleteAlbum(album);
+  };
+
+  const handleDeleteAlbum = (album: Album) => {
+    setConfirmation({
+      open: true,
+      text: 'Really delete album? It will be deleted permanently.',
+      handleOk: () => beginDeleteAlbum(album),
+      handleCancel: () => setConfirmation({}),
+    });
+  };
+
   return (
     <PictureListOuterContainer>
       <PictureListToolBar>
@@ -359,7 +333,7 @@ const PicturesPage = () => {
             editButtonVisible={album.id !== '0'}
             deleteButtonVisible={album.photos.length === 0}
             onEditClick={() => handleEditAlbum(album.id)}
-            onDeleteClick={() => handleDeleteAlbum(album.id, album.name)}
+            onDeleteClick={() => handleDeleteAlbum(album)}
           >
             <>
               {album.photos.map(photo => (
