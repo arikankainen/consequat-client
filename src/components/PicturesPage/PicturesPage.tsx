@@ -335,7 +335,7 @@ const PicturesPage = () => {
           </PictureListButtonGroup>
         </PictureListButtonGroups>
 
-        <PictureListHeader photos={photos} selection={selection} />
+        <PictureListHeader photos={photos} albums={albums} selection={selection} />
       </PictureListToolBar>
 
       <PictureListContainer>

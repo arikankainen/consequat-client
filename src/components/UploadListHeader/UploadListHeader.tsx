@@ -17,9 +17,9 @@ const UploadListHeader: React.FC<UploadListHeaderProps> = ({
   if (selectedFile !== null && selectedCount === 1) {
     filenameValue = selectedFile.name;
   } else if (selectedCount === 0) {
-    filenameValue = 'No picture selected';
+    filenameValue = 'No photo selected';
   } else if (selectedCount > 1) {
-    filenameValue = 'Multiple pictures selected';
+    filenameValue = 'Multiple photos selected';
   }
 
   return (
@@ -27,10 +27,10 @@ const UploadListHeader: React.FC<UploadListHeaderProps> = ({
       items={[
         {
           name: 'Selected',
-          value: selectedCount + ' of ' + pictureCount,
+          value: `${selectedCount} of ${pictureCount}`,
         },
         {
-          name: 'Filename',
+          name: 'Photo',
           value: filenameValue,
         },
       ]}
