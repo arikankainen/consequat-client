@@ -323,8 +323,10 @@ const PicturesPage = () => {
             isEmpty={album.photos.length === 0}
             editButtonVisible={album.id !== '0'}
             deleteButtonVisible={album.photos.length === 0}
+            selectButtonVisible={true}
             onEditClick={() => handleEditAlbum(album.id)}
             onDeleteClick={() => handleDeleteAlbum(album)}
+            onSelectClick={() => console.log('select')}
           >
             <>
               {album.photos.map(photo => (

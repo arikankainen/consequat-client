@@ -3,6 +3,8 @@ import Button, { ButtonColor } from '../Buttons/Button';
 import { ReactComponent as EditButton } from '../../images/button_edit.svg';
 import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
 import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
+import { ReactComponent as CheckButton } from '../../images/button_check.svg';
+import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
 
 import {
   AlbumContainer,
@@ -23,9 +25,12 @@ interface PhotoAlbumProps {
   onUploadClick?: () => void;
   onEditClick?: () => void;
   onDeleteClick?: () => void;
+  onSelectClick?: () => void;
   uploadButtonVisible?: boolean;
   deleteButtonVisible?: boolean;
   editButtonVisible?: boolean;
+  selectButtonVisible?: boolean;
+  selected?: boolean;
   children: JSX.Element;
 }
 
@@ -37,9 +42,12 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   onUploadClick,
   onEditClick,
   onDeleteClick,
+  onSelectClick,
   uploadButtonVisible,
   deleteButtonVisible,
   editButtonVisible,
+  selectButtonVisible,
+  selected,
   children,
 }) => {
   if (isEmpty && isNotRealAlbum) return null;
@@ -51,6 +59,24 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           {description && <Description>{description}</Description>}
         </NameAndDescription>
         <Edit>
+          {selectButtonVisible && !selected && (
+            <Button
+              text="Select all"
+              onClick={onSelectClick || (() => void 0)}
+              color={ButtonColor.white}
+              icon={CheckButton}
+              breakPoint="600px"
+            />
+          )}
+          {selectButtonVisible && selected && (
+            <Button
+              text="Deselect all"
+              onClick={onSelectClick || (() => void 0)}
+              color={ButtonColor.white}
+              icon={UncheckButton}
+              breakPoint="600px"
+            />
+          )}
           {uploadButtonVisible && (
             <Button
               text="Upload"
