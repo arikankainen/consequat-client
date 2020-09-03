@@ -252,6 +252,35 @@ const PicturesPage = () => {
     });
   };
 
+  const isAllSelected = (album: Album) => {
+    if (!album) return false;
+
+    const selectedPhotos = album.photos.filter(p => selection.includes(p.id));
+    const allSelected = selectedPhotos.length === album.photos.length;
+
+    return allSelected;
+  };
+
+  const handleSelectClick = (album: Album) => {
+    let currentSelection = selection;
+
+    if (isAllSelected(album)) {
+      album.photos.forEach(photo => {
+        if (selection.includes(photo.id)) {
+          currentSelection = currentSelection.filter(value => value !== photo.id);
+        }
+      });
+    } else {
+      album.photos.forEach(photo => {
+        if (!selection.includes(photo.id)) {
+          currentSelection = currentSelection.concat(photo.id);
+        }
+      });
+    }
+
+    setSelection(currentSelection);
+  };
+
   return (
     <PictureListOuterContainer>
       <PictureListToolBar>
@@ -323,10 +352,11 @@ const PicturesPage = () => {
             isEmpty={album.photos.length === 0}
             editButtonVisible={album.id !== '0'}
             deleteButtonVisible={album.photos.length === 0}
-            selectButtonVisible={true}
+            selectButtonVisible={album.photos.length > 0}
             onEditClick={() => handleEditAlbum(album.id)}
             onDeleteClick={() => handleDeleteAlbum(album)}
-            onSelectClick={() => console.log('select')}
+            onSelectClick={() => handleSelectClick(album)}
+            selected={isAllSelected(album)}
           >
             <>
               {album.photos.map(photo => (
