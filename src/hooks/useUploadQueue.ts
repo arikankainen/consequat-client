@@ -89,13 +89,13 @@ const useUploadQueue = (): Return => {
     } else {
       setStatus(QueueStatus.ready);
     }
-  }, [pictureState.pictures.length, status]);
+  }, [pictureState.pictures.length, status]); // eslint-disable-line
 
   useEffect(() => {
     if (status === QueueStatus.aborted || !currentPhoto) return;
 
     uploadPhoto.execute(currentPhoto);
-  }, [currentPhoto]);
+  }, [currentPhoto]); // eslint-disable-line
 
   useEffect(() => {
     if (uploadPhoto.response.status === UploadPhotoStatus.ready) {
@@ -103,7 +103,7 @@ const useUploadQueue = (): Return => {
     } else if (uploadPhoto.response.status === UploadPhotoStatus.error) {
       setStatus(QueueStatus.error);
     }
-  }, [uploadPhoto.response.status]);
+  }, [uploadPhoto.response.status]); // eslint-disable-line
 
   const execute = () => {
     if (pictureState.pictures.length === 0) return;
