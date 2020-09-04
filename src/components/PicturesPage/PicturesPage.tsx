@@ -307,7 +307,7 @@ const PicturesPage = () => {
               onClick={handleEditPictures}
               text="Edit"
               icon={EditButton}
-              disabled={selection.length !== 1}
+              disabled={selection.length === 0}
               color={ButtonColor.black}
               breakPoint="400px"
             />

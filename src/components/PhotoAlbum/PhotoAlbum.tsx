@@ -59,24 +59,6 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           {description && <Description>{description}</Description>}
         </NameAndDescription>
         <Edit>
-          {selectButtonVisible && !selected && (
-            <Button
-              text="Select all"
-              onClick={onSelectClick || (() => void 0)}
-              color={ButtonColor.white}
-              icon={CheckButton}
-              breakPoint="600px"
-            />
-          )}
-          {selectButtonVisible && selected && (
-            <Button
-              text="Deselect all"
-              onClick={onSelectClick || (() => void 0)}
-              color={ButtonColor.white}
-              icon={UncheckButton}
-              breakPoint="600px"
-            />
-          )}
           {uploadButtonVisible && (
             <Button
               text="Upload"
@@ -102,6 +84,14 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               color={ButtonColor.white}
               icon={DeleteButton}
               breakPoint="400px"
+            />
+          )}
+          {selectButtonVisible && (
+            <Button
+              onClick={onSelectClick || (() => void 0)}
+              color={ButtonColor.white}
+              icon={selected ? CheckButton : UncheckButton}
+              breakPoint="600px"
             />
           )}
         </Edit>

@@ -244,7 +244,7 @@ const UploadForm = () => {
               <Button
                 onClick={handleSelectAll}
                 text="Select all"
-                icon={CheckButton}
+                icon={UncheckButton}
                 color={ButtonColor.black}
                 breakPoint="265px"
               />
@@ -252,7 +252,7 @@ const UploadForm = () => {
               <Button
                 onClick={handleSelectAll}
                 text="Deselect all"
-                icon={UncheckButton}
+                icon={CheckButton}
                 color={ButtonColor.black}
                 breakPoint="265px"
               />
