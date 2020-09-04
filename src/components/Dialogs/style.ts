@@ -84,7 +84,7 @@ interface ProgressProps {
 
 export const Progress = styled.div<ProgressProps>`
   height: 100%;
-  width: ${(props) => props.progress}%;
+  width: ${props => props.progress}%;
   background-color: #55bb55;
 `;
 
@@ -148,7 +148,7 @@ export const Input = styled.input<InputProps>`
     border: 1px solid var(--accent-color-2);
   }
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       border: 1px solid var(--error-color);
@@ -208,11 +208,15 @@ export const Error = styled.div<ErrorProps>`
   opacity: 0;
   transition: max-height 0.1s ease, opacity 0.3s ease, margin 0.1s ease;
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       margin-top: 7px;
       max-height: 20px;
       opacity: 1;
   `};
+`;
+
+export const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+
 `;

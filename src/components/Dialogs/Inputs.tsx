@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import { Album } from '../../utils/types';
 import {
@@ -9,17 +9,16 @@ import {
   TextArea,
   Select,
   Error,
+  CheckBox,
 } from './style';
 
 interface UncontrolledInputProps {
   label: string;
   value: string;
+  multi?: boolean;
 }
 
-export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({
-  label,
-  value,
-}) => {
+export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({ label, value }) => {
   return (
     <InputContainer>
       <Label>{label}</Label>
@@ -31,6 +30,7 @@ export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({
 interface TextInputProps {
   name: string;
   label: string;
+  multi?: boolean;
 }
 
 export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
@@ -49,6 +49,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
           error={meta.touched && !!meta.error}
         />
       </InputContainer>
+
       <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
     </>
   );
@@ -57,12 +58,10 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
 interface TextAreaInputProps {
   name: string;
   label: string;
+  multi?: boolean;
 }
 
-export const TextAreaInput: React.FC<TextAreaInputProps> = ({
-  label,
-  ...props
-}) => {
+export const TextAreaInput: React.FC<TextAreaInputProps> = ({ label, ...props }) => {
   const [field] = useField(props);
 
   return (
@@ -77,12 +76,10 @@ interface SelectInputProps {
   name: string;
   label: string;
   albums: Album[] | undefined;
+  multi?: boolean;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({
-  label,
-  ...props
-}) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ label, ...props }) => {
   const [field] = useField(props);
 
   return (
@@ -90,12 +87,38 @@ export const SelectInput: React.FC<SelectInputProps> = ({
       <Label htmlFor={props.name}>{label}</Label>
       <Select autoComplete="off" spellCheck={false} {...field} {...props}>
         {props.albums &&
-          props.albums.map((album) => (
+          props.albums.map(album => (
             <option key={album.id} value={album.id}>
               {album.name}
             </option>
           ))}
       </Select>
     </InputContainer>
+  );
+};
+
+/* ******************* */
+
+interface CheckInputProps {
+  name: string;
+  label: string;
+  multi?: boolean;
+}
+
+export const CheckInput: React.FC<CheckInputProps> = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  useEffect(() => {
+    console.log('check_props', props);
+    console.log('check_field', field);
+    console.log('check_meta', meta);
+  }, [field, meta, props]);
+
+  if (!props.multi) return null;
+
+  return (
+    <>
+      <CheckBox type="checkbox" {...field} {...props} />
+    </>
   );
 };
