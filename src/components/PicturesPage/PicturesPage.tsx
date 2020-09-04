@@ -108,7 +108,7 @@ const PicturesPage = () => {
   const handleEditPictures = () => {
     setEditPhoto({
       open: true,
-      photos: photos.filter(photo => selection.includes(photo.id)),
+      photo: photos.find(photo => photo.id === selection[0]),
       albums: albums,
       handleOk: () => void 0,
       handleCancel: () => setEditPhoto({}),

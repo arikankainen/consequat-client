@@ -9,10 +9,6 @@ export interface FormValues {
   location: string;
   album: string;
   description: string;
-  nameLocked: boolean;
-  locationLocked: boolean;
-  albumLocked: boolean;
-  descriptionLocked: boolean;
 }
 
 const initialValues: FormValues = {
@@ -20,38 +16,26 @@ const initialValues: FormValues = {
   location: '',
   album: '',
   description: '',
-  nameLocked: false,
-  locationLocked: false,
-  albumLocked: false,
-  descriptionLocked: false,
 };
 
 const validation = Yup.object({
-  //name: Yup.string().min(3, 'Must be at least 3 characters').required('Name required'),
+  name: Yup.string().min(3, 'Must be at least 3 characters').required('Name required'),
 });
 
 export interface EditPhotoProps {
   open?: boolean;
-  photos?: Photo[];
+  photo?: Photo;
   albums?: Album[];
   handleOk?: () => void;
   handleCancel?: () => void;
 }
 
-interface FieldValues {
-  names?: string[];
-  locations?: string[];
-  descriptions?: string[];
-  albums?: string[];
-}
-
 const EditPhoto: React.FC<EditPhotoProps> = props => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<EditPhotoProps>({});
-  const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState('');
+  const [saving, setSaving] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
   const savePhoto = useSavePhoto();
-  const [fieldValues, setFieldValues] = useState<FieldValues>({});
 
   useEffect(() => {
     if (props.open) {
@@ -65,51 +49,20 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
   }, [props]);
 
   useEffect(() => {
-    const uniqueList = (list: string[]) => {
-      return Array.from(new Set(list));
-    };
+    if (savedProps.photo) {
+      initialValues.name = savedProps.photo.name ? savedProps.photo.name : '';
+      initialValues.location = savedProps.photo.location ? savedProps.photo.location : '';
+      initialValues.description = savedProps.photo.description
+        ? savedProps.photo.description
+        : '';
 
-    const firstValue = (list: string[]) => {
-      return list.length === 1 ? list[0] : '';
-    };
-
-    const multiValue = (list: string[]) => {
-      return list.length > 1;
-    };
-
-    if (savedProps.photos) {
-      const photos = savedProps.photos;
-
-      const names = uniqueList(photos.map(photo => photo.name));
-      const locations = uniqueList(photos.map(photo => photo.location));
-      const descriptions = uniqueList(photos.map(photo => photo.description));
-      const albums = uniqueList(
-        photos.map(photo => (photo.album ? photo.album.id : '0'))
-      );
-
-      setFieldValues({
-        names,
-        locations,
-        descriptions,
-        albums,
-      });
-
-      initialValues.name = firstValue(names);
-      initialValues.location = firstValue(locations);
-      initialValues.description = firstValue(descriptions);
-
-      if (savedProps.albums && albums.length === 1) {
-        const albumId = albums[0];
+      if (savedProps.albums && savedProps.photo.album) {
+        const albumId = savedProps.photo.album.id;
         const album = savedProps.albums.find(album => album.id === albumId);
         initialValues.album = album?.id || '';
       } else {
         initialValues.album = '';
       }
-
-      initialValues.nameLocked = multiValue(names);
-      initialValues.locationLocked = multiValue(locations);
-      initialValues.descriptionLocked = multiValue(descriptions);
-      initialValues.albumLocked = multiValue(albums);
     }
   }, [savedProps]); // eslint-disable-line
 
@@ -120,19 +73,16 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
   const handleSubmit = (values: FormValues) => {
     setMessage('Saving...');
     setSaving(true);
-    console.log(values);
 
-    /*
-    if (savedProps.photos) {
+    if (savedProps.photo) {
       savePhoto.execute({
         name: values.name,
         location: values.location,
         album: values.album !== '0' ? values.album : null,
         description: values.description,
-        id: savedProps.photos.id,
+        id: savedProps.photo.id,
       });
     }
-    */
   };
 
   useEffect(() => {
@@ -148,8 +98,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
   return (
     <EditPhotoDialog
       open={open}
-      //dateAdded={savedProps.photos?.dateAdded}
-      dateAdded={new Date()}
+      dateAdded={savedProps.photo?.dateAdded}
       albums={savedProps.albums}
       message={message}
       saving={saving}
@@ -157,7 +106,6 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       validation={validation}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
-      multi={savedProps.photos && savedProps.photos.length > 1}
     />
   );
 };

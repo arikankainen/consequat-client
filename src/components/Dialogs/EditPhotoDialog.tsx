@@ -6,13 +6,7 @@ import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues } from './EditPhoto';
 import formatDate from '../../utils/formatDate';
-import {
-  UncontrolledInput,
-  TextInput,
-  TextAreaInput,
-  SelectInput,
-  CheckInput,
-} from './Inputs';
+import { UncontrolledInput, TextInput, TextAreaInput, SelectInput } from './Inputs';
 import {
   DialogContainer,
   DialogTopic,
@@ -31,7 +25,6 @@ export interface Props {
   saving: boolean;
   initialValues: FormValues;
   validation: Yup.ObjectSchema<object | undefined>;
-  multi?: boolean;
 }
 
 const EditPhotoDialog: React.FC<Props> = ({
@@ -44,7 +37,6 @@ const EditPhotoDialog: React.FC<Props> = ({
   saving,
   initialValues,
   validation,
-  multi,
 }) => {
   return (
     <BaseDialog open={open}>
@@ -58,17 +50,11 @@ const EditPhotoDialog: React.FC<Props> = ({
           <Form>
             <DialogTopic>Edit photo</DialogTopic>
             <DialogContent>
-              <UncontrolledInput
-                label="Added"
-                value={formatDate(dateAdded)}
-                multi={multi}
-              />
-              <TextInput name="name" label="Name" multi={multi} />
-              <CheckInput name="nameLocked" label="nameLocked" multi={multi} />
-              <TextInput name="location" label="Location" multi={multi} />
-              <CheckInput name="locationLocked" label="locationLocked" multi={multi} />
-              <SelectInput name="album" label="Album" albums={albums} multi={multi} />
-              <TextAreaInput name="description" label="Description" multi={multi} />
+              <UncontrolledInput label="Added" value={formatDate(dateAdded)} />
+              <TextInput name="name" label="Name" />
+              <TextInput name="location" label="Location" />
+              <SelectInput name="album" label="Album" albums={albums} />
+              <TextAreaInput name="description" label="Description" />
             </DialogContent>
             <DialogButtonArea>
               <SavingIndicator>{message}</SavingIndicator>
