@@ -47,6 +47,8 @@ const GlobalStyles = createGlobalStyle`
     --header-height: 60px;
     --focus: 0px 0px 0px 1px var(--accent-color-2);
     --default-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, .1);
+    --unlocked-color: var(--accent-color-2);
+    --locked-color: #999;
   }
 
   * {

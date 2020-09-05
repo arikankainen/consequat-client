@@ -1,26 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import * as Yup from 'yup';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
 import useSavePhoto, { SavePhotoStatus } from '../../hooks/useSavePhoto';
 
 export interface FormValues {
   name: string;
+  nameLocked?: boolean;
   location: string;
+  locationLocked?: boolean;
   album: string;
+  albumLocked?: boolean;
   description: string;
+  descriptionLocked?: boolean;
 }
 
 const initialValues: FormValues = {
   name: '',
+  nameLocked: true,
   location: '',
+  locationLocked: true,
   album: '',
+  albumLocked: true,
   description: '',
+  descriptionLocked: true,
 };
 
-const validation = Yup.object({
-  name: Yup.string().min(3, 'Must be at least 3 characters').required('Name required'),
-});
+export interface Errors {
+  name?: string;
+  nameLocked?: boolean;
+}
+
+const validation = (values: FormValues) => {
+  const errors: Errors = {};
+
+  if (!values.nameLocked) {
+    if (!values.name) errors.name = 'Name required';
+    else if (values.name.length < 3) errors.name = 'Must be at least 3 characters';
+  }
+
+  return errors;
+};
 
 export interface EditPhotoProps {
   open?: boolean;
@@ -106,6 +125,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       validation={validation}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
+      multi={true}
     />
   );
 };

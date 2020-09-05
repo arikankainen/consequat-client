@@ -58,6 +58,13 @@ export const DialogContent = styled.div`
   overflow: auto;
 `;
 
+export const Warning = styled.div`
+  margin: 10px 20px 20px 20px;
+  color: #000;
+  font-size: 14px;
+  line-height: 1.2;
+`;
+
 export const DialogButtonArea = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -84,7 +91,7 @@ interface ProgressProps {
 
 export const Progress = styled.div<ProgressProps>`
   height: 100%;
-  width: ${(props) => props.progress}%;
+  width: ${props => props.progress}%;
   background-color: #55bb55;
 `;
 
@@ -148,11 +155,16 @@ export const Input = styled.input<InputProps>`
     border: 1px solid var(--accent-color-2);
   }
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       border: 1px solid var(--error-color);
   `}
+
+  &:disabled {
+    background-color: #eeeeef;
+    color: #000;
+  }
 `;
 
 export const Select = styled.select`
@@ -167,6 +179,11 @@ export const Select = styled.select`
   &:focus {
     outline: none;
     border: 1px solid var(--accent-color-2);
+  }
+
+  &:disabled {
+    background-color: #eeeeef;
+    color: #000;
   }
 `;
 
@@ -185,6 +202,11 @@ export const TextArea = styled.textarea`
   &:focus {
     outline: none;
     border: 1px solid var(--accent-color-2);
+  }
+
+  &:disabled {
+    background-color: #eeeeef;
+    color: #000;
   }
 `;
 
@@ -208,11 +230,35 @@ export const Error = styled.div<ErrorProps>`
   opacity: 0;
   transition: max-height 0.1s ease, opacity 0.3s ease, margin 0.1s ease;
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       margin-top: 7px;
       max-height: 20px;
       opacity: 1;
   `};
+`;
+
+interface LockContainerProps {
+  locked?: boolean;
+}
+
+export const LockContainer = styled.div<LockContainerProps>`
+  padding-top: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+
+  & > svg {
+    color: var(--unlocked-color);
+    height: 16px;
+  }
+
+  ${props =>
+    props.locked &&
+    css`
+      & > svg {
+        color: var(--locked-color);
+        height: 16px;
+      }
+  `}
 `;
