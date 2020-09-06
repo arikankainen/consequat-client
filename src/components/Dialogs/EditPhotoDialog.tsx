@@ -16,7 +16,7 @@ import {
   Warning,
 } from './style';
 
-export interface Props {
+export interface EditPhotoDialogProps {
   open: boolean;
   dateAdded: Date | undefined;
   handleSubmit: (values: FormValues) => void;
@@ -29,7 +29,7 @@ export interface Props {
   multi?: boolean;
 }
 
-const EditPhotoDialog: React.FC<Props> = ({
+const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
   open,
   dateAdded,
   handleSubmit,
@@ -60,16 +60,20 @@ const EditPhotoDialog: React.FC<Props> = ({
               <DialogContent>
                 {multi && (
                   <Warning>
-                    Unlock each field that you want to modify. Unlocked fields will be
-                    saved to all selected photos.
+                    Fields that are initially locked, contains unique values. By unlocking
+                    those fields, you overwrite existing values for all selected photos by
+                    values you enter. Only unlocked fields will be saved.
                   </Warning>
                 )}
-                <UncontrolledInput label="Added" value={formatDate(dateAdded)} />
+                {!multi && (
+                  <UncontrolledInput label="Added" value={formatDate(dateAdded)} />
+                )}
                 <TextInput
                   name="name"
                   label="Name"
                   disabled={values.nameLocked}
                   onLockClick={() => setFieldValue('nameLocked', !values.nameLocked)}
+                  multi={multi}
                 />
                 <TextInput
                   name="location"
@@ -78,6 +82,7 @@ const EditPhotoDialog: React.FC<Props> = ({
                   onLockClick={() =>
                     setFieldValue('locationLocked', !values.locationLocked)
                   }
+                  multi={multi}
                 />
                 <SelectInput
                   name="album"
@@ -85,6 +90,7 @@ const EditPhotoDialog: React.FC<Props> = ({
                   albums={albums}
                   disabled={values.albumLocked}
                   onLockClick={() => setFieldValue('albumLocked', !values.albumLocked)}
+                  multi={multi}
                 />
                 <TextAreaInput
                   name="description"
@@ -93,6 +99,7 @@ const EditPhotoDialog: React.FC<Props> = ({
                   onLockClick={() =>
                     setFieldValue('descriptionLocked', !values.descriptionLocked)
                   }
+                  multi={multi}
                 />
               </DialogContent>
               <DialogButtonArea>

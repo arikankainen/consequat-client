@@ -140,6 +140,27 @@ export const EDIT_PHOTO = gql`
   ${PHOTO_DETAILS}
 `;
 
+export const EDIT_PHOTOS = gql`
+  mutation editPhotos(
+    $name: String,
+    $location: String,
+    $description: String,
+    $album: String,
+    $id: [ID!]!
+  ) {
+      editPhotos(
+        name: $name,
+        location: $location,
+        description: $description,
+        album: $album,
+        id: $id
+      ) {
+        ...PhotoDetails
+      }
+    }
+  ${PHOTO_DETAILS}
+`;
+
 export const DELETE_PHOTO = gql`
   mutation deletePhoto(
     $id: ID!

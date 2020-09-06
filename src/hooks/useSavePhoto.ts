@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Photo } from '../utils/types';
-import { EDIT_PHOTO, ADD_PHOTO, ME } from '../utils/queries';
+import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from '../utils/queries';
 import logger from '../utils/logger';
 
 export enum SavePhotoStatus {
@@ -22,12 +22,12 @@ interface SavePhotoResponse {
   status: SavePhotoStatus;
 }
 
-interface SavePhoto {
-  name: string;
+export interface SavePhoto {
+  name?: string;
   location?: string | undefined;
   album?: string | undefined | null;
   description?: string;
-  id?: string;
+  id?: string[];
   mainUrl?: string;
   thumbUrl?: string;
   filename?: string;
@@ -44,6 +44,13 @@ const useSavePhoto = (): Return => {
   const [response, setResponse] = useState<SavePhotoResponse>(initialResponse);
 
   const [editPhoto, editPhotoResponse] = useMutation(EDIT_PHOTO, {
+    onError: error => {
+      logger.error(error);
+    },
+    refetchQueries: [{ query: ME }], // TODO: update cache manually
+  });
+
+  const [editPhotos, editPhotosResponse] = useMutation(EDIT_PHOTOS, {
     onError: error => {
       logger.error(error);
     },
@@ -74,6 +81,22 @@ const useSavePhoto = (): Return => {
   }, [editPhotoResponse.data, editPhotoResponse.error]);
 
   useEffect(() => {
+    if (editPhotosResponse.data && !editPhotosResponse.error) {
+      setResponse({
+        data: editPhotosResponse.data.editPhotos,
+        status: SavePhotoStatus.ready,
+      });
+    } else if (editPhotosResponse.error) {
+      logger.error(editPhotosResponse.error);
+
+      setResponse({
+        data: undefined,
+        status: SavePhotoStatus.error,
+      });
+    }
+  }, [editPhotosResponse.data, editPhotosResponse.error]);
+
+  useEffect(() => {
     if (addPhotoResponse.data && !addPhotoResponse.error) {
       setResponse({
         data: addPhotoResponse.data.addPhoto,
@@ -97,14 +120,18 @@ const useSavePhoto = (): Return => {
       status: SavePhotoStatus.saving,
     });
 
-    if (photo.id) {
+    if (photo.id && photo.id.length > 1) {
+      editPhotos({
+        variables: photo,
+      });
+    } else if (photo.id) {
       editPhoto({
         variables: {
-          name: photo.name,
-          location: photo.location,
-          album: photo.album,
-          description: photo.description,
-          id: photo.id,
+          name: photo.name || '',
+          location: photo.location || '',
+          album: photo.album || null,
+          description: photo.description || '',
+          id: photo.id[0],
         },
       });
     } else {

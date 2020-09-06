@@ -34,9 +34,15 @@ interface TextInputProps {
   label: string;
   disabled?: boolean;
   onLockClick?: () => void;
+  multi?: boolean;
 }
 
-export const TextInput: React.FC<TextInputProps> = ({ label, onLockClick, ...props }) => {
+export const TextInput: React.FC<TextInputProps> = ({
+  label,
+  onLockClick,
+  multi,
+  ...props
+}) => {
   const [field, meta] = useField(props);
 
   return (
@@ -51,9 +57,11 @@ export const TextInput: React.FC<TextInputProps> = ({ label, onLockClick, ...pro
           {...props}
           error={meta.touched && !!meta.error}
         />
-        <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-          {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-        </LockContainer>
+        {multi && (
+          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+          </LockContainer>
+        )}
       </InputContainer>
       <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
     </>
@@ -63,6 +71,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, onLockClick, ...pro
 export const TextAreaInput: React.FC<TextInputProps> = ({
   label,
   onLockClick,
+  multi,
   ...props
 }) => {
   const [field] = useField(props);
@@ -71,9 +80,11 @@ export const TextAreaInput: React.FC<TextInputProps> = ({
     <InputContainer>
       <Label htmlFor={props.name}>{label}</Label>
       <TextArea autoComplete="off" spellCheck={false} {...field} {...props} />
-      <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-        {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-      </LockContainer>
+      {multi && (
+        <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+          {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+        </LockContainer>
+      )}
     </InputContainer>
   );
 };
@@ -84,11 +95,13 @@ interface SelectInputProps {
   albums: Album[] | undefined;
   disabled?: boolean;
   onLockClick?: () => void;
+  multi?: boolean;
 }
 
 export const SelectInput: React.FC<SelectInputProps> = ({
   label,
   onLockClick,
+  multi,
   ...props
 }) => {
   const [field] = useField(props);
@@ -104,9 +117,11 @@ export const SelectInput: React.FC<SelectInputProps> = ({
             </option>
           ))}
       </Select>
-      <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-        {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-      </LockContainer>
+      {multi && (
+        <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+          {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+        </LockContainer>
+      )}
     </InputContainer>
   );
 };
