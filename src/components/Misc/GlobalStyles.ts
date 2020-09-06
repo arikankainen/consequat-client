@@ -29,8 +29,8 @@ const GlobalStyles = createGlobalStyle`
     --icon-color-hover: #68b1ff;
     --icon-size: 20px;
     --button-size: 40px;
-    --notification-message-bg-color: #232325;
     --notification-message-bg-color: rgba(48, 48, 50, 0.9);
+    --notification-message-bg-color: rgba(255, 255, 255, 0.9);
     --color-success: #38a342;
     --color-success-hover: #5bc360;
     --color-error: #be2b2b;

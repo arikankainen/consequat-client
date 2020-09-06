@@ -35,7 +35,7 @@ export const IconContainer = styled.div<IconContainerProps>`
     margin-right: 20px;
   }
 
-  ${(props) =>
+  ${props =>
     props.type === NotificationType.Message &&
     css`
       & > svg {
@@ -43,7 +43,7 @@ export const IconContainer = styled.div<IconContainerProps>`
       }
   `}
 
-  ${(props) =>
+  ${props =>
     props.type === NotificationType.Error &&
     css`
       & > svg {
@@ -60,11 +60,11 @@ export const ContentContainer = styled.div`
 export const Topic = styled.div`
   margin-bottom: 5px;
   font-size: 20px;
-  color: var(--default-font-color);
+  color: #000;
   line-height: 1;
 `;
 
 export const Body = styled.div`
-  color: var(--default-font-color-slightly-darker);
+  color: #000;
   line-height: 1;
 `;

@@ -20,10 +20,11 @@ export const Container = styled.div`
   margin-right: auto;
   padding: 20px;
   padding-bottom: 15px;
-  background-color: var(--navigation-bg-color);
+  background-color: #fff;
   border: none;
   border-radius: var(--input-border-radius);
   text-align: center;
+  box-shadow: var(--default-box-shadow);
 
   ${breakPoints.mobileL} {
     width: 100%;
@@ -44,7 +45,7 @@ export const Button = styled.button`
   height: 30px;
   margin-top: 20px;
   background-color: var(--accent-color-2);
-  border: 1px solid var(--navigation-bg-color);
+  border: 1px solid var(--accent-color-2);
   border-radius: var(--input-border-radius);
   color: #eee;
   font-size: var(--default-font-size);
@@ -72,13 +73,13 @@ export const QuestionArea = styled.div`
 
 export const QuestionLink = styled(Link)`
   text-decoration: none;
-  color: var(--default-font-color);
+  color: #555;
   
   &:visited {
-    color: var(--default-font-color);
+    color: #555;
   }
   &:hover {
-    color: var(--default-font-color-highlight);
+    color: #000;
   }
 
 `;

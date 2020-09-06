@@ -48,6 +48,10 @@ const AccountPage = () => {
                 name="Fast selection"
                 description="Selecting thumbnail does not affect other selections"
               />
+              <CheckboxSetting
+                name="Dismiss dialogs"
+                description="Automatically dismiss success dialogs after upload or delete operation"
+              />
             </form>
           </Box>
         </BoxContainer>

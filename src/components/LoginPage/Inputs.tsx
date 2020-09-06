@@ -43,17 +43,17 @@ const InputContainer = styled.div<InputContainerProps>`
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
-  background-color: #eee;
-  border: 1px solid var(--navigation-bg-color);
+  background-color: #fff;
+  border: 1px solid #eee;
   border-radius: var(--input-border-radius);
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       box-shadow: 0px 0px 1px 1px var(--error-color);
   `};
 
-  ${(props) =>
+  ${props =>
     props.focused &&
     css`
       box-shadow: var(--focus);
@@ -71,7 +71,7 @@ const Input = styled.input`
   width: 100%;
   height: 25px;
   padding-top: 5px;
-  background-color: #eee;
+  background-color: #fff;
   border: none;
   color: #222;
   font-size: 16px;
@@ -102,7 +102,7 @@ const Error = styled.div<ErrorProps>`
   max-height: 0;
   opacity: 0;
 
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
     max-height: 20px;
@@ -145,13 +145,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
       <InputContainer focused={focused} error={meta.touched && !!meta.error}>
         <NameContainer>
           <Label htmlFor={props.name}>{label}</Label>
-          <Input
-            type="text"
-            {...field}
-            {...props}
-            ref={inputRef}
-            onFocus={handleFocus}
-          />
+          <Input type="text" {...field} {...props} ref={inputRef} onFocus={handleFocus} />
         </NameContainer>
       </InputContainer>
       <Error error={meta.touched && !!meta.error}>
@@ -162,10 +156,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   );
 };
 
-export const PasswordInput: React.FC<TextInputProps> = ({
-  label,
-  ...props
-}) => {
+export const PasswordInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const [show, setShow] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);
