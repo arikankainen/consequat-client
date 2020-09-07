@@ -37,7 +37,7 @@ const LoginPage = () => {
   };
 
   const [login, resultLogin] = useMutation(LOGIN, {
-    onError: (error) => {
+    onError: error => {
       console.log(error.graphQLErrors[0].message);
       loggingProgress(false);
       dispatch(setError('Error', 'Invalid username or password.'));
@@ -73,10 +73,7 @@ const LoginPage = () => {
       );
 
       dispatch(
-        setMessage(
-          'Log in',
-          `${resultMe.data.me.fullname} logged in successfully.`
-        )
+        setMessage('Logged in', `${resultMe.data.me.fullname} logged in successfully.`)
       );
       history.replace('/');
     }
@@ -100,12 +97,8 @@ const LoginPage = () => {
   };
 
   const validation = Yup.object({
-    username: Yup.string()
-      .min(3, 'must be at least 3 characters')
-      .required('required'),
-    password: Yup.string()
-      .min(5, 'must be at least 5 characters')
-      .required('required'),
+    username: Yup.string().min(3, 'must be at least 3 characters').required('required'),
+    password: Yup.string().min(5, 'must be at least 5 characters').required('required'),
   });
 
   return (
@@ -124,9 +117,7 @@ const LoginPage = () => {
               {buttonText}
             </Button>
             <QuestionArea>
-              <QuestionLink to="/signup">
-                Not registered yet? Sign up!
-              </QuestionLink>
+              <QuestionLink to="/signup">Not registered yet? Sign up!</QuestionLink>
             </QuestionArea>
           </Form>
         </Formik>

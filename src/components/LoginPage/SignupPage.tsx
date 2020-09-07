@@ -51,7 +51,7 @@ const SignupPage = () => {
     if (resultSignup.data) {
       dispatch(
         setMessage(
-          'Sign up',
+          'Signed up',
           `${resultSignup.data?.createUser.fullname} signed up successfully! Please log in.`
         )
       );

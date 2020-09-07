@@ -16,7 +16,7 @@ const LogoutPage = () => {
     if (loginStatus && loginStatus.loggedIn) {
       dispatch(
         setMessage(
-          'Log out',
+          'Logged out',
           `${loginStatus.loggedUser?.fullname} logged out successfully.`
         )
       );
