@@ -35,10 +35,15 @@ const SignupPage = () => {
   };
 
   const [signup, resultSignup] = useMutation(SIGNUP, {
-    onError: (error) => {
+    onError: error => {
       console.log(error.graphQLErrors[0].message);
       signingProgress(false);
-      dispatch(setError('Error', 'Something went wrong...'));
+      const errorText = error.graphQLErrors[0].message;
+      if (errorText.includes('expected `username` to be unique')) {
+        dispatch(setError('Error', 'Username is already taken. Please choose another.'));
+      } else {
+        dispatch(setError('Error', 'Something went wrong...'));
+      }
     },
   });
 
@@ -82,14 +87,10 @@ const SignupPage = () => {
   };
 
   const validation = Yup.object({
-    username: Yup.string()
-      .min(3, 'must be at least 3 characters')
-      .required('required'),
+    username: Yup.string().min(3, 'must be at least 3 characters').required('required'),
     email: Yup.string().email('must be valid e-mail').required('required'),
     fullname: Yup.string().required('required'),
-    password: Yup.string()
-      .min(5, 'must be at least 5 characters')
-      .required('required'),
+    password: Yup.string().min(5, 'must be at least 5 characters').required('required'),
   });
 
   return (
@@ -110,9 +111,7 @@ const SignupPage = () => {
               {buttonText}
             </Button>
             <QuestionArea>
-              <QuestionLink to="/login">
-                Already registered? Log in.
-              </QuestionLink>
+              <QuestionLink to="/login">Already registered? Log in.</QuestionLink>
             </QuestionArea>
           </Form>
         </Formik>
