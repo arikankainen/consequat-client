@@ -77,6 +77,7 @@ const SignupPage = () => {
     email: string;
     fullname: string;
     password: string;
+    passwordConfirmation: string;
   }
 
   const initialValues: FormValues = {
@@ -84,6 +85,7 @@ const SignupPage = () => {
     email: '',
     fullname: '',
     password: '',
+    passwordConfirmation: '',
   };
 
   const validation = Yup.object({
@@ -91,6 +93,10 @@ const SignupPage = () => {
     email: Yup.string().email('must be valid e-mail').required('required'),
     fullname: Yup.string().required('required'),
     password: Yup.string().min(5, 'must be at least 5 characters').required('required'),
+    passwordConfirmation: Yup.string().oneOf(
+      [Yup.ref('password'), ''],
+      'Passwords must match'
+    ),
   });
 
   return (
@@ -107,6 +113,7 @@ const SignupPage = () => {
             <TextInput name="fullname" label="Full name" />
             <TextInput name="email" label="E-mail" />
             <PasswordInput name="password" label="Password" />
+            <PasswordInput name="passwordConfirmation" label="Confirm password" />
             <Button type="submit" disabled={disabled}>
               {buttonText}
             </Button>
