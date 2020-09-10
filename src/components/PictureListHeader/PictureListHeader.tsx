@@ -1,6 +1,7 @@
 import React from 'react';
 import { Photo, Album } from '../../utils/types';
 import ListHeader from '../ListHeader/ListHeader';
+import { getUniqueValue, uniqueList } from '../../utils/arrayHelpers';
 
 interface PictureListHeaderProps {
   photos: Photo[];
@@ -13,17 +14,13 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
   selection,
 }) => {
   const selectedPhotos = photos.filter(photo => selection.includes(photo.id));
-  const selectedPhoto = selectedPhotos.length === 1 ? selectedPhotos[0] : null;
+  const notUnique = '(Multiple values)';
+  const noValues = '(No photos selected)';
 
-  let photo = '';
-
-  if (selectedPhoto && selectedPhotos.length === 1) {
-    photo = selectedPhoto.name;
-  } else if (selectedPhotos.length === 0) {
-    photo = 'No photo selected';
-  } else if (selectedPhotos.length > 1) {
-    photo = 'Multiple photos selected';
-  }
+  const names = uniqueList(selectedPhotos.map(photo => photo.name));
+  const locations = uniqueList(selectedPhotos.map(photo => photo.location));
+  const descriptions = uniqueList(selectedPhotos.map(photo => photo.description));
+  const tags = uniqueList(selectedPhotos.map(photo => photo.tags.join(', ')));
 
   return (
     <ListHeader
@@ -34,7 +31,25 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
         },
         {
           name: 'Photo',
-          value: photo,
+          value: getUniqueValue(names, notUnique, noValues),
+          grayed: !getUniqueValue(names),
+        },
+      ]}
+      hiddenItems={[
+        {
+          name: 'Location',
+          value: getUniqueValue(locations, notUnique, noValues),
+          grayed: !getUniqueValue(locations),
+        },
+        {
+          name: 'Description',
+          value: getUniqueValue(descriptions, notUnique, noValues),
+          grayed: !getUniqueValue(descriptions),
+        },
+        {
+          name: 'Tags',
+          value: getUniqueValue(tags, notUnique, noValues),
+          grayed: !getUniqueValue(tags),
         },
       ]}
     />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
 import useSavePhoto, { SavePhotoStatus, SavePhoto } from '../../hooks/useSavePhoto';
+import { getUniqueValue, multiValue, uniqueList } from '../../utils/arrayHelpers';
 
 export interface FormValues {
   name: string;
@@ -75,18 +76,6 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
   useEffect(() => {
     if (savedProps.photos && savedProps.photos.length > 1) setMulti(true);
     else setMulti(false);
-
-    const uniqueList = (list: string[]) => {
-      return Array.from(new Set(list));
-    };
-
-    const getUniqueValue = (list: string[]) => {
-      return list.length === 1 ? list[0] : '';
-    };
-
-    const multiValue = (list: string[]) => {
-      return list.length > 1;
-    };
 
     if (savedProps.photos) {
       const photos = savedProps.photos;

@@ -127,7 +127,7 @@ export const Label = styled.label`
   display: block;
   margin-top: 8px;
   margin-right: 10px;
-  width: 100px;
+  min-width: 80px;
   color: #000;
   font-size: 14px;
   line-height: 1;
