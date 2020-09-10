@@ -14,8 +14,8 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
   selection,
 }) => {
   const selectedPhotos = photos.filter(photo => selection.includes(photo.id));
-  const notUnique = '(Multiple values)';
-  const noValues = '(No photos selected)';
+  const notUnique = 'Multiple values';
+  const noValues = 'No photos selected';
 
   const names = uniqueList(selectedPhotos.map(photo => photo.name));
   const locations = uniqueList(selectedPhotos.map(photo => photo.location));
@@ -27,7 +27,7 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
 
   const selectedAlbumsText =
     selectedAlbums.length > 1
-      ? `(selection contains photos from ${selectedAlbums.length} albums)`
+      ? ` (selection contains photos from ${selectedAlbums.length} albums)`
       : '';
 
   return (
@@ -38,7 +38,7 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
           value: `${selection.length} of ${photos.length} ${selectedAlbumsText}`,
         },
         {
-          name: 'Photo',
+          name: 'Name',
           value: getUniqueValue(names, notUnique, noValues),
           grayed: !getUniqueValue(names),
         },
