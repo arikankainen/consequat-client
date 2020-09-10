@@ -132,6 +132,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         const unlockedValues: SavePhoto = { id: ids };
         if (!values.nameLocked) unlockedValues.name = values.name;
         if (!values.locationLocked) unlockedValues.location = values.location;
+        if (!values.descriptionLocked) unlockedValues.description = values.description;
         if (!values.tagsLocked)
           unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
         if (!values.albumLocked)

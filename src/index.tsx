@@ -84,6 +84,16 @@ const cache = new InMemoryCache({
         },
       },
     },
+    Photo: {
+      fields: {
+        tags: {
+          // eslint-disable-next-line
+          merge(_existing = [], incoming: any[]) {
+            return [...incoming];
+          },
+        },
+      },
+    },
   },
 });
 
