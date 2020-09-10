@@ -21,13 +21,21 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
   const locations = uniqueList(selectedPhotos.map(photo => photo.location));
   const descriptions = uniqueList(selectedPhotos.map(photo => photo.description));
   const tags = uniqueList(selectedPhotos.map(photo => photo.tags.join(', ')));
+  const selectedAlbums = uniqueList(
+    selectedPhotos.map(photo => (photo.album ? photo.album.id : ''))
+  );
+
+  const selectedAlbumsText =
+    selectedAlbums.length > 1
+      ? `(selection contains photos from ${selectedAlbums.length} albums)`
+      : '';
 
   return (
     <ListHeader
       items={[
         {
           name: 'Selected',
-          value: `${selection.length} of ${photos.length}`,
+          value: `${selection.length} of ${photos.length} ${selectedAlbumsText}`,
         },
         {
           name: 'Photo',

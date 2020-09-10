@@ -16,7 +16,6 @@ export interface Items {
 }
 
 const InfoBlock: React.FC<Item> = ({ name, value, hide, grayed }) => {
-  console.log(grayed);
   return (
     <>
       <Property hide={hide}>{name}</Property>
