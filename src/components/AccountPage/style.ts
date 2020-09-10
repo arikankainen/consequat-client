@@ -96,11 +96,27 @@ export const BoxTopic = styled.h3`
 
 export const SettingContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   margin-top: 20px;
 `;
 
-export const SettingLabel = styled.label`
+export const IconContainer = styled.div`
+  margin-right: 15px;
+  padding-top: 5px;
+
+  & > svg {
+    height: 20px;
+    color: var(--accent-color-1);
+  }
+`;
+
+export const SettingTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Label = styled.label`
   color: #000;
   font-weight: 400;
   font-size: 16px;
@@ -117,6 +133,7 @@ export const SettingDescription = styled.div`
   color: #666;
   font-size: 13px;
   line-height: 1.3;
+  padding-top: 4px;
 `;
 
 export const Link = styled.span`
@@ -129,7 +146,7 @@ export const Link = styled.span`
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
-  margin-right: 5px;
+  margin-right: 10px;
   margin-top: 2px;
 `;
 

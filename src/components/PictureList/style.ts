@@ -55,3 +55,9 @@ export const PictureListButtonGroup = styled.div`
 export const UploadFileButton = styled.input`
   display: none;
 `;
+
+export const Loading = styled.div`
+  font-size: 20px;
+  margin-top: 20px;
+  color: #000;
+`;

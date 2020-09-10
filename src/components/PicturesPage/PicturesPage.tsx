@@ -26,6 +26,7 @@ import {
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
+  Loading,
 } from '../PictureList/style';
 
 const PicturesPage = () => {
@@ -342,6 +343,7 @@ const PicturesPage = () => {
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
         <EditAlbum {...editAlbum} />
+        {resultMe.loading && <Loading>Loading...</Loading>}
 
         {albums.map(album => (
           <PhotoAlbum

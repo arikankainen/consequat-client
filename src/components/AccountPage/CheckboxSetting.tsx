@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   SettingContainer,
-  SettingLabel,
+  SettingTextContainer,
+  Label,
   SettingDescription,
   Checkbox,
   CheckboxContainer,
@@ -24,11 +25,14 @@ const CheckboxSetting: React.FC<CheckboxSettingProps> = ({
 }) => {
   return (
     <SettingContainer>
-      <CheckboxContainer>
-        <Checkbox name={name} checked={checked} onChange={onChange} />
-        <SettingLabel htmlFor={name}>{label}</SettingLabel>
-      </CheckboxContainer>
-      <SettingDescription>{description}</SettingDescription>
+      <SettingTextContainer>
+        <CheckboxContainer>
+          <Checkbox name={name} checked={checked} onChange={onChange} />
+          <Label htmlFor={name}>{label}</Label>
+        </CheckboxContainer>
+
+        <SettingDescription>{description}</SettingDescription>
+      </SettingTextContainer>
     </SettingContainer>
   );
 };

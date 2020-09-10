@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import Button from '../Buttons/Button';
 import TextSetting from './TextSetting';
 import CheckboxSetting from './CheckboxSetting';
+import { ReactComponent as UsernameIcon } from '../../images/account_username.svg';
+import { ReactComponent as EmailIcon } from '../../images/account_email.svg';
+import { ReactComponent as FullnameIcon } from '../../images/account_fullname.svg';
+import { ReactComponent as PasswordIcon } from '../../images/account_password.svg';
+
 import {
   OuterContainer,
   Container,
@@ -34,20 +39,23 @@ const AccountPage = () => {
         <BoxContainer>
           <Box>
             <BoxTopic>Personal information</BoxTopic>
-            <TextSetting label="Username" value="admin" />
+            <TextSetting label="Username" value="admin" Icon={UsernameIcon} />
             <TextSetting
               label="Email"
               value="admin@mail.com"
+              Icon={EmailIcon}
               onClick={() => console.log('change email')}
             />
             <TextSetting
               label="Full name"
               value="Administrator"
+              Icon={FullnameIcon}
               onClick={() => console.log('change name')}
             />
             <TextSetting
               label="Password"
-              value="change password"
+              value="*****"
+              Icon={PasswordIcon}
               onClick={() => console.log('change password')}
             />
           </Box>
@@ -79,7 +87,7 @@ const AccountPage = () => {
                 text="Save"
                 type="submit"
                 onClick={() => void 0}
-                margin={[20, 0, 0, 0]}
+                margin={[30, 0, 0, 0]}
               />
             </form>
           </Box>

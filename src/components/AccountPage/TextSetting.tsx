@@ -1,27 +1,41 @@
 import React from 'react';
-import { SettingContainer, SettingLabel, SettingValue, Link } from './style';
+import {
+  SettingContainer,
+  SettingTextContainer,
+  Label,
+  SettingValue,
+  Link,
+  IconContainer,
+} from './style';
 
 interface TextSettingProps {
   label: string;
   value: string;
+  Icon: React.FunctionComponent;
   onClick?: () => void;
 }
 
 const TextSetting: React.FC<TextSettingProps> = ({
   label,
   value,
+  Icon,
   onClick: onValueClick,
 }) => {
   return (
     <SettingContainer>
-      <SettingLabel>{label}</SettingLabel>
-      {onValueClick ? (
-        <SettingValue>
-          <Link onClick={onValueClick}>{value}</Link>
-        </SettingValue>
-      ) : (
-        <SettingValue>{value}</SettingValue>
-      )}
+      <IconContainer>
+        <Icon />
+      </IconContainer>
+      <SettingTextContainer>
+        <Label>{label}</Label>
+        {onValueClick ? (
+          <SettingValue>
+            <Link onClick={onValueClick}>{value}</Link>
+          </SettingValue>
+        ) : (
+          <SettingValue>{value}</SettingValue>
+        )}
+      </SettingTextContainer>
     </SettingContainer>
   );
 };
