@@ -100,7 +100,7 @@ export const SettingContainer = styled.div`
   margin-top: 20px;
 `;
 
-export const SettingText = styled.div`
+export const SettingLabel = styled.label`
   color: #000;
   font-weight: 400;
   font-size: 16px;
@@ -126,4 +126,13 @@ export const Link = styled.span`
   &:hover {
     color: var(--accent-color-2-hover);
   }
+`;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  margin-right: 5px;
+  margin-top: 2px;
+`;
+
+export const CheckboxContainer = styled.div`
+  display: flex;
 `;

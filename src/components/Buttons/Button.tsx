@@ -15,6 +15,7 @@ export enum ButtonContentAlign {
 
 interface ContainerProps {
   width?: number;
+  margin?: [number, number, number, number];
   contentAlign?: ButtonContentAlign;
   backColor?: ButtonColor;
 }
@@ -59,25 +60,35 @@ const Container = styled.button<ContainerProps>`
     }
   }
 
-  ${(props) =>
+  ${props =>
+    props.margin &&
+    css`
+      margin:
+        ${props.margin[0]}px
+        ${props.margin[1]}px
+        ${props.margin[2]}px
+        ${props.margin[3]}px;
+  `}
+
+  ${props =>
     props.width &&
     css`
       min-width: ${props.width}px;
   `}
 
-  ${(props) =>
+  ${props =>
     props.contentAlign === ButtonContentAlign.left &&
     css`
       justify-content: flex-start;
   `}
 
-  ${(props) =>
+  ${props =>
     props.contentAlign === ButtonContentAlign.right &&
     css`
       justify-content: flex-end;
   `}
 
-  ${(props) =>
+  ${props =>
     props.backColor === ButtonColor.white &&
     css`
       border: 1px solid var(--accent-color-2);
@@ -101,7 +112,7 @@ const Container = styled.button<ContainerProps>`
       }
   `}
 
-  ${(props) =>
+  ${props =>
     props.backColor === ButtonColor.black &&
     css`
       border: 1px solid #444;
@@ -137,7 +148,7 @@ interface TextProps {
 const RequiredText = styled.div<TextProps>`
   margin-top: 1px;
 
-  ${(props) =>
+  ${props =>
     props.icon &&
     css`
       margin-left: 8px;
@@ -149,7 +160,7 @@ interface OptionalTextProps {
 }
 
 const OptionalText = styled(RequiredText)<OptionalTextProps>`
-  ${(props) =>
+  ${props =>
     props.breakPoint &&
     css`
       @media screen and (max-width: ${props.breakPoint}) {
@@ -167,11 +178,12 @@ interface ButtonProps {
   textRequired?: boolean;
   breakPoint?: string;
   contentAlign?: ButtonContentAlign;
+  margin?: [number, number, number, number];
   onClick: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button: React.FC<ButtonProps> = props => {
   return (
     <Container
       type={props.type}
@@ -179,6 +191,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       width={props.width}
       contentAlign={props.contentAlign}
       backColor={props.color}
+      margin={props.margin}
       onClick={props.onClick}
     >
       {props.icon && <props.icon />}

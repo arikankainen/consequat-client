@@ -1,20 +1,20 @@
 import React from 'react';
-import { SettingContainer, SettingText, SettingValue, Link } from './style';
+import { SettingContainer, SettingLabel, SettingValue, Link } from './style';
 
 interface TextSettingProps {
-  name: string;
+  label: string;
   value: string;
   onClick?: () => void;
 }
 
 const TextSetting: React.FC<TextSettingProps> = ({
-  name,
+  label,
   value,
   onClick: onValueClick,
 }) => {
   return (
     <SettingContainer>
-      <SettingText>{name}</SettingText>
+      <SettingLabel>{label}</SettingLabel>
       {onValueClick ? (
         <SettingValue>
           <Link onClick={onValueClick}>{value}</Link>
