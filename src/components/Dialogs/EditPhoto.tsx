@@ -134,7 +134,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         savePhoto.execute({
           name: values.name,
           location: values.location,
-          album: values.album !== '0' ? values.album : null,
+          album: values.album !== '0' && values.album !== '' ? values.album : null,
           description: values.description,
           tags: values.tags.split(',').map(tag => tag.trim()),
           id: ids,
@@ -146,7 +146,8 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         if (!values.tagsLocked)
           unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
         if (!values.albumLocked)
-          unlockedValues.album = values.album !== '0' ? values.album : null;
+          unlockedValues.album =
+            values.album !== '0' && values.album !== '' ? values.album : null;
 
         savePhoto.execute(unlockedValues);
       }
