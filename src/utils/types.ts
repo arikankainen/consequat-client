@@ -25,6 +25,7 @@ export interface Photo {
   name: string;
   location: string;
   description: string;
+  tags: string[];
   dateAdded: Date;
   id: string;
   album: { id: string };

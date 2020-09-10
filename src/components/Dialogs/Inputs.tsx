@@ -32,6 +32,7 @@ export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({ label, val
 interface TextInputProps {
   name: string;
   label: string;
+  placeholder?: string;
   disabled?: boolean;
   onLockClick?: () => void;
   multi?: boolean;

@@ -27,6 +27,7 @@ export interface SavePhoto {
   location?: string | undefined;
   album?: string | undefined | null;
   description?: string;
+  tags?: string[];
   id?: string[];
   mainUrl?: string;
   thumbUrl?: string;
@@ -131,6 +132,7 @@ const useSavePhoto = (): Return => {
           location: photo.location || '',
           album: photo.album || null,
           description: photo.description || '',
+          tags: photo.tags || [],
           id: photo.id[0],
         },
       });

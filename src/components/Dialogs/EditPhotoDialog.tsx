@@ -14,6 +14,7 @@ import {
   DialogButtonArea,
   SavingIndicator,
   Warning,
+  Comment,
 } from './style';
 
 export interface EditPhotoDialogProps {
@@ -101,6 +102,14 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   }
                   multi={multi}
                 />
+                <TextInput
+                  name="tags"
+                  label="Tags"
+                  disabled={values.tagsLocked}
+                  onLockClick={() => setFieldValue('tagsLocked', !values.tagsLocked)}
+                  multi={multi}
+                />
+                <Comment>Separate your tags by comma</Comment>
               </DialogContent>
               <DialogButtonArea>
                 <SavingIndicator>{message}</SavingIndicator>

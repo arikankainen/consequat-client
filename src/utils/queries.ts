@@ -8,7 +8,7 @@ export const GET_USERS = gql`
       email,
       fullname,
       isAdmin,
-      id
+      id,
     }
   }
 `;
@@ -17,9 +17,9 @@ export const LOGIN = gql`
   mutation login($username: String!, $password: String!) {
     login(
       username: $username,
-      password: $password
+      password: $password,
     ) {
-      token
+      token,
     }
   }
 `;
@@ -34,13 +34,13 @@ export const SIGNUP = gql`
         username: $username,
         email: $email,
         fullname: $fullname,
-        password: $password
+        password: $password,
       ) {
         username,
         email,
         fullname,
         isAdmin,
-        id
+        id,
       }
     }
 `;
@@ -55,6 +55,7 @@ const PHOTO_DETAILS = gql`
     name,
     location,
     description,
+    tags,
     dateAdded,
     id,
   }
@@ -96,12 +97,13 @@ export const ADD_PHOTO = gql`
   mutation addPhoto(
     $mainUrl: String!,
     $thumbUrl: String!,
-    $filename: String!
-    $thumbFilename: String!
-    $originalFilename: String!
-    $name: String,
+    $filename: String!,
+    $thumbFilename: String!,
+    $originalFilename: String!,
+    $name: String!,
     $location: String,
-    $description: String
+    $description: String,
+    $tags: [String],
   ) {
       addPhoto(
         mainUrl: $mainUrl,
@@ -111,9 +113,10 @@ export const ADD_PHOTO = gql`
         originalFilename: $originalFilename,
         name: $name,
         location: $location,
-        description: $description
+        description: $description,
+        tags: $tags,
       ) {
-        ...PhotoDetails
+        ...PhotoDetails,
       }
     }
   ${PHOTO_DETAILS}
@@ -121,20 +124,22 @@ export const ADD_PHOTO = gql`
 
 export const EDIT_PHOTO = gql`
   mutation editPhoto(
-    $name: String,
+    $name: String!,
     $location: String,
     $description: String,
+    $tags: [String],
     $album: String,
-    $id: ID!
+    $id: ID!,
   ) {
       editPhoto(
         name: $name,
         location: $location,
         description: $description,
+        tags: $tags,
         album: $album,
-        id: $id
+        id: $id,
       ) {
-        ...PhotoDetails
+        ...PhotoDetails,
       }
     }
   ${PHOTO_DETAILS}
@@ -145,17 +150,19 @@ export const EDIT_PHOTOS = gql`
     $name: String,
     $location: String,
     $description: String,
+    $tags: [String],
     $album: String,
-    $id: [ID!]!
+    $id: [ID!]!,
   ) {
       editPhotos(
         name: $name,
         location: $location,
         description: $description,
+        tags: $tags,
         album: $album,
-        id: $id
+        id: $id,
       ) {
-        ...PhotoDetails
+        ...PhotoDetails,
       }
     }
   ${PHOTO_DETAILS}
@@ -163,12 +170,12 @@ export const EDIT_PHOTOS = gql`
 
 export const DELETE_PHOTO = gql`
   mutation deletePhoto(
-    $id: ID!
+    $id: ID!,
   ) {
       deletePhoto(
-        id: $id
+        id: $id,
       ) {
-        ...PhotoDetails
+        ...PhotoDetails,
       }
     }
   ${PHOTO_DETAILS}
@@ -183,7 +190,7 @@ export const CREATE_ALBUM = gql`
         name: $name,
         description: $description,
       ) {
-        ...AlbumDetails
+        ...AlbumDetails,
       }
     }
   ${ALBUM_DETAILS}
@@ -193,14 +200,14 @@ export const EDIT_ALBUM = gql`
   mutation editAlbum(
     $name: String!,
     $description: String,
-    $id: ID!
+    $id: ID!,
   ) {
       editAlbum(
         name: $name,
         description: $description,
-        id: $id
+        id: $id,
       ) {
-        ...AlbumDetails
+        ...AlbumDetails,
       }
     }
   ${ALBUM_DETAILS}
@@ -208,12 +215,12 @@ export const EDIT_ALBUM = gql`
 
 export const DELETE_ALBUM = gql`
   mutation deleteAlbum(
-    $id: ID!
+    $id: ID!,
   ) {
       deleteAlbum(
-        id: $id
+        id: $id,
       ) {
-        ...AlbumDetails
+        ...AlbumDetails,
       }
     }
   ${ALBUM_DETAILS}

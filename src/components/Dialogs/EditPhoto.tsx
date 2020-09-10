@@ -12,6 +12,8 @@ export interface FormValues {
   albumLocked?: boolean;
   description: string;
   descriptionLocked?: boolean;
+  tags: string;
+  tagsLocked?: boolean;
 }
 
 const initialValues: FormValues = {
@@ -23,6 +25,8 @@ const initialValues: FormValues = {
   albumLocked: true,
   description: '',
   descriptionLocked: true,
+  tags: '',
+  tagsLocked: true,
 };
 
 export interface Errors {
@@ -90,6 +94,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       const names = uniqueList(photos.map(photo => photo.name));
       const locations = uniqueList(photos.map(photo => photo.location));
       const descriptions = uniqueList(photos.map(photo => photo.description));
+      const tags = uniqueList(photos.map(photo => photo.tags.join(', ')));
       const albums = uniqueList(
         photos.map(photo => (photo.album ? photo.album.id : '0'))
       );
@@ -97,6 +102,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       initialValues.name = getUniqueValue(names);
       initialValues.location = getUniqueValue(locations);
       initialValues.description = getUniqueValue(descriptions);
+      initialValues.tags = getUniqueValue(tags);
 
       if (savedProps.albums && albums.length === 1) {
         const albumId = albums[0];
@@ -109,6 +115,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       initialValues.nameLocked = multiValue(names);
       initialValues.locationLocked = multiValue(locations);
       initialValues.descriptionLocked = multiValue(descriptions);
+      initialValues.tagsLocked = multiValue(tags);
       initialValues.albumLocked = multiValue(albums);
     }
   }, [savedProps]); // eslint-disable-line
@@ -129,12 +136,15 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
           location: values.location,
           album: values.album !== '0' ? values.album : null,
           description: values.description,
+          tags: values.tags.split(',').map(tag => tag.trim()),
           id: ids,
         });
       } else {
         const unlockedValues: SavePhoto = { id: ids };
         if (!values.nameLocked) unlockedValues.name = values.name;
         if (!values.locationLocked) unlockedValues.location = values.location;
+        if (!values.tagsLocked)
+          unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
         if (!values.albumLocked)
           unlockedValues.album = values.album !== '0' ? values.album : null;
 

@@ -65,6 +65,13 @@ export const Warning = styled.div`
   line-height: 1.2;
 `;
 
+export const Comment = styled.div`
+  margin: 5px 20px 10px 100px;
+  color: #999;
+  font-size: 14px;
+  line-height: 1.2;
+`;
+
 export const DialogButtonArea = styled.div`
   display: flex;
   justify-content: flex-end;
