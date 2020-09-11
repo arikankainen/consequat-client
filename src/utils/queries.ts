@@ -230,6 +230,7 @@ export const LIST_PHOTOS = gql`
   query {
     listPhotos {
     ...PhotoDetails,
+    user { fullname },
     }
   }
   ${PHOTO_DETAILS}

@@ -31,6 +31,22 @@ export interface Photo {
   album: { id: string };
 }
 
+export interface PhotoUserExtended {
+  mainUrl: string;
+  thumbUrl: string;
+  filename: string;
+  thumbFilename: string;
+  originalFilename: string;
+  name: string;
+  location: string;
+  description: string;
+  tags: string[];
+  dateAdded: Date;
+  id: string;
+  album: { id: string };
+  user: { fullname: string };
+}
+
 export interface Album {
   name: string;
   description: string;

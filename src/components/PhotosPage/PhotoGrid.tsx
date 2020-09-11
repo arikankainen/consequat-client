@@ -1,10 +1,10 @@
 import React from 'react';
-import { Photo } from '../../utils/types';
+import { PhotoUserExtended } from '../../utils/types';
 import { GridContainer } from './style';
 import PhotoGridItem from './PhotoGridItem';
 
 interface PhotoGridProps {
-  photos: Photo[];
+  photos: PhotoUserExtended[];
 }
 
 const PhotoGrid: React.FC<PhotoGridProps> = ({ photos }) => {

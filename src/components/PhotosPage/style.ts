@@ -24,6 +24,8 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   `}
 
   &:hover {
+    cursor: pointer;
+
     & > div:first-child > img {
       transform: scale(1.1);
     }
@@ -53,18 +55,14 @@ export const Image = styled.img`
 export const InfoContainer = styled.div`
   position: absolute;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
   bottom: 0;
   left: 0;
   padding: 5px;
   width: 100%;
-  height: 60px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #fff;
-  font-size: 10px;
-  line-height: 1;
+  height: 70px;
   pointer-events: none;
   opacity: 0;
   transition: 0.3s ease-in-out;
@@ -73,7 +71,29 @@ export const InfoContainer = styled.div`
     180deg,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, .1) 20%,
-    rgba(0, 0, 0, .3) 70%,
+    rgba(0, 0, 0, .3) 80%,
     rgba(0, 0, 0, .4) 100%
   );
+`;
+
+const InfoBase = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+  line-height: 1;
+`;
+
+export const InfoName = styled(InfoBase)`
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+`;
+
+export const InfoUser = styled(InfoBase)`
+  color: #ccc;
+  margin-top: 5px;
+  font-size: 10px;
+  font-weight: 400;
 `;

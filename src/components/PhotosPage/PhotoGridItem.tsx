@@ -1,9 +1,16 @@
 import React from 'react';
-import { Photo } from '../../utils/types';
-import { ItemContainer, ImageContainer, Image, InfoContainer } from './style';
+import { PhotoUserExtended } from '../../utils/types';
+import {
+  ItemContainer,
+  ImageContainer,
+  Image,
+  InfoContainer,
+  InfoName,
+  InfoUser,
+} from './style';
 
 interface PhotoGridItemProps {
-  photo: Photo;
+  photo: PhotoUserExtended;
 }
 
 const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo }) => {
@@ -17,7 +24,10 @@ const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo }) => {
       <ImageContainer>
         <Image src={photo.thumbUrl} alt={photo.name} />
       </ImageContainer>
-      <InfoContainer>{photo.name}</InfoContainer>
+      <InfoContainer>
+        <InfoName>{photo.name}</InfoName>
+        <InfoUser>photo by {photo.user.fullname}</InfoUser>
+      </InfoContainer>
     </ItemContainer>
   );
 };
