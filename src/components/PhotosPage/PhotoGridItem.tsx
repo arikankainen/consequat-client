@@ -20,7 +20,7 @@ const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo }) => {
   console.log(rnd);
 
   return (
-    <ItemContainer key={photo.id} landscape={rnd}>
+    <ItemContainer key={photo.id} landscape={rnd} to={`/photos/photo/${photo.id}`}>
       <ImageContainer>
         <Image src={photo.thumbUrl} alt={photo.name} />
       </ImageContainer>

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const GridContainer = styled.div`
   display: grid;
@@ -12,7 +13,7 @@ interface ItemContainerProps {
   landscape: boolean;
 }
 
-export const ItemContainer = styled.div<ItemContainerProps>`
+export const ItemContainer = styled(Link)<ItemContainerProps>`
   width: 100%;
   height: 100%;
   position: relative;
@@ -24,8 +25,6 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   `}
 
   &:hover {
-    cursor: pointer;
-
     & > div:first-child > img {
       transform: scale(1.1);
     }
