@@ -1,44 +1,44 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  grid-auto-rows: minmax(120px, 140px);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: 220px;
   grid-gap: 5px;
-  /*grid-auto-flow: dense;*/
+  grid-auto-flow: dense;
 `;
 
-interface ItemOuterContainerProps {
-  portrait: boolean;
+interface ItemContainerProps {
+  landscape: boolean;
 }
 
-export const ItemOuterContainer = styled.div<ItemOuterContainerProps>`
-  grid-column: span 1;
-  /*
-  ${props =>
-    props.portrait &&
-    css`
-      grid-row: span 1;
-  `}
-
-  ${props =>
-    !props.portrait &&
-    css`
-      grid-column: span 1;
-  `}
-  */
-`;
-
-export const ItemContainer = styled.div`
+export const ItemContainer = styled.div<ItemContainerProps>`
   width: 100%;
   height: 100%;
   position: relative;
+
+  ${props =>
+    props.landscape &&
+    css`
+      grid-column: span 2;
+  `}
+
+  &:hover {
+    & > div:first-child > img {
+      transform: scale(1.1);
+    }
+    
+    & > div:last-child {
+      opacity: 1;
+    }
+  }
 `;
 
 export const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  pointer-events: none;
 `;
 
 export const Image = styled.img`
@@ -46,4 +46,34 @@ export const Image = styled.img`
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
+  transition: 0.7s ease-in-out;
+  pointer-events: none;
+`;
+
+export const InfoContainer = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  width: 100%;
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, .1) 20%,
+    rgba(0, 0, 0, .3) 70%,
+    rgba(0, 0, 0, .4) 100%
+  );
 `;

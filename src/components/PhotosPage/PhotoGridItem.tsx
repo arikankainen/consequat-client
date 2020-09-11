@@ -1,6 +1,6 @@
 import React from 'react';
 import { Photo } from '../../utils/types';
-import { ItemContainer, ItemOuterContainer, ImageContainer, Image } from './style';
+import { ItemContainer, ImageContainer, Image, InfoContainer } from './style';
 
 interface PhotoGridItemProps {
   photo: Photo;
@@ -13,13 +13,12 @@ const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo }) => {
   console.log(rnd);
 
   return (
-    <ItemOuterContainer key={photo.id} portrait={rnd}>
-      <ItemContainer>
-        <ImageContainer>
-          <Image src={photo.thumbUrl} alt={photo.name} />
-        </ImageContainer>
-      </ItemContainer>
-    </ItemOuterContainer>
+    <ItemContainer key={photo.id} landscape={rnd}>
+      <ImageContainer>
+        <Image src={photo.thumbUrl} alt={photo.name} />
+      </ImageContainer>
+      <InfoContainer>{photo.name}</InfoContainer>
+    </ItemContainer>
   );
 };
 
