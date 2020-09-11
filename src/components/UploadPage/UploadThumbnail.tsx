@@ -11,17 +11,14 @@ interface UploadThumbnailProps {
   selected: boolean;
 }
 
-const UploadThumbnail: React.FC<UploadThumbnailProps> = ({
-  file,
-  selected,
-}) => {
+const UploadThumbnail: React.FC<UploadThumbnailProps> = ({ file, selected }) => {
   const thumbnailImage = useRef<HTMLImageElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    resizeImage(file, true, 500).then(
-      (blob) => {
+    resizeImage(file, false, 600).then(
+      blob => {
         if (thumbnailImage.current) {
           thumbnailImage.current.src = URL.createObjectURL(blob);
         }

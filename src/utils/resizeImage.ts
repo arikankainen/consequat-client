@@ -12,10 +12,8 @@ const resizeImage = (
       const inputHeight = image.height;
 
       const squareSize = inputWidth > inputHeight ? inputHeight : inputWidth;
-      const squareStartX =
-        inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
-      const squareStartY =
-        inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
+      const squareStartX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
+      const squareStartY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
 
       const ratio =
         inputWidth > inputHeight ? maxSize / inputWidth : maxSize / inputHeight;
@@ -30,7 +28,7 @@ const resizeImage = (
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = 'high';
 
-      if (square)
+      if (square) {
         context.drawImage(
           image,
           squareStartX,
@@ -42,7 +40,7 @@ const resizeImage = (
           maxSize,
           maxSize
         );
-      else
+      } else {
         context.drawImage(
           image,
           0,
@@ -54,8 +52,9 @@ const resizeImage = (
           outputWidth,
           outputHeight
         );
+      }
 
-      canvas.toBlob((blob) => {
+      canvas.toBlob(blob => {
         resolve(blob);
       }, file.type);
     };
