@@ -225,3 +225,12 @@ export const DELETE_ALBUM = gql`
     }
   ${ALBUM_DETAILS}
 `;
+
+export const LIST_PHOTOS = gql`
+  query {
+    listPhotos {
+    ...PhotoDetails,
+    }
+  }
+  ${PHOTO_DETAILS}
+`;
