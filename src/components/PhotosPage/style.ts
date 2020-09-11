@@ -1,5 +1,14 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import breakPoints from '../../utils/breakPoints';
+
+export const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
 
 export const GridContainer = styled.div`
   display: grid;
@@ -7,6 +16,23 @@ export const GridContainer = styled.div`
   grid-auto-rows: 220px;
   grid-gap: 5px;
   grid-auto-flow: dense;
+  padding: 5px;
+
+  height: 100%;
+  width: 100%;
+  max-width: ${breakPoints.laptopLWidth};
+  background-color: #fff;
+
+  ${breakPoints.set(600)} {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-rows: auto;
+  }
+  
+  ${breakPoints.set(500)} {
+    grid-template-columns: 100%;
+    grid-auto-rows: 200px;
+    padding: 0px;
+  }
 `;
 
 interface ItemContainerProps {

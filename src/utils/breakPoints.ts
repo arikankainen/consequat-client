@@ -22,6 +22,10 @@ const mobileL = `@media screen and (max-width: ${mobileLWidth})`;
 const mobileM = `@media screen and (max-width: ${mobileMWidth})`;
 const mobileS = `@media screen and (max-width: ${mobileSWidth})`;
 
+const set = (width: number) => {
+  return `@media screen and (max-width: ${width}px)`;
+};
+
 export default {
   laptopLWidthNumber,
   laptopWidthNumber,
@@ -44,4 +48,5 @@ export default {
   mobileL,
   mobileM,
   mobileS,
+  set,
 };
