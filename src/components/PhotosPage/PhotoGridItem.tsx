@@ -16,11 +16,12 @@ interface PhotoGridItemProps {
 const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo }) => {
   if (!photo) return null;
 
-  const rnd = Math.random() >= 0.5;
-  console.log(rnd);
-
   return (
-    <ItemContainer key={photo.id} landscape={rnd} to={`/photos/photo/${photo.id}`}>
+    <ItemContainer
+      key={photo.id}
+      landscape={photo.width > photo.height}
+      to={`/photos/photo/${photo.id}`}
+    >
       <ImageContainer>
         <Image src={photo.thumbUrl} alt={photo.name} />
       </ImageContainer>

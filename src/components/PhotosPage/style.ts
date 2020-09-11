@@ -87,6 +87,7 @@ export const InfoContainer = styled.div`
   left: 0;
   padding: 5px;
   width: 100%;
+  overflow: hidden;
   height: 70px;
   pointer-events: none;
   opacity: 0;
@@ -117,7 +118,7 @@ export const InfoName = styled(InfoBase)`
 `;
 
 export const InfoUser = styled(InfoBase)`
-  color: #ccc;
+  color: #ddd;
   margin-top: 5px;
   font-size: 10px;
   font-weight: 400;
