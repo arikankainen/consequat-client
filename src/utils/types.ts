@@ -22,6 +22,8 @@ export interface Photo {
   filename: string;
   thumbFilename: string;
   originalFilename: string;
+  width: number;
+  height: number;
   name: string;
   location: string;
   description: string;
@@ -37,6 +39,8 @@ export interface PhotoUserExtended {
   filename: string;
   thumbFilename: string;
   originalFilename: string;
+  width: number;
+  height: number;
   name: string;
   location: string;
   description: string;

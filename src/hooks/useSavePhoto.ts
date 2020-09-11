@@ -34,6 +34,8 @@ export interface SavePhoto {
   filename?: string;
   thumbFilename?: string;
   originalFilename?: string;
+  width?: number;
+  height?: number;
 }
 
 const initialResponse = {
@@ -144,6 +146,8 @@ const useSavePhoto = (): Return => {
           filename: photo.filename,
           thumbFilename: photo.thumbFilename,
           originalFilename: photo.originalFilename,
+          width: photo.width,
+          height: photo.height,
           name: photo.name,
         },
       });

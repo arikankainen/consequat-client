@@ -3,6 +3,7 @@ import { Photo } from '../utils/types';
 import { storage } from '../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import resizeImage from '../utils/resizeImage';
+import imageDimensions from '../utils/imageDimensions';
 import { v1 as uuid } from 'uuid';
 import useSavePhoto, { SavePhotoStatus } from './useSavePhoto';
 import { removePicture, updateProgress } from '../reducers/pictureReducer';
@@ -116,6 +117,9 @@ const useUploadPhoto = (): Return => {
       const filename = `images/${uuid()}`;
       const thumbFilename = `images/${uuid()}`;
 
+      const { width, height } = await imageDimensions(file);
+      console.log(width, height);
+
       const resized = await resizeImage(file, false, 600);
       const mainUrl = await uploadPicture(file, filename);
       const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
@@ -126,6 +130,8 @@ const useUploadPhoto = (): Return => {
         filename,
         thumbFilename,
         originalFilename: file.name,
+        width,
+        height,
         name: file.name,
       });
     } catch {
