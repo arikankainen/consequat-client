@@ -12,26 +12,34 @@ export const PageContainer = styled.div`
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-auto-rows: 220px;
-  grid-gap: 5px;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 3px;
   grid-auto-flow: dense;
-  padding: 5px;
-
+  padding: 3px;
   height: 100%;
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
   background-color: #fff;
 
-  ${breakPoints.set(600)} {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-template-rows: auto;
+  ${breakPoints.laptopL} {
+    padding: 3px 0px;
   }
-  
-  ${breakPoints.set(500)} {
+
+  ${breakPoints.custom(1300)} {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  ${breakPoints.tablet} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  ${breakPoints.mobileXL} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  ${breakPoints.mobileM} {
     grid-template-columns: 100%;
-    grid-auto-rows: 200px;
-    padding: 0px;
   }
 `;
 
@@ -52,7 +60,7 @@ export const ItemContainer = styled(Link)<ItemContainerProps>`
 
   &:hover {
     & > div:first-child > img {
-      transform: scale(1.1);
+      /*transform: scale(1.05);*/
     }
     
     & > div:last-child {
@@ -73,7 +81,7 @@ export const Image = styled.img`
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
-  transition: 0.7s ease-in-out;
+  transition: 0.3s ease-in-out;
   pointer-events: none;
 `;
 
@@ -118,7 +126,7 @@ export const InfoName = styled(InfoBase)`
 `;
 
 export const InfoUser = styled(InfoBase)`
-  color: #ddd;
+  color: #eee;
   margin-top: 5px;
   font-size: 10px;
   font-weight: 400;

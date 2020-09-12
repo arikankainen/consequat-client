@@ -22,7 +22,7 @@ const mobileL = `@media screen and (max-width: ${mobileLWidth})`;
 const mobileM = `@media screen and (max-width: ${mobileMWidth})`;
 const mobileS = `@media screen and (max-width: ${mobileSWidth})`;
 
-const set = (width: number) => {
+const custom = (width: number) => {
   return `@media screen and (max-width: ${width}px)`;
 };
 
@@ -48,5 +48,5 @@ export default {
   mobileL,
   mobileM,
   mobileS,
-  set,
+  custom,
 };
