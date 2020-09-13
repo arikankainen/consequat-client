@@ -20,7 +20,6 @@ export const GridContainer = styled.div`
   height: 100%;
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
-  background-color: #fff;
 
   ${breakPoints.laptopL} {
     padding: 3px 0px;
@@ -44,7 +43,7 @@ export const GridContainer = styled.div`
 `;
 
 interface ItemContainerProps {
-  landscape: boolean;
+  landscape?: boolean;
 }
 
 export const ItemContainer = styled(Link)<ItemContainerProps>`
@@ -90,7 +89,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center;
   bottom: 0;
   left: 0;
   padding: 5px;
@@ -117,6 +116,7 @@ const InfoBase = styled.div`
   color: #fff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
   line-height: 1;
+  max-width: 100%;
 `;
 
 export const InfoName = styled(InfoBase)`

@@ -4,6 +4,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --bg-color: rgb(23, 23, 25);
     --bg-color: rgb(40, 40, 43);
+    --bg-color: #f8f8fa;
     --bg-color-active: #191920;
     --accent-color-1: #c37f1d;
     --accent-color-1: #d68b1e;
