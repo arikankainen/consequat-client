@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
 import breakPoints from '../../utils/breakPoints';
 
 export const PageContainer = styled.div`
@@ -46,7 +45,7 @@ interface ItemContainerProps {
   landscape?: boolean;
 }
 
-export const ItemContainer = styled(Link)<ItemContainerProps>`
+export const ItemContainer = styled.div<ItemContainerProps>`
   width: 100%;
   height: 100%;
   position: relative;
@@ -58,11 +57,11 @@ export const ItemContainer = styled(Link)<ItemContainerProps>`
   `}
 
   &:hover {
-    & > div:first-child > img {
+    & > a > div:first-child > img {
       /*transform: scale(1.05);*/
     }
     
-    & > div:last-child {
+    & > a > div:last-child {
       opacity: 1;
     }
   }
