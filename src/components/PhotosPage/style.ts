@@ -13,6 +13,15 @@ export const TopicContainer = styled.div`
   line-height: 1;
 `;
 
+export const Keyword = styled.span`
+  font-family: var(--topic-font-family);
+  font-weight: 400;
+  font-size: 20px;
+  color: #222;
+  line-height: 1;
+  padding: 0px 5px;
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
