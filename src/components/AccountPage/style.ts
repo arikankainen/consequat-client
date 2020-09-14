@@ -108,6 +108,7 @@ export const IconContainer = styled.div`
   & > svg {
     height: 20px;
     color: var(--accent-color-1);
+    color: #888;
   }
 `;
 
