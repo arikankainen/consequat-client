@@ -136,3 +136,11 @@ export const InfoUser = styled(InfoBase)`
   font-size: 10px;
   font-weight: 400;
 `;
+
+export const Loading = styled.div`
+  margin: 20px;
+  font-family: var(--topic-font-family);
+  font-weight: 200;
+  font-size: 24px;
+  color: #000;
+`;
