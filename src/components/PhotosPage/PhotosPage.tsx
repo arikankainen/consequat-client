@@ -4,10 +4,12 @@ import { LIST_PHOTOS } from '../../utils/queries';
 import { PhotoUserExtended } from '../../utils/types';
 import PhotoGrid from './PhotoGrid';
 import { Loading } from './style';
+import { useParams } from 'react-router-dom';
 
 const PhotosPage = () => {
   const { loading, data } = useQuery(LIST_PHOTOS);
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
+  const { search } = useParams();
 
   useEffect(() => {
     if (!data || !data.listPhotos) return;
@@ -16,7 +18,7 @@ const PhotosPage = () => {
 
   if (loading) return <Loading>Loading...</Loading>;
 
-  return <PhotoGrid photos={photos} />;
+  return <PhotoGrid photos={photos} search={search} />;
 };
 
 export default PhotosPage;

@@ -8,7 +8,7 @@ export const TopicContainer = styled.div`
   max-width: ${breakPoints.laptopLWidth};
   font-family: var(--topic-font-family);
   font-weight: 200;
-  font-size: 24px;
+  font-size: 20px;
   color: #222;
   line-height: 1;
 `;
