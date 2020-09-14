@@ -1,6 +1,29 @@
 import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
+export const TopicAreaContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: var(--default-box-shadow);
+  z-index: 1;
+`;
+
+export const TopicArea = styled.div`
+  width: 100%;
+  max-width: ${breakPoints.laptopLWidth};
+  padding: 50px;
+
+  ${breakPoints.tablet} {
+    padding: 20px;
+  }
+
+  ${breakPoints.mobileXL} {
+    padding: 15px;
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,31 +36,14 @@ export const Container = styled.div`
   background-color: #f8f8fa;
 `;
 
-export const TopicArea = styled.div`
-  padding: 50px;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: var(--default-box-shadow);
-
-  ${breakPoints.tablet} {
-    padding: 20px;
-  }
-
-  ${breakPoints.mobileXL} {
-    padding: 15px;
-  }
-`;
-
 export const Topic = styled.h1`
   color: #000;
-  font-weight: 300;
   font-size: 24px;
   line-height: 1.3;
 `;
 
 export const SubTopic = styled.h2`
   color: #666;
-  font-weight: 300;
   font-size: 14px;
   line-height: 1.3;
 `;
