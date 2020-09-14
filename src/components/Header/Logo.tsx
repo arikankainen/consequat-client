@@ -26,8 +26,8 @@ const Logo = () => {
   return (
     <LogoLink to="/">
       <LogoImage>
-        <source media="(max-width: 500px)" srcSet={logoImageSmall} />
-        <source media="(min-width: 501px)" srcSet={logoImage} />
+        <source media="(max-width: 600px)" srcSet={logoImageSmall} />
+        <source media="(min-width: 601px)" srcSet={logoImage} />
         <img src={logoImage} alt="consequat-logo" />
       </LogoImage>
     </LogoLink>

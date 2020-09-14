@@ -52,4 +52,8 @@ export const StyledLink = styled(Link)`
   &:hover {
     color: #fff;
   }
+
+  ${breakPoints.custom(600)} {
+    display: none;
+  }
 `;
