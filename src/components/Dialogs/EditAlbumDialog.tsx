@@ -44,7 +44,9 @@ const EditAlbumDialog: React.FC<Props> = ({
           onSubmit={handleSubmit}
         >
           <Form>
-            <DialogTopic>{createNew ? <>Create album</> : <>Edit album</>}</DialogTopic>
+            <DialogTopic>
+              {createNew ? <>Create a new album</> : <>Edit album</>}
+            </DialogTopic>
             <DialogContent>
               <TextInput name="name" label="Name" />
               <TextAreaInput name="description" label="Description" />

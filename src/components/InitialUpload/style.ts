@@ -12,6 +12,7 @@ export const InitialUploadContainer = styled.div`
   flex-direction: column;
   padding: 20px;
   text-align: center;
+  color: #000;
 
   & > svg {
     height: var(--image-size);

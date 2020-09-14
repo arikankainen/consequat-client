@@ -35,8 +35,9 @@ export const NameAndDescription = styled.div`
 `;
 
 export const Name = styled.div`
+  font-family: var(--topic-font-family);
+  font-weight: 200;
   font-size: 24px;
-  font-weight: 300;
   color: #222;
   line-height: 1;
 `;

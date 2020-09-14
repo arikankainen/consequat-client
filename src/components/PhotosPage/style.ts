@@ -1,6 +1,18 @@
 import styled, { css } from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
+export const TopicContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 40px 20px 10px 20px;
+  max-width: ${breakPoints.laptopLWidth};
+  font-family: var(--topic-font-family);
+  font-weight: 200;
+  font-size: 24px;
+  color: #222;
+  line-height: 1;
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);

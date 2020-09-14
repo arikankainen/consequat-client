@@ -20,9 +20,7 @@ const InitialUpload = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) =>
-        dispatch(addPicture(file))
-      );
+      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
     }
   };
 
@@ -34,7 +32,6 @@ const InitialUpload = () => {
     <InitialUploadOuterContainer>
       <InitialUploadContainer>
         <ImagesIcon />
-        Select pictures to upload by using the button below.
         <form onSubmit={handleSubmit}>
           <InitialUploadButton onClick={handleClick}>
             Select pictures to upload

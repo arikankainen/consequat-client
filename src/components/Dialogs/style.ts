@@ -47,8 +47,9 @@ export const DialogTopic = styled.div`
   color: #111;
   line-height: 1;
   text-align: left;
+  font-family: var(--topic-font-family);
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 200;
   background-color: #fff;
   border-radius: 5px 5px 0px 0px;
 `;

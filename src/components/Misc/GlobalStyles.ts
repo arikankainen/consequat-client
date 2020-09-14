@@ -12,6 +12,7 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-2-hover: #398ff2;
     --accent-color-2-disabled: #00449b;
     --default-font-family: 'Hind', 'sans-serif';
+    --topic-font-family: 'Montserrat', sans-serif;
     --default-font-color: #bbb;
     --default-font-color-slightly-darker: #999;
     --default-font-color-darker: #888;
@@ -38,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
     --color-inprogress: #c3c22a;
     --input-bg-color: #333;
     --input-color: #ccc;
-    --image-color: #555558;
+    --image-color: #444;
     --image-size: 140px;
     --progress-back: rgba(0, 0, 0, 0.5);
     --progress-value: #666;

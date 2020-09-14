@@ -38,6 +38,8 @@ export const Container = styled.div`
 
 export const Topic = styled.h1`
   color: #000;
+  font-family: var(--topic-font-family);
+  font-weight: 200;
   font-size: 24px;
   line-height: 1.3;
 `;
