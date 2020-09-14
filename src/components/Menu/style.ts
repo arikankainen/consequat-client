@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Direction } from './Menu';
-import breakPoints from '../../utils/breakPoints';
 
 interface MenuItemsContainerProps {
   direction: Direction;
@@ -12,25 +11,22 @@ export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   width: 300px;
   padding: 0px 0px;
   background-color: #fff;
+  border-radius: 6px;
   box-shadow: var(--default-box-shadow);
 
   ${props =>
     props.direction === Direction.Right &&
     css`
-      right: -10px;
+      right: 0px;
   `}
 
   ${props =>
     props.direction === Direction.Left &&
     css`
-      left: -10px;
+      left: 0px;
   `}
 
-  top: 50px;
-
-  ${breakPoints.mobileL} {
-    width: 100vw;
-  }
+  top: 60px;
 `;
 
 interface MenuButtonContainerProps {
@@ -78,6 +74,20 @@ export const MenuItem = styled.li`
   align-items: center;
   list-style: none;
   border-bottom: 1px solid #eee;
+
+  &:first-child > a {
+    border-radius: 6px 6px 0px 0px;
+    padding-top: 10px;
+  }
+
+  &:last-child > a {
+    border-radius: 0px 0px 6px 6px;
+    padding-bottom: 10px;
+  }
+
+  &:last-child {
+    border: none;
+  }
 `;
 
 export const MenuLink = styled(Link)`
@@ -110,7 +120,7 @@ export const MenuLink = styled(Link)`
     color: var(--icon-color);
   }
 
-  transition: all 200ms ease;
+  transition: all 100ms ease-in-out;
 `;
 
 export const MenuTextContainer = styled.div`
@@ -120,13 +130,16 @@ export const MenuTextContainer = styled.div`
 `;
 
 export const MenuTextUpperText = styled.div`
-  font-size: var(--default-font-size-bigger);
-  color: #000;
+  font-family: var(--topic-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: #555;
   line-height: 1.2;
 `;
 
 export const MenuTextLowerText = styled.div`
-  font-size: 15px;
+  font-size: 14px;
   color: #777;
   line-height: 1.2;
+  padding-top: 5px;
 `;

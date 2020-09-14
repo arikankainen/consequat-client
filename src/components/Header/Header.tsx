@@ -59,14 +59,17 @@ const Header = () => {
   const mainMenuItems = [
     {
       text: 'Consequat',
+      subText: 'Back to the starting point',
       link: '/',
     },
     {
       text: 'Browse',
+      subText: 'Browse all photos',
       link: '/photos',
     },
     {
       text: 'About',
+      subText: 'What Consequat is?',
       link: '/about',
     },
   ];
