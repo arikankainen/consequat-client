@@ -17,11 +17,13 @@ import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
+
 import {
   HeaderContainer,
   HeaderInnerContainer,
   LeftContainer,
   RightContainer,
+  StyledLink,
 } from './style';
 
 const Header = () => {
@@ -98,6 +100,8 @@ const Header = () => {
         </LeftContainer>
         <Search />
         <RightContainer>
+          <StyledLink to="/photos">Browse</StyledLink>
+          <StyledLink to="/about">About</StyledLink>
           {loginState.loggedIn ? (
             <Menu
               button={userMenuButton}

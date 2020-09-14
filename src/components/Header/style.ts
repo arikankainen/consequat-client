@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
+import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`
   position: sticky;
@@ -33,4 +34,22 @@ export const RightContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   flex: 1 1 0%;
+`;
+
+export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+  font-family: var(--topic-font-family);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:link, &:visited {
+    color: #ddd;
+  }
+
+  &:hover {
+    color: #fff;
+  }
 `;
