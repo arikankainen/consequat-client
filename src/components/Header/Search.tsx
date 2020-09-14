@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../images/menu_search.svg';
+import { useHistory } from 'react-router-dom';
 
 interface SearchContainerProps {
   focus: boolean;
@@ -54,16 +55,33 @@ const Input = styled.input`
 
 const Search = () => {
   const [focus, setFocus] = useState(false);
+  const [value, setValue] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    history.push(`/photos/${value}`);
+    setValue('');
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
   return (
     <SearchContainer focus={focus}>
       <SearchIcon />
-      <Input
-        placeholder="Search photos"
-        autoComplete="off"
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-      />
+      <form onSubmit={handleSubmit}>
+        <Input
+          placeholder="Search photos"
+          autoComplete="off"
+          spellCheck={false}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          onChange={handleChange}
+          value={value}
+        />
+      </form>
     </SearchContainer>
   );
 };
