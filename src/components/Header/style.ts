@@ -39,7 +39,7 @@ export const RightContainer = styled.div`
 export const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
-  margin: 0px 20px;
+  margin: 0px 15px;
   font-family: var(--topic-font-family);
   font-size: 14px;
   font-weight: 500;

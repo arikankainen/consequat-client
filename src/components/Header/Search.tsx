@@ -16,8 +16,10 @@ const SearchContainer = styled.div`
   background-color: var(--input-bg-color);
 
   & > svg {
-    height: var(--icon-size);
+    width: 16px;
+    min-width: 16px;
     color: var(--icon-color);
+    color: #aaa;
   }
 `;
 
@@ -42,7 +44,7 @@ const Search = () => {
   return (
     <SearchContainer>
       <SearchIcon />
-      <Input placeholder="Search photos" />
+      <Input placeholder="Search photos" autoComplete="off" />
     </SearchContainer>
   );
 };
