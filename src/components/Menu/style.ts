@@ -8,11 +8,11 @@ interface MenuItemsContainerProps {
 
 export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   position: absolute;
-  width: 300px;
+  width: 250px;
   padding: 0px 0px;
   background-color: #fff;
   border-radius: 6px;
-  box-shadow: var(--default-box-shadow);
+  box-shadow: var(--menu-box-shadow);
 
   ${props =>
     props.direction === Direction.Right &&
