@@ -13,14 +13,14 @@ import {
 export const MenuItems: React.FC<MenuProps> = ({ items, settings }) => {
   return (
     <MenuItemsContainer direction={settings.direction}>
-      {items.map((item) => {
+      {items.map(item => {
         return (
           <MenuItem key={item.text}>
             <MenuLink to={item.link}>
-              <item.icon />
+              {item.icon && <item.icon />}
               <MenuTextContainer>
                 <MenuTextUpperText>{item.text}</MenuTextUpperText>
-                <MenuTextLowerText>{item.subText}</MenuTextLowerText>
+                {item.subText && <MenuTextLowerText>{item.subText}</MenuTextLowerText>}
               </MenuTextContainer>
             </MenuLink>
           </MenuItem>

@@ -15,14 +15,15 @@ interface Button {
 
 interface Item {
   text: string;
-  subText: string;
+  subText?: string;
   link: string;
-  icon: React.FunctionComponent;
+  icon?: React.FunctionComponent;
 }
 
 interface Settings {
   classNames: string;
   direction: Direction;
+  hideWhen?: number;
 }
 
 export interface MenuProps {
@@ -50,7 +51,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   };
 
   return (
-    <MenuButtonContainer>
+    <MenuButtonContainer hideWhen={settings.hideWhen}>
       <MenuButton onClick={() => toggleMenu()}>
         <button.icon />
       </MenuButton>

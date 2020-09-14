@@ -17,6 +17,7 @@ import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
+import { ReactComponent as MenuIcon } from '../../images/menu.svg';
 
 import {
   HeaderContainer,
@@ -54,6 +55,32 @@ const Header = () => {
       );
     }
   }, [resultMe.data]); // eslint-disable-line
+
+  const mainMenuItems = [
+    {
+      text: 'Consequat',
+      link: '/',
+    },
+    {
+      text: 'Browse',
+      link: '/photos',
+    },
+    {
+      text: 'About',
+      link: '/about',
+    },
+  ];
+
+  const mainMenuButton = {
+    text: 'Consequat',
+    icon: MenuIcon,
+  };
+
+  const mainMenuSettings = {
+    classNames: 'usermenu',
+    direction: Direction.Left,
+    hideWhen: 601,
+  };
 
   const userMenuItems = [
     {
@@ -96,6 +123,11 @@ const Header = () => {
     <HeaderContainer>
       <HeaderInnerContainer>
         <LeftContainer>
+          <Menu
+            button={mainMenuButton}
+            items={mainMenuItems}
+            settings={mainMenuSettings}
+          />
           <Logo />
         </LeftContainer>
         <Search />

@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import logoImage from '../../images/consequat_top2.png';
-import logoImageSmall from '../../images/consequat_o.png';
 import { Link } from 'react-router-dom';
+import breakPoints from '../../utils/breakPoints';
 
 const LogoLink = styled(Link)`
   height: 30px;
+
+  ${breakPoints.custom(600)} {
+    display: none;
+  }
 `;
 
 const LogoImage = styled.picture`
@@ -26,8 +30,6 @@ const Logo = () => {
   return (
     <LogoLink to="/">
       <LogoImage>
-        <source media="(max-width: 600px)" srcSet={logoImageSmall} />
-        <source media="(min-width: 601px)" srcSet={logoImage} />
         <img src={logoImage} alt="consequat-logo" />
       </LogoImage>
     </LogoLink>

@@ -14,13 +14,13 @@ export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   background-color: #fff;
   box-shadow: var(--default-box-shadow);
 
-  ${(props) =>
+  ${props =>
     props.direction === Direction.Right &&
     css`
       right: -10px;
   `}
 
-  ${(props) =>
+  ${props =>
     props.direction === Direction.Left &&
     css`
       left: -10px;
@@ -33,8 +33,20 @@ export const MenuItemsContainer = styled.ul<MenuItemsContainerProps>`
   }
 `;
 
-export const MenuButtonContainer = styled.div`
+interface MenuButtonContainerProps {
+  hideWhen?: number;
+}
+
+export const MenuButtonContainer = styled.div<MenuButtonContainerProps>`
   position: relative;
+
+  ${props =>
+    props.hideWhen &&
+    css`
+      @media screen and (min-width: ${props.hideWhen}px) {
+        display: none;
+      }
+  `}
 `;
 
 export const MenuButton = styled.div`
