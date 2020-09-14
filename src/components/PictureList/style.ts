@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
-export const PictureListOuterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
 export const PictureListContainer = styled.div`
   display: flex;
   flex-direction: column;

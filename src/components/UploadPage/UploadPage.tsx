@@ -22,7 +22,6 @@ import {
 } from '../../reducers/pictureReducer';
 
 import {
-  PictureListOuterContainer,
   PictureListContainer,
   PictureListToolBar,
   PictureListButtonGroups,
@@ -226,7 +225,7 @@ const UploadForm = () => {
   };
 
   return (
-    <PictureListOuterContainer>
+    <>
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
@@ -308,7 +307,7 @@ const UploadForm = () => {
           />
         </form>
       </PictureListContainer>
-    </PictureListOuterContainer>
+    </>
   );
 };
 

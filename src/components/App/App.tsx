@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { SiteContainer, Main } from './style';
+import { SiteContainer, Main, MainContainer } from './style';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -35,39 +35,41 @@ const App = () => {
       <Header />
 
       <Main>
-        <Switch>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
+        <MainContainer>
+          <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
 
-          <Route path="/signup">
-            <SignupPage />
-          </Route>
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
 
-          <Route path="/logout">
-            <LogoutPage />
-          </Route>
+            <Route path="/logout">
+              <LogoutPage />
+            </Route>
 
-          <Route path="/upload">
-            <UploadPage />
-          </Route>
+            <Route path="/upload">
+              <UploadPage />
+            </Route>
 
-          <Route path="/pictures">
-            <PicturesPage />
-          </Route>
+            <Route path="/pictures">
+              <PicturesPage />
+            </Route>
 
-          <Route path="/account">
-            <AccountPage />
-          </Route>
+            <Route path="/account">
+              <AccountPage />
+            </Route>
 
-          <Route path="/photos">
-            <PhotosPage />
-          </Route>
+            <Route path="/photos">
+              <PhotosPage />
+            </Route>
 
-          <Route path="/">
-            <MainPage />
-          </Route>
-        </Switch>
+            <Route path="/">
+              <MainPage />
+            </Route>
+          </Switch>
+        </MainContainer>
       </Main>
 
       <Footer />

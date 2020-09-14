@@ -8,7 +8,6 @@ import { ReactComponent as FullnameIcon } from '../../images/account_fullname.sv
 import { ReactComponent as PasswordIcon } from '../../images/account_password.svg';
 
 import {
-  OuterContainer,
   Container,
   TopicArea,
   Topic,
@@ -29,71 +28,69 @@ const AccountPage = () => {
   };
 
   return (
-    <OuterContainer>
-      <Container>
-        <TopicArea>
-          <Topic>Account settings</Topic>
-          <SubTopic>View and change settings related to your account</SubTopic>
-        </TopicArea>
+    <Container>
+      <TopicArea>
+        <Topic>Account settings</Topic>
+        <SubTopic>View and change settings related to your account</SubTopic>
+      </TopicArea>
 
-        <BoxContainer>
-          <Box>
-            <BoxTopic>Personal information</BoxTopic>
-            <TextSetting label="Username" value="admin" Icon={UsernameIcon} />
-            <TextSetting
-              label="Email"
-              value="admin@mail.com"
-              Icon={EmailIcon}
-              onClick={() => console.log('change email')}
+      <BoxContainer>
+        <Box>
+          <BoxTopic>Personal information</BoxTopic>
+          <TextSetting label="Username" value="admin" Icon={UsernameIcon} />
+          <TextSetting
+            label="Email"
+            value="admin@mail.com"
+            Icon={EmailIcon}
+            onClick={() => console.log('change email')}
+          />
+          <TextSetting
+            label="Full name"
+            value="Administrator"
+            Icon={FullnameIcon}
+            onClick={() => console.log('change name')}
+          />
+          <TextSetting
+            label="Password"
+            value="*****"
+            Icon={PasswordIcon}
+            onClick={() => console.log('change password')}
+          />
+        </Box>
+        <Box>
+          <BoxTopic>Preferences</BoxTopic>
+          <form onSubmit={handleSubmit}>
+            <CheckboxSetting
+              name="fastSelection"
+              label="Fast selection"
+              description="Clicking thumbnail does not deselect other thumbnails"
+              checked={fastSelection}
+              onChange={() => setFastSelection(!fastSelection)}
             />
-            <TextSetting
-              label="Full name"
-              value="Administrator"
-              Icon={FullnameIcon}
-              onClick={() => console.log('change name')}
+            <CheckboxSetting
+              name="dismissDialogs"
+              label="Dismiss dialogs"
+              description="Automatically dismiss success dialogs after upload or delete operation"
+              checked={dismissDialogs}
+              onChange={() => setDismissDialogs(!dismissDialogs)}
             />
-            <TextSetting
-              label="Password"
-              value="*****"
-              Icon={PasswordIcon}
-              onClick={() => console.log('change password')}
+            <CheckboxSetting
+              name="expandInfo"
+              label="Expand photo info"
+              description="Automatically expand additional fields in photo info panel"
+              checked={expandInfo}
+              onChange={() => setExpandInfo(!expandInfo)}
             />
-          </Box>
-          <Box>
-            <BoxTopic>Preferences</BoxTopic>
-            <form onSubmit={handleSubmit}>
-              <CheckboxSetting
-                name="fastSelection"
-                label="Fast selection"
-                description="Clicking thumbnail does not deselect other thumbnails"
-                checked={fastSelection}
-                onChange={() => setFastSelection(!fastSelection)}
-              />
-              <CheckboxSetting
-                name="dismissDialogs"
-                label="Dismiss dialogs"
-                description="Automatically dismiss success dialogs after upload or delete operation"
-                checked={dismissDialogs}
-                onChange={() => setDismissDialogs(!dismissDialogs)}
-              />
-              <CheckboxSetting
-                name="expandInfo"
-                label="Expand photo info"
-                description="Automatically expand additional fields in photo info panel"
-                checked={expandInfo}
-                onChange={() => setExpandInfo(!expandInfo)}
-              />
-              <Button
-                text="Save"
-                type="submit"
-                onClick={() => void 0}
-                margin={[30, 0, 0, 0]}
-              />
-            </form>
-          </Box>
-        </BoxContainer>
-      </Container>
-    </OuterContainer>
+            <Button
+              text="Save"
+              type="submit"
+              onClick={() => void 0}
+              margin={[30, 0, 0, 0]}
+            />
+          </form>
+        </Box>
+      </BoxContainer>
+    </Container>
   );
 };
 

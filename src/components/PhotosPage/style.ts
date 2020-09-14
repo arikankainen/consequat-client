@@ -1,14 +1,6 @@
 import styled, { css } from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
-export const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -57,10 +49,12 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   `}
 
   &:hover {
+    /*
     & > a > div:first-child > img {
-      /*transform: scale(1.05);*/
+      transform: scale(1.05);
     }
-    
+    */
+
     & > a > div:last-child {
       opacity: 1;
     }

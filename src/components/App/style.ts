@@ -15,7 +15,7 @@ export const SiteContainer = styled.section<SiteContainerProps>`
   height: 100%;
   width: 100%;
 
-  ${(props) =>
+  ${props =>
     props.picture &&
     css`
       background-position: center center;
@@ -42,4 +42,12 @@ export const SiteContainer = styled.section<SiteContainerProps>`
 
 export const Main = styled.div`
   flex: auto;
+`;
+
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 `;

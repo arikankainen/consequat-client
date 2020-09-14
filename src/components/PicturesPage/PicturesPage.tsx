@@ -21,7 +21,6 @@ import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import Thumbnail from '../Thumbnail/Thumbnail';
 
 import {
-  PictureListOuterContainer,
   PictureListContainer,
   PictureListToolBar,
   PictureListButtonGroups,
@@ -283,7 +282,7 @@ const PicturesPage = () => {
   };
 
   return (
-    <PictureListOuterContainer>
+    <>
       <PictureListToolBar>
         <PictureListButtonGroups>
           <PictureListButtonGroup>
@@ -375,7 +374,7 @@ const PicturesPage = () => {
           </PhotoAlbum>
         ))}
       </PictureListContainer>
-    </PictureListOuterContainer>
+    </>
   );
 };
 
