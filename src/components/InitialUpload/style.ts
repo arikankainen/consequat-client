@@ -24,29 +24,3 @@ export const InitialUploadContainer = styled.div`
 export const InitialUploadFileButton = styled.input`
   display: none;
 `;
-
-export const InitialUploadButton = styled.button`
-  height: 30px;
-  margin-top: 20px;
-  padding: 0px 10px;
-  background-color: var(--accent-color-2);
-  border: none;
-  border-radius: var(--input-border-radius);
-  color: #eee;
-  font-size: var(--default-font-size);
-  font-weight: 600;
-  cursor: pointer;
-
-  &:focus {
-    outline-width: 0;
-  }
-
-  &:hover {
-    background-color: var(--accent-color-2-hover);
-  }
-  
-  &:disabled {
-    background-color: var(--accent-color-2);
-    cursor: wait;
-  }
-`;

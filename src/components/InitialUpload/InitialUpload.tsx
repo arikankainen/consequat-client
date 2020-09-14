@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPicture } from '../../reducers/pictureReducer';
 import { ReactComponent as ImagesIcon } from '../../images/menu_upload.svg';
+import Button from '../Buttons/Button';
 
 import {
   InitialUploadOuterContainer,
   InitialUploadContainer,
-  InitialUploadButton,
   InitialUploadFileButton,
 } from './style';
 
@@ -33,9 +33,7 @@ const InitialUpload = () => {
       <InitialUploadContainer>
         <ImagesIcon />
         <form onSubmit={handleSubmit}>
-          <InitialUploadButton onClick={handleClick}>
-            Select pictures to upload
-          </InitialUploadButton>
+          <Button onClick={handleClick} text="Select pictures to upload" />
           <InitialUploadFileButton
             type="file"
             ref={fileInput}
