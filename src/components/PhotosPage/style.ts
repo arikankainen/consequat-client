@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import breakPoints from '../../utils/breakPoints';
 
 export const TopicContainer = styled.div`
-  display: flex;
   width: 100%;
   padding: 40px 20px 10px 20px;
   max-width: ${breakPoints.laptopLWidth};
@@ -14,12 +13,12 @@ export const TopicContainer = styled.div`
 `;
 
 export const Keyword = styled.span`
+  display: inline;
   font-family: var(--topic-font-family);
   font-weight: 400;
   font-size: 20px;
   color: #222;
   line-height: 1;
-  padding: 0px 5px;
 `;
 
 export const GridContainer = styled.div`
