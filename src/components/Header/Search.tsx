@@ -1,13 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../images/menu_search.svg';
 
-const SearchContainer = styled.div`
+interface SearchContainerProps {
+  focus: boolean;
+}
+
+const SearchContainer = styled.div<SearchContainerProps>`
   display: flex;
   flex: 100;
   align-items: center;
   justify-content: flex-start;
-  max-width: 400px;
+  max-width: 300px;
   margin-left: 10px;
   margin-right: 10px;
   padding-left: 15px;
@@ -21,13 +25,22 @@ const SearchContainer = styled.div`
     color: var(--icon-color);
     color: #aaa;
   }
+
+  ${props =>
+    props.focus &&
+    css`
+      background-color: #444;
+      max-width: 400px;
+  `}
+
+  transition: all 200ms ease-in-out;
 `;
 
 const Input = styled.input`
   width: 100%;
   margin-left: 20px;
   margin-right: 20px;
-  background-color: var(--input-bg-color);
+  background-color: transparent;
   border: none;
   color: var(--input-color);
   font-size: var(--default-font-size);
@@ -39,12 +52,18 @@ const Input = styled.input`
   }
 `;
 
-// TODO: add focus indicator
 const Search = () => {
+  const [focus, setFocus] = useState(false);
+
   return (
-    <SearchContainer>
+    <SearchContainer focus={focus}>
       <SearchIcon />
-      <Input placeholder="Search photos" autoComplete="off" />
+      <Input
+        placeholder="Search photos"
+        autoComplete="off"
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
+      />
     </SearchContainer>
   );
 };
