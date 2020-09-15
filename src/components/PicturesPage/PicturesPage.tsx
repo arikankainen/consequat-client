@@ -29,7 +29,9 @@ import {
 } from '../PictureList/style';
 
 const PicturesPage = () => {
-  const resultMe = useQuery(ME);
+  const resultMe = useQuery(ME, {
+    fetchPolicy: 'no-cache',
+  });
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
