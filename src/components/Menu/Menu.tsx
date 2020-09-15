@@ -11,6 +11,8 @@ export enum Direction {
 interface Button {
   text: string;
   icon: React.FunctionComponent;
+  iconColor?: string;
+  iconColorHover?: string;
 }
 
 interface Item {
@@ -52,7 +54,11 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
 
   return (
     <MenuButtonContainer hideWhen={settings.hideWhen}>
-      <MenuButton onClick={() => toggleMenu()}>
+      <MenuButton
+        onClick={() => toggleMenu()}
+        iconColor={button.iconColor}
+        iconColorHover={button.iconColorHover}
+      >
         <button.icon />
       </MenuButton>
       <CSSTransition

@@ -17,7 +17,7 @@ import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
 import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
 import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
 import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
-import { ReactComponent as MenuIcon } from '../../images/menu.svg';
+import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
 
 import {
   HeaderContainer,
@@ -77,6 +77,8 @@ const Header = () => {
   const mainMenuButton = {
     text: 'Consequat',
     icon: MenuIcon,
+    iconColor: '#d68b1e',
+    iconColorHover: '#ffaf45',
   };
 
   const mainMenuSettings = {

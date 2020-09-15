@@ -45,7 +45,12 @@ export const MenuButtonContainer = styled.div<MenuButtonContainerProps>`
   `}
 `;
 
-export const MenuButton = styled.div`
+interface MenuButtonProps {
+  iconColor?: string;
+  iconColorHover?: string;
+}
+
+export const MenuButton = styled.div<MenuButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,6 +72,24 @@ export const MenuButton = styled.div`
     height: var(--icon-size);
     color: var(--icon-color);
   }
+
+  ${props =>
+    props.iconColor &&
+    css`
+      & > svg {
+        color: ${props.iconColor};
+      }
+  `}
+
+  ${props =>
+    props.iconColorHover &&
+    css`
+      &:hover {
+        & > svg {
+          color: ${props.iconColorHover};
+        }
+      }
+  `}
 `;
 
 export const MenuItem = styled.li`
