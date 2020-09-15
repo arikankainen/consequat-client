@@ -12,6 +12,7 @@ const PhotosPage = () => {
   const { search } = useParams();
 
   useEffect(() => {
+    setPhotos([]);
     listPhotos({
       variables: { search },
     });
@@ -24,7 +25,7 @@ const PhotosPage = () => {
     setPhotos(data.listPhotos);
   }, [resultListPhotos.data]);
 
-  if (resultListPhotos.loading) return <Loading>Loading...</Loading>;
+  if (resultListPhotos.loading || !photos) return <Loading>Loading...</Loading>;
 
   return <PhotoGrid photos={photos} search={search} />;
 };

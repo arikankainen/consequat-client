@@ -7,7 +7,7 @@ export const TopicContainer = styled.div`
   max-width: ${breakPoints.laptopLWidth};
   font-family: var(--topic-font-family);
   font-weight: 200;
-  font-size: 20px;
+  font-size: 18px;
   color: #222;
   line-height: 1;
 `;
@@ -16,7 +16,7 @@ export const Keyword = styled.span`
   display: inline;
   font-family: var(--topic-font-family);
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   color: #222;
   line-height: 1;
 `;
@@ -63,12 +63,13 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   width: 100%;
   height: 100%;
   position: relative;
-  padding-top: calc(4/3 * 100%);
+  padding-top: 150%;
+  background-color: #eee;
 
   ${props =>
     props.landscape &&
     css`
-      padding-top: calc(3/4 * 100%);
+      padding-top: 74%;
       grid-column: span 2;
   `}
 
