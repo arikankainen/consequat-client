@@ -23,8 +23,10 @@ export const Keyword = styled.span`
 
 export const GridContainer = styled.div`
   display: grid;
+  align-content: start;
+  justify-content: center;
   grid-template-columns: repeat(8, 1fr);
-  grid-auto-rows: 200px;
+  grid-auto-rows: auto;
   grid-gap: 3px;
   grid-auto-flow: dense;
   padding: 3px;
@@ -61,10 +63,12 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   width: 100%;
   height: 100%;
   position: relative;
+  padding-top: calc(4/3 * 100%);
 
   ${props =>
     props.landscape &&
     css`
+      padding-top: calc(3/4 * 100%);
       grid-column: span 2;
   `}
 
@@ -82,6 +86,9 @@ export const ItemContainer = styled.div<ItemContainerProps>`
 `;
 
 export const ImageContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
