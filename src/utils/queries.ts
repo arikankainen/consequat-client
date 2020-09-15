@@ -233,8 +233,8 @@ export const DELETE_ALBUM = gql`
 `;
 
 export const LIST_PHOTOS = gql`
-  query {
-    listPhotos {
+  query ($search: String) {
+    listPhotos (search: $search) {
     ...PhotoDetails,
     user { fullname },
     }
