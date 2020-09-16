@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import breakPoints from '../../utils/breakPoints';
 
 export const TopicContainer = styled.div`
@@ -94,9 +95,14 @@ export const ImageContainer = styled.div`
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+
+  & > span {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
-export const Image = styled.img`
+export const Image = styled(LazyLoadImage)`
   width: 100%;
   height: 100%;
   object-fit: cover;

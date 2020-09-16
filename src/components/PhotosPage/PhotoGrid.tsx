@@ -1,4 +1,6 @@
 import React from 'react';
+import { trackWindowScroll, ScrollPosition } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { PhotoUserExtended } from '../../utils/types';
 import { TopicContainer, Keyword, GridContainer } from './style';
 import PhotoGridItem from './PhotoGridItem';
@@ -6,9 +8,10 @@ import PhotoGridItem from './PhotoGridItem';
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
   search: string | undefined;
+  scrollPosition: ScrollPosition;
 }
 
-const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search }) => {
+const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search, scrollPosition }) => {
   if (!photos) return null;
 
   return (
@@ -22,11 +25,11 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search }) => {
       )}
       <GridContainer>
         {photos.map(photo => (
-          <PhotoGridItem key={photo.id} photo={photo} />
+          <PhotoGridItem key={photo.id} photo={photo} scrollPosition={scrollPosition} />
         ))}
       </GridContainer>
     </>
   );
 };
 
-export default PhotoGrid;
+export default trackWindowScroll(PhotoGrid);
