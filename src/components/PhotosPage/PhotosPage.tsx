@@ -5,10 +5,13 @@ import { PhotoUserExtended } from '../../utils/types';
 import PhotoGrid from './PhotoGrid';
 import { Loading } from './style';
 import { useLocation } from 'react-router-dom';
+import NotFound from '../NotFound/NotFound';
+import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
 
 const PhotosPage = () => {
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS);
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
+  const [notFound, setNotFound] = useState(false);
   const url = useLocation();
   const urlParams = new URLSearchParams(url.search);
 
@@ -35,10 +38,23 @@ const PhotosPage = () => {
     const data = resultListPhotos.data;
 
     if (!data || !data.listPhotos) return;
+
+    if (data.listPhotos.length === 0) setNotFound(true);
+    else setNotFound(false);
+
     setPhotos(data.listPhotos);
   }, [resultListPhotos.data]);
 
   if (resultListPhotos.loading || !photos) return <Loading>Loading...</Loading>;
+
+  if (notFound)
+    return (
+      <NotFound
+        topic="No photos found"
+        text="Try different search terms"
+        Icon={NotFoundIcon}
+      />
+    );
 
   return <PhotoGrid photos={photos} search={keyword} />;
 };

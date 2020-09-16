@@ -25,7 +25,6 @@ export const Keyword = styled.span`
 export const GridContainer = styled.div`
   display: grid;
   align-content: start;
-  justify-content: center;
   grid-template-columns: repeat(8, 1fr);
   grid-auto-rows: auto;
   grid-gap: 3px;
