@@ -55,18 +55,19 @@ const Input = styled.input`
 
 const Search = () => {
   const [focus, setFocus] = useState(false);
-  const [value, setValue] = useState('');
+  const [keyWord, setKeyWord] = useState('');
   const history = useHistory();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!value) return;
-    history.push(`/photos/search/all/${value}`);
-    setValue('');
+    if (!keyWord.trim()) return;
+
+    const searchOptions = 'name=true&location=true&description=true&tags=true';
+    history.push(`/photos/?${searchOptions}&keyword=${keyWord}`);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setKeyWord(event.target.value);
   };
 
   return (
@@ -80,7 +81,7 @@ const Search = () => {
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           onChange={handleChange}
-          value={value}
+          value={keyWord}
         />
       </form>
     </SearchContainer>

@@ -7,7 +7,7 @@ import PhotoGridItem from './PhotoGridItem';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
-  search: string | undefined;
+  search: string | undefined | null;
   scrollPosition: ScrollPosition;
 }
 
