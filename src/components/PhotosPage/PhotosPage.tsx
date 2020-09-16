@@ -9,14 +9,14 @@ import { useParams } from 'react-router-dom';
 const PhotosPage = () => {
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS);
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
-  const { search } = useParams();
+  const { type, keyword } = useParams();
 
   useEffect(() => {
     setPhotos([]);
     listPhotos({
-      variables: { search },
+      variables: { type, keyword },
     });
-  }, [search, listPhotos]);
+  }, [keyword, type, listPhotos]);
 
   useEffect(() => {
     const data = resultListPhotos.data;
@@ -27,7 +27,7 @@ const PhotosPage = () => {
 
   if (resultListPhotos.loading || !photos) return <Loading>Loading...</Loading>;
 
-  return <PhotoGrid photos={photos} search={search} />;
+  return <PhotoGrid photos={photos} search={keyword} />;
 };
 
 export default PhotosPage;

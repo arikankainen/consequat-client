@@ -61,7 +61,7 @@ const App = () => {
               <AccountPage />
             </Route>
 
-            <Route path="/photos/:search">
+            <Route path="/photos/search/:type/:keyword">
               <PhotosPage />
             </Route>
 

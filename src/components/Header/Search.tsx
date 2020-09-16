@@ -60,7 +60,8 @@ const Search = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    history.push(`/photos/${value}`);
+    if (!value) return;
+    history.push(`/photos/search/all/${value}`);
     setValue('');
   };
 
