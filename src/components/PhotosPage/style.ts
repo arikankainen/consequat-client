@@ -75,15 +75,17 @@ export const ItemContainer = styled.div<ItemContainerProps>`
   `}
 
   &:hover {
-    /*
-    & > a > div:first-child > img {
-      transform: scale(1.05);
-    }
-    */
-
     & > a > div:last-child {
       opacity: 1;
     }
+  }
+
+  & > a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -99,6 +101,7 @@ export const ImageContainer = styled.div`
   & > span {
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
 `;
 
