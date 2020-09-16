@@ -57,7 +57,7 @@ const EditAlbumDialog: React.FC<Props> = ({
                 text="Cancel"
                 type="button"
                 width={75}
-                color={ButtonColor.white}
+                color={ButtonColor.whiteWithBlueBorder}
                 onClick={handleCancel}
               />
               <Button

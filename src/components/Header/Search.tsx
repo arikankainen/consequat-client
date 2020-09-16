@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../images/menu_search.svg';
 import { useHistory } from 'react-router-dom';
@@ -56,6 +56,7 @@ const Input = styled.input`
 const Search = () => {
   const [focus, setFocus] = useState(false);
   const [keyWord, setKeyWord] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -64,6 +65,7 @@ const Search = () => {
 
     const searchOptions = 'name=true&location=true&description=true&tags=true';
     history.push(`/photos/?${searchOptions}&keyword=${keyWord}`);
+    if (inputRef.current) inputRef.current.blur();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +84,7 @@ const Search = () => {
           onBlur={() => setFocus(false)}
           onChange={handleChange}
           value={keyWord}
+          ref={inputRef}
         />
       </form>
     </SearchContainer>

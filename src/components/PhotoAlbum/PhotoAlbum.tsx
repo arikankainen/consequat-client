@@ -63,7 +63,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
             <Button
               text="Upload"
               onClick={onUploadClick || (() => void 0)}
-              color={ButtonColor.white}
+              color={ButtonColor.whiteWithBlueBorder}
               icon={UploadButton}
               breakPoint="290px"
             />
@@ -72,7 +72,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
             <Button
               text="Edit"
               onClick={onEditClick || (() => void 0)}
-              color={ButtonColor.white}
+              color={ButtonColor.whiteWithBlueBorder}
               icon={EditButton}
               breakPoint="400px"
             />
@@ -81,7 +81,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
             <Button
               text="Delete"
               onClick={onDeleteClick || (() => void 0)}
-              color={ButtonColor.white}
+              color={ButtonColor.whiteWithBlueBorder}
               icon={DeleteButton}
               breakPoint="400px"
             />
@@ -89,7 +89,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           {selectButtonVisible && (
             <Button
               onClick={onSelectClick || (() => void 0)}
-              color={ButtonColor.white}
+              color={ButtonColor.whiteWithBlueBorder}
               icon={selected ? CheckButton : UncheckButton}
               breakPoint="600px"
             />

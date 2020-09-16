@@ -117,7 +117,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   text="Cancel"
                   type="button"
                   width={75}
-                  color={ButtonColor.white}
+                  color={ButtonColor.whiteWithBlueBorder}
                   onClick={handleCancel}
                 />
                 <Button

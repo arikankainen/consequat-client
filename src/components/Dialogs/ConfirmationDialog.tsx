@@ -55,25 +55,15 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
                 onClick={handleCancel}
                 text="Cancel"
                 disabled={disableCancel}
-                color={ButtonColor.white}
+                color={ButtonColor.whiteWithBlueBorder}
                 width={75}
               />
-              <Button
-                onClick={handleOk}
-                text="OK"
-                disabled={disableOk}
-                width={75}
-              />
+              <Button onClick={handleOk} text="OK" disabled={disableOk} width={75} />
             </>
           )}
 
           {!handleCancel && handleOk && (
-            <Button
-              onClick={handleOk}
-              text="OK"
-              disabled={disableOk}
-              width={75}
-            />
+            <Button onClick={handleOk} text="OK" disabled={disableOk} width={75} />
           )}
 
           {handleCancel && !handleOk && (

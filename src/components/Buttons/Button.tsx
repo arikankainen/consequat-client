@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 export enum ButtonColor {
   blue,
+  whiteWithBlueBorder,
   white,
   black,
 }
@@ -18,6 +19,7 @@ interface ContainerProps {
   margin?: [number, number, number, number];
   contentAlign?: ButtonContentAlign;
   backColor?: ButtonColor;
+  rounded?: boolean;
 }
 
 const Container = styled.button<ContainerProps>`
@@ -61,6 +63,12 @@ const Container = styled.button<ContainerProps>`
   }
 
   ${props =>
+    props.rounded &&
+    css`
+      border-radius: 20px;
+  `}
+
+  ${props =>
     props.margin &&
     css`
       margin:
@@ -89,7 +97,7 @@ const Container = styled.button<ContainerProps>`
   `}
 
   ${props =>
-    props.backColor === ButtonColor.white &&
+    props.backColor === ButtonColor.whiteWithBlueBorder &&
     css`
       border: 1px solid var(--accent-color-2);
       color: var(--accent-color-2-disabled);
@@ -109,6 +117,34 @@ const Container = styled.button<ContainerProps>`
         border: 1px solid #111155;
         color: #111155;
         background-color: #aaa;
+      }
+  `}
+
+  ${props =>
+    props.backColor === ButtonColor.white &&
+    css`
+      border: 1px solid #ddd;
+      color: #555;
+      background-color: transparent;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, .1);
+      }
+
+      &:hover {
+        border: 1px solid #ccc;
+        color: #333;
+        background-color: #eee;
+      }
+
+      & > svg {
+        color: #555;
+      }
+
+      &:disabled {
+        border: 1px solid #ccc;
+        color: #999;
+        background-color: #eee;
       }
   `}
 
@@ -179,6 +215,7 @@ interface ButtonProps {
   breakPoint?: string;
   contentAlign?: ButtonContentAlign;
   margin?: [number, number, number, number];
+  rounded?: boolean;
   onClick: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
@@ -192,6 +229,7 @@ const Button: React.FC<ButtonProps> = props => {
       contentAlign={props.contentAlign}
       backColor={props.color}
       margin={props.margin}
+      rounded={props.rounded}
       onClick={props.onClick}
     >
       {props.icon && <props.icon />}
