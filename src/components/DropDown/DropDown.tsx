@@ -25,7 +25,6 @@ const Drop = styled.div<DropProps>`
   box-shadow: var(--menu-box-shadow);
   border-radius: 5px;
   opacity: 0;
-  /*transition: opacity 150ms ease-in-out;*/
 
   ${props =>
     props.show &&
@@ -64,10 +63,10 @@ const DropDown = () => {
         margin={[0, 0, 0, 0]}
         icon={ExpandIcon}
         color={ButtonColor.white}
-        rounded
+        rounded={true}
       />
       <Drop show={open} ref={refMenu}>
-        <Content open={open} />
+        <Content open={open} onSubmitted={() => setOpen(false)} />
       </Drop>
     </Container>
   );

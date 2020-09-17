@@ -34,9 +34,10 @@ const Label = styled.label`
 
 interface ContentProps {
   open: boolean;
+  onSubmitted: () => void;
 }
 
-const Content: React.FC<ContentProps> = ({ open }) => {
+const Content: React.FC<ContentProps> = ({ open, onSubmitted }) => {
   const history = useHistory();
   const url = useLocation();
   const [name, setName] = useState(false);
@@ -68,6 +69,7 @@ const Content: React.FC<ContentProps> = ({ open }) => {
     const address = `${url.pathname}?name=${name}&location=${location}&description=${description}&tags=${tags}&keyword=${keyword}`;
 
     history.replace(address);
+    onSubmitted();
   };
 
   return (
