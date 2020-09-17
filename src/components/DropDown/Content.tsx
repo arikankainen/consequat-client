@@ -44,6 +44,7 @@ const Content: React.FC<ContentProps> = ({ open }) => {
   const [description, setDescription] = useState(false);
   const [tags, setTags] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(url.search);
@@ -55,6 +56,11 @@ const Content: React.FC<ContentProps> = ({ open }) => {
     const urlKeyWord = urlParams.get('keyword');
     if (urlKeyWord) setKeyword(urlKeyWord);
   }, [open, url.search]);
+
+  useEffect(() => {
+    if (!name && !location && !description && !tags) setDisabled(true);
+    else setDisabled(false);
+  }, [name, location, description, tags]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,6 +116,7 @@ const Content: React.FC<ContentProps> = ({ open }) => {
           margin={[20, 0, 0, 0]}
           color={ButtonColor.white}
           fullWidth
+          disabled={disabled}
         />
       </Container>
     </form>

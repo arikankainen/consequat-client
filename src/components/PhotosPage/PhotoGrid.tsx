@@ -2,17 +2,27 @@ import React from 'react';
 import { trackWindowScroll, ScrollPosition } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { PhotoUserExtended } from '../../utils/types';
-import { TopBar, Text, TopicContainer, Keyword, GridContainer } from './style';
+import { TopBar, Text, TopicContainer, Keyword, GridContainer, Loading } from './style';
 import PhotoGridItem from './PhotoGridItem';
 import DropDown from '../DropDown/DropDown';
+import NotFound from '../NotFound/NotFound';
+import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
   search: string | undefined | null;
   scrollPosition: ScrollPosition;
+  notFound: boolean;
+  loading: boolean;
 }
 
-const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search, scrollPosition }) => {
+const PhotoGrid: React.FC<PhotoGridProps> = ({
+  photos,
+  search,
+  scrollPosition,
+  notFound,
+  loading,
+}) => {
   if (!photos) return null;
 
   return (
@@ -21,7 +31,13 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search, scrollPosition })
         <>
           <TopBar>
             <Text>
-              Found <Keyword>{photos.length}</Keyword> photos
+              {loading ? (
+                <>Loading...</>
+              ) : (
+                <>
+                  Found <Keyword>{photos.length}</Keyword> photos
+                </>
+              )}
             </Text>
             <DropDown />
           </TopBar>
@@ -32,11 +48,24 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, search, scrollPosition })
       ) : (
         <TopicContainer>Browsing all photos</TopicContainer>
       )}
-      <GridContainer>
-        {photos.map(photo => (
-          <PhotoGridItem key={photo.id} photo={photo} scrollPosition={scrollPosition} />
-        ))}
-      </GridContainer>
+
+      {notFound && (
+        <NotFound
+          topic="No photos found"
+          text="Try different search terms"
+          Icon={NotFoundIcon}
+        />
+      )}
+
+      {!notFound && loading && <Loading>Loading...</Loading>}
+
+      {!notFound && !loading && (
+        <GridContainer>
+          {photos.map(photo => (
+            <PhotoGridItem key={photo.id} photo={photo} scrollPosition={scrollPosition} />
+          ))}
+        </GridContainer>
+      )}
     </>
   );
 };

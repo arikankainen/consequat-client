@@ -3,10 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 import { LIST_PHOTOS } from '../../utils/queries';
 import { PhotoUserExtended } from '../../utils/types';
 import PhotoGrid from './PhotoGrid';
-import { Loading } from './style';
 import { useLocation } from 'react-router-dom';
-import NotFound from '../NotFound/NotFound';
-import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
 
 const PhotosPage = () => {
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS);
@@ -20,7 +17,7 @@ const PhotosPage = () => {
   const location = urlParams.get('location') === 'true';
   const description = urlParams.get('description') === 'true';
   const tags = urlParams.get('tags') === 'true';
-  console.log('refresh');
+
   useEffect(() => {
     const type: string[] = [];
     if (name) type.push('name');
@@ -45,18 +42,14 @@ const PhotosPage = () => {
     setPhotos(data.listPhotos);
   }, [resultListPhotos.data]);
 
-  if (resultListPhotos.loading || !photos) return <Loading>Loading...</Loading>;
-
-  if (notFound)
-    return (
-      <NotFound
-        topic="No photos found"
-        text="Try different search terms"
-        Icon={NotFoundIcon}
-      />
-    );
-
-  return <PhotoGrid photos={photos} search={keyword} />;
+  return (
+    <PhotoGrid
+      photos={photos}
+      search={keyword}
+      notFound={notFound}
+      loading={resultListPhotos.loading}
+    />
+  );
 };
 
 export default PhotosPage;
