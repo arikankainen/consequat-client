@@ -4,9 +4,10 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { PhotoUserExtended } from '../../utils/types';
 import { TopBar, Text, TopicContainer, Keyword, GridContainer, Loading } from './style';
 import PhotoGridItem from './PhotoGridItem';
-import DropDown from '../DropDown/DropDown';
+import DropDownMenu, { DropDownAlign } from '../DropDownMenu/DropDownMenu';
 import NotFound from '../NotFound/NotFound';
 import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
+import SearchOptions from '../SearchOptions/SearchOptions';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
@@ -39,7 +40,9 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
                 </>
               )}
             </Text>
-            <DropDown />
+            <DropDownMenu buttonName="Search options" alignContent={DropDownAlign.right}>
+              <SearchOptions />
+            </DropDownMenu>
           </TopBar>
           <TopicContainer>
             Browsing photos containing <Keyword>{search}</Keyword>

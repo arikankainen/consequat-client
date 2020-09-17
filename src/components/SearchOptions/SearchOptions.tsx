@@ -6,6 +6,7 @@ import Button, { ButtonColor } from '../Buttons/Button';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 180px;
 `;
 
 const Topic = styled.div`
@@ -32,12 +33,12 @@ const Label = styled.label`
   line-height: 1.3;
 `;
 
-interface ContentProps {
-  open: boolean;
-  onSubmitted: () => void;
+interface SearchOptionsProps {
+  open?: boolean;
+  onSubmitted?: () => void;
 }
 
-const Content: React.FC<ContentProps> = ({ open, onSubmitted }) => {
+const SearchOptions: React.FC<SearchOptionsProps> = ({ open, onSubmitted }) => {
   const history = useHistory();
   const url = useLocation();
   const [name, setName] = useState(false);
@@ -69,7 +70,7 @@ const Content: React.FC<ContentProps> = ({ open, onSubmitted }) => {
     const address = `${url.pathname}?name=${name}&location=${location}&description=${description}&tags=${tags}&keyword=${keyword}`;
 
     history.replace(address);
-    onSubmitted();
+    if (onSubmitted) onSubmitted();
   };
 
   return (
@@ -125,4 +126,4 @@ const Content: React.FC<ContentProps> = ({ open, onSubmitted }) => {
   );
 };
 
-export default Content;
+export default SearchOptions;

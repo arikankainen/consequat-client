@@ -2,23 +2,25 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { ReactComponent as ExpandIcon } from '../../images/expand.svg';
-import Content from './Content';
 
 const Container = styled.div`
   display: flex;
-  justify-content: flex-end;
   position: relative;
 `;
 
+export enum DropDownAlign {
+  left,
+  right,
+}
+
 interface DropProps {
   show: boolean;
+  alignContent: DropDownAlign;
 }
 
 const Drop = styled.div<DropProps>`
   position: absolute;
   top: calc(100% + 10px);
-  right: 0;
-  width: 200px;
   padding: 10px;
   background-color: #fff;
   z-index: 1;
@@ -31,9 +33,33 @@ const Drop = styled.div<DropProps>`
     css`
       opacity: 1;
   `}
+
+  ${props =>
+    props.alignContent === DropDownAlign.left &&
+    css`
+      left: 0;
+  `}
+
+  ${props =>
+    props.alignContent === DropDownAlign.right &&
+    css`
+      right: 0;
+  `}
 `;
 
-const DropDown = () => {
+interface DropDownMenuProps {
+  buttonName: string;
+  children: JSX.Element;
+  alignContent: DropDownAlign;
+  Icon?: React.FunctionComponent;
+}
+
+const DropDownMenu: React.FC<DropDownMenuProps> = ({
+  children,
+  buttonName,
+  alignContent,
+  Icon,
+}) => {
   const [open, setOpen] = useState(false);
   const refButton = useRef<HTMLButtonElement>(null);
   const refMenu = useRef<HTMLDivElement>(null);
@@ -58,18 +84,21 @@ const DropDown = () => {
     <Container>
       <Button
         refProp={refButton}
-        text="Search options"
+        text={buttonName}
         onClick={() => setOpen(!open)}
         margin={[0, 0, 0, 0]}
-        icon={ExpandIcon}
+        icon={Icon || ExpandIcon}
         color={ButtonColor.white}
         rounded={true}
       />
-      <Drop show={open} ref={refMenu}>
-        <Content open={open} onSubmitted={() => setOpen(false)} />
+      <Drop show={open} ref={refMenu} alignContent={alignContent}>
+        {React.cloneElement(children, {
+          open: open,
+          onSubmitted: () => setOpen(false),
+        })}
       </Drop>
     </Container>
   );
 };
 
-export default DropDown;
+export default DropDownMenu;
