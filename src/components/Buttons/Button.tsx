@@ -128,7 +128,7 @@ const Container = styled.button<ContainerProps>`
       background-color: transparent;
 
       &:focus {
-        box-shadow: 0 0 0 3px rgba(0, 0, 0, .1);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, .05);
       }
 
       &:hover {
@@ -218,6 +218,7 @@ interface ButtonProps {
   rounded?: boolean;
   onClick: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  refProp?: React.RefObject<HTMLButtonElement> | null | undefined;
 }
 
 const Button: React.FC<ButtonProps> = props => {
@@ -231,6 +232,7 @@ const Button: React.FC<ButtonProps> = props => {
       margin={props.margin}
       rounded={props.rounded}
       onClick={props.onClick}
+      ref={props.refProp}
     >
       {props.icon && <props.icon />}
 

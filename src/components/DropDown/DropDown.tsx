@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { ReactComponent as ExpandIcon } from '../../images/expand.svg';
+import Content from './Content';
 
 const Container = styled.div`
   display: flex;
@@ -30,41 +31,43 @@ const Drop = styled.div<DropProps>`
     props.show &&
     css`
       opacity: 1;
-
   `}
 `;
 
 const DropDown = () => {
   const [open, setOpen] = useState(false);
+  const refButton = useRef<HTMLButtonElement>(null);
+  const refMenu = useRef<HTMLDivElement>(null);
 
-  const closeMenu = () => {
-    document.removeEventListener('click', closeMenu);
-    setOpen(false);
-  };
-
-  const toggleMenu = () => {
-    if (!open) {
-      document.addEventListener('click', closeMenu);
-      setOpen(true);
-    } else {
-      document.removeEventListener('click', closeMenu);
-      setOpen(false);
+  const closeMenu = useCallback((event: MouseEvent) => {
+    if (event.target && event.target instanceof HTMLElement) {
+      if (refMenu.current && refMenu.current.contains(event.target)) return;
+      if (refButton.current && refButton.current.contains(event.target)) return;
     }
-  };
+
+    setOpen(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', closeMenu);
+    return () => {
+      document.removeEventListener('click', closeMenu);
+    };
+  }, [closeMenu]);
 
   return (
     <Container>
       <Button
+        refProp={refButton}
         text="Search options"
-        onClick={toggleMenu}
+        onClick={() => setOpen(!open)}
         margin={[0, 0, 0, 0]}
         icon={ExpandIcon}
         color={ButtonColor.white}
         rounded
       />
-      <Drop show={open}>
-        Search options
-        <br />
+      <Drop show={open} ref={refMenu}>
+        <Content open={open} />
       </Drop>
     </Container>
   );
