@@ -20,7 +20,7 @@ const PhotosPage = () => {
   const location = urlParams.get('location') === 'true';
   const description = urlParams.get('description') === 'true';
   const tags = urlParams.get('tags') === 'true';
-
+  console.log('refresh');
   useEffect(() => {
     const type: string[] = [];
     if (name) type.push('name');

@@ -16,6 +16,7 @@ export enum ButtonContentAlign {
 
 interface ContainerProps {
   width?: number;
+  fullWidth?: boolean;
   margin?: [number, number, number, number];
   contentAlign?: ButtonContentAlign;
   backColor?: ButtonColor;
@@ -82,6 +83,12 @@ const Container = styled.button<ContainerProps>`
     props.width &&
     css`
       min-width: ${props.width}px;
+  `}
+
+  ${props =>
+    props.fullWidth &&
+    css`
+      min-width: 100%;
   `}
 
   ${props =>
@@ -210,6 +217,7 @@ interface ButtonProps {
   icon?: React.FunctionComponent;
   color?: ButtonColor;
   width?: number;
+  fullWidth?: boolean;
   disabled?: boolean;
   textRequired?: boolean;
   breakPoint?: string;
@@ -227,6 +235,7 @@ const Button: React.FC<ButtonProps> = props => {
       type={props.type}
       disabled={props.disabled}
       width={props.width}
+      fullWidth={props.fullWidth}
       contentAlign={props.contentAlign}
       backColor={props.color}
       margin={props.margin}
