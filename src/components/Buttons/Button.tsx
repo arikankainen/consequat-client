@@ -41,6 +41,7 @@ const Container = styled.button<ContainerProps>`
     width: 16px;
     height: 16px;
     color: #fff;
+    pointer-events: none;
   }
 
   &:focus {

@@ -26,12 +26,12 @@ const Drop = styled.div<DropProps>`
   z-index: 1;
   box-shadow: var(--menu-box-shadow);
   border-radius: 5px;
-  opacity: 0;
+  display: none;
 
   ${props =>
     props.show &&
     css`
-      opacity: 1;
+      display: block;
   `}
 
   ${props =>
