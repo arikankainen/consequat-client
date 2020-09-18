@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import * as Yup from 'yup';
 import Button from '../Buttons/Button';
 import TextSetting from './TextSetting';
@@ -25,6 +27,7 @@ const AccountPage = () => {
   const [dismissDialogs, setDismissDialogs] = useState(false);
   const [expandInfo, setExpandInfo] = useState(false);
   const [editOneField, setEditOneField] = useState<EditOneFieldProps>({});
+  const loginState = useSelector((state: RootState) => state.system);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,7 +41,7 @@ const AccountPage = () => {
       fieldText: 'Email',
       handleOk: () => void 0,
       handleCancel: () => setEditOneField({}),
-      defaultValue: 'test@mail.com',
+      defaultValue: loginState.loggedUser?.email || '',
       validation: Yup.object({
         field: Yup.string()
           .email('Must be valid email')
@@ -61,18 +64,21 @@ const AccountPage = () => {
         <BoxContainer>
           <Box>
             <BoxTopic>Personal information</BoxTopic>
-            <TextSetting label="Username" value="admin" Icon={UsernameIcon} />
             <TextSetting
-              label="Email"
-              value="admin@mail.com"
-              Icon={EmailIcon}
-              onClick={handleEmailChange}
+              label="Username"
+              value={loginState.loggedUser?.username || '...'}
+              Icon={UsernameIcon}
             />
             <TextSetting
               label="Full name"
-              value="Administrator"
+              value={loginState.loggedUser?.fullname || '...'}
               Icon={FullnameIcon}
-              onClick={() => console.log('change name')}
+            />
+            <TextSetting
+              label="Email"
+              value={loginState.loggedUser?.email || '...'}
+              Icon={EmailIcon}
+              onClick={handleEmailChange}
             />
             <TextSetting
               label="Password"
