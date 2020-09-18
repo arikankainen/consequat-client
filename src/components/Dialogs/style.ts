@@ -73,6 +73,13 @@ export const Comment = styled.div`
   line-height: 1.2;
 `;
 
+export const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  margin-left: 5px;
+`;
+
 export const DialogButtonArea = styled.div`
   display: flex;
   justify-content: flex-end;

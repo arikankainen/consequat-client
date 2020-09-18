@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-1: #d68b1e;
     --accent-color-2: #007ad9;
     --accent-color-2-hover: #398ff2;
-    --accent-color-2-disabled: #00449b;
+    --accent-color-2-disabled: #2967ae;
     --default-font-family: 'Hind', 'sans-serif';
     --topic-font-family: 'Montserrat', sans-serif;
     --default-font-color: #bbb;

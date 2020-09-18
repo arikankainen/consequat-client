@@ -60,7 +60,6 @@ const EditAlbum: React.FC<EditAlbumProps> = props => {
   };
 
   const handleSubmit = (values: FormValues) => {
-    setMessage('Saving...');
     setSaving(true);
 
     if (savedProps.album) {

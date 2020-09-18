@@ -114,7 +114,6 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
   };
 
   const handleSubmit = (values: FormValues) => {
-    setMessage('Saving...');
     setSaving(true);
     if (savedProps.photos) {
       const ids = savedProps.photos.map(photo => photo.id);

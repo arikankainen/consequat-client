@@ -5,12 +5,15 @@ import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues, Field } from './EditCustomFields';
 import { TextInput, TextAreaInput } from './Inputs';
+import Spinner from '../Spinner/Spinner';
+
 import {
   DialogContainer,
   DialogTopic,
   DialogContent,
   DialogButtonArea,
   SavingIndicator,
+  SpinnerContainer,
 } from './style';
 
 export interface EditCustomFieldsDialogProps {
@@ -55,6 +58,9 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
               })}
             </DialogContent>
             <DialogButtonArea>
+              <SpinnerContainer>
+                <Spinner show={props.saving} />
+              </SpinnerContainer>
               <SavingIndicator>{props.message}</SavingIndicator>
               <Button
                 text="Cancel"
@@ -64,7 +70,7 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                 onClick={props.handleCancel}
               />
               <Button
-                text="Save"
+                text={props.saving ? 'Saving...' : 'Save'}
                 type="submit"
                 width={75}
                 disabled={props.saving}

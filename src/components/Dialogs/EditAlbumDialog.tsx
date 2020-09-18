@@ -5,12 +5,15 @@ import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues } from './EditAlbum';
 import { TextInput, TextAreaInput } from './Inputs';
+import Spinner from '../Spinner/Spinner';
+
 import {
   DialogContainer,
   DialogTopic,
   DialogContent,
   DialogButtonArea,
   SavingIndicator,
+  SpinnerContainer,
 } from './style';
 
 export interface Props {
@@ -52,6 +55,9 @@ const EditAlbumDialog: React.FC<Props> = ({
               <TextAreaInput name="description" label="Description" />
             </DialogContent>
             <DialogButtonArea>
+              <SpinnerContainer>
+                <Spinner show={saving} />
+              </SpinnerContainer>
               <SavingIndicator>{message}</SavingIndicator>
               <Button
                 text="Cancel"
@@ -61,7 +67,7 @@ const EditAlbumDialog: React.FC<Props> = ({
                 onClick={handleCancel}
               />
               <Button
-                text="Save"
+                text={saving ? 'Saving...' : 'Save'}
                 type="submit"
                 width={75}
                 disabled={saving}

@@ -73,7 +73,6 @@ const EditCustomFields: React.FC<EditCustomFieldsProps> = props => {
       }
     }
 
-    setMessage('Saving...');
     setSaving(true);
     saveUser.execute(saveObject);
   };

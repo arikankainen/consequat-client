@@ -6,6 +6,7 @@ import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues, Errors } from './EditPhoto';
 import formatDate from '../../utils/formatDate';
 import { UncontrolledInput, TextInput, TextAreaInput, SelectInput } from './Inputs';
+import Spinner from '../Spinner/Spinner';
 
 import {
   DialogContainer,
@@ -13,6 +14,7 @@ import {
   DialogContent,
   DialogButtonArea,
   SavingIndicator,
+  SpinnerContainer,
   Warning,
   Comment,
 } from './style';
@@ -112,6 +114,9 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                 <Comment>Separate your tags by comma</Comment>
               </DialogContent>
               <DialogButtonArea>
+                <SpinnerContainer>
+                  <Spinner show={saving} />
+                </SpinnerContainer>
                 <SavingIndicator>{message}</SavingIndicator>
                 <Button
                   text="Cancel"
@@ -121,7 +126,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   onClick={handleCancel}
                 />
                 <Button
-                  text="Save"
+                  text={saving ? 'Saving...' : 'Save'}
                   type="submit"
                   width={75}
                   disabled={saving}
