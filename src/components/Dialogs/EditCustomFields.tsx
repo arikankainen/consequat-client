@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import EditOneFieldDialog from './EditCustomFieldsDialog';
+import EditCustomFieldsDialog from './EditCustomFieldsDialog';
 import useSaveUser, { SaveUserStatus, SaveUser } from '../../hooks/useSaveUser';
 
 export interface Field {
   type: string;
   name: string;
   label: string;
-  initialValue: string;
+  initialValue?: string;
   validation: Yup.StringSchema<string | undefined>;
 }
 
@@ -15,8 +15,13 @@ export interface FormValues {
   [k: string]: string;
 }
 
+export interface ValidationSchema {
+  [k: string]: Yup.StringSchema<string | undefined>;
+}
+
 const initialValues: FormValues = {};
-const validation = Yup.object({});
+const schema: ValidationSchema = {};
+let validationSchema: Yup.ObjectSchema<object | undefined>;
 
 export interface EditCustomFieldsProps {
   open?: boolean;
@@ -44,11 +49,16 @@ const EditCustomFields: React.FC<EditCustomFieldsProps> = props => {
     }
   }, [props]);
 
-  if (props.fields) {
-    props.fields.forEach(field => {
-      initialValues[field.name] = field.initialValue || '';
-    });
-  }
+  useEffect(() => {
+    if (props.fields) {
+      props.fields.forEach(field => {
+        initialValues[field.name] = field.initialValue || '';
+        schema[field.name] = field.validation;
+      });
+    }
+
+    validationSchema = Yup.object(schema);
+  }, [props]);
 
   const handleCancel = () => {
     if (savedProps.handleCancel) savedProps.handleCancel();
@@ -79,14 +89,14 @@ const EditCustomFields: React.FC<EditCustomFieldsProps> = props => {
   }, [saveUser.response.status]); // eslint-disable-line
 
   return (
-    <EditOneFieldDialog
+    <EditCustomFieldsDialog
       open={open}
       topic={savedProps.topic}
       fields={savedProps.fields}
       message={message}
       saving={saving}
       initialValues={initialValues}
-      validation={validation}
+      validation={validationSchema}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
     />

@@ -43,7 +43,7 @@ const AccountPage = () => {
         type: 'text',
         name: 'email',
         label: 'Email',
-        initialValue: loginState.loggedUser?.email || '',
+        initialValue: loginState.loggedUser?.email,
         validation: Yup.string()
           .email('Must be valid email')
           .required('Email cannot be empty'),

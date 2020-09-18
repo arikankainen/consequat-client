@@ -25,30 +25,20 @@ export interface EditCustomFieldsDialogProps {
   validation: Yup.ObjectSchema<object | undefined>;
 }
 
-const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = ({
-  open,
-  topic,
-  fields,
-  handleSubmit,
-  handleCancel,
-  message,
-  saving,
-  initialValues,
-  validation,
-}) => {
+const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
   return (
-    <BaseDialog open={open}>
+    <BaseDialog open={props.open}>
       <DialogContainer>
         <Formik
-          initialValues={initialValues}
+          initialValues={props.initialValues}
           enableReinitialize={true}
-          validationSchema={validation}
-          onSubmit={handleSubmit}
+          validationSchema={props.validation}
+          onSubmit={props.handleSubmit}
         >
           <Form>
-            <DialogTopic>{topic}</DialogTopic>
+            <DialogTopic>{props.topic}</DialogTopic>
             <DialogContent>
-              {fields?.map(field => {
+              {props.fields?.map(field => {
                 if (field.type === 'text') {
                   return (
                     <TextInput key={field.name} name={field.name} label={field.label} />
@@ -65,19 +55,19 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = ({
               })}
             </DialogContent>
             <DialogButtonArea>
-              <SavingIndicator>{message}</SavingIndicator>
+              <SavingIndicator>{props.message}</SavingIndicator>
               <Button
                 text="Cancel"
                 type="button"
                 width={75}
                 color={ButtonColor.whiteWithBlueBorder}
-                onClick={handleCancel}
+                onClick={props.handleCancel}
               />
               <Button
                 text="Save"
                 type="submit"
                 width={75}
-                disabled={saving}
+                disabled={props.saving}
                 onClick={() => void 0}
               />
             </DialogButtonArea>
