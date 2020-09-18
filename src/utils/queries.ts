@@ -45,6 +45,25 @@ export const SIGNUP = gql`
     }
 `;
 
+export const EDIT_USER = gql`
+  mutation editUser(
+    $email: String,
+    $oldPassword: String,
+    $newPassword: String) {
+      editUser(
+        email: $email,
+        oldPassword: $oldPassword,
+        newPassword: $newPassword,
+      ) {
+        username,
+        email,
+        fullname,
+        isAdmin,
+        id,
+      }
+    }
+`;
+
 const PHOTO_DETAILS = gql`
   fragment PhotoDetails on Photo {
     mainUrl,

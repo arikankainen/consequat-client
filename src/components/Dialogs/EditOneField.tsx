@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import EditOneFieldDialog from './EditOneFieldDialog';
+import useSaveUser, { SaveUserStatus } from '../../hooks/useSaveUser';
 
 export interface FormValues {
   field: string;
@@ -27,6 +28,7 @@ const EditOneField: React.FC<EditOneFieldProps> = props => {
   const [savedProps, setSavedProps] = useState<EditOneFieldProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const saveUser = useSaveUser();
 
   useEffect(() => {
     if (props.open) {
@@ -51,22 +53,20 @@ const EditOneField: React.FC<EditOneFieldProps> = props => {
     setMessage('Saving...');
     setSaving(true);
 
-    // saveAlbum.execute({
-    //   name: values.name,
-    //   description: values.description,
-    //   id: savedProps.album.id,
-    // });
+    saveUser.execute({
+      email: values.field,
+    });
   };
 
-  // useEffect(() => {
-  //   if (saveAlbum.response.status === SaveAlbumStatus.ready) {
-  //     setMessage('');
-  //     handleCancel();
-  //   } else if (saveAlbum.response.status === SaveAlbumStatus.error) {
-  //     setMessage('Error!');
-  //     setSaving(false);
-  //   }
-  // }, [saveAlbum.response.status]); // eslint-disable-line
+  useEffect(() => {
+    if (saveUser.response.status === SaveUserStatus.ready) {
+      setMessage('');
+      handleCancel();
+    } else if (saveUser.response.status === SaveUserStatus.error) {
+      setMessage('Error!');
+      setSaving(false);
+    }
+  }, [saveUser.response.status]); // eslint-disable-line
 
   return (
     <EditOneFieldDialog

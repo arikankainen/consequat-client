@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Album } from '../utils/types';
-import { EDIT_ALBUM, CREATE_ALBUM, ME } from '../utils/queries';
+import { UserToSave } from '../utils/types';
+import { EDIT_USER, ME } from '../utils/queries';
 import logger from '../utils/logger';
 
-export enum SaveAlbumStatus {
+export enum SaveUserStatus {
   idle,
   saving,
   ready,
@@ -12,38 +12,31 @@ export enum SaveAlbumStatus {
 }
 
 interface Return {
-  response: SaveAlbumResponse;
-  execute: (album: SaveAlbum) => void;
+  response: SaveUserResponse;
+  execute: (user: SaveUser) => void;
   reset: () => void;
 }
 
-interface SaveAlbumResponse {
-  data: Album | null | undefined;
-  status: SaveAlbumStatus;
+interface SaveUserResponse {
+  data: UserToSave | null | undefined;
+  status: SaveUserStatus;
 }
 
-interface SaveAlbum {
-  name: string;
-  description: string | undefined;
-  id?: string;
+interface SaveUser {
+  email?: string;
+  oldPassword?: string;
+  newPassword?: string;
 }
 
 const initialResponse = {
   data: undefined,
-  status: SaveAlbumStatus.idle,
+  status: SaveUserStatus.idle,
 };
 
-const useSaveAlbum = (): Return => {
-  const [response, setResponse] = useState<SaveAlbumResponse>(initialResponse);
+const useSaveUser = (): Return => {
+  const [response, setResponse] = useState<SaveUserResponse>(initialResponse);
 
-  const [editAlbum, editAlbumResponse] = useMutation(EDIT_ALBUM, {
-    onError: error => {
-      logger.error(error);
-    },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
-  });
-
-  const [createAlbum, createAlbumResponse] = useMutation(CREATE_ALBUM, {
+  const [editUser, editUserResponse] = useMutation(EDIT_USER, {
     onError: error => {
       logger.error(error);
     },
@@ -51,71 +44,46 @@ const useSaveAlbum = (): Return => {
   });
 
   useEffect(() => {
-    if (editAlbumResponse.data && !editAlbumResponse.error) {
+    if (editUserResponse.data && !editUserResponse.error) {
       setResponse({
-        data: editAlbumResponse.data.editAlbum,
-        status: SaveAlbumStatus.ready,
+        data: editUserResponse.data.editUser,
+        status: SaveUserStatus.ready,
       });
-    } else if (editAlbumResponse.error) {
-      logger.error(editAlbumResponse.error);
+    } else if (editUserResponse.error) {
+      logger.error(editUserResponse.error);
 
       setResponse({
         data: undefined,
-        status: SaveAlbumStatus.error,
+        status: SaveUserStatus.error,
       });
     }
-  }, [editAlbumResponse.data, editAlbumResponse.error]);
+  }, [editUserResponse.data, editUserResponse.error]);
 
-  useEffect(() => {
-    if (createAlbumResponse.data && !createAlbumResponse.error) {
-      setResponse({
-        data: createAlbumResponse.data.editAlbum,
-        status: SaveAlbumStatus.ready,
-      });
-    } else if (createAlbumResponse.error) {
-      logger.error(createAlbumResponse.error);
-
-      setResponse({
-        data: undefined,
-        status: SaveAlbumStatus.error,
-      });
-    }
-  }, [createAlbumResponse.data, createAlbumResponse.error]);
-
-  const execute = (album: SaveAlbum | null | undefined) => {
-    if (!album) return;
+  const execute = (user: SaveUser | null | undefined) => {
+    if (!user) return;
 
     setResponse({
       data: undefined,
-      status: SaveAlbumStatus.saving,
+      status: SaveUserStatus.saving,
     });
 
-    if (album.id) {
-      editAlbum({
-        variables: {
-          name: album.name,
-          description: album.description,
-          id: album.id,
-        },
-      });
-    } else {
-      createAlbum({
-        variables: {
-          name: album.name,
-          description: album.description,
-        },
-      });
-    }
+    editUser({
+      variables: {
+        email: user.email,
+        oldPassword: user.oldPassword,
+        newPassword: user.newPassword,
+      },
+    });
   };
 
   const reset = () => {
     setResponse({
       data: undefined,
-      status: SaveAlbumStatus.idle,
+      status: SaveUserStatus.idle,
     });
   };
 
   return { response, execute, reset };
 };
 
-export default useSaveAlbum;
+export default useSaveUser;
