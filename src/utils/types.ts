@@ -16,6 +16,12 @@ export interface User {
   id: string;
 }
 
+export interface UserToSave {
+  email?: string;
+  oldPassword?: string;
+  newPassword?: string;
+}
+
 export interface Photo {
   mainUrl: string;
   thumbUrl: string;
