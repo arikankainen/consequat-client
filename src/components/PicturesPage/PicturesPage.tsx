@@ -19,13 +19,13 @@ import PhotoAlbum from '../PhotoAlbum/PhotoAlbum';
 import { InitialUploadFileButton } from '../InitialUpload/style';
 import { PictureListHeader } from '../PictureListHeader/PictureListHeader';
 import Thumbnail from '../Thumbnail/Thumbnail';
+import CenteredSpinner from '../Spinner/CenteredSpinner';
 
 import {
   PictureListContainer,
   PictureListToolBar,
   PictureListButtonGroups,
   PictureListButtonGroup,
-  Loading,
 } from '../PictureList/style';
 
 const PicturesPage = () => {
@@ -344,7 +344,7 @@ const PicturesPage = () => {
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
         <EditAlbum {...editAlbum} />
-        {resultMe.loading && <Loading>Loading...</Loading>}
+        {resultMe.loading && <CenteredSpinner />}
 
         {albums.map(album => (
           <PhotoAlbum

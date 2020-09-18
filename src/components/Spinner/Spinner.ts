@@ -3,12 +3,27 @@ import styled, { css } from 'styled-components';
 interface SpinnerProps {
   show?: boolean;
   size?: number;
+  color?: string;
+  bgcolor?: string;
 }
-
 const Spinner = styled.div<SpinnerProps>`
+  --color: 0, 122, 217;
+  --bgcolor: 255, 255, 255;
+  
+  ${props =>
+    props.color &&
+    css`
+      --color: ${props.color};
+  `}
+
+  ${props =>
+    props.bgcolor &&
+    css`
+      --bgcolor: ${props.bgcolor};
+  `}
+
   border-radius: 50%;
-  background: var(--accent-color-2);
-  background: linear-gradient(to right, var(--accent-color-2) 10%, rgba(31,100,203, 0) 42%);
+  background: linear-gradient(to right, rgba(var(--color), 1) 10%, rgba(var(--color), 0) 42%);
   position: relative;
   animation: spin 1s infinite linear;
   transform: translateZ(0);
@@ -33,7 +48,7 @@ const Spinner = styled.div<SpinnerProps>`
   &:before {
     width: 50%;
     height: 50%;
-    background: var(--accent-color-2);
+    background: rgba(var(--color), 1);
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
@@ -42,7 +57,7 @@ const Spinner = styled.div<SpinnerProps>`
   }
 
   &:after {
-    background: #ffffff;
+    background: rgba(var(--bgcolor), 1);
     width: 75%;
     height: 75%;
     border-radius: 50%;

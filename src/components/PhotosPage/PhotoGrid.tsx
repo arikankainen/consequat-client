@@ -2,12 +2,13 @@ import React from 'react';
 import { trackWindowScroll, ScrollPosition } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { PhotoUserExtended } from '../../utils/types';
-import { TopBar, Text, TopicContainer, Keyword, GridContainer, Loading } from './style';
+import { TopBar, Text, TopicContainer, Keyword, GridContainer } from './style';
 import PhotoGridItem from './PhotoGridItem';
 import DropDownMenu, { DropDownAlign } from '../DropDownMenu/DropDownMenu';
 import NotFound from '../NotFound/NotFound';
 import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
 import SearchOptions from '../SearchOptions/SearchOptions';
+import CenteredSpinner from '../Spinner/CenteredSpinner';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
@@ -60,7 +61,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
         />
       )}
 
-      {!notFound && loading && <Loading>Loading...</Loading>}
+      {!notFound && loading && <CenteredSpinner />}
 
       {!notFound && !loading && (
         <GridContainer>
