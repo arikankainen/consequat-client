@@ -50,6 +50,22 @@ const AccountPage = () => {
     });
   };
 
+  const handlePasswordChange = () => {
+    // setEditOneField({
+    //   open: true,
+    //   topic: 'Change your password',
+    //   fieldText: 'Password',
+    //   handleOk: () => void 0,
+    //   handleCancel: () => setEditOneField({}),
+    //   defaultValue: '',
+    //   validation: Yup.object({
+    //     field: Yup.string()
+    //       .required('Must be at least 5 characters')
+    //       .min(5, 'Must be at least 5 characters'),
+    //   }),
+    // });
+  };
+
   return (
     <>
       <EditOneField {...editOneField} />
@@ -84,7 +100,7 @@ const AccountPage = () => {
               label="Password"
               value="*****"
               Icon={PasswordIcon}
-              onClick={() => console.log('change password')}
+              onClick={handlePasswordChange}
             />
           </Box>
           <Box>
