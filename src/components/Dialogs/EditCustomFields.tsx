@@ -1,31 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import EditOneFieldDialog from './EditOneFieldDialog';
-import useSaveUser, { SaveUserStatus } from '../../hooks/useSaveUser';
+import EditOneFieldDialog from './EditCustomFieldsDialog';
+import useSaveUser, { SaveUserStatus, SaveUser } from '../../hooks/useSaveUser';
+
+export interface Field {
+  type: string;
+  name: string;
+  label: string;
+  initialValue: string;
+  validation: Yup.StringSchema<string | undefined>;
+}
 
 export interface FormValues {
-  field: string;
+  [k: string]: string;
 }
 
-const initialValues: FormValues = {
-  field: '',
-};
-
+const initialValues: FormValues = {};
 const validation = Yup.object({});
 
-export interface EditOneFieldProps {
+export interface EditCustomFieldsProps {
   open?: boolean;
   topic?: string;
-  fieldText?: string;
-  defaultValue?: string;
+  fields?: Field[];
   handleOk?: () => void;
   handleCancel?: () => void;
-  validation?: Yup.ObjectSchema<object | undefined>;
 }
 
-const EditOneField: React.FC<EditOneFieldProps> = props => {
+const EditCustomFields: React.FC<EditCustomFieldsProps> = props => {
   const [open, setOpen] = useState<boolean>(false);
-  const [savedProps, setSavedProps] = useState<EditOneFieldProps>({});
+  const [savedProps, setSavedProps] = useState<EditCustomFieldsProps>({});
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const saveUser = useSaveUser();
@@ -41,21 +44,28 @@ const EditOneField: React.FC<EditOneFieldProps> = props => {
     }
   }, [props]);
 
-  useEffect(() => {
-    initialValues.field = savedProps.defaultValue ? savedProps.defaultValue : '';
-  }, [savedProps]);
+  if (props.fields) {
+    props.fields.forEach(field => {
+      initialValues[field.name] = field.initialValue || '';
+    });
+  }
 
   const handleCancel = () => {
     if (savedProps.handleCancel) savedProps.handleCancel();
   };
 
   const handleSubmit = (values: FormValues) => {
+    const saveObject: SaveUser = {};
+
+    for (const [key, value] of Object.entries(values)) {
+      if (key === 'email' || key === 'oldPassword' || key === 'newPassword') {
+        saveObject[key] = value;
+      }
+    }
+
     setMessage('Saving...');
     setSaving(true);
-
-    saveUser.execute({
-      email: values.field,
-    });
+    saveUser.execute(saveObject);
   };
 
   useEffect(() => {
@@ -72,15 +82,15 @@ const EditOneField: React.FC<EditOneFieldProps> = props => {
     <EditOneFieldDialog
       open={open}
       topic={savedProps.topic}
-      fieldText={savedProps.fieldText}
+      fields={savedProps.fields}
       message={message}
       saving={saving}
       initialValues={initialValues}
-      validation={props.validation || validation}
+      validation={validation}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
     />
   );
 };
 
-export default EditOneField;
+export default EditCustomFields;

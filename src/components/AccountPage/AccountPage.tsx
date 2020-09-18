@@ -9,7 +9,10 @@ import { ReactComponent as UsernameIcon } from '../../images/account_username.sv
 import { ReactComponent as EmailIcon } from '../../images/account_email.svg';
 import { ReactComponent as FullnameIcon } from '../../images/account_fullname.svg';
 import { ReactComponent as PasswordIcon } from '../../images/account_password.svg';
-import EditOneField, { EditOneFieldProps } from '../Dialogs/EditOneField';
+import EditCustomFields, {
+  EditCustomFieldsProps,
+  Field,
+} from '../Dialogs/EditCustomFields';
 
 import {
   TopicAreaContainer,
@@ -26,7 +29,7 @@ const AccountPage = () => {
   const [fastSelection, setFastSelection] = useState(false);
   const [dismissDialogs, setDismissDialogs] = useState(false);
   const [expandInfo, setExpandInfo] = useState(false);
-  const [editOneField, setEditOneField] = useState<EditOneFieldProps>({});
+  const [editOneField, setEditOneField] = useState<EditCustomFieldsProps>({});
   const loginState = useSelector((state: RootState) => state.system);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,22 +38,46 @@ const AccountPage = () => {
   };
 
   const handleEmailChange = () => {
+    const fields: Field[] = [
+      {
+        type: 'text',
+        name: 'email',
+        label: 'Email',
+        initialValue: loginState.loggedUser?.email || '',
+        validation: Yup.string()
+          .email('Must be valid email')
+          .required('Email cannot be empty'),
+      },
+    ];
+
     setEditOneField({
       open: true,
       topic: 'Update your email address',
-      fieldText: 'Email',
+      fields: fields,
       handleOk: () => void 0,
       handleCancel: () => setEditOneField({}),
-      defaultValue: loginState.loggedUser?.email || '',
-      validation: Yup.object({
-        field: Yup.string()
-          .email('Must be valid email')
-          .required('Email cannot be empty'),
-      }),
     });
   };
 
   const handlePasswordChange = () => {
+    // const fields: Field[] = [
+    //   {
+    //     type: 'password',
+    //     name: 'oldPassword',
+    //     label: 'Password',
+    //     initialValue: '',
+    //     validation: Yup.string()
+    //       .min(5, 'Must be at least 5 characters')
+    //       .required('Required'),
+    //   },
+    //   {
+    //     type: 'password',
+    //     name: 'newPassword',
+    //     label: 'Confirm',
+    //     initialValue: '',
+    //     validation: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match'),
+    //   },
+    // ];
     // setEditOneField({
     //   open: true,
     //   topic: 'Change your password',
@@ -68,7 +95,7 @@ const AccountPage = () => {
 
   return (
     <>
-      <EditOneField {...editOneField} />
+      <EditCustomFields {...editOneField} />
       <TopicAreaContainer>
         <TopicArea>
           <Topic>Account settings</Topic>

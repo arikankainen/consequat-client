@@ -3,8 +3,8 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
-import { FormValues } from './EditOneField';
-import { TextInput } from './Inputs';
+import { FormValues, Field } from './EditCustomFields';
+import { TextInput, TextAreaInput } from './Inputs';
 import {
   DialogContainer,
   DialogTopic,
@@ -13,10 +13,10 @@ import {
   SavingIndicator,
 } from './style';
 
-export interface Props {
+export interface EditCustomFieldsDialogProps {
   open: boolean;
   topic?: string;
-  fieldText?: string;
+  fields?: Field[];
   handleSubmit: (values: FormValues) => void;
   handleCancel: () => void;
   saving: boolean;
@@ -25,10 +25,10 @@ export interface Props {
   validation: Yup.ObjectSchema<object | undefined>;
 }
 
-const EditAlbumDialog: React.FC<Props> = ({
+const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = ({
   open,
   topic,
-  fieldText,
+  fields,
   handleSubmit,
   handleCancel,
   message,
@@ -48,7 +48,21 @@ const EditAlbumDialog: React.FC<Props> = ({
           <Form>
             <DialogTopic>{topic}</DialogTopic>
             <DialogContent>
-              <TextInput name="field" label={fieldText || 'field'} />
+              {fields?.map(field => {
+                if (field.type === 'text') {
+                  return (
+                    <TextInput key={field.name} name={field.name} label={field.label} />
+                  );
+                } else if (field.type === 'textarea') {
+                  return (
+                    <TextAreaInput
+                      key={field.name}
+                      name={field.name}
+                      label={field.label}
+                    />
+                  );
+                }
+              })}
             </DialogContent>
             <DialogButtonArea>
               <SavingIndicator>{message}</SavingIndicator>
@@ -74,4 +88,4 @@ const EditAlbumDialog: React.FC<Props> = ({
   );
 };
 
-export default EditAlbumDialog;
+export default EditCustomFieldsDialog;

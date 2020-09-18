@@ -22,7 +22,7 @@ interface SaveUserResponse {
   status: SaveUserStatus;
 }
 
-interface SaveUser {
+export interface SaveUser {
   email?: string;
   oldPassword?: string;
   newPassword?: string;
