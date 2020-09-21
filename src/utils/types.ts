@@ -33,6 +33,7 @@ export interface Photo {
   name: string;
   location: string;
   description: string;
+  hidden: boolean;
   tags: string[];
   dateAdded: Date;
   id: string;
@@ -50,6 +51,7 @@ export interface PhotoUserExtended {
   name: string;
   location: string;
   description: string;
+  hidden: boolean;
   tags: string[];
   dateAdded: Date;
   id: string;
