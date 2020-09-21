@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues, Field } from './EditCustomFields';
-import { TextInput, TextAreaInput } from './Inputs';
+import { TextInput, TextAreaInput, PasswordInput } from './Inputs';
 import Spinner from '../Spinner/Spinner';
 
 import {
@@ -46,9 +46,21 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                   return (
                     <TextInput key={field.name} name={field.name} label={field.label} />
                   );
-                } else if (field.type === 'textarea') {
+                }
+
+                if (field.type === 'textarea') {
                   return (
                     <TextAreaInput
+                      key={field.name}
+                      name={field.name}
+                      label={field.label}
+                    />
+                  );
+                }
+
+                if (field.type === 'password') {
+                  return (
+                    <PasswordInput
                       key={field.name}
                       name={field.name}
                       label={field.label}

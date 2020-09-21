@@ -29,7 +29,7 @@ const AccountPage = () => {
   const [fastSelection, setFastSelection] = useState(false);
   const [dismissDialogs, setDismissDialogs] = useState(false);
   const [expandInfo, setExpandInfo] = useState(false);
-  const [editOneField, setEditOneField] = useState<EditCustomFieldsProps>({});
+  const [editCustomFields, setEditCustomFields] = useState<EditCustomFieldsProps>({});
   const loginState = useSelector((state: RootState) => state.system);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,52 +50,58 @@ const AccountPage = () => {
       },
     ];
 
-    setEditOneField({
+    setEditCustomFields({
       open: true,
       topic: 'Update your email address',
-      fields: fields,
+      fields,
       handleOk: () => void 0,
-      handleCancel: () => setEditOneField({}),
+      handleCancel: () => setEditCustomFields({}),
     });
   };
 
   const handlePasswordChange = () => {
-    // const fields: Field[] = [
-    //   {
-    //     type: 'password',
-    //     name: 'oldPassword',
-    //     label: 'Password',
-    //     initialValue: '',
-    //     validation: Yup.string()
-    //       .min(5, 'Must be at least 5 characters')
-    //       .required('Required'),
-    //   },
-    //   {
-    //     type: 'password',
-    //     name: 'newPassword',
-    //     label: 'Confirm',
-    //     initialValue: '',
-    //     validation: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match'),
-    //   },
-    // ];
-    // setEditOneField({
-    //   open: true,
-    //   topic: 'Change your password',
-    //   fieldText: 'Password',
-    //   handleOk: () => void 0,
-    //   handleCancel: () => setEditOneField({}),
-    //   defaultValue: '',
-    //   validation: Yup.object({
-    //     field: Yup.string()
-    //       .required('Must be at least 5 characters')
-    //       .min(5, 'Must be at least 5 characters'),
-    //   }),
-    // });
+    const fields: Field[] = [
+      {
+        type: 'password',
+        name: 'oldPassword',
+        label: 'Old password',
+        initialValue: '',
+        validation: Yup.string()
+          .min(5, 'Must be at least 5 characters')
+          .required('Required'),
+      },
+      {
+        type: 'password',
+        name: 'newPassword',
+        label: 'New password',
+        initialValue: '',
+        validation: Yup.string()
+          .min(5, 'Must be at least 5 characters')
+          .required('Required'),
+      },
+      {
+        type: 'password',
+        name: 'confirmPassword',
+        label: 'Confirm',
+        initialValue: '',
+        validation: Yup.string().oneOf(
+          [Yup.ref('newPassword'), ''],
+          'Passwords must match'
+        ),
+      },
+    ];
+    setEditCustomFields({
+      open: true,
+      topic: 'Change your password',
+      fields,
+      handleOk: () => void 0,
+      handleCancel: () => setEditCustomFields({}),
+    });
   };
 
   return (
     <>
-      <EditCustomFields {...editOneField} />
+      <EditCustomFields {...editCustomFields} />
       <TopicAreaContainer>
         <TopicArea>
           <Topic>Account settings</Topic>

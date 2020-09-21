@@ -126,3 +126,34 @@ export const SelectInput: React.FC<SelectInputProps> = ({
     </InputContainer>
   );
 };
+
+export const PasswordInput: React.FC<TextInputProps> = ({
+  label,
+  onLockClick,
+  multi,
+  ...props
+}) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <InputContainer>
+        <Label htmlFor={props.name}>{label}</Label>
+        <Input
+          type="password"
+          autoComplete="off"
+          spellCheck={false}
+          {...field}
+          {...props}
+          error={meta.touched && !!meta.error}
+        />
+        {multi && (
+          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+          </LockContainer>
+        )}
+      </InputContainer>
+      <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+    </>
+  );
+};
