@@ -172,6 +172,9 @@ interface InputProps {
   error?: boolean;
 }
 
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+`;
+
 export const Input = styled.input<InputProps>`
   background-color: #fff;
   border: 1px solid #ccc;

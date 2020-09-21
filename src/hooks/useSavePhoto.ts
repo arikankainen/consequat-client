@@ -129,13 +129,14 @@ const useSavePhoto = (): Return => {
         variables: photo,
       });
     } else if (photo.id) {
+      console.log(photo);
       editPhoto({
         variables: {
           name: photo.name || '',
           location: photo.location || '',
           album: photo.album || null,
           description: photo.description || '',
-          hidden: photo.hidden || true,
+          hidden: photo.hidden,
           tags: photo.tags || [],
           id: photo.id[0],
         },

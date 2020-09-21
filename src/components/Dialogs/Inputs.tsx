@@ -12,6 +12,7 @@ import {
   DummyLabel,
   DummyInput,
   Input,
+  Checkbox,
   TextArea,
   Select,
   Error,
@@ -166,7 +167,7 @@ export const CheckboxInput: React.FC<CheckboxInputProps> = ({
   separator,
   ...props
 }) => {
-  const [field, meta] = useField(props);
+  const [field] = useField(props);
 
   return (
     <>
@@ -174,14 +175,7 @@ export const CheckboxInput: React.FC<CheckboxInputProps> = ({
       <Label htmlFor={props.name}>{label}</Label>
       <div>
         <InputContainer>
-          <Input
-            type="text"
-            autoComplete="off"
-            spellCheck={false}
-            {...field}
-            {...props}
-            error={meta.touched && !!meta.error}
-          />
+          <Checkbox type="checkbox" {...field} {...props} checked={field.value} />
           {multi && (
             <LockContainer
               onClick={onLockClick || (() => void 0)}
@@ -191,7 +185,6 @@ export const CheckboxInput: React.FC<CheckboxInputProps> = ({
             </LockContainer>
           )}
         </InputContainer>
-        <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
       </div>
     </>
   );
