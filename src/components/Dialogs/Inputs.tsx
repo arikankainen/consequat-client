@@ -150,6 +150,53 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   );
 };
 
+interface CheckboxInputProps {
+  name: string;
+  label: string;
+  disabled?: boolean;
+  onLockClick?: () => void;
+  multi?: boolean;
+  separator?: boolean;
+}
+
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({
+  label,
+  onLockClick,
+  multi,
+  separator,
+  ...props
+}) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      {separator && <Separator />}
+      <Label htmlFor={props.name}>{label}</Label>
+      <div>
+        <InputContainer>
+          <Input
+            type="text"
+            autoComplete="off"
+            spellCheck={false}
+            {...field}
+            {...props}
+            error={meta.touched && !!meta.error}
+          />
+          {multi && (
+            <LockContainer
+              onClick={onLockClick || (() => void 0)}
+              locked={props.disabled}
+            >
+              {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+            </LockContainer>
+          )}
+        </InputContainer>
+        <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+      </div>
+    </>
+  );
+};
+
 export const PasswordInput: React.FC<TextInputProps> = ({
   label,
   separator,

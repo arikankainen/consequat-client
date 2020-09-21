@@ -5,7 +5,13 @@ import BaseDialog from './BaseDialog';
 import Button, { ButtonColor } from '../Buttons/Button';
 import { FormValues, Errors } from './EditPhoto';
 import formatDate from '../../utils/formatDate';
-import { UncontrolledInput, TextInput, TextAreaInput, SelectInput } from './Inputs';
+import {
+  UncontrolledInput,
+  TextInput,
+  TextAreaInput,
+  SelectInput,
+  CheckboxInput,
+} from './Inputs';
 import Spinner from '../Spinner/Spinner';
 
 import {
@@ -113,6 +119,13 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                 />
                 <div></div>
                 <Comment>Separate your tags by comma</Comment>
+                <CheckboxInput
+                  name="hidden"
+                  label="Hidden"
+                  disabled={values.hiddenLocked}
+                  onLockClick={() => setFieldValue('hiddenLocked', !values.hiddenLocked)}
+                  multi={multi}
+                />
               </DialogContentGrid>
               <DialogButtonArea>
                 <SpinnerContainer>

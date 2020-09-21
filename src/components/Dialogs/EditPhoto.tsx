@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
 import useSavePhoto, { SavePhotoStatus, SavePhoto } from '../../hooks/useSavePhoto';
-import { getUniqueValue, multiValue, uniqueList } from '../../utils/arrayHelpers';
+import {
+  getUniqueValue,
+  getUniqueBoolean,
+  multiValue,
+  multiBooleanValue,
+  uniqueList,
+  uniqueBooleanList,
+} from '../../utils/arrayHelpers';
 
 export interface FormValues {
   name: string;
@@ -13,6 +20,8 @@ export interface FormValues {
   albumLocked?: boolean;
   description: string;
   descriptionLocked?: boolean;
+  hidden: boolean;
+  hiddenLocked?: boolean;
   tags: string;
   tagsLocked?: boolean;
 }
@@ -26,6 +35,8 @@ const initialValues: FormValues = {
   albumLocked: true,
   description: '',
   descriptionLocked: true,
+  hidden: false,
+  hiddenLocked: true,
   tags: '',
   tagsLocked: true,
 };
@@ -83,6 +94,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       const names = uniqueList(photos.map(photo => photo.name));
       const locations = uniqueList(photos.map(photo => photo.location));
       const descriptions = uniqueList(photos.map(photo => photo.description));
+      const hiddens = uniqueBooleanList(photos.map(photo => photo.hidden));
       const tags = uniqueList(photos.map(photo => photo.tags.join(', ')));
       const albums = uniqueList(
         photos.map(photo => (photo.album ? photo.album.id : '0'))
@@ -91,6 +103,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       initialValues.name = getUniqueValue(names);
       initialValues.location = getUniqueValue(locations);
       initialValues.description = getUniqueValue(descriptions);
+      initialValues.hidden = getUniqueBoolean(hiddens);
       initialValues.tags = getUniqueValue(tags);
 
       if (savedProps.albums && albums.length === 1) {
@@ -104,6 +117,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
       initialValues.nameLocked = multiValue(names);
       initialValues.locationLocked = multiValue(locations);
       initialValues.descriptionLocked = multiValue(descriptions);
+      initialValues.hiddenLocked = multiBooleanValue(hiddens);
       initialValues.tagsLocked = multiValue(tags);
       initialValues.albumLocked = multiValue(albums);
     }
@@ -124,6 +138,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
           location: values.location,
           album: values.album !== '0' && values.album !== '' ? values.album : null,
           description: values.description,
+          hidden: values.hidden,
           tags: values.tags.split(',').map(tag => tag.trim()),
           id: ids,
         });
@@ -132,6 +147,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         if (!values.nameLocked) unlockedValues.name = values.name;
         if (!values.locationLocked) unlockedValues.location = values.location;
         if (!values.descriptionLocked) unlockedValues.description = values.description;
+        if (!values.hiddenLocked) unlockedValues.hidden = values.hidden;
         if (!values.tagsLocked)
           unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
         if (!values.albumLocked)
