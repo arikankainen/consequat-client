@@ -142,7 +142,8 @@ export const InputContainer = styled.div`
 export const Label = styled.label`
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 8px;
   color: #000;
   font-size: 14px;
   line-height: 1;
@@ -267,13 +268,15 @@ interface LockContainerProps {
 export const LockContainer = styled.div<LockContainerProps>`
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 6px;
   margin-left: 10px;
   cursor: pointer;
 
   & > svg {
     color: var(--unlocked-color);
     height: 16px;
+    width: 16px;
   }
 
   ${props =>
@@ -281,7 +284,6 @@ export const LockContainer = styled.div<LockContainerProps>`
     css`
       & > svg {
         color: var(--locked-color);
-        height: 16px;
       }
   `}
 `;

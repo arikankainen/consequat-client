@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useField } from 'formik';
 import { Album } from '../../utils/types';
 import { ReactComponent as LockedIcon } from '../../images/icon_locked.svg';
 import { ReactComponent as UnlockedIcon } from '../../images/icon_unlocked.svg';
+import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
+import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg';
 
 import {
   InputContainer,
@@ -149,13 +151,12 @@ export const SelectInput: React.FC<SelectInputProps> = ({
 
 export const PasswordInput: React.FC<TextInputProps> = ({
   label,
-  onLockClick,
-  multi,
   separator,
   ...props
 }) => {
   const [field, meta] = useField(props);
-  console.log(separator);
+  const [show, setShow] = useState<boolean>(false);
+
   return (
     <>
       {separator && <Separator />}
@@ -163,21 +164,16 @@ export const PasswordInput: React.FC<TextInputProps> = ({
       <div>
         <InputContainer>
           <Input
-            type="password"
+            type={show ? 'text' : 'password'}
             autoComplete="off"
             spellCheck={false}
             {...field}
             {...props}
             error={meta.touched && !!meta.error}
           />
-          {multi && (
-            <LockContainer
-              onClick={onLockClick || (() => void 0)}
-              locked={props.disabled}
-            >
-              {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-            </LockContainer>
-          )}
+          <LockContainer onClick={() => setShow(!show)} locked={!show}>
+            {show ? <ShowPasswordIcon /> : <HidePasswordIcon />}
+          </LockContainer>
         </InputContainer>
         <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
       </div>
