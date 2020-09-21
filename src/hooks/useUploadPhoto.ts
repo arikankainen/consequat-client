@@ -31,7 +31,7 @@ const initialResponse = {
   status: UploadPhotoStatus.idle,
 };
 
-const useUploadPhoto = (): Return => {
+const useUploadPhoto = (username?: string): Return => {
   const [response, setResponse] = useState<UploadPhotoResponse>(initialResponse);
   const [uploadedFilename, setUploadedFilename] = useState('');
   const savePhoto = useSavePhoto();
@@ -105,7 +105,7 @@ const useUploadPhoto = (): Return => {
   }, [savePhoto.response.status, uploadedFilename]); // eslint-disable-line
 
   const execute = async (file: File) => {
-    if (!file) return;
+    if (!file || !username) return;
 
     setResponse({
       data: undefined,
@@ -114,8 +114,9 @@ const useUploadPhoto = (): Return => {
     setUploadedFilename(file.name);
 
     try {
-      const filename = `images/${uuid()}`;
-      const thumbFilename = `images/${uuid()}`;
+      const name = uuid();
+      const filename = `images/${username}/${name}_p`;
+      const thumbFilename = `images/${username}/${name}_t`;
 
       const { width, height } = await imageDimensions(file);
       const resized = await resizeImage(file, false, 600);

@@ -31,6 +31,7 @@ import {
 
 const UploadForm = () => {
   const pictureState = useSelector((state: RootState) => state.picture);
+  const loginState = useSelector((state: RootState) => state.system);
   const fileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [pictureCount, setPictureCount] = useState<number>(0);
@@ -40,7 +41,7 @@ const UploadForm = () => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const history = useHistory();
-  const uploadQueue = useUploadQueue();
+  const uploadQueue = useUploadQueue(loginState.loggedUser?.username);
   const [queueStarted, setQueueStarted] = useState(false);
 
   useEffect(() => {

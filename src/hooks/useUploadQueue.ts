@@ -37,7 +37,7 @@ const initialResponse = {
   currentName: '',
 };
 
-const useUploadQueue = (): Return => {
+const useUploadQueue = (username?: string): Return => {
   const pictureState = useSelector((state: RootState) => state.picture);
   const dispatch = useDispatch();
   const [response, setResponse] = useState<Response>(initialResponse);
@@ -48,7 +48,7 @@ const useUploadQueue = (): Return => {
   const [totalFiles, setTotalFiles] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState<File | null>(null);
   const [currentName, setCurrentName] = useState('');
-  const uploadPhoto = useUploadPhoto();
+  const uploadPhoto = useUploadPhoto(username);
 
   useEffect(() => {
     setResponse({
