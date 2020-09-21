@@ -151,6 +151,10 @@ export const Label = styled.label`
   font-weight: 400;
 `;
 
+export const DummyLabel = styled(Label)`
+  padding-top: 0px;
+`;
+
 export const DummyInput = styled.div`
   background-color: #fff;
   width: 100%;

@@ -9,6 +9,7 @@ import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.s
 import {
   InputContainer,
   Label,
+  DummyLabel,
   DummyInput,
   Input,
   TextArea,
@@ -26,7 +27,7 @@ interface UncontrolledInputProps {
 export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({ label, value }) => {
   return (
     <>
-      <Label>{label}</Label>
+      <DummyLabel>{label}</DummyLabel>
       <InputContainer>
         <DummyInput>{value}</DummyInput>
       </InputContainer>
