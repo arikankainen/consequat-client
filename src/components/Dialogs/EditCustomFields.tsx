@@ -4,6 +4,7 @@ import EditCustomFieldsDialog from './EditCustomFieldsDialog';
 import useSaveUser, { SaveUserStatus, SaveUser } from '../../hooks/useSaveUser';
 
 export interface Field {
+  separator?: boolean;
   type: string;
   name: string;
   label: string;

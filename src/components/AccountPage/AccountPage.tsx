@@ -71,6 +71,7 @@ const AccountPage = () => {
           .required('Required'),
       },
       {
+        separator: true,
         type: 'password',
         name: 'newPassword',
         label: 'New password',
@@ -82,7 +83,7 @@ const AccountPage = () => {
       {
         type: 'password',
         name: 'confirmPassword',
-        label: 'Confirm new password',
+        label: 'Confirm',
         initialValue: '',
         validation: Yup.string().oneOf(
           [Yup.ref('newPassword'), ''],

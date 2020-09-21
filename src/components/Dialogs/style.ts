@@ -63,6 +63,10 @@ export const DialogContent = styled.div`
   padding: 15px;
 `;
 
+export const Separator = styled.div`
+  grid-column: span 2;
+`;
+
 export const Warning = styled.div`
   margin: 0px 5px 15px 5px;
   color: #000;

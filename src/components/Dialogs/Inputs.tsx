@@ -13,6 +13,7 @@ import {
   Select,
   Error,
   LockContainer,
+  Separator,
 } from './style';
 
 interface UncontrolledInputProps {
@@ -38,18 +39,21 @@ interface TextInputProps {
   disabled?: boolean;
   onLockClick?: () => void;
   multi?: boolean;
+  separator?: boolean;
 }
 
 export const TextInput: React.FC<TextInputProps> = ({
   label,
   onLockClick,
   multi,
+  separator,
   ...props
 }) => {
   const [field, meta] = useField(props);
 
   return (
     <>
+      {separator && <Separator />}
       <Label htmlFor={props.name}>{label}</Label>
       <div>
         <InputContainer>
@@ -80,12 +84,14 @@ export const TextAreaInput: React.FC<TextInputProps> = ({
   label,
   onLockClick,
   multi,
+  separator,
   ...props
 }) => {
   const [field] = useField(props);
 
   return (
     <>
+      {separator && <Separator />}
       <Label htmlFor={props.name}>{label}</Label>
       <InputContainer>
         <TextArea autoComplete="off" spellCheck={false} {...field} {...props} />
@@ -106,18 +112,21 @@ interface SelectInputProps {
   disabled?: boolean;
   onLockClick?: () => void;
   multi?: boolean;
+  separator?: boolean;
 }
 
 export const SelectInput: React.FC<SelectInputProps> = ({
   label,
   onLockClick,
   multi,
+  separator,
   ...props
 }) => {
   const [field] = useField(props);
 
   return (
     <>
+      {separator && <Separator />}
       <Label htmlFor={props.name}>{label}</Label>
       <InputContainer>
         <Select autoComplete="off" spellCheck={false} {...field} {...props}>
@@ -142,12 +151,14 @@ export const PasswordInput: React.FC<TextInputProps> = ({
   label,
   onLockClick,
   multi,
+  separator,
   ...props
 }) => {
   const [field, meta] = useField(props);
-
+  console.log(separator);
   return (
     <>
+      {separator && <Separator />}
       <Label htmlFor={props.name}>{label}</Label>
       <div>
         <InputContainer>

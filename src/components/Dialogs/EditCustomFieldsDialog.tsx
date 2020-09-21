@@ -44,7 +44,12 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
               {props.fields?.map(field => {
                 if (field.type === 'text') {
                   return (
-                    <TextInput key={field.name} name={field.name} label={field.label} />
+                    <TextInput
+                      key={field.name}
+                      name={field.name}
+                      label={field.label}
+                      separator={field.separator}
+                    />
                   );
                 }
 
@@ -54,6 +59,7 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                       key={field.name}
                       name={field.name}
                       label={field.label}
+                      separator={field.separator}
                     />
                   );
                 }
@@ -64,6 +70,7 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                       key={field.name}
                       name={field.name}
                       label={field.label}
+                      separator={field.separator}
                     />
                   );
                 }
