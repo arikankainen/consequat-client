@@ -118,8 +118,6 @@ const useUploadPhoto = (): Return => {
       const thumbFilename = `images/${uuid()}`;
 
       const { width, height } = await imageDimensions(file);
-      console.log(width, height);
-
       const resized = await resizeImage(file, false, 600);
       const mainUrl = await uploadPicture(file, filename);
       const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';

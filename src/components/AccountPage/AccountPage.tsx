@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import * as Yup from 'yup';
-import Button from '../Buttons/Button';
+// import Button from '../Buttons/Button';
 import TextSetting from './TextSetting';
-import CheckboxSetting from './CheckboxSetting';
+// import CheckboxSetting from './CheckboxSetting';
 import { ReactComponent as UsernameIcon } from '../../images/account_username.svg';
 import { ReactComponent as EmailIcon } from '../../images/account_email.svg';
 import { ReactComponent as FullnameIcon } from '../../images/account_fullname.svg';
@@ -26,16 +26,16 @@ import {
 } from './style';
 
 const AccountPage = () => {
-  const [fastSelection, setFastSelection] = useState(false);
-  const [dismissDialogs, setDismissDialogs] = useState(false);
-  const [expandInfo, setExpandInfo] = useState(false);
+  // const [fastSelection, setFastSelection] = useState(false);
+  // const [dismissDialogs, setDismissDialogs] = useState(false);
+  // const [expandInfo, setExpandInfo] = useState(false);
   const [editCustomFields, setEditCustomFields] = useState<EditCustomFieldsProps>({});
   const loginState = useSelector((state: RootState) => state.system);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('submit', fastSelection, dismissDialogs, expandInfo);
-  };
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   console.log('submit', fastSelection, dismissDialogs, expandInfo);
+  // };
 
   const handleEmailChange = () => {
     const fields: Field[] = [
