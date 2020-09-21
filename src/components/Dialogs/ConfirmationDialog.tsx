@@ -6,7 +6,7 @@ import { ConfirmationProps } from './Confirmation';
 import {
   DialogContainer,
   DialogTopic,
-  DialogContent,
+  DialogContentNormal,
   DialogButtonArea,
   ProgressContainer,
   Progress,
@@ -30,7 +30,7 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
       <DialogContainer>
         <DialogTopic>{topic || <>Confirmation</>}</DialogTopic>
 
-        <DialogContent>
+        <DialogContentNormal>
           {text && <Text>{text}</Text>}
 
           {typeof progress !== 'undefined' && (
@@ -46,7 +46,7 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
               <Progress progress={progress2} />
             </ProgressContainer>
           )}
-        </DialogContent>
+        </DialogContentNormal>
 
         <DialogButtonArea>
           {handleCancel && handleOk && (

@@ -11,7 +11,7 @@ import Spinner from '../Spinner/Spinner';
 import {
   DialogContainer,
   DialogTopic,
-  DialogContent,
+  DialogContentGrid,
   DialogButtonArea,
   SavingIndicator,
   SpinnerContainer,
@@ -60,7 +60,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
               ) : (
                 <DialogTopic>Edit photo</DialogTopic>
               )}
-              <DialogContent>
+              <DialogContentGrid>
                 {multi && (
                   <Warning>
                     Fields that are initially locked, contains unique values. By unlocking
@@ -113,7 +113,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                 />
                 <div></div>
                 <Comment>Separate your tags by comma</Comment>
-              </DialogContent>
+              </DialogContentGrid>
               <DialogButtonArea>
                 <SpinnerContainer>
                   <Spinner show={saving} />

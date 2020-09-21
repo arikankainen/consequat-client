@@ -10,7 +10,7 @@ import Spinner from '../Spinner/Spinner';
 import {
   DialogContainer,
   DialogTopic,
-  DialogContent,
+  DialogContentGrid,
   DialogButtonArea,
   SavingIndicator,
   SpinnerContainer,
@@ -50,10 +50,10 @@ const EditAlbumDialog: React.FC<Props> = ({
             <DialogTopic>
               {createNew ? <>Create a new album</> : <>Edit album</>}
             </DialogTopic>
-            <DialogContent>
+            <DialogContentGrid>
               <TextInput name="name" label="Name" />
               <TextAreaInput name="description" label="Description" />
-            </DialogContent>
+            </DialogContentGrid>
             <DialogButtonArea>
               <SpinnerContainer>
                 <Spinner show={saving} />

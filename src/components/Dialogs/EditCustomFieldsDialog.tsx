@@ -10,7 +10,7 @@ import Spinner from '../Spinner/Spinner';
 import {
   DialogContainer,
   DialogTopic,
-  DialogContent,
+  DialogContentGrid,
   DialogButtonArea,
   SavingIndicator,
   SpinnerContainer,
@@ -40,7 +40,7 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
         >
           <Form>
             <DialogTopic>{props.topic}</DialogTopic>
-            <DialogContent>
+            <DialogContentGrid>
               {props.fields?.map(field => {
                 if (field.type === 'text') {
                   return (
@@ -75,7 +75,7 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                   );
                 }
               })}
-            </DialogContent>
+            </DialogContentGrid>
             <DialogButtonArea>
               <SpinnerContainer>
                 <Spinner show={props.saving} />

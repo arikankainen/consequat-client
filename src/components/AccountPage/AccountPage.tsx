@@ -137,6 +137,7 @@ const AccountPage = () => {
               onClick={handlePasswordChange}
             />
           </Box>
+          {/*
           <Box>
             <BoxTopic>Preferences</BoxTopic>
             <form onSubmit={handleSubmit}>
@@ -169,6 +170,7 @@ const AccountPage = () => {
               />
             </form>
           </Box>
+          */}
         </BoxContainer>
       </Container>
     </>

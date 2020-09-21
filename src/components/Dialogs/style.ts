@@ -54,7 +54,12 @@ export const DialogTopic = styled.div`
   border-radius: 5px 5px 0px 0px;
 `;
 
-export const DialogContent = styled.div`
+export const DialogContentNormal = styled.div`
+  background-color: #fff;
+  overflow: auto;
+`;
+
+export const DialogContentGrid = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 10px;
