@@ -82,7 +82,7 @@ const AccountPage = () => {
       {
         type: 'password',
         name: 'confirmPassword',
-        label: 'Confirm',
+        label: 'Confirm new password',
         initialValue: '',
         validation: Yup.string().oneOf(
           [Yup.ref('newPassword'), ''],

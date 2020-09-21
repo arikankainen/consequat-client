@@ -111,6 +111,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   onLockClick={() => setFieldValue('tagsLocked', !values.tagsLocked)}
                   multi={multi}
                 />
+                <div></div>
                 <Comment>Separate your tags by comma</Comment>
               </DialogContent>
               <DialogButtonArea>

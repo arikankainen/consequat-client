@@ -22,10 +22,12 @@ interface UncontrolledInputProps {
 
 export const UncontrolledInput: React.FC<UncontrolledInputProps> = ({ label, value }) => {
   return (
-    <InputContainer>
+    <>
       <Label>{label}</Label>
-      <DummyInput>{value}</DummyInput>
-    </InputContainer>
+      <InputContainer>
+        <DummyInput>{value}</DummyInput>
+      </InputContainer>
+    </>
   );
 };
 
@@ -48,23 +50,28 @@ export const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <>
-      <InputContainer>
-        <Label htmlFor={props.name}>{label}</Label>
-        <Input
-          type="text"
-          autoComplete="off"
-          spellCheck={false}
-          {...field}
-          {...props}
-          error={meta.touched && !!meta.error}
-        />
-        {multi && (
-          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-          </LockContainer>
-        )}
-      </InputContainer>
-      <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+      <Label htmlFor={props.name}>{label}</Label>
+      <div>
+        <InputContainer>
+          <Input
+            type="text"
+            autoComplete="off"
+            spellCheck={false}
+            {...field}
+            {...props}
+            error={meta.touched && !!meta.error}
+          />
+          {multi && (
+            <LockContainer
+              onClick={onLockClick || (() => void 0)}
+              locked={props.disabled}
+            >
+              {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+            </LockContainer>
+          )}
+        </InputContainer>
+        <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+      </div>
     </>
   );
 };
@@ -78,15 +85,17 @@ export const TextAreaInput: React.FC<TextInputProps> = ({
   const [field] = useField(props);
 
   return (
-    <InputContainer>
+    <>
       <Label htmlFor={props.name}>{label}</Label>
-      <TextArea autoComplete="off" spellCheck={false} {...field} {...props} />
-      {multi && (
-        <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-          {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-        </LockContainer>
-      )}
-    </InputContainer>
+      <InputContainer>
+        <TextArea autoComplete="off" spellCheck={false} {...field} {...props} />
+        {multi && (
+          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+          </LockContainer>
+        )}
+      </InputContainer>
+    </>
   );
 };
 
@@ -108,22 +117,24 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   const [field] = useField(props);
 
   return (
-    <InputContainer>
+    <>
       <Label htmlFor={props.name}>{label}</Label>
-      <Select autoComplete="off" spellCheck={false} {...field} {...props}>
-        {props.albums &&
-          props.albums.map(album => (
-            <option key={album.id} value={album.id}>
-              {album.name}
-            </option>
-          ))}
-      </Select>
-      {multi && (
-        <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-          {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-        </LockContainer>
-      )}
-    </InputContainer>
+      <InputContainer>
+        <Select autoComplete="off" spellCheck={false} {...field} {...props}>
+          {props.albums &&
+            props.albums.map(album => (
+              <option key={album.id} value={album.id}>
+                {album.name}
+              </option>
+            ))}
+        </Select>
+        {multi && (
+          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
+            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+          </LockContainer>
+        )}
+      </InputContainer>
+    </>
   );
 };
 
@@ -137,23 +148,28 @@ export const PasswordInput: React.FC<TextInputProps> = ({
 
   return (
     <>
-      <InputContainer>
-        <Label htmlFor={props.name}>{label}</Label>
-        <Input
-          type="password"
-          autoComplete="off"
-          spellCheck={false}
-          {...field}
-          {...props}
-          error={meta.touched && !!meta.error}
-        />
-        {multi && (
-          <LockContainer onClick={onLockClick || (() => void 0)} locked={props.disabled}>
-            {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
-          </LockContainer>
-        )}
-      </InputContainer>
-      <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+      <Label htmlFor={props.name}>{label}</Label>
+      <div>
+        <InputContainer>
+          <Input
+            type="password"
+            autoComplete="off"
+            spellCheck={false}
+            {...field}
+            {...props}
+            error={meta.touched && !!meta.error}
+          />
+          {multi && (
+            <LockContainer
+              onClick={onLockClick || (() => void 0)}
+              locked={props.disabled}
+            >
+              {props.disabled ? <LockedIcon /> : <UnlockedIcon />}
+            </LockContainer>
+          )}
+        </InputContainer>
+        <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
+      </div>
     </>
   );
 };

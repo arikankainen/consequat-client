@@ -55,19 +55,24 @@ export const DialogTopic = styled.div`
 `;
 
 export const DialogContent = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
   background-color: #fff;
   overflow: auto;
+  padding: 15px;
 `;
 
 export const Warning = styled.div`
-  margin: 10px 20px 20px 20px;
+  margin: 0px 5px 15px 5px;
   color: #000;
   font-size: 14px;
   line-height: 1.2;
+  grid-column: span 2;
 `;
 
 export const Comment = styled.div`
-  margin: 5px 20px 10px 100px;
+  margin-left: 5px;
   color: #999;
   font-size: 14px;
   line-height: 1.2;
@@ -128,14 +133,12 @@ export const SavingIndicator = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 15px 15px 0px 5px;
 `;
 
 export const Label = styled.label`
-  display: block;
-  margin-top: 8px;
-  margin-right: 10px;
-  min-width: 80px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   color: #000;
   font-size: 14px;
   line-height: 1;
@@ -148,7 +151,6 @@ export const DummyInput = styled.div`
   width: 100%;
   color: #000;
   font-size: 14px;
-  padding: 8px 7px 7px 7px;
   line-height: 1;
 `;
 
@@ -259,7 +261,9 @@ interface LockContainerProps {
 }
 
 export const LockContainer = styled.div<LockContainerProps>`
-  padding-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-left: 10px;
   cursor: pointer;
 
