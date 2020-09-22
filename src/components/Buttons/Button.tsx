@@ -5,6 +5,7 @@ export enum ButtonColor {
   blue,
   whiteWithBlueBorder,
   white,
+  whiteBig,
   black,
 }
 
@@ -147,6 +148,41 @@ const Container = styled.button<ContainerProps>`
 
       & > svg {
         color: #555;
+      }
+
+      &:disabled {
+        border: 1px solid #ccc;
+        color: #999;
+        background-color: #eee;
+      }
+  `}
+
+  ${props =>
+    props.backColor === ButtonColor.whiteBig &&
+    css`
+      border: 1px solid #fff;
+      color: #444;
+      background-color: #fff;
+      
+      & > div {
+        font-family: var(--topic-font-family);
+        font-weight: 400;
+      }
+      padding: 15px 20px;
+      font-size: 20px;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, .05);
+      }
+
+      &:hover {
+        border: 1px solid #fff;
+        color: var(--accent-color-1);
+        background-color: #fff;
+      }
+
+      & > svg {
+        color: #000;
       }
 
       &:disabled {

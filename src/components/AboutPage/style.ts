@@ -47,6 +47,7 @@ export const Strong = styled.span`
 export const Warning = styled(P)`
   margin-top: 20px;
   font-weight: 500;
+  margin-bottom: 0px;
 `;
 
 export const Link = styled.a`
