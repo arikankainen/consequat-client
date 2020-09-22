@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 
 import Notification from '../Notification/Notification';
 import MainPage from '../MainPage/MainPage';
+import AboutPage from '../AboutPage/AboutPage';
 import LoginPage from '../LoginPage/LoginPage';
 import LogoutPage from '../LoginPage/LogoutPage';
 import SignupPage from '../LoginPage/SignupPage';
@@ -20,6 +21,7 @@ const App = () => {
   const [back, setBack] = useState<boolean>(false);
 
   if (
+    location.pathname === '/about' ||
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
     location.pathname === '/'
@@ -63,6 +65,10 @@ const App = () => {
 
             <Route path="/photos">
               <PhotosPage />
+            </Route>
+
+            <Route path="/about">
+              <AboutPage />
             </Route>
 
             <Route path="/">
