@@ -43,6 +43,7 @@ const UploadThumbnail: React.FC<UploadThumbnailProps> = ({ file, selected }) => 
       src={placeholder}
       name={file.name}
       selected={selected}
+      hidden={true}
       handleIconClick={handleCheckClick}
       handleThumbnailClick={handleThumbnailClick}
       containerRef={container}

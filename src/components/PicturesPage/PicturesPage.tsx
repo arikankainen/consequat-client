@@ -367,6 +367,7 @@ const PicturesPage = () => {
                   key={photo.id}
                   src={photo.thumbUrl}
                   name={photo.name}
+                  hidden={photo.hidden}
                   selected={selection.includes(photo.id)}
                   handleThumbnailClick={() => handleThumbnailClick(photo.id)}
                   handleIconClick={() => handleCheckClick(photo.id)}

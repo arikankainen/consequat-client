@@ -30,11 +30,11 @@ export const ThumbnailPicture = styled.img`
   }
 `;
 
-interface ThumbnailIconAreaProps {
+interface ThumbnailSelectIconAreaProps {
   selected: boolean;
 }
 
-export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps>`
+export const ThumbnailSelectIconArea = styled.div<ThumbnailSelectIconAreaProps>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -48,17 +48,36 @@ export const ThumbnailIconArea = styled.div<ThumbnailIconAreaProps>`
   background-color: rgba(255, 255, 255, .4);
   border: 1px solid rgba(0, 0, 0, 0.4);
 
-  ${(props) =>
+  ${props =>
     props.selected &&
     css`
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 1);
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 1);
   `}
 
   & > svg {
     margin-top: 1px;
     height: 14px;
     color: #222;
+  }
+`;
+
+export const ThumbnailHiddenIconArea = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+
+  & > svg {
+    height: 18px;
+    color: #fff;
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 1));
   }
 `;
 

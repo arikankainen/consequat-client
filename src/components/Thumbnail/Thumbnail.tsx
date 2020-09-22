@@ -1,11 +1,13 @@
 import React from 'react';
 import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
+import { ReactComponent as HiddenIcon } from '../../images/icon_locked.svg';
 
 import {
   ThumbnailContainer,
   ThumbnailPlaceholder,
   ThumbnailPicture,
-  ThumbnailIconArea,
+  ThumbnailSelectIconArea,
+  ThumbnailHiddenIconArea,
   ThumbnailNameArea,
   ThumbnailNameAreaText,
 } from './style';
@@ -14,6 +16,7 @@ interface ThumbnailProps {
   src: string;
   name: string;
   selected: boolean;
+  hidden: boolean;
   handleIconClick: () => void;
   handleThumbnailClick: () => void;
   containerRef?: React.RefObject<HTMLDivElement>;
@@ -24,6 +27,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   src,
   name,
   selected,
+  hidden,
   handleIconClick,
   handleThumbnailClick,
   containerRef,
@@ -42,9 +46,11 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         />
       </ThumbnailPlaceholder>
 
-      <ThumbnailIconArea onClick={handleIconClick} selected={selected}>
+      <ThumbnailSelectIconArea onClick={handleIconClick} selected={selected}>
         {selected && <CheckedIcon />}
-      </ThumbnailIconArea>
+      </ThumbnailSelectIconArea>
+
+      <ThumbnailHiddenIconArea>{hidden && <HiddenIcon />}</ThumbnailHiddenIconArea>
 
       <ThumbnailNameArea>
         <ThumbnailNameAreaText>{name}</ThumbnailNameAreaText>
