@@ -129,7 +129,6 @@ const useSavePhoto = (): Return => {
         variables: photo,
       });
     } else if (photo.id) {
-      console.log(photo);
       editPhoto({
         variables: {
           name: photo.name || '',

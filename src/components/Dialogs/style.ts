@@ -156,6 +156,52 @@ export const Label = styled.label`
   font-weight: 400;
 `;
 
+export const CheckboxLabel = styled(Label)`
+  & > input[type='checkbox'] {
+    display: none;
+  }
+
+  & > input[type='checkbox'] + *::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    margin-right: 7px;
+    line-height: 1.6;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  & > input[type='checkbox']:checked + *::before {
+    content: '✓';
+    background-color: var(--accent-color-2);
+    border: 1px solid var(--accent-color-2);
+    color: #fff;
+    text-align: center;
+  }
+
+  & > input[type='checkbox']:disabled:checked + *::before {
+    content: '✓';
+    background-color: var(--accent-color-2-disabled);
+    border: 1px solid var(--accent-color-2-disabled);
+    color: #fff;
+    text-align: center;
+  }
+
+  & > input[type='checkbox']:disabled + * {
+    color: #999;
+  }
+
+  & > span {
+    font-weight: 400;
+    color: #000;
+  }
+`;
+
 export const DummyLabel = styled(Label)`
   padding-top: 0px;
 `;

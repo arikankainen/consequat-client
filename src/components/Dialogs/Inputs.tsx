@@ -12,7 +12,7 @@ import {
   DummyLabel,
   DummyInput,
   Input,
-  Checkbox,
+  CheckboxLabel,
   TextArea,
   Select,
   Error,
@@ -172,10 +172,13 @@ export const CheckboxInput: React.FC<CheckboxInputProps> = ({
   return (
     <>
       {separator && <Separator />}
-      <Label htmlFor={props.name}>{label}</Label>
+      <div />
       <div>
         <InputContainer>
-          <Checkbox type="checkbox" {...field} {...props} checked={field.value} />
+          <CheckboxLabel>
+            <input type="checkbox" {...field} {...props} checked={field.value} />
+            <span>{label}</span>
+          </CheckboxLabel>
           {multi && (
             <LockContainer
               onClick={onLockClick || (() => void 0)}

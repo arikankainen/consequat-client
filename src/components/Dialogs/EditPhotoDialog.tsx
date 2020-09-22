@@ -121,7 +121,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                 <Comment>Separate your tags by comma</Comment>
                 <CheckboxInput
                   name="hidden"
-                  label="Hidden"
+                  label="Hide photo from public gallery"
                   disabled={values.hiddenLocked}
                   onLockClick={() => setFieldValue('hiddenLocked', !values.hiddenLocked)}
                   multi={multi}
