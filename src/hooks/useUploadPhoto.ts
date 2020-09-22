@@ -37,9 +37,13 @@ const useUploadPhoto = (username?: string): Return => {
   const savePhoto = useSavePhoto();
   const dispatch = useDispatch();
 
-  const uploadPicture = (file: File, filename: string) => {
+  const uploadResizedPicture = (
+    file: Blob,
+    storageFilename: string,
+    filename: string
+  ) => {
     return new Promise((resolve, reject) => {
-      const storageRef = storage.ref(filename);
+      const storageRef = storage.ref(storageFilename);
       const task = storageRef.put(file);
 
       task.on(
@@ -48,7 +52,7 @@ const useUploadPhoto = (username?: string): Return => {
           const percentage = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          dispatch(updateProgress(file.name, percentage));
+          dispatch(updateProgress(filename, percentage));
         },
         function error(err) {
           console.log(err);
@@ -56,7 +60,7 @@ const useUploadPhoto = (username?: string): Return => {
         },
         function complete() {
           storageRef.getDownloadURL().then(url => {
-            dispatch(updateProgress(file.name, 100));
+            dispatch(updateProgress(storageFilename, 100));
             resolve(url);
           });
         }
@@ -114,14 +118,22 @@ const useUploadPhoto = (username?: string): Return => {
     setUploadedFilename(file.name);
 
     try {
+      const photoSize = 2000;
+      const thumbSize = 600;
+
       const name = uuid();
       const filename = `images/${username}/${name}_p`;
       const thumbFilename = `images/${username}/${name}_t`;
 
       const { width, height } = await imageDimensions(file);
-      const resized = await resizeImage(file, false, 600);
-      const mainUrl = await uploadPicture(file, filename);
-      const thumbUrl = resized != null ? await uploadThumb(resized, thumbFilename) : '';
+
+      const resizedPhoto = await resizeImage(file, false, photoSize);
+      const resizedThumb = await resizeImage(file, false, thumbSize);
+
+      if (!resizedPhoto || !resizedThumb) throw new Error();
+
+      const mainUrl = await uploadResizedPicture(resizedPhoto, filename, file.name);
+      const thumbUrl = await uploadThumb(resizedThumb, thumbFilename);
 
       savePhoto.execute({
         mainUrl: mainUrl as string,
