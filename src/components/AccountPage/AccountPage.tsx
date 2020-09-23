@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import * as Yup from 'yup';
-// import Button from '../Buttons/Button';
+import { useQuery } from '@apollo/client';
+import { ME } from '../../utils/queries';
+import { Photo, Album } from '../../utils/types';
 import TextSetting from './TextSetting';
-// import CheckboxSetting from './CheckboxSetting';
 import { ReactComponent as UsernameIcon } from '../../images/account_username.svg';
 import { ReactComponent as EmailIcon } from '../../images/account_email.svg';
 import { ReactComponent as FullnameIcon } from '../../images/account_fullname.svg';
 import { ReactComponent as PasswordIcon } from '../../images/account_password.svg';
+import { ReactComponent as HiddenIcon } from '../../images/icon_locked.svg';
+import { ReactComponent as AlbumIcon } from '../../images/layer-group-solid.svg';
+import { ReactComponent as PhotoIcon } from '../../images/camera-solid.svg';
+
 import EditCustomFields, {
   EditCustomFieldsProps,
   Field,
@@ -26,16 +31,26 @@ import {
 } from './style';
 
 const AccountPage = () => {
-  // const [fastSelection, setFastSelection] = useState(false);
-  // const [dismissDialogs, setDismissDialogs] = useState(false);
-  // const [expandInfo, setExpandInfo] = useState(false);
   const [editCustomFields, setEditCustomFields] = useState<EditCustomFieldsProps>({});
   const loginState = useSelector((state: RootState) => state.system);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [fetched, setFetched] = useState(false);
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   console.log('submit', fastSelection, dismissDialogs, expandInfo);
-  // };
+  const resultMe = useQuery(ME, {
+    fetchPolicy: 'no-cache',
+  });
+
+  useEffect(() => {
+    if (resultMe.data) {
+      const allPhotos: Photo[] = resultMe.data.me.photos;
+      const allAlbums: Album[] = resultMe.data.me.albums;
+
+      setPhotos(allPhotos);
+      setAlbums(allAlbums);
+      setFetched(true);
+    }
+  }, [resultMe.data]);
 
   const handleEmailChange = () => {
     const fields: Field[] = [
@@ -137,40 +152,37 @@ const AccountPage = () => {
               onClick={handlePasswordChange}
             />
           </Box>
-          {/*
           <Box>
-            <BoxTopic>Preferences</BoxTopic>
-            <form onSubmit={handleSubmit}>
-              <CheckboxSetting
-                name="fastSelection"
-                label="Fast selection"
-                description="Clicking thumbnail does not deselect other thumbnails"
-                checked={fastSelection}
-                onChange={() => setFastSelection(!fastSelection)}
-              />
-              <CheckboxSetting
-                name="dismissDialogs"
-                label="Dismiss dialogs"
-                description="Automatically dismiss success dialogs after upload or delete operation"
-                checked={dismissDialogs}
-                onChange={() => setDismissDialogs(!dismissDialogs)}
-              />
-              <CheckboxSetting
-                name="expandInfo"
-                label="Expand photo info"
-                description="Automatically expand additional fields in photo info panel"
-                checked={expandInfo}
-                onChange={() => setExpandInfo(!expandInfo)}
-              />
-              <Button
-                text="Save"
-                type="submit"
-                onClick={() => void 0}
-                margin={[30, 0, 0, 0]}
-              />
-            </form>
+            <BoxTopic>Statistics</BoxTopic>
+            <TextSetting
+              label="Uploaded photos"
+              value={(fetched && String(photos.length)) || '...'}
+              Icon={PhotoIcon}
+            />
+            <TextSetting
+              label="Photos not in any albums"
+              value={
+                (fetched &&
+                  String(photos.filter(photo => photo.album === null).length)) ||
+                '...'
+              }
+              Icon={PhotoIcon}
+            />
+            <TextSetting
+              label="Hidden photos"
+              value={
+                (fetched &&
+                  String(photos.filter(photo => photo.hidden === true).length)) ||
+                '...'
+              }
+              Icon={HiddenIcon}
+            />
+            <TextSetting
+              label="Photo albums"
+              value={(fetched && String(albums.length)) || '...'}
+              Icon={AlbumIcon}
+            />
           </Box>
-          */}
         </BoxContainer>
       </Container>
     </>

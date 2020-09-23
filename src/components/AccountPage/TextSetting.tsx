@@ -11,7 +11,7 @@ import {
 interface TextSettingProps {
   label: string;
   value: string;
-  Icon: React.FunctionComponent;
+  Icon?: React.FunctionComponent;
   onClick?: () => void;
 }
 
@@ -23,9 +23,11 @@ const TextSetting: React.FC<TextSettingProps> = ({
 }) => {
   return (
     <SettingContainer>
-      <IconContainer>
-        <Icon />
-      </IconContainer>
+      {Icon && (
+        <IconContainer>
+          <Icon />
+        </IconContainer>
+      )}
       <SettingTextContainer>
         <Label>{label}</Label>
         {onValueClick ? (
