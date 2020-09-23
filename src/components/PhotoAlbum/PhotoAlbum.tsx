@@ -26,6 +26,7 @@ interface PhotoAlbumProps {
   onEditClick?: () => void;
   onDeleteClick?: () => void;
   onSelectClick?: () => void;
+  onOutsideClick?: () => void;
   uploadButtonVisible?: boolean;
   deleteButtonVisible?: boolean;
   editButtonVisible?: boolean;
@@ -43,6 +44,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   onEditClick,
   onDeleteClick,
   onSelectClick,
+  onOutsideClick,
   uploadButtonVisible,
   deleteButtonVisible,
   editButtonVisible,
@@ -50,15 +52,21 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   selected,
   children,
 }) => {
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if ((event.target as HTMLDivElement).hasAttribute('data-outside')) {
+      if (onOutsideClick) onOutsideClick();
+    }
+  };
+
   if (isEmpty && isNotRealAlbum) return null;
   return (
-    <AlbumContainer>
-      <TopicContainer>
-        <NameAndDescription>
-          <Name>{name}</Name>
-          {description && <Description>{description}</Description>}
+    <AlbumContainer onClick={handleContainerClick}>
+      <TopicContainer data-outside>
+        <NameAndDescription data-outside>
+          <Name data-outside>{name}</Name>
+          {description && <Description data-outside>{description}</Description>}
         </NameAndDescription>
-        <Edit>
+        <Edit data-outside>
           {uploadButtonVisible && (
             <Button
               text="Upload"
@@ -96,7 +104,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           )}
         </Edit>
       </TopicContainer>
-      <PictureListArea>
+      <PictureListArea data-outside>
         {!isEmpty ? children : <EmptyText>No photos</EmptyText>}
       </PictureListArea>
     </AlbumContainer>

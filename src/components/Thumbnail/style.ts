@@ -45,8 +45,9 @@ export const ThumbnailSelectIconArea = styled.div<ThumbnailSelectIconAreaProps>`
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, .4);
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  /*background-color: rgba(255, 255, 255, .4);
+  border: 1px solid rgba(0, 0, 0, 0.4);*/
+  pointer-events: none;
 
   ${props =>
     props.selected &&
@@ -76,8 +77,6 @@ export const ThumbnailHiddenIconArea = styled.div`
 
   & > svg {
     height: 18px;
-    color: #fff;
-    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 1));
   }
 `;
 
@@ -93,6 +92,7 @@ export const ThumbnailNameArea = styled.div`
   width: 100%;
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 `;
 
 export const ThumbnailNameAreaText = styled.div`

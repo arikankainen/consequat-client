@@ -225,6 +225,15 @@ const UploadForm = () => {
     }
   };
 
+  const handleSelectNone = () => {
+    pictureState.pictures.forEach(element => {
+      if (element.selected) {
+        dispatch(updateSelected(element.picture.name, false));
+      }
+    });
+    setAllSelected(false);
+  };
+
   return (
     <>
       <PictureListToolBar>
@@ -286,6 +295,7 @@ const UploadForm = () => {
           description="Photos to be uploaded"
           uploadButtonVisible={true}
           onUploadClick={handleUploadPictures}
+          onOutsideClick={handleSelectNone}
         >
           <>
             {pictureState.pictures.map(file => (

@@ -79,14 +79,12 @@ const MyPhotosPage = () => {
   };
 
   const handleThumbnailClick = (id: string) => {
-    /*
     if (selection.includes(id)) {
       setSelection(selection.filter(s => s !== id));
     } else {
       setSelection(selection.concat(id));
     }
-    */
-    setSelection([id]);
+    // setSelection([id]);
   };
 
   const handleCreateAlbum = () => {
@@ -359,6 +357,7 @@ const MyPhotosPage = () => {
             onEditClick={() => handleEditAlbum(album.id)}
             onDeleteClick={() => handleDeleteAlbum(album)}
             onSelectClick={() => handleSelectClick(album)}
+            onOutsideClick={() => setSelection([])}
             selected={isAllSelected(album)}
           >
             <>

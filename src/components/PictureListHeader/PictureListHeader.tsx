@@ -26,9 +26,7 @@ export const PictureListHeader: React.FC<PictureListHeaderProps> = ({
   );
 
   const selectedAlbumsText =
-    selectedAlbums.length > 1
-      ? ` (selection contains photos from ${selectedAlbums.length} albums)`
-      : '';
+    selectedAlbums.length > 1 ? ` (${selectedAlbums.length} albums)` : '';
 
   return (
     <ListHeader
