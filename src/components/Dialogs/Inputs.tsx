@@ -215,8 +215,8 @@ export const PasswordInput: React.FC<TextInputProps> = ({
             {...props}
             error={meta.touched && !!meta.error}
           />
-          <LockContainer onClick={() => setShow(!show)} locked={!show}>
-            {show ? <ShowPasswordIcon /> : <HidePasswordIcon />}
+          <LockContainer onClick={() => setShow(!show)} locked={false}>
+            {show ? <HidePasswordIcon /> : <ShowPasswordIcon />}
           </LockContainer>
         </InputContainer>
         <Error error={meta.touched && !!meta.error}>{meta.error}</Error>
