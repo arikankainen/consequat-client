@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
 import { Album } from '../../utils/types';
-import { ReactComponent as LockedIcon } from '../../images/icon_locked.svg';
-import { ReactComponent as UnlockedIcon } from '../../images/icon_unlocked.svg';
-import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
-import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg';
+import { ReactComponent as LockedIcon } from '../../images/lock-solid_modified.svg';
+import { ReactComponent as UnlockedIcon } from '../../images/unlock-solid.svg';
+import { ReactComponent as ShowPasswordIcon } from '../../images/eye-solid.svg';
+import { ReactComponent as HidePasswordIcon } from '../../images/eye-slash-solid.svg';
 
 import {
   InputContainer,

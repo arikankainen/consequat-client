@@ -6,12 +6,13 @@ import { useQuery } from '@apollo/client';
 import { ME } from '../../utils/queries';
 import { Photo, Album } from '../../utils/types';
 import TextSetting from './TextSetting';
-import { ReactComponent as UsernameIcon } from '../../images/account_username.svg';
-import { ReactComponent as EmailIcon } from '../../images/account_email.svg';
-import { ReactComponent as FullnameIcon } from '../../images/account_fullname.svg';
-import { ReactComponent as PasswordIcon } from '../../images/account_password.svg';
-import { ReactComponent as HiddenIcon } from '../../images/icon_locked.svg';
-import { ReactComponent as AlbumIcon } from '../../images/layer-group-solid.svg';
+import { ReactComponent as UsernameIcon } from '../../images/user-solid.svg';
+import { ReactComponent as EmailIcon } from '../../images/at-solid.svg';
+import { ReactComponent as FullnameIcon } from '../../images/signature-solid.svg';
+import { ReactComponent as PasswordIcon } from '../../images/key-solid.svg';
+import { ReactComponent as HiddenIcon } from '../../images/lock-solid_modified.svg';
+import { ReactComponent as AlbumIcon } from '../../images/folder-solid.svg';
+import { ReactComponent as NotItAlbumIcon } from '../../images/folder-open-solid.svg';
 import { ReactComponent as PhotoIcon } from '../../images/camera-solid.svg';
 
 import EditCustomFields, {
@@ -166,7 +167,7 @@ const AccountPage = () => {
                   String(photos.filter(photo => photo.album === null).length)) ||
                 '...'
               }
-              Icon={PhotoIcon}
+              Icon={NotItAlbumIcon}
             />
             <TextSetting
               label="Hidden photos"

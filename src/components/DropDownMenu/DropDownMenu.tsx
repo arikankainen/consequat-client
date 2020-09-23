@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Button, { ButtonColor } from '../Buttons/Button';
-import { ReactComponent as ExpandIcon } from '../../images/expand.svg';
+import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
 
 const Container = styled.div`
   display: flex;

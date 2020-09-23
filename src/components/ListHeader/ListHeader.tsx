@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Property, Value, Container, Expand } from './style';
-import { ReactComponent as ExpandIcon } from '../../images/expand.svg';
-import { ReactComponent as CollapseIcon } from '../../images/collapse.svg';
+import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
+import { ReactComponent as CollapseIcon } from '../../images/chevron-up-solid_modified.svg';
 
 interface Item {
   name: string;

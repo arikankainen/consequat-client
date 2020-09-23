@@ -1,10 +1,10 @@
 import React from 'react';
 import Button, { ButtonColor } from '../Buttons/Button';
-import { ReactComponent as EditButton } from '../../images/button_edit.svg';
-import { ReactComponent as DeleteButton } from '../../images/button_delete.svg';
-import { ReactComponent as UploadButton } from '../../images/button_upload.svg';
-import { ReactComponent as CheckButton } from '../../images/button_check.svg';
-import { ReactComponent as UncheckButton } from '../../images/button_uncheck.svg';
+import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
+import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
+import { ReactComponent as UploadButton } from '../../images/upload-solid.svg';
+import { ReactComponent as CheckButton } from '../../images/check-circle-regular.svg';
+import { ReactComponent as UncheckButton } from '../../images/check-circle-regular_modified.svg';
 
 import {
   AlbumContainer,

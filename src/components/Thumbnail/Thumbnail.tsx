@@ -1,6 +1,6 @@
 import React from 'react';
-import { ReactComponent as CheckedIcon } from '../../images/icon_checked.svg';
-import { ReactComponent as HiddenIcon } from '../../images/icon_locked.svg';
+import { ReactComponent as CheckedIcon } from '../../images/check-solid.svg';
+import { ReactComponent as HiddenIcon } from '../../images/lock-solid_modified.svg';
 
 import {
   ThumbnailContainer,

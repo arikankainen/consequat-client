@@ -140,7 +140,7 @@ export const MenuLink = styled(Link)`
     width: var(--icon-size);
     margin-right: 15px;
     color: var(--icon-color);
-    color: #666;
+    color: #555;
   }
 
   transition: all 100ms ease-in-out;

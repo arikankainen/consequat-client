@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useField } from 'formik';
 import styled, { css } from 'styled-components';
-import { ReactComponent as ShowPasswordIcon } from '../../images/password_show.svg';
-import { ReactComponent as HidePasswordIcon } from '../../images/password_hide.svg';
-import { ReactComponent as InfoIcon } from '../../images/information.svg';
+import { ReactComponent as ShowPasswordIcon } from '../../images/eye-solid.svg';
+import { ReactComponent as HidePasswordIcon } from '../../images/eye-slash-solid.svg';
+import { ReactComponent as InfoIcon } from '../../images/info-circle-solid.svg';
 
 const Label = styled.label`
   display: block;

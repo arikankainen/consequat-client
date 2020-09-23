@@ -6,7 +6,7 @@ import { TopBar, Text, TopicContainer, Keyword, GridContainer } from './style';
 import PhotoGridItem from './PhotoGridItem';
 import DropDownMenu, { DropDownAlign } from '../DropDownMenu/DropDownMenu';
 import NotFound from '../NotFound/NotFound';
-import { ReactComponent as NotFoundIcon } from '../../images/not_found.svg';
+import { ReactComponent as NotFoundIcon } from '../../images/tired-regular.svg';
 import SearchOptions from '../SearchOptions/SearchOptions';
 import CenteredSpinner from '../Spinner/CenteredSpinner';
 

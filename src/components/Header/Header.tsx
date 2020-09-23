@@ -11,13 +11,16 @@ import Menu, { Direction } from '../Menu/Menu';
 import Search from './Search';
 import MenuButton from '../Buttons/MenuButton';
 
-import { ReactComponent as UserIcon } from '../../images/menu_user.svg';
-import { ReactComponent as AccountIcon } from '../../images/menu_settings.svg';
-import { ReactComponent as LogoutIcon } from '../../images/menu_logout.svg';
-import { ReactComponent as PicturesIcon } from '../../images/menu_image.svg';
-import { ReactComponent as UploadIcon } from '../../images/menu_upload.svg';
-import { ReactComponent as LoginIcon } from '../../images/menu_login.svg';
+import { ReactComponent as UserIcon } from '../../images/user-solid.svg';
+import { ReactComponent as AccountIcon } from '../../images/cog-solid.svg';
+import { ReactComponent as LogoutIcon } from '../../images/sign-out-alt-solid.svg';
+import { ReactComponent as PicturesIcon } from '../../images/camera-solid.svg';
+import { ReactComponent as UploadIcon } from '../../images/upload-solid.svg';
+import { ReactComponent as LoginIcon } from '../../images/sign-in-alt-solid.svg';
 import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
+import { ReactComponent as ConsequatIcon } from '../../images/consequat_o.svg';
+import { ReactComponent as BrowseIcon } from '../../images/globe-solid.svg';
+import { ReactComponent as AboutIcon } from '../../images/question-circle-solid.svg';
 
 import {
   HeaderContainer,
@@ -61,16 +64,19 @@ const Header = () => {
       text: 'Consequat',
       subText: 'Back to the starting point',
       link: '/',
+      icon: ConsequatIcon,
     },
     {
       text: 'Browse',
       subText: 'Browse all photos',
       link: '/photos',
+      icon: BrowseIcon,
     },
     {
       text: 'About',
       subText: 'What Consequat is?',
       link: '/about',
+      icon: AboutIcon,
     },
   ];
 
@@ -138,7 +144,9 @@ const Header = () => {
         <Search />
         <RightContainer>
           <StyledLink to="/photos">Browse</StyledLink>
-          <StyledLink to="/about">About</StyledLink>
+          <StyledLink to="/about" style={{ marginRight: '20px' }}>
+            About
+          </StyledLink>
           {loginState.loggedIn ? (
             <Menu
               button={userMenuButton}

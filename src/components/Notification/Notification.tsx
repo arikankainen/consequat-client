@@ -5,8 +5,8 @@ import { NotificationType } from '../../reducers/notificationReducer';
 import { CSSTransition } from 'react-transition-group';
 import { clearNotification } from '../../reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as MessageIcon } from '../../images/notification_message.svg';
-import { ReactComponent as ErrorIcon } from '../../images/notification_error.svg';
+import { ReactComponent as MessageIcon } from '../../images/exclamation-circle-solid.svg';
+import { ReactComponent as ErrorIcon } from '../../images/exclamation-triangle-solid.svg';
 
 import {
   Container,
@@ -57,11 +57,7 @@ const Notification = () => {
       <Container onClick={handleClick}>
         <MessageBox>
           <IconContainer type={type}>
-            {type === NotificationType.Message ? (
-              <MessageIcon />
-            ) : (
-              <ErrorIcon />
-            )}
+            {type === NotificationType.Message ? <MessageIcon /> : <ErrorIcon />}
           </IconContainer>
           <ContentContainer>
             <Topic>{topic}</Topic>

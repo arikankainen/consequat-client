@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { ReactComponent as SearchIcon } from '../../images/menu_search.svg';
+import { ReactComponent as SearchIcon } from '../../images/search-solid.svg';
 import { useHistory } from 'react-router-dom';
 
 interface SearchContainerProps {

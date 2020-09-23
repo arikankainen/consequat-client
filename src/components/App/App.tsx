@@ -75,7 +75,7 @@ const App = () => {
               <MainPage />
             </Route>
 
-            <Route path="/">{/* error page */}</Route>
+            <Route path="/">{/* TODO: error page */}</Route>
           </Switch>
         </MainContainer>
       </Main>
