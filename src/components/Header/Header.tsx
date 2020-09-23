@@ -95,9 +95,9 @@ const Header = () => {
       icon: UploadIcon,
     },
     {
-      text: 'Pictures',
-      subText: 'Browse your own pictures',
-      link: '/pictures',
+      text: 'My photos',
+      subText: 'Browse your own photos',
+      link: '/myphotos',
       icon: PicturesIcon,
     },
     {

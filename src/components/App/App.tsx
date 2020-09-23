@@ -12,7 +12,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import LogoutPage from '../LoginPage/LogoutPage';
 import SignupPage from '../LoginPage/SignupPage';
 import UploadPage from '../UploadPage/UploadPage';
-import PicturesPage from '../PicturesPage/PicturesPage';
+import MyPhotosPage from '../MyPhotosPage/MyPhotosPage';
 import AccountPage from '../AccountPage/AccountPage';
 import PhotosPage from '../PhotosPage/PhotosPage';
 
@@ -55,8 +55,8 @@ const App = () => {
               <UploadPage />
             </Route>
 
-            <Route path="/pictures">
-              <PicturesPage />
+            <Route path="/myphotos">
+              <MyPhotosPage />
             </Route>
 
             <Route path="/account">
@@ -71,9 +71,11 @@ const App = () => {
               <AboutPage />
             </Route>
 
-            <Route path="/">
+            <Route exact path="/">
               <MainPage />
             </Route>
+
+            <Route path="/">{/* error page */}</Route>
           </Switch>
         </MainContainer>
       </Main>

@@ -28,7 +28,7 @@ import {
   PictureListButtonGroup,
 } from '../PictureList/style';
 
-const PicturesPage = () => {
+const MyPhotosPage = () => {
   const resultMe = useQuery(ME, {
     fetchPolicy: 'no-cache',
   });
@@ -381,4 +381,4 @@ const PicturesPage = () => {
   );
 };
 
-export default PicturesPage;
+export default MyPhotosPage;
