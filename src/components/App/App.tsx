@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { SiteContainer, Main } from './style';
 import Header from '../Header/Header';
@@ -19,6 +20,11 @@ import PhotosPage from '../PhotosPage/PhotosPage';
 const App = () => {
   const location = useLocation();
   const [back, setBack] = useState<boolean>(false);
+  const prevLocationRef = useRef<string | undefined>();
+
+  useEffect(() => {
+    prevLocationRef.current = location.pathname;
+  });
 
   if (
     location.pathname === '/about' ||
@@ -36,20 +42,38 @@ const App = () => {
       <Notification />
       <Header />
 
-      <Main>
-        <Switch>
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/logout" component={LogoutPage} />
-          <Route path="/upload" component={UploadPage} />
-          <Route path="/myphotos" component={MyPhotosPage} />
-          <Route path="/account" component={AccountPage} />
-          <Route path="/photos" component={PhotosPage} />
-          <Route path="/about" component={AboutPage} />
-          <Route exact path="/" component={MainPage} />
-          <Route path="/">{/* TODO: error page */}</Route>
-        </Switch>
-      </Main>
+      <Route
+        render={({ location }) => {
+          let timeout = { enter: 300, exit: 300 };
+          let classNames = 'fade';
+
+          if (prevLocationRef.current === location.pathname) {
+            timeout = { enter: 0, exit: 0 };
+            classNames = 'nofade';
+          }
+
+          return (
+            <TransitionGroup component={null}>
+              <CSSTransition key={location.key} timeout={timeout} classNames={classNames}>
+                <Main>
+                  <Switch location={location}>
+                    <Route path="/login" component={LoginPage} />
+                    <Route path="/signup" component={SignupPage} />
+                    <Route path="/logout" component={LogoutPage} />
+                    <Route path="/upload" component={UploadPage} />
+                    <Route path="/myphotos" component={MyPhotosPage} />
+                    <Route path="/account" component={AccountPage} />
+                    <Route path="/photos" component={PhotosPage} />
+                    <Route path="/about" component={AboutPage} />
+                    <Route exact path="/" component={MainPage} />
+                    <Route path="/">{/* TODO: error page */}</Route>
+                  </Switch>
+                </Main>
+              </CSSTransition>
+            </TransitionGroup>
+          );
+        }}
+      />
 
       <Footer />
     </SiteContainer>

@@ -160,6 +160,28 @@ const GlobalStyles = createGlobalStyle`
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
   }
+
+  .fade-enter {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  .fade-enter-active {
+      opacity: 1;
+      transition: opacity 300ms ease-in;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  .fade-exit {
+      opacity: 1;
+  }
+
+  .fade-exit-active {
+      opacity: 0;
+      display: none;
+      transition: opacity 300ms ease-in;
+  }
 `;
 
 export default GlobalStyles;
