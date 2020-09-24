@@ -267,3 +267,29 @@ export const LIST_PHOTOS = gql`
   }
   ${PHOTO_DETAILS}
 `;
+
+export const GET_PHOTO = gql`
+  query getPhoto($id: String!) {
+    getPhoto(id: $id) {
+      ...PhotoDetails,
+      user { fullname },
+    }
+  }
+  ${PHOTO_DETAILS}
+`;
+
+export const LIST_COMMENTS = gql`
+  query listComments($photo: String, $author: String) {
+    listComments(
+      photo: $photo,
+      author: $author,
+    ) {
+      dateAdded,
+      text,
+      id,
+      author {
+        fullname,
+      },
+    }
+  }
+`;
