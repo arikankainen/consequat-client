@@ -20,6 +20,16 @@ export const Logo = styled.div`
     height: 150px;
     color: var(--accent-color-1);
     filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, .5));
+    animation: spin 30s infinite linear;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   }
 
   ${breakPoints.mobileM} {

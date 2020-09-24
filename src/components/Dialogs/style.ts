@@ -186,8 +186,8 @@ export const CheckboxLabel = styled(Label)`
 
   & > input[type='checkbox']:disabled:checked + *::before {
     content: '✓';
-    background-color: var(--accent-color-2-disabled);
-    border: 1px solid var(--accent-color-2-disabled);
+    background-color: #ccc;
+    border: 1px solid #ccc;
     color: #fff;
     text-align: center;
   }
