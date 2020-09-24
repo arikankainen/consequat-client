@@ -16,6 +16,7 @@ import UploadPage from '../UploadPage/UploadPage';
 import MyPhotosPage from '../MyPhotosPage/MyPhotosPage';
 import AccountPage from '../AccountPage/AccountPage';
 import PhotosPage from '../PhotosPage/PhotosPage';
+import PhotoPage from '../PhotoPage/PhotoPage';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const App = () => {
@@ -64,6 +65,7 @@ const App = () => {
                     <Route path="/upload" component={UploadPage} />
                     <Route path="/myphotos" component={MyPhotosPage} />
                     <Route path="/account" component={AccountPage} />
+                    <Route path="/photos/photo/:id" component={PhotoPage} />
                     <Route path="/photos" component={PhotosPage} />
                     <Route path="/about" component={AboutPage} />
                     <Route exact path="/" component={MainPage} />
