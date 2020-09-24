@@ -65,3 +65,11 @@ export interface Album {
   photos: Photo[];
   id: string;
 }
+
+export interface Comment {
+  dateAdded: string;
+  text: string;
+  author: User;
+  photo: Photo;
+  id: string;
+}
