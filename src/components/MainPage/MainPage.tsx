@@ -24,8 +24,8 @@ const MainPage = () => {
       />
 
       <H3>
-        Please check out <StyledLink to="/about">About</StyledLink>, to see where you are
-        registering!
+        Please check out <StyledLink to="/about">About</StyledLink> page, to see what this
+        all is about!
       </H3>
     </Container>
   );

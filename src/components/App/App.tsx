@@ -16,6 +16,7 @@ import UploadPage from '../UploadPage/UploadPage';
 import MyPhotosPage from '../MyPhotosPage/MyPhotosPage';
 import AccountPage from '../AccountPage/AccountPage';
 import PhotosPage from '../PhotosPage/PhotosPage';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const App = () => {
   const location = useLocation();
@@ -66,7 +67,7 @@ const App = () => {
                     <Route path="/photos" component={PhotosPage} />
                     <Route path="/about" component={AboutPage} />
                     <Route exact path="/" component={MainPage} />
-                    <Route path="/">{/* TODO: error page */}</Route>
+                    <Route path="/" component={NotFoundPage} />
                   </Switch>
                 </Main>
               </CSSTransition>

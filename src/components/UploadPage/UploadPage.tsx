@@ -79,7 +79,7 @@ const UploadForm = () => {
 
     setTimeout(() => {
       setUploadDialogOpen(false);
-      history.replace('/pictures');
+      history.replace('/myphotos');
     }, 300);
   };
 
