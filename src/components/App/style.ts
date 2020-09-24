@@ -10,8 +10,14 @@ interface SiteContainerProps {
 }
 
 export const SiteContainer = styled.section<SiteContainerProps>`
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 1fr 50px;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
   height: 100%;
   width: 100%;
 
@@ -41,10 +47,7 @@ export const SiteContainer = styled.section<SiteContainerProps>`
 `;
 
 export const Main = styled.div`
-  flex: auto;
-`;
-
-export const MainContainer = styled.div`
+  grid-area: main;
   display: flex;
   flex-direction: column;
   align-items: center;

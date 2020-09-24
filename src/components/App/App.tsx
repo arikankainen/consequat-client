@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { SiteContainer, Main, MainContainer } from './style';
+import { SiteContainer, Main } from './style';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -37,47 +37,18 @@ const App = () => {
       <Header />
 
       <Main>
-        <MainContainer>
-          <Switch>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-
-            <Route path="/signup">
-              <SignupPage />
-            </Route>
-
-            <Route path="/logout">
-              <LogoutPage />
-            </Route>
-
-            <Route path="/upload">
-              <UploadPage />
-            </Route>
-
-            <Route path="/myphotos">
-              <MyPhotosPage />
-            </Route>
-
-            <Route path="/account">
-              <AccountPage />
-            </Route>
-
-            <Route path="/photos">
-              <PhotosPage />
-            </Route>
-
-            <Route path="/about">
-              <AboutPage />
-            </Route>
-
-            <Route exact path="/">
-              <MainPage />
-            </Route>
-
-            <Route path="/">{/* TODO: error page */}</Route>
-          </Switch>
-        </MainContainer>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/logout" component={LogoutPage} />
+          <Route path="/upload" component={UploadPage} />
+          <Route path="/myphotos" component={MyPhotosPage} />
+          <Route path="/account" component={AccountPage} />
+          <Route path="/photos" component={PhotosPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route exact path="/" component={MainPage} />
+          <Route path="/">{/* TODO: error page */}</Route>
+        </Switch>
       </Main>
 
       <Footer />

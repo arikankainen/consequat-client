@@ -3,6 +3,7 @@ import breakPoints from '../../utils/breakPoints';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`
+  grid-area: header;
   position: sticky;
   top: 0;
   display: flex;
@@ -10,6 +11,7 @@ export const HeaderContainer = styled.div`
   align-items: center;
   z-index: 1000;
   background-color: var(--navigation-bg-color);
+  height: 60px;
 `;
 
 export const HeaderInnerContainer = styled.div`
