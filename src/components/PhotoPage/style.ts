@@ -5,8 +5,7 @@ import breakPoints from '../../utils/breakPoints';
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  /*grid-template-rows: calc(100vh - var(--header-height)) 1fr;*/
-  grid-template-rows: calc(100vh - 500px) 1fr;
+  grid-template-rows: calc(100vh - var(--header-height)) 1fr;
   width: 100%;
   padding: 0px;
 `;
@@ -26,6 +25,11 @@ export const PictureContainer = styled.div`
     align-items: center;
     max-width: calc(100% - 80px);
     height: calc(100% - 60px);
+
+    ${breakPoints.custom(600)} {
+      max-width: 100%;
+      height: 100%;
+    }
   }
 `;
 
@@ -44,6 +48,11 @@ const Arrow = styled.div`
   & > svg {
     width: 16px;
     color: #999;
+
+    ${breakPoints.custom(600)} {
+      color: #eee;
+      filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, .8));
+    }
   }
 `;
 
@@ -66,19 +75,18 @@ export const InfoContainer = styled.div`
   max-width: ${breakPoints.laptopLWidth};
   margin-left: auto;
   margin-right: auto;
-  padding: 30px 20px 20px 20px;
+  padding: 30px 20px 30px 20px;
 `;
 
 export const AuthorContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 30px;
 `;
 
 export const AuthorGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr;
   gap: 40px;
 
@@ -93,10 +101,22 @@ export const AuthorGridItem = styled.div`
 `;
 
 export const Author = styled.div`
+  display: flex;
+  align-items: center;
   font-family: var(--alt-font-family);
   font-size: 28px;
   font-weight: 200;
   line-height: 1;
+
+  & > svg {
+    height: 24px;
+    width: 24px;
+    min-height: 24px;
+    min-width: 24px;
+    color: #555;
+    margin-right: 10px;
+    margin-bottom: 3px;
+  }
 `;
 
 export const Name = styled.div`
@@ -126,6 +146,9 @@ export const PropertyWithIcon = styled.div`
 
   & > svg {
     height: 16px;
+    width: 16px;
+    min-height: 16px;
+    min-width: 16px;
     color: #555;
     margin-right: 7px;
     margin-bottom: 2px;
@@ -134,4 +157,10 @@ export const PropertyWithIcon = styled.div`
   &:first-child {
     margin-top: 0px;
   }
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  margin: 30px 0px;
 `;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Comment } from '../../utils/types';
 import formatDate from '../../utils/formatDate';
 import Button from '../Buttons/Button';
+import { ReactComponent as UserIcon } from '../../images/user-solid.svg';
 
 import {
   Container,
@@ -10,7 +11,7 @@ import {
   Author,
   Date,
   Text,
-  Input,
+  TextArea,
 } from './style';
 
 interface CommentsProps {
@@ -23,7 +24,7 @@ interface CommentsProps {
 const Comments: React.FC<CommentsProps> = ({ comments, onSubmit, loading, loggedIn }) => {
   const [inputComment, setInputComment] = useState('');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputComment(event.target.value);
   };
 
@@ -39,21 +40,30 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit, loading, logged
     <Container>
       {comments.map(comment => (
         <CommentContainer key={comment.id}>
-          <Author>{comment.author.fullname}</Author>
-          <Date>{formatDate(comment.dateAdded)}</Date>
-          <Text>{comment.text}</Text>
+          <UserIcon />
+          <div>
+            <Author>{comment.author.fullname}</Author>
+            <Date>{formatDate(comment.dateAdded)}</Date>
+            <Text>{comment.text}</Text>
+          </div>
         </CommentContainer>
       ))}
       {loggedIn && (
         <form onSubmit={handleSubmit}>
           <InputContainer>
-            <Input
-              type="text"
+            <TextArea
               onChange={handleInputChange}
               value={inputComment}
               disabled={loading}
+              autoComplete="off"
+              spellCheck={false}
+            ></TextArea>
+            <Button
+              text="Add comment"
+              onClick={() => void 0}
+              disabled={loading}
+              margin={[10, 0, 0, 0]}
             />
-            <Button text="Add comment" onClick={() => void 0} disabled={loading} />
           </InputContainer>
         </form>
       )}

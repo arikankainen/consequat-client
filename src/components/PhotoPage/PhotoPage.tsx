@@ -83,7 +83,7 @@ const PhotoPage = () => {
   if (resultPhoto.loading) return <div>Loading...</div>;
 
   return (
-    <ShowPhoto photo={photo}>
+    <ShowPhoto photo={photo} commentCount={comments.length}>
       <Comments
         comments={comments}
         onSubmit={handleSubmit}
