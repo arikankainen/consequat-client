@@ -6,7 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from '../../utils/queries';
 import { setError } from '../../reducers/notificationReducer';
-import { Photo, Comment } from '../../utils/types';
+import { PhotoUserExtended, Comment } from '../../utils/types';
 import logger from '../../utils/logger';
 import ShowPhoto from './ShowPhoto';
 import Comments from '../Comments/Comments';
@@ -14,7 +14,7 @@ import Comments from '../Comments/Comments';
 const PhotoPage = () => {
   const loginState = useSelector((state: RootState) => state.system);
   const { id } = useParams<{ id: string }>();
-  const [photo, setPhoto] = useState<Photo | null>(null);
+  const [photo, setPhoto] = useState<PhotoUserExtended | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const dispatch = useDispatch();
 

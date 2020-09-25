@@ -59,19 +59,79 @@ export const RightArrow = styled(Arrow)`
 
 export const InfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid red;
-  padding: 20px;
+  padding: 30px 20px 20px 20px;
+`;
+
+export const AuthorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+`;
+
+export const AuthorGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 40px;
+
+  ${breakPoints.custom(600)} {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+`;
+
+export const AuthorGridItem = styled.div`
+
 `;
 
 export const Author = styled.div`
-  font-family: var(--topic-font-family);
-  font-size: 24px;
+  font-family: var(--alt-font-family);
+  font-size: 28px;
   font-weight: 200;
-  color: #000;
+  line-height: 1;
+`;
+
+export const Name = styled.div`
+  font-family: var(--alt-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 15px;
+`;
+
+export const Description = styled.div`
+  font-family: var(--alt-font-family);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-top: 15px;
+`;
+
+export const PropertyWithIcon = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: var(--alt-font-family);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: 15px;
+
+  & > svg {
+    height: 16px;
+    color: #555;
+    margin-right: 7px;
+    margin-bottom: 2px;
+  }
+
+  &:first-child {
+    margin-top: 0px;
+  }
 `;

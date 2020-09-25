@@ -139,7 +139,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
           album: values.album !== '0' && values.album !== '' ? values.album : null,
           description: values.description,
           hidden: values.hidden,
-          tags: values.tags.split(',').map(tag => tag.trim()),
+          tags: values.tags.split(',').map(tag => tag.trim().toLowerCase()),
           id: ids,
         });
       } else {

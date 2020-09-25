@@ -13,7 +13,9 @@ const GlobalStyles = createGlobalStyle`
     --accent-color-2-disabled: #2967ae;
     --default-font-family: 'Hind', 'sans-serif';
     --topic-font-family: 'Montserrat', sans-serif;
+    --alt-font-family: 'Nunito Sans', sans-serif;
     --default-font-color: #bbb;
+    --default-font-color: #000;
     --default-font-color-slightly-darker: #999;
     --default-font-color-darker: #888;
     --default-font-color-highlight: #fff;
