@@ -57,9 +57,10 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit, loading, logged
               disabled={loading}
               autoComplete="off"
               spellCheck={false}
+              placeholder="Add your comment"
             ></TextArea>
             <Button
-              text="Add comment"
+              text="Comment"
               onClick={() => void 0}
               disabled={loading}
               margin={[10, 0, 0, 0]}

@@ -8,7 +8,7 @@ import { ReactComponent as MapIcon } from '../../images/map-marker-alt-solid.svg
 import { ReactComponent as TagIcon } from '../../images/tag-solid.svg';
 import { ReactComponent as CalendarIcon } from '../../images/calendar-alt-solid.svg';
 import { ReactComponent as CameraIcon } from '../../images/camera-solid.svg';
-import { ReactComponent as CommentIcon } from '../../images/camera-solid.svg';
+import { ReactComponent as CommentIcon } from '../../images/comment-solid.svg';
 
 import {
   GridContainer,

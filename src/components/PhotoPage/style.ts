@@ -75,7 +75,11 @@ export const InfoContainer = styled.div`
   max-width: ${breakPoints.laptopLWidth};
   margin-left: auto;
   margin-right: auto;
-  padding: 30px 20px 30px 20px;
+  padding: 50px 50px 50px 50px;
+
+  ${breakPoints.tablet} {
+    padding: 30px 20px 30px 20px;
+  }
 `;
 
 export const AuthorContainer = styled.div`
