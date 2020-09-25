@@ -6,13 +6,13 @@ import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from '../../utils/queries';
 import { setError } from '../../reducers/notificationReducer';
 import { Photo, Comment } from '../../utils/types';
 import logger from '../../utils/logger';
+import Comments from '../Comments/Comments';
 
 const PhotoPage = () => {
   const { id } = useParams<{ id: string }>();
   const [photo, setPhoto] = useState<Photo | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const dispatch = useDispatch();
-  const [inputText, setInputText] = useState('');
 
   const resultPhoto = useQuery(GET_PHOTO, { variables: { id }, fetchPolicy: 'no-cache' });
   const resultComments = useQuery(LIST_COMMENTS, {
@@ -31,9 +31,6 @@ const PhotoPage = () => {
           variables: { photo: id },
         });
         if (existingCache) {
-          console.log(existingCache);
-          console.log(response);
-
           const existingComments = existingCache.listComments;
           const updatedComments = existingComments.concat(response.data.createComment);
 
@@ -70,38 +67,26 @@ const PhotoPage = () => {
     //
   }, [resultAddComment.data]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (text: string) => {
     if (!photo) return;
 
     addComment({
-      variables: { text: inputText, photo: photo.id },
+      variables: { text, photo: photo.id },
     });
   };
 
+  if (!photo) return null;
   if (resultPhoto.loading) return <div>Loading...</div>;
 
   return (
     <div style={{ backgroundColor: '#222', width: '100%', height: '100%' }}>
-      <img src={photo?.thumbUrl} alt={photo?.name} />
-      <div>
-        {comments.map(comment => (
-          <div key={comment.id}>
-            <div>{comment.author.fullname}</div>
-            <div>{comment.dateAdded}</div>
-            <div>{comment.text}</div>
-          </div>
-        ))}
-      </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input type="text" onChange={handleInputChange} value={inputText} />
-        </form>
-      </div>
+      <img src={photo.thumbUrl} alt={photo.name} />
+      <Comments
+        comments={comments}
+        onSubmit={handleSubmit}
+        loading={resultAddComment.loading || resultComments.loading}
+        loggedIn={false}
+      />
     </div>
   );
 };

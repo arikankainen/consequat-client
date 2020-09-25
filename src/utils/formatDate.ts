@@ -3,11 +3,15 @@ const pad = (input: number): string => {
   return `${input}`;
 };
 
-const formatDate = (input: Date | undefined): string => {
+const formatDate = (input: string | Date | undefined): string => {
   if (input) {
     const date = new Date(Number(input));
-    const customizedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    const customizedTime = `${date.getHours()}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    const customizedDate = `${date.getDate()}.${
+      date.getMonth() + 1
+    }.${date.getFullYear()}`;
+    const customizedTime = `${date.getHours()}:${pad(date.getMinutes())}:${pad(
+      date.getSeconds()
+    )}`;
 
     return `${customizedDate} ${customizedTime}`;
   } else return '';
