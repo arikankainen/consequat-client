@@ -293,3 +293,22 @@ export const LIST_COMMENTS = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation createComment(
+    $text: String!,
+    $photo: String!,
+  ) {
+    createComment(
+      text: $text,
+      photo: $photo,
+    ) {
+      dateAdded,
+      text,
+      id,
+      author {
+        fullname,
+      },
+    }
+  }
+`;
