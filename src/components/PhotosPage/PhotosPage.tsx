@@ -6,7 +6,9 @@ import PhotoGrid from './PhotoGrid';
 import { useLocation } from 'react-router-dom';
 
 const PhotosPage = () => {
-  const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS);
+  const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
+    fetchPolicy: 'network-only',
+  });
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
   const [notFound, setNotFound] = useState(false);
   const url = useLocation();

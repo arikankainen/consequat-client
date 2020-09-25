@@ -21,6 +21,7 @@ const PhotoPage = () => {
   const resultPhoto = useQuery(GET_PHOTO, { variables: { id }, fetchPolicy: 'no-cache' });
   const resultComments = useQuery(LIST_COMMENTS, {
     variables: { photo: id },
+    pollInterval: 5000,
   });
 
   const [addComment, resultAddComment] = useMutation(CREATE_COMMENT, {
