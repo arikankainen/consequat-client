@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const CommentContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   & > svg {
     height: 16px;

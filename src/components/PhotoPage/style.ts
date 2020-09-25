@@ -2,12 +2,18 @@ import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import breakPoints from '../../utils/breakPoints';
 
+const spacing = '30px';
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: calc(100vh - var(--header-height)) 1fr;
   width: 100%;
   padding: 0px;
+
+  ${breakPoints.custom(600)} {
+    grid-template-rows: auto auto;
+  }
 `;
 
 export const PictureContainer = styled.div`
@@ -31,6 +37,10 @@ export const PictureContainer = styled.div`
       height: 100%;
     }
   }
+
+  ${breakPoints.custom(600)} {
+    padding-bottom: ${spacing};
+  }
 `;
 
 export const Image = styled(LazyLoadImage)`
@@ -53,6 +63,10 @@ const Arrow = styled.div`
       color: #eee;
       filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, .8));
     }
+  }
+
+  ${breakPoints.custom(600)} {
+    transform: translateY(calc(-50% - (${spacing} / 2)));
   }
 `;
 
