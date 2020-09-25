@@ -11,7 +11,7 @@ export const HeaderContainer = styled.div`
   align-items: center;
   z-index: 1000;
   background-color: var(--navigation-bg-color);
-  height: 60px;
+  height: var(--header-height);
 `;
 
 export const HeaderInnerContainer = styled.div`

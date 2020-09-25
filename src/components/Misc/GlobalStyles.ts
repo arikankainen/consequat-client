@@ -52,6 +52,7 @@ const GlobalStyles = createGlobalStyle`
     --menu-box-shadow: 0 0 5px 1px rgba(0, 0, 0, .2);
     --unlocked-color: var(--accent-color-2);
     --locked-color: #999;
+    --header-height: 60px;
   }
 
   * {

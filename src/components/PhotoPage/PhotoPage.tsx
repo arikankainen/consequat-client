@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -6,9 +8,11 @@ import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from '../../utils/queries';
 import { setError } from '../../reducers/notificationReducer';
 import { Photo, Comment } from '../../utils/types';
 import logger from '../../utils/logger';
+import ShowPhoto from './ShowPhoto';
 import Comments from '../Comments/Comments';
 
 const PhotoPage = () => {
+  const loginState = useSelector((state: RootState) => state.system);
   const { id } = useParams<{ id: string }>();
   const [photo, setPhoto] = useState<Photo | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -79,15 +83,14 @@ const PhotoPage = () => {
   if (resultPhoto.loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ backgroundColor: '#222', width: '100%', height: '100%' }}>
-      <img src={photo.thumbUrl} alt={photo.name} />
+    <ShowPhoto photo={photo}>
       <Comments
         comments={comments}
         onSubmit={handleSubmit}
         loading={resultAddComment.loading || resultComments.loading}
-        loggedIn={false}
+        loggedIn={loginState.loggedIn}
       />
-    </div>
+    </ShowPhoto>
   );
 };
 
