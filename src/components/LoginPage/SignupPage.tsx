@@ -8,15 +8,9 @@ import { setMessage, setError } from '../../reducers/notificationReducer';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, PasswordInput } from './Inputs';
+import Button from '../Buttons/Button';
 
-import {
-  OuterContainer,
-  Container,
-  Topic,
-  Button,
-  QuestionArea,
-  QuestionLink,
-} from './style';
+import { OuterContainer, Container, Topic, QuestionArea, QuestionLink } from './style';
 
 const SignupPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -114,9 +108,14 @@ const SignupPage = () => {
             <TextInput name="email" label="E-mail" />
             <PasswordInput name="password" label="Password" />
             <PasswordInput name="passwordConfirmation" label="Confirm password" />
-            <Button type="submit" disabled={disabled}>
-              {buttonText}
-            </Button>
+            <Button
+              type="submit"
+              text={buttonText}
+              disabled={disabled}
+              onClick={() => void 0}
+              margin={[20, 0, 0, 0]}
+              fullWidth
+            />
             <QuestionArea>
               <QuestionLink to="/login">Already registered? Log in.</QuestionLink>
             </QuestionArea>

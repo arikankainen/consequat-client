@@ -33,11 +33,11 @@ export const Container = styled.div`
 `;
 
 export const Topic = styled.h1`
+  font-family: var(--topic-font-family);
   font-size: 24px;
-  color: var(--accent-color-2);
-  color: var(--accent-color-1);
-  text-transform: uppercase;
-  font-weight: 300;
+  color: #000;
+  font-weight: 200;
+  margin-bottom: 10px;
 `;
 
 export const Button = styled.button`
@@ -73,13 +73,13 @@ export const QuestionArea = styled.div`
 
 export const QuestionLink = styled(Link)`
   text-decoration: none;
-  color: #555;
+  color: #000;
   
   &:visited {
-    color: #555;
+    color: #000;
   }
   &:hover {
-    color: #000;
+    color: var(--accent-color-2);
   }
 
 `;

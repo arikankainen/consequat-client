@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 
 import { SiteContainer, Main } from './style';
 import Header from '../Header/Header';
@@ -20,6 +22,7 @@ import PhotoPage from '../PhotoPage/PhotoPage';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const App = () => {
+  const loginState = useSelector((state: RootState) => state.system);
   const location = useLocation();
   const [back, setBack] = useState<boolean>(false);
   const prevLocationRef = useRef<string | undefined>();
@@ -59,8 +62,12 @@ const App = () => {
               <CSSTransition key={location.key} timeout={timeout} classNames={classNames}>
                 <Main>
                   <Switch location={location}>
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/signup" component={SignupPage} />
+                    <Route path="/login">
+                      {loginState.loggedIn ? <Redirect to="/" /> : <LoginPage />}
+                    </Route>
+                    <Route path="/signup">
+                      {loginState.loggedIn ? <Redirect to="/" /> : <SignupPage />}
+                    </Route>
                     <Route path="/logout" component={LogoutPage} />
                     <Route path="/upload" component={UploadPage} />
                     <Route path="/myphotos" component={MyPhotosPage} />

@@ -37,6 +37,7 @@ const Container = styled.button<ContainerProps>`
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
+  transition: transform 100ms;
 
   & > svg {
     width: 16px;
@@ -179,6 +180,7 @@ const Container = styled.button<ContainerProps>`
         border: 1px solid #fff;
         color: var(--accent-color-1);
         background-color: #fff;
+        transform: scale(1.1);
       }
 
       & > svg {

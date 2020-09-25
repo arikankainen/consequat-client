@@ -10,15 +10,9 @@ import { LOGIN, ME } from '../../utils/queries';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, PasswordInput } from './Inputs';
+import Button from '../Buttons/Button';
 
-import {
-  OuterContainer,
-  Container,
-  Topic,
-  Button,
-  QuestionArea,
-  QuestionLink,
-} from './style';
+import { OuterContainer, Container, Topic, QuestionArea, QuestionLink } from './style';
 
 const LoginPage = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -97,8 +91,8 @@ const LoginPage = () => {
   };
 
   const validation = Yup.object({
-    username: Yup.string().min(3, 'must be at least 3 characters').required('required'),
-    password: Yup.string().min(5, 'must be at least 5 characters').required('required'),
+    username: Yup.string().required('required'),
+    password: Yup.string().required('required'),
   });
 
   return (
@@ -113,9 +107,14 @@ const LoginPage = () => {
           <Form>
             <TextInput name="username" label="Username" />
             <PasswordInput name="password" label="Password" />
-            <Button type="submit" disabled={disabled}>
-              {buttonText}
-            </Button>
+            <Button
+              type="submit"
+              text={buttonText}
+              disabled={disabled}
+              onClick={() => void 0}
+              margin={[20, 0, 0, 0]}
+              fullWidth
+            />
             <QuestionArea>
               <QuestionLink to="/signup">Not registered yet? Sign up!</QuestionLink>
             </QuestionArea>

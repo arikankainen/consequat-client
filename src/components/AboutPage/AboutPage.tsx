@@ -13,7 +13,7 @@ const AboutPage = () => {
           <Link href="https://courses.helsinki.fi/fi/aytkt21010">
             Full Stack Web Development
           </Link>{' '}
-          in Avoin Yliopisto. That said, there is no guarantee for this application being
+          at Avoin Yliopisto. That said, there is no guarantee for this application being
           the most secure or stable. Anything can get broken, so do not upload anything
           you don&apos;t want public viewers to see. Also, do not use the same password
           that you are using in other services. Aside of that, this application will be
