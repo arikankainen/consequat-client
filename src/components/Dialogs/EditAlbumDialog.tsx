@@ -1,20 +1,13 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import BaseDialog from './BaseDialog';
-import Button, { ButtonColor } from '../Buttons/Button';
+import BaseDialog from './BaseDialog/BaseDialog';
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
 import { FormValues } from './EditAlbum';
-import { TextInput, TextAreaInput } from './Inputs';
+import { TextInput, TextAreaInput } from './Inputs/Inputs';
 import Spinner from '../Spinner/Spinner';
-
-import {
-  DialogContainer,
-  DialogTopic,
-  DialogContentGrid,
-  DialogButtonArea,
-  SavingIndicator,
-  SpinnerContainer,
-} from './style';
+import * as Styled from './style';
 
 export interface Props {
   open: boolean;
@@ -39,7 +32,7 @@ const EditAlbumDialog: React.FC<Props> = ({
 }) => {
   return (
     <BaseDialog open={open}>
-      <DialogContainer>
+      <Styled.DialogContainer>
         <Formik
           initialValues={initialValues}
           enableReinitialize={true}
@@ -47,18 +40,18 @@ const EditAlbumDialog: React.FC<Props> = ({
           onSubmit={handleSubmit}
         >
           <Form>
-            <DialogTopic>
+            <Styled.DialogTopic>
               {createNew ? <>Create a new album</> : <>Edit album</>}
-            </DialogTopic>
-            <DialogContentGrid>
+            </Styled.DialogTopic>
+            <Styled.DialogContentGrid>
               <TextInput name="name" label="Name" />
               <TextAreaInput name="description" label="Description" />
-            </DialogContentGrid>
-            <DialogButtonArea>
-              <SpinnerContainer>
+            </Styled.DialogContentGrid>
+            <Styled.DialogButtonArea>
+              <Styled.SpinnerContainer>
                 <Spinner show={saving} />
-              </SpinnerContainer>
-              <SavingIndicator>{message}</SavingIndicator>
+              </Styled.SpinnerContainer>
+              <Styled.SavingIndicator>{message}</Styled.SavingIndicator>
               <Button
                 text="Cancel"
                 type="button"
@@ -73,10 +66,10 @@ const EditAlbumDialog: React.FC<Props> = ({
                 disabled={saving}
                 onClick={() => void 0}
               />
-            </DialogButtonArea>
+            </Styled.DialogButtonArea>
           </Form>
         </Formik>
-      </DialogContainer>
+      </Styled.DialogContainer>
     </BaseDialog>
   );
 };

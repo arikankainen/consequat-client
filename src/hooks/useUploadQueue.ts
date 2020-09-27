@@ -59,14 +59,24 @@ const useUploadQueue = (username?: string): Return => {
       totalFiles,
       currentName,
     });
-  }, [status, totalProgress, fileProgress, currentFile, totalFiles, currentName]);
+  }, [
+    status,
+    totalProgress,
+    fileProgress,
+    currentFile,
+    totalFiles,
+    currentName,
+  ]);
 
   useEffect(() => {
     if (!pictureState.pictures || !totalFiles) return;
     const photos = pictureState.pictures;
 
-    const percent = Math.round(((totalFiles - photos.length) / totalFiles) * 100);
-    const current = photos.length > 0 ? totalFiles - photos.length + 1 : totalFiles;
+    const percent = Math.round(
+      ((totalFiles - photos.length) / totalFiles) * 100
+    );
+    const current =
+      photos.length > 0 ? totalFiles - photos.length + 1 : totalFiles;
     setTotalProgress(percent);
     setCurrentFile(current);
   }, [pictureState.pictures, totalFiles]);
@@ -74,7 +84,9 @@ const useUploadQueue = (username?: string): Return => {
   useEffect(() => {
     if (!pictureState.pictures) return;
 
-    const photo = pictureState.pictures.find(p => p.picture.name === currentName);
+    const photo = pictureState.pictures.find(
+      p => p.picture.name === currentName
+    );
     if (!photo) return;
 
     if (photo.progress > -1) setFileProgress(photo.progress);

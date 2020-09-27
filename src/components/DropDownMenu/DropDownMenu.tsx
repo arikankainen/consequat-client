@@ -1,56 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import styled, { css } from 'styled-components';
-import Button, { ButtonColor } from '../Buttons/Button';
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
 import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
-
-const Container = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-export enum DropDownAlign {
-  left,
-  right,
-}
-
-interface DropProps {
-  show: boolean;
-  alignContent: DropDownAlign;
-}
-
-const Drop = styled.div<DropProps>`
-  position: absolute;
-  top: calc(100% + 10px);
-  padding: 10px;
-  background-color: #fff;
-  z-index: 1;
-  box-shadow: var(--menu-box-shadow);
-  border-radius: 5px;
-  display: none;
-
-  ${props =>
-    props.show &&
-    css`
-      display: block;
-  `}
-
-  ${props =>
-    props.alignContent === DropDownAlign.left &&
-    css`
-      left: 0;
-  `}
-
-  ${props =>
-    props.alignContent === DropDownAlign.right &&
-    css`
-      right: 0;
-  `}
-`;
+import * as Styled from './style';
 
 interface DropDownMenuProps {
   buttonName: string;
   children: JSX.Element;
-  alignContent: DropDownAlign;
+  alignContent: Styled.DropDownAlign;
   Icon?: React.FunctionComponent;
 }
 
@@ -81,7 +38,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   }, [closeMenu]);
 
   return (
-    <Container>
+    <Styled.Container>
       <Button
         refProp={refButton}
         text={buttonName}
@@ -91,13 +48,13 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
         color={ButtonColor.white}
         rounded={true}
       />
-      <Drop show={open} ref={refMenu} alignContent={alignContent}>
+      <Styled.Drop show={open} ref={refMenu} alignContent={alignContent}>
         {React.cloneElement(children, {
           open: open,
           onSubmitted: () => setOpen(false),
         })}
-      </Drop>
-    </Container>
+      </Styled.Drop>
+    </Styled.Container>
   );
 };
 

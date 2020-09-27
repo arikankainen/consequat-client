@@ -2,15 +2,7 @@ import React from 'react';
 import { ReactComponent as CheckedIcon } from '../../images/check-solid.svg';
 import { ReactComponent as HiddenIcon } from '../../images/lock-solid_modified_thumbnail.svg';
 
-import {
-  ThumbnailContainer,
-  ThumbnailPlaceholder,
-  ThumbnailPicture,
-  ThumbnailSelectIconArea,
-  ThumbnailHiddenIconArea,
-  ThumbnailNameArea,
-  ThumbnailNameAreaText,
-} from './style';
+import * as Styled from './style';
 
 interface ThumbnailProps {
   src: string;
@@ -34,9 +26,9 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnailRef,
 }) => {
   return (
-    <ThumbnailContainer ref={containerRef}>
-      <ThumbnailPlaceholder>
-        <ThumbnailPicture
+    <Styled.ThumbnailContainer ref={containerRef}>
+      <Styled.ThumbnailPlaceholder>
+        <Styled.ThumbnailPicture
           ref={thumbnailRef}
           onClick={handleThumbnailClick}
           src={src}
@@ -44,18 +36,23 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
             e.target.style.display = 'none';
           }}
         />
-      </ThumbnailPlaceholder>
+      </Styled.ThumbnailPlaceholder>
 
-      <ThumbnailSelectIconArea onClick={handleIconClick} selected={selected}>
+      <Styled.ThumbnailSelectIconArea
+        onClick={handleIconClick}
+        selected={selected}
+      >
         {selected && <CheckedIcon />}
-      </ThumbnailSelectIconArea>
+      </Styled.ThumbnailSelectIconArea>
 
-      <ThumbnailHiddenIconArea>{hidden && <HiddenIcon />}</ThumbnailHiddenIconArea>
+      <Styled.ThumbnailHiddenIconArea>
+        {hidden && <HiddenIcon />}
+      </Styled.ThumbnailHiddenIconArea>
 
-      <ThumbnailNameArea>
-        <ThumbnailNameAreaText>{name}</ThumbnailNameAreaText>
-      </ThumbnailNameArea>
-    </ThumbnailContainer>
+      <Styled.ThumbnailNameArea>
+        <Styled.ThumbnailNameAreaText>{name}</Styled.ThumbnailNameAreaText>
+      </Styled.ThumbnailNameArea>
+    </Styled.ThumbnailContainer>
   );
 };
 

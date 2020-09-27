@@ -38,7 +38,9 @@ const useDeleteQueue = (): Return => {
   const [currentFile, setCurrentFile] = useState(0);
   const [totalFiles, setTotalFiles] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(undefined);
+  const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(
+    undefined
+  );
   const deletePhoto = useDeletePhoto();
 
   useEffect(() => {
@@ -48,8 +50,11 @@ const useDeleteQueue = (): Return => {
   useEffect(() => {
     if (!photos || !totalFiles) return;
 
-    const percent = Math.round(((totalFiles - photos.length) / totalFiles) * 100);
-    const current = photos.length > 0 ? totalFiles - photos.length + 1 : totalFiles;
+    const percent = Math.round(
+      ((totalFiles - photos.length) / totalFiles) * 100
+    );
+    const current =
+      photos.length > 0 ? totalFiles - photos.length + 1 : totalFiles;
     setProgress(percent);
     setCurrentFile(current);
   }, [photos, totalFiles]);

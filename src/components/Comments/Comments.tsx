@@ -3,16 +3,7 @@ import { Comment } from '../../utils/types';
 import formatDate from '../../utils/formatDate';
 import Button from '../Buttons/Button';
 import { ReactComponent as UserIcon } from '../../images/user-solid.svg';
-
-import {
-  Container,
-  CommentContainer,
-  InputContainer,
-  Author,
-  Date,
-  Text,
-  TextArea,
-} from './style';
+import * as Styled from './style';
 
 interface CommentsProps {
   comments: Comment[];
@@ -21,7 +12,12 @@ interface CommentsProps {
   loggedIn: boolean;
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments, onSubmit, loading, loggedIn }) => {
+const Comments: React.FC<CommentsProps> = ({
+  comments,
+  onSubmit,
+  loading,
+  loggedIn,
+}) => {
   const [inputComment, setInputComment] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -37,38 +33,38 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit, loading, logged
   };
 
   return (
-    <Container>
+    <Styled.Container>
       {comments.map(comment => (
-        <CommentContainer key={comment.id}>
+        <Styled.CommentContainer key={comment.id}>
           <UserIcon />
           <div>
-            <Author>{comment.author.fullname}</Author>
-            <Date>{formatDate(comment.dateAdded)}</Date>
-            <Text>{comment.text}</Text>
+            <Styled.Author>{comment.author.fullname}</Styled.Author>
+            <Styled.Date>{formatDate(comment.dateAdded)}</Styled.Date>
+            <Styled.Text>{comment.text}</Styled.Text>
           </div>
-        </CommentContainer>
+        </Styled.CommentContainer>
       ))}
       {loggedIn && (
         <form onSubmit={handleSubmit}>
-          <InputContainer>
-            <TextArea
+          <Styled.InputContainer>
+            <Styled.TextArea
               onChange={handleInputChange}
               value={inputComment}
               disabled={loading}
               autoComplete="off"
               spellCheck={false}
               placeholder="Add your comment"
-            ></TextArea>
+            ></Styled.TextArea>
             <Button
               text="Comment"
               onClick={() => void 0}
               disabled={loading}
               margin={[10, 0, 0, 0]}
             />
-          </InputContainer>
+          </Styled.InputContainer>
         </form>
       )}
-    </Container>
+    </Styled.Container>
   );
 };
 

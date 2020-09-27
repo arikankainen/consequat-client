@@ -28,7 +28,9 @@ const initialResponse = {
 };
 
 const useDeleteAlbum = (): Return => {
-  const [response, setResponse] = useState<DeleteAlbumResponse>(initialResponse);
+  const [response, setResponse] = useState<DeleteAlbumResponse>(
+    initialResponse
+  );
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_ALBUM, {
     onError: error => {

@@ -1,37 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router-dom';
-import Button, { ButtonColor } from '../Buttons/Button';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 180px;
-`;
-
-const Topic = styled.div`
-  font-size: 16px;
-  color: #000;
-  margin-bottom: 15px;
-  line-height: 1.3;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  margin: 5px 10px 0px 10px;
-`;
-
-const Checkbox = styled.input.attrs({ type: 'checkbox' })`
-  margin-right: 10px;
-  margin-top: 2px;
-`;
-
-const Label = styled.label`
-  color: #000;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.3;
-`;
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
+import * as Styled from './style';
 
 interface SearchOptionsProps {
   open?: boolean;
@@ -75,44 +46,60 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({ open, onSubmitted }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container>
-        <Topic>Search inside of following information fields:</Topic>
+      <Styled.Container>
+        <Styled.Topic>
+          Search inside of following information fields:
+        </Styled.Topic>
 
-        <CheckboxContainer>
-          <Checkbox name="name" onChange={() => setName(!name)} checked={name} />
-          <Label htmlFor="name" onClick={() => setName(!name)}>
+        <Styled.CheckboxContainer>
+          <Styled.Checkbox
+            name="name"
+            onChange={() => setName(!name)}
+            checked={name}
+          />
+          <Styled.Label htmlFor="name" onClick={() => setName(!name)}>
             Photo name
-          </Label>
-        </CheckboxContainer>
+          </Styled.Label>
+        </Styled.CheckboxContainer>
 
-        <CheckboxContainer>
-          <Checkbox
+        <Styled.CheckboxContainer>
+          <Styled.Checkbox
             name="location"
             onChange={() => setLocation(!location)}
             checked={location}
           />
-          <Label htmlFor="location" onClick={() => setLocation(!location)}>
+          <Styled.Label
+            htmlFor="location"
+            onClick={() => setLocation(!location)}
+          >
             Location
-          </Label>
-        </CheckboxContainer>
+          </Styled.Label>
+        </Styled.CheckboxContainer>
 
-        <CheckboxContainer>
-          <Checkbox
+        <Styled.CheckboxContainer>
+          <Styled.Checkbox
             name="description"
             onChange={() => setDescription(!description)}
             checked={description}
           />
-          <Label htmlFor="description" onClick={() => setDescription(!description)}>
+          <Styled.Label
+            htmlFor="description"
+            onClick={() => setDescription(!description)}
+          >
             Description
-          </Label>
-        </CheckboxContainer>
+          </Styled.Label>
+        </Styled.CheckboxContainer>
 
-        <CheckboxContainer>
-          <Checkbox name="tags" onChange={() => setTags(!tags)} checked={tags} />
-          <Label htmlFor="tags" onClick={() => setTags(!tags)}>
+        <Styled.CheckboxContainer>
+          <Styled.Checkbox
+            name="tags"
+            onChange={() => setTags(!tags)}
+            checked={tags}
+          />
+          <Styled.Label htmlFor="tags" onClick={() => setTags(!tags)}>
             Tags
-          </Label>
-        </CheckboxContainer>
+          </Styled.Label>
+        </Styled.CheckboxContainer>
         <Button
           text="Apply"
           onClick={() => void 0}
@@ -121,7 +108,7 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({ open, onSubmitted }) => {
           fullWidth
           disabled={disabled}
         />
-      </Container>
+      </Styled.Container>
     </form>
   );
 };

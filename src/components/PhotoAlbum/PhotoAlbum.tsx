@@ -1,21 +1,12 @@
 import React from 'react';
-import Button, { ButtonColor } from '../Buttons/Button';
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
 import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
 import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
 import { ReactComponent as UploadButton } from '../../images/upload-solid.svg';
 import { ReactComponent as CheckButton } from '../../images/check-circle-regular.svg';
 import { ReactComponent as UncheckButton } from '../../images/check-circle-regular_modified.svg';
-
-import {
-  AlbumContainer,
-  PictureListArea,
-  TopicContainer,
-  NameAndDescription,
-  Name,
-  Description,
-  Edit,
-  EmptyText,
-} from './style';
+import * as Styled from './style';
 
 interface PhotoAlbumProps {
   name: string;
@@ -52,7 +43,9 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   selected,
   children,
 }) => {
-  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleContainerClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     if ((event.target as HTMLDivElement).hasAttribute('data-outside')) {
       if (onOutsideClick) onOutsideClick();
     }
@@ -60,13 +53,15 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
 
   if (isEmpty && isNotRealAlbum) return null;
   return (
-    <AlbumContainer onClick={handleContainerClick}>
-      <TopicContainer data-outside>
-        <NameAndDescription data-outside>
-          <Name data-outside>{name}</Name>
-          {description && <Description data-outside>{description}</Description>}
-        </NameAndDescription>
-        <Edit data-outside>
+    <Styled.AlbumContainer onClick={handleContainerClick}>
+      <Styled.TopicContainer data-outside>
+        <Styled.NameAndDescription data-outside>
+          <Styled.Name data-outside>{name}</Styled.Name>
+          {description && (
+            <Styled.Description data-outside>{description}</Styled.Description>
+          )}
+        </Styled.NameAndDescription>
+        <Styled.Edit data-outside>
           {uploadButtonVisible && (
             <Button
               text="Upload"
@@ -102,12 +97,12 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               breakPoint="600px"
             />
           )}
-        </Edit>
-      </TopicContainer>
-      <PictureListArea data-outside>
-        {!isEmpty ? children : <EmptyText>No photos</EmptyText>}
-      </PictureListArea>
-    </AlbumContainer>
+        </Styled.Edit>
+      </Styled.TopicContainer>
+      <Styled.PictureListArea data-outside>
+        {!isEmpty ? children : <Styled.EmptyText>No photos</Styled.EmptyText>}
+      </Styled.PictureListArea>
+    </Styled.AlbumContainer>
   );
 };
 

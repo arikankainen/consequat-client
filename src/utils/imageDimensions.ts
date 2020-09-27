@@ -1,4 +1,6 @@
-const imageDimensions = (file: File): Promise<{ width: number; height: number }> => {
+const imageDimensions = (
+  file: File
+): Promise<{ width: number; height: number }> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.src = URL.createObjectURL(file);

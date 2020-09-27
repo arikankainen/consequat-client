@@ -1,29 +1,21 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { Album } from '../../utils/types';
-import BaseDialog from './BaseDialog';
-import Button, { ButtonColor } from '../Buttons/Button';
+import BaseDialog from './BaseDialog/BaseDialog';
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
 import { FormValues, Errors } from './EditPhoto';
 import formatDate from '../../utils/formatDate';
+import Spinner from '../Spinner/Spinner';
+import * as Styled from './style';
+
 import {
   UncontrolledInput,
   TextInput,
   TextAreaInput,
   SelectInput,
   CheckboxInput,
-} from './Inputs';
-import Spinner from '../Spinner/Spinner';
-
-import {
-  DialogContainer,
-  DialogTopic,
-  DialogContentGrid,
-  DialogButtonArea,
-  SavingIndicator,
-  SpinnerContainer,
-  Warning,
-  Comment,
-} from './style';
+} from './Inputs/Inputs';
 
 export interface EditPhotoDialogProps {
   open: boolean;
@@ -52,7 +44,7 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
 }) => {
   return (
     <BaseDialog open={open}>
-      <DialogContainer>
+      <Styled.DialogContainer>
         <Formik
           initialValues={initialValues}
           enableReinitialize={true}
@@ -62,26 +54,32 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
           {({ values, setFieldValue }) => (
             <Form>
               {multi ? (
-                <DialogTopic>Edit multiple photos</DialogTopic>
+                <Styled.DialogTopic>Edit multiple photos</Styled.DialogTopic>
               ) : (
-                <DialogTopic>Edit photo</DialogTopic>
+                <Styled.DialogTopic>Edit photo</Styled.DialogTopic>
               )}
-              <DialogContentGrid>
+              <Styled.DialogContentGrid>
                 {multi && (
-                  <Warning>
-                    Fields that are initially locked, contains unique values. By unlocking
-                    those fields, you overwrite existing values for all selected photos by
-                    values you enter. Only unlocked fields will be saved.
-                  </Warning>
+                  <Styled.Warning>
+                    Fields that are initially locked, contains unique values. By
+                    unlocking those fields, you overwrite existing values for
+                    all selected photos by values you enter. Only unlocked
+                    fields will be saved.
+                  </Styled.Warning>
                 )}
                 {!multi && (
-                  <UncontrolledInput label="Added" value={formatDate(dateAdded)} />
+                  <UncontrolledInput
+                    label="Added"
+                    value={formatDate(dateAdded)}
+                  />
                 )}
                 <TextInput
                   name="name"
                   label="Name"
                   disabled={values.nameLocked}
-                  onLockClick={() => setFieldValue('nameLocked', !values.nameLocked)}
+                  onLockClick={() =>
+                    setFieldValue('nameLocked', !values.nameLocked)
+                  }
                   multi={multi}
                 />
                 <TextInput
@@ -98,7 +96,9 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   label="Album"
                   albums={albums}
                   disabled={values.albumLocked}
-                  onLockClick={() => setFieldValue('albumLocked', !values.albumLocked)}
+                  onLockClick={() =>
+                    setFieldValue('albumLocked', !values.albumLocked)
+                  }
                   multi={multi}
                 />
                 <TextAreaInput
@@ -106,7 +106,10 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   label="Description"
                   disabled={values.descriptionLocked}
                   onLockClick={() =>
-                    setFieldValue('descriptionLocked', !values.descriptionLocked)
+                    setFieldValue(
+                      'descriptionLocked',
+                      !values.descriptionLocked
+                    )
                   }
                   multi={multi}
                 />
@@ -114,24 +117,28 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   name="tags"
                   label="Tags"
                   disabled={values.tagsLocked}
-                  onLockClick={() => setFieldValue('tagsLocked', !values.tagsLocked)}
+                  onLockClick={() =>
+                    setFieldValue('tagsLocked', !values.tagsLocked)
+                  }
                   multi={multi}
                 />
                 <div></div>
-                <Comment>Separate your tags by comma</Comment>
+                <Styled.Comment>Separate your tags by comma</Styled.Comment>
                 <CheckboxInput
                   name="hidden"
                   label="Hide photo from public gallery"
                   disabled={values.hiddenLocked}
-                  onLockClick={() => setFieldValue('hiddenLocked', !values.hiddenLocked)}
+                  onLockClick={() =>
+                    setFieldValue('hiddenLocked', !values.hiddenLocked)
+                  }
                   multi={multi}
                 />
-              </DialogContentGrid>
-              <DialogButtonArea>
-                <SpinnerContainer>
+              </Styled.DialogContentGrid>
+              <Styled.DialogButtonArea>
+                <Styled.SpinnerContainer>
                   <Spinner show={saving} />
-                </SpinnerContainer>
-                <SavingIndicator>{message}</SavingIndicator>
+                </Styled.SpinnerContainer>
+                <Styled.SavingIndicator>{message}</Styled.SavingIndicator>
                 <Button
                   text="Cancel"
                   type="button"
@@ -146,11 +153,11 @@ const EditPhotoDialog: React.FC<EditPhotoDialogProps> = ({
                   disabled={saving}
                   onClick={() => void 0}
                 />
-              </DialogButtonArea>
+              </Styled.DialogButtonArea>
             </Form>
           )}
         </Formik>
-      </DialogContainer>
+      </Styled.DialogContainer>
     </BaseDialog>
   );
 };

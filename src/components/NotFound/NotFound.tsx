@@ -1,5 +1,5 @@
 import React from 'react';
-import { OuterContainer, Container, Topic } from './style';
+import * as Styled from './style';
 
 interface NotFoundProps {
   topic: string;
@@ -9,13 +9,13 @@ interface NotFoundProps {
 
 const NotFound: React.FC<NotFoundProps> = ({ topic, text, Icon }) => {
   return (
-    <OuterContainer>
-      <Container>
+    <Styled.OuterContainer>
+      <Styled.Container>
         <Icon />
-        <Topic>{topic}</Topic>
+        <Styled.Topic>{topic}</Styled.Topic>
         {text}
-      </Container>
-    </OuterContainer>
+      </Styled.Container>
+    </Styled.OuterContainer>
   );
 };
 

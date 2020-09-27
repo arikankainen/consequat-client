@@ -38,7 +38,7 @@ export const RightContainer = styled.div`
   flex: 1 1 0%;
 `;
 
-export const StyledLink = styled(Link)`
+export const HeaderLink = styled(Link)`
   display: flex;
   align-items: center;
   margin: 0px 15px;

@@ -29,7 +29,9 @@ const initialResponse = {
 };
 
 const useDeletePhoto = (): Return => {
-  const [response, setResponse] = useState<DeletePhotoResponse>(initialResponse);
+  const [response, setResponse] = useState<DeletePhotoResponse>(
+    initialResponse
+  );
 
   const [deleteFromDb, deleteFromDbResponse] = useMutation(DELETE_PHOTO, {
     onError: error => {
@@ -120,7 +122,9 @@ const useDeletePhoto = (): Return => {
     try {
       await deleteFromFirebase(photo.filename);
     } catch (error) {
-      logger.error(`Error deleting ${photo.filename} from firebase: ${error.code}`);
+      logger.error(
+        `Error deleting ${photo.filename} from firebase: ${error.code}`
+      );
 
       if (error.code !== allowedError) {
         setResponse({
@@ -134,7 +138,9 @@ const useDeletePhoto = (): Return => {
     try {
       await deleteFromFirebase(photo.thumbFilename);
     } catch (error) {
-      logger.error(`Error deleting ${photo.thumbFilename} from firebase: ${error.code}`);
+      logger.error(
+        `Error deleting ${photo.thumbFilename} from firebase: ${error.code}`
+      );
 
       if (error.code !== allowedError) {
         setResponse({

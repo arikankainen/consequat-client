@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { MenuItems } from './MenuItems';
-import { MenuButton, MenuButtonContainer } from './style';
+import { MenuItems } from '../MenuItems/MenuItems';
+import * as Styled from './style';
 
 export enum Direction {
   Left,
@@ -10,7 +10,7 @@ export enum Direction {
 
 interface Button {
   text: string;
-  icon: React.FunctionComponent;
+  Icon: React.FunctionComponent;
   iconColor?: string;
   iconColorHover?: string;
 }
@@ -19,7 +19,7 @@ interface Item {
   text: string;
   subText?: string;
   link: string;
-  icon?: React.FunctionComponent;
+  Icon?: React.FunctionComponent;
 }
 
 interface Settings {
@@ -53,14 +53,14 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
   };
 
   return (
-    <MenuButtonContainer hideWhen={settings.hideWhen}>
-      <MenuButton
+    <Styled.MenuButtonContainer hideWhen={settings.hideWhen}>
+      <Styled.MenuButton
         onClick={() => toggleMenu()}
         iconColor={button.iconColor}
         iconColorHover={button.iconColorHover}
       >
-        <button.icon />
-      </MenuButton>
+        <button.Icon />
+      </Styled.MenuButton>
       <CSSTransition
         in={open}
         timeout={300}
@@ -69,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
       >
         <MenuItems button={button} items={items} settings={settings} />
       </CSSTransition>
-    </MenuButtonContainer>
+    </Styled.MenuButtonContainer>
   );
 };
 

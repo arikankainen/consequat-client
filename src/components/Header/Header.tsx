@@ -6,10 +6,11 @@ import { useDispatch } from 'react-redux';
 import { updateLogin } from '../../reducers/systemReducer';
 import storage from '../../utils/storage';
 import { ME } from '../../utils/queries';
-import Logo from './Logo';
+import Logo from '../HeaderLogo/Logo';
 import Menu, { Direction } from '../Menu/Menu';
-import Search from './Search';
-import MenuButton from '../Buttons/MenuButton';
+import HeaderSearch from '../HeaderSearch/HeaderSearch';
+import MenuButton from '../MenuButton/MenuButton';
+import * as Styled from './style';
 
 import { ReactComponent as UserIcon } from '../../images/user-solid.svg';
 import { ReactComponent as AccountIcon } from '../../images/cog-solid.svg';
@@ -21,14 +22,6 @@ import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
 import { ReactComponent as ConsequatIcon } from '../../images/consequat_o.svg';
 import { ReactComponent as BrowseIcon } from '../../images/globe-solid.svg';
 import { ReactComponent as AboutIcon } from '../../images/question-circle-solid.svg';
-
-import {
-  HeaderContainer,
-  HeaderInnerContainer,
-  LeftContainer,
-  RightContainer,
-  StyledLink,
-} from './style';
 
 const Header = () => {
   const loginState = useSelector((state: RootState) => state.system);
@@ -64,25 +57,25 @@ const Header = () => {
       text: 'Consequat',
       subText: 'Back to the starting point',
       link: '/',
-      icon: ConsequatIcon,
+      Icon: ConsequatIcon,
     },
     {
       text: 'Browse',
       subText: 'Browse all photos',
       link: '/photos',
-      icon: BrowseIcon,
+      Icon: BrowseIcon,
     },
     {
       text: 'About',
       subText: 'What Consequat is?',
       link: '/about',
-      icon: AboutIcon,
+      Icon: AboutIcon,
     },
   ];
 
   const mainMenuButton = {
     text: 'Consequat',
-    icon: MenuIcon,
+    Icon: MenuIcon,
     iconColor: '#d68b1e',
     iconColorHover: '#ffaf45',
   };
@@ -98,31 +91,31 @@ const Header = () => {
       text: 'Upload',
       subText: 'Add new pictures',
       link: '/upload',
-      icon: UploadIcon,
+      Icon: UploadIcon,
     },
     {
       text: 'My photos',
       subText: 'Browse your own photos',
       link: '/myphotos',
-      icon: PicturesIcon,
+      Icon: PicturesIcon,
     },
     {
       text: 'Account',
       subText: 'View account settings',
       link: '/account',
-      icon: AccountIcon,
+      Icon: AccountIcon,
     },
     {
       text: 'Log out',
       subText: loginState.loggedUser?.fullname || '',
       link: '/logout',
-      icon: LogoutIcon,
+      Icon: LogoutIcon,
     },
   ];
 
   const userMenuButton = {
     text: 'User menu',
-    icon: UserIcon,
+    Icon: UserIcon,
   };
 
   const userMenuSettings = {
@@ -131,22 +124,22 @@ const Header = () => {
   };
 
   return (
-    <HeaderContainer>
-      <HeaderInnerContainer>
-        <LeftContainer>
+    <Styled.HeaderContainer>
+      <Styled.HeaderInnerContainer>
+        <Styled.LeftContainer>
           <Menu
             button={mainMenuButton}
             items={mainMenuItems}
             settings={mainMenuSettings}
           />
           <Logo />
-        </LeftContainer>
-        <Search />
-        <RightContainer>
-          <StyledLink to="/photos">Browse</StyledLink>
-          <StyledLink to="/about" style={{ marginRight: '20px' }}>
+        </Styled.LeftContainer>
+        <HeaderSearch />
+        <Styled.RightContainer>
+          <Styled.HeaderLink to="/photos">Browse</Styled.HeaderLink>
+          <Styled.HeaderLink to="/about" style={{ marginRight: '20px' }}>
             About
-          </StyledLink>
+          </Styled.HeaderLink>
           {loginState.loggedIn ? (
             <Menu
               button={userMenuButton}
@@ -154,11 +147,11 @@ const Header = () => {
               settings={userMenuSettings}
             />
           ) : (
-            <MenuButton to="/login" text="Login" icon={LoginIcon} />
+            <MenuButton to="/login" text="Login" Icon={LoginIcon} />
           )}
-        </RightContainer>
-      </HeaderInnerContainer>
-    </HeaderContainer>
+        </Styled.RightContainer>
+      </Styled.HeaderInnerContainer>
+    </Styled.HeaderContainer>
   );
 };
 

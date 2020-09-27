@@ -1,38 +1,16 @@
 import React, { useState } from 'react';
-import { Property, Value, Container, Expand } from './style';
+import { Items, ListHeaderBlock } from '../ListHeaderBlock/ListHeaderBlock';
+import * as Styled from './style';
 import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
 import { ReactComponent as CollapseIcon } from '../../images/chevron-up-solid_modified.svg';
-
-interface Item {
-  name: string;
-  value: string | undefined | null;
-  hide?: boolean;
-  grayed?: boolean;
-}
-
-export interface Items {
-  items: Item[];
-  hiddenItems?: Item[];
-}
-
-const InfoBlock: React.FC<Item> = ({ name, value, hide, grayed }) => {
-  return (
-    <>
-      <Property hide={hide}>{name}</Property>
-      <Value hide={hide} grayed={grayed}>
-        {value}
-      </Value>
-    </>
-  );
-};
 
 const ListHeader: React.FC<Items> = ({ items, hiddenItems }) => {
   const [hide, setHide] = useState(true);
 
   return (
-    <Container>
+    <Styled.Container>
       {items.map(item => (
-        <InfoBlock
+        <ListHeaderBlock
           key={item.name}
           name={item.name}
           value={item.value}
@@ -42,7 +20,7 @@ const ListHeader: React.FC<Items> = ({ items, hiddenItems }) => {
       {hiddenItems && (
         <>
           {hiddenItems.map(item => (
-            <InfoBlock
+            <ListHeaderBlock
               hide={hide}
               key={item.name}
               name={item.name}
@@ -50,16 +28,16 @@ const ListHeader: React.FC<Items> = ({ items, hiddenItems }) => {
               grayed={item.grayed}
             />
           ))}
-          <Expand>
+          <Styled.Expand>
             {hide ? (
               <ExpandIcon onClick={() => setHide(false)} />
             ) : (
               <CollapseIcon onClick={() => setHide(true)} />
             )}
-          </Expand>
+          </Styled.Expand>
         </>
       )}
-    </Container>
+    </Styled.Container>
   );
 };
 

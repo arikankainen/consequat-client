@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Photo, Album } from '../../utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
-import useSavePhoto, { SavePhotoStatus, SavePhoto } from '../../hooks/useSavePhoto';
+import useSavePhoto, {
+  SavePhotoStatus,
+  SavePhoto,
+} from '../../hooks/useSavePhoto';
 import {
   getUniqueValue,
   getUniqueBoolean,
@@ -51,7 +54,8 @@ const validation = (values: FormValues) => {
 
   if (!values.nameLocked) {
     if (!values.name) errors.name = 'Name required';
-    else if (values.name.length < 3) errors.name = 'Must be at least 3 characters';
+    else if (values.name.length < 3)
+      errors.name = 'Must be at least 3 characters';
   }
 
   return errors;
@@ -136,7 +140,8 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         savePhoto.execute({
           name: values.name,
           location: values.location,
-          album: values.album !== '0' && values.album !== '' ? values.album : null,
+          album:
+            values.album !== '0' && values.album !== '' ? values.album : null,
           description: values.description,
           hidden: values.hidden,
           tags: values.tags.split(',').map(tag => tag.trim().toLowerCase()),
@@ -146,7 +151,8 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         const unlockedValues: SavePhoto = { id: ids };
         if (!values.nameLocked) unlockedValues.name = values.name;
         if (!values.locationLocked) unlockedValues.location = values.location;
-        if (!values.descriptionLocked) unlockedValues.description = values.description;
+        if (!values.descriptionLocked)
+          unlockedValues.description = values.description;
         if (!values.hiddenLocked) unlockedValues.hidden = values.hidden;
         if (!values.tagsLocked)
           unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());

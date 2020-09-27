@@ -12,8 +12,10 @@ const resizeImage = (
       const inputHeight = image.height;
 
       const squareSize = inputWidth > inputHeight ? inputHeight : inputWidth;
-      const squareStartX = inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
-      const squareStartY = inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
+      const squareStartX =
+        inputWidth > inputHeight ? (inputWidth - inputHeight) / 2 : 0;
+      const squareStartY =
+        inputHeight > inputWidth ? (inputHeight - inputWidth) / 2 : 0;
 
       const ratio =
         inputWidth > inputHeight ? maxSize / inputWidth : maxSize / inputHeight;

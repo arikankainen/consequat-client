@@ -32,7 +32,9 @@ const initialResponse = {
 };
 
 const useUploadPhoto = (username?: string): Return => {
-  const [response, setResponse] = useState<UploadPhotoResponse>(initialResponse);
+  const [response, setResponse] = useState<UploadPhotoResponse>(
+    initialResponse
+  );
   const [uploadedFilename, setUploadedFilename] = useState('');
   const savePhoto = useSavePhoto();
   const dispatch = useDispatch();
@@ -132,7 +134,11 @@ const useUploadPhoto = (username?: string): Return => {
 
       if (!resizedPhoto || !resizedThumb) throw new Error();
 
-      const mainUrl = await uploadResizedPicture(resizedPhoto, filename, file.name);
+      const mainUrl = await uploadResizedPicture(
+        resizedPhoto,
+        filename,
+        file.name
+      );
       const thumbUrl = await uploadThumb(resizedThumb, thumbFilename);
 
       savePhoto.execute({

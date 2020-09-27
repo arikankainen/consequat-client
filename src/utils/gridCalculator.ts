@@ -85,7 +85,8 @@ const gridCalculator = ({
     }
 
     const totalGap = (imageRow.length - 1) * gap;
-    const targetTotalMultiplier = (containerWidth - totalGap) / totalTargetWidth;
+    const targetTotalMultiplier =
+      (containerWidth - totalGap) / totalTargetWidth;
 
     let topAddition = 0;
     let left = 0;

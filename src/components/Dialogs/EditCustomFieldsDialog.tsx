@@ -1,20 +1,13 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import BaseDialog from './BaseDialog';
-import Button, { ButtonColor } from '../Buttons/Button';
+import BaseDialog from './BaseDialog/BaseDialog';
+import Button from '../Buttons/Button';
+import { ButtonColor } from '../Buttons/style';
 import { FormValues, Field } from './EditCustomFields';
-import { TextInput, TextAreaInput, PasswordInput } from './Inputs';
+import { TextInput, TextAreaInput, PasswordInput } from './Inputs/Inputs';
 import Spinner from '../Spinner/Spinner';
-
-import {
-  DialogContainer,
-  DialogTopic,
-  DialogContentGrid,
-  DialogButtonArea,
-  SavingIndicator,
-  SpinnerContainer,
-} from './style';
+import * as Styled from './style';
 
 export interface EditCustomFieldsDialogProps {
   open: boolean;
@@ -31,7 +24,7 @@ export interface EditCustomFieldsDialogProps {
 const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
   return (
     <BaseDialog open={props.open}>
-      <DialogContainer>
+      <Styled.DialogContainer>
         <Formik
           initialValues={props.initialValues}
           enableReinitialize={true}
@@ -39,8 +32,8 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
           onSubmit={props.handleSubmit}
         >
           <Form>
-            <DialogTopic>{props.topic}</DialogTopic>
-            <DialogContentGrid>
+            <Styled.DialogTopic>{props.topic}</Styled.DialogTopic>
+            <Styled.DialogContentGrid>
               {props.fields?.map(field => {
                 if (field.type === 'text') {
                   return (
@@ -75,12 +68,12 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                   );
                 }
               })}
-            </DialogContentGrid>
-            <DialogButtonArea>
-              <SpinnerContainer>
+            </Styled.DialogContentGrid>
+            <Styled.DialogButtonArea>
+              <Styled.SpinnerContainer>
                 <Spinner show={props.saving} />
-              </SpinnerContainer>
-              <SavingIndicator>{props.message}</SavingIndicator>
+              </Styled.SpinnerContainer>
+              <Styled.SavingIndicator>{props.message}</Styled.SavingIndicator>
               <Button
                 text="Cancel"
                 type="button"
@@ -95,10 +88,10 @@ const EditCustomFieldsDialog: React.FC<EditCustomFieldsDialogProps> = props => {
                 disabled={props.saving}
                 onClick={() => void 0}
               />
-            </DialogButtonArea>
+            </Styled.DialogButtonArea>
           </Form>
         </Formik>
-      </DialogContainer>
+      </Styled.DialogContainer>
     </BaseDialog>
   );
 };

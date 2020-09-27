@@ -3,12 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addPicture } from '../../reducers/pictureReducer';
 import { ReactComponent as ImagesIcon } from '../../images/cloud-upload-alt-solid.svg';
 import Button from '../Buttons/Button';
-
-import {
-  InitialUploadOuterContainer,
-  InitialUploadContainer,
-  InitialUploadFileButton,
-} from './style';
+import * as Styled from './style';
 
 const InitialUpload = () => {
   const fileInput = useRef<HTMLInputElement>(null);
@@ -20,7 +15,9 @@ const InitialUpload = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
+      Array.from(event.target.files).forEach(file =>
+        dispatch(addPicture(file))
+      );
     }
   };
 
@@ -29,12 +26,12 @@ const InitialUpload = () => {
   };
 
   return (
-    <InitialUploadOuterContainer>
-      <InitialUploadContainer>
+    <Styled.InitialUploadOuterContainer>
+      <Styled.InitialUploadContainer>
         <ImagesIcon />
         <form onSubmit={handleSubmit}>
           <Button onClick={handleClick} text="Select pictures to upload" />
-          <InitialUploadFileButton
+          <Styled.InitialUploadFileButton
             type="file"
             ref={fileInput}
             onChange={handleFileChange}
@@ -42,8 +39,8 @@ const InitialUpload = () => {
             accept=".jpg,.jpeg,.png,.gif"
           />
         </form>
-      </InitialUploadContainer>
-    </InitialUploadOuterContainer>
+      </Styled.InitialUploadContainer>
+    </Styled.InitialUploadOuterContainer>
   );
 };
 

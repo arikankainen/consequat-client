@@ -108,7 +108,7 @@ export const pictureReducer = (
   switch (action.type) {
     case ADD_PICTURE:
       const exist = state.pictures.find(
-        (picture) => picture.picture.name === action.data.name
+        picture => picture.picture.name === action.data.name
       );
       if (exist) return state;
 
@@ -125,7 +125,7 @@ export const pictureReducer = (
     case REMOVE_PICTURE:
       return {
         pictures: [...state.pictures].filter(
-          (picture) => picture.picture.name !== action.data
+          picture => picture.picture.name !== action.data
         ),
       };
     case CLEAR:
@@ -134,7 +134,7 @@ export const pictureReducer = (
       };
     case UPDATE_PROGRESS:
       return {
-        pictures: [...state.pictures].map((picture) => {
+        pictures: [...state.pictures].map(picture => {
           if (picture.picture.name === action.data.filename) {
             picture.progress = action.data.progress;
           }
@@ -143,7 +143,7 @@ export const pictureReducer = (
       };
     case UPDATE_SELECTED:
       return {
-        pictures: [...state.pictures].map((picture) => {
+        pictures: [...state.pictures].map(picture => {
           if (picture.picture.name === action.data.filename) {
             picture.selected = action.data.selected;
           }

@@ -3,7 +3,10 @@ const pad = (input: number): string => {
   return `${input}`;
 };
 
-const formatDate = (input: string | Date | undefined, hideTime?: boolean): string => {
+const formatDate = (
+  input: string | Date | undefined,
+  hideTime?: boolean
+): string => {
   if (input) {
     const date = new Date(Number(input));
     const customizedDate = `${date.getDate()}.${

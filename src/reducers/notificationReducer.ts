@@ -44,7 +44,7 @@ export const setMessage = (topic: string, text: string): ThunkType => {
     clearNotification();
   }
 
-  return async (dispatch) => {
+  return async dispatch => {
     timeoutID = setTimeout(() => {
       dispatch(clearNotification());
     }, TIMEOUT);
@@ -66,7 +66,7 @@ export const setError = (topic: string, text: string): ThunkType => {
     clearNotification();
   }
 
-  return async (dispatch) => {
+  return async dispatch => {
     timeoutID = setTimeout(() => {
       dispatch(clearNotification());
     }, TIMEOUT);

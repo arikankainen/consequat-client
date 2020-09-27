@@ -7,15 +7,7 @@ import { clearNotification } from '../../reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
 import { ReactComponent as MessageIcon } from '../../images/exclamation-circle-solid.svg';
 import { ReactComponent as ErrorIcon } from '../../images/exclamation-triangle-solid.svg';
-
-import {
-  Container,
-  MessageBox,
-  IconContainer,
-  ContentContainer,
-  Topic,
-  Body,
-} from './style';
+import * as Styled from './style';
 
 const Notification = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -54,17 +46,21 @@ const Notification = () => {
       unmountOnExit
       classNames="notification"
     >
-      <Container onClick={handleClick}>
-        <MessageBox>
-          <IconContainer type={type}>
-            {type === NotificationType.Message ? <MessageIcon /> : <ErrorIcon />}
-          </IconContainer>
-          <ContentContainer>
-            <Topic>{topic}</Topic>
-            <Body>{text}</Body>
-          </ContentContainer>
-        </MessageBox>
-      </Container>
+      <Styled.Container onClick={handleClick}>
+        <Styled.MessageBox>
+          <Styled.IconContainer type={type}>
+            {type === NotificationType.Message ? (
+              <MessageIcon />
+            ) : (
+              <ErrorIcon />
+            )}
+          </Styled.IconContainer>
+          <Styled.ContentContainer>
+            <Styled.Topic>{topic}</Styled.Topic>
+            <Styled.Body>{text}</Styled.Body>
+          </Styled.ContentContainer>
+        </Styled.MessageBox>
+      </Styled.Container>
     </CSSTransition>
   );
 };

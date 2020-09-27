@@ -38,9 +38,7 @@ export const clearLogin = (): UpdateLogin => {
 
 export const updateLoginThunk = (
   data: SystemState
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch
-) => {
+): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   dispatch(updateLogin(data));
 };
 

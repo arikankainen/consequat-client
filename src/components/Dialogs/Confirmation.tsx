@@ -14,7 +14,7 @@ export interface ConfirmationProps {
   handleCancel?: () => void;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = (props) => {
+const Confirmation: React.FC<ConfirmationProps> = props => {
   const [open, setOpen] = useState<boolean>(false);
   const [savedProps, setSavedProps] = useState<ConfirmationProps>({});
 
