@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import breakPoints from '../../utils/breakPoints';
 
@@ -40,55 +40,21 @@ export const Keyword = styled.span`
 `;
 
 export const GridContainer = styled.div`
-  display: grid;
-  align-content: start;
-  grid-template-columns: repeat(8, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 3px;
-  grid-auto-flow: dense;
-  padding: 0px;
-  height: 100%;
+  position: relative;
   width: 100%;
   max-width: ${breakPoints.laptopLWidth};
-
-  ${breakPoints.laptopL} {
-    /*padding: 3px 0px;*/
-  }
-
-  ${breakPoints.custom(1300)} {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  ${breakPoints.tablet} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  ${breakPoints.mobileXL} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  ${breakPoints.mobileM} {
-    grid-template-columns: 100%;
-  }
+  margin-bottom: 7px;
 `;
 
-interface ItemContainerProps {
-  landscape?: boolean;
-}
+export const ItemOuterContainer = styled.div`
+  position: absolute;
+`;
 
-export const ItemContainer = styled.div<ItemContainerProps>`
+export const ItemContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding-top: 150%;
   background-color: #eee;
-
-  ${props =>
-    props.landscape &&
-    css`
-      padding-top: 74%;
-      grid-column: span 2;
-  `}
 
   &:hover {
     & > a > div:last-child {

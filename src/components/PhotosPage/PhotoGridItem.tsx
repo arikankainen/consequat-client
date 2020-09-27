@@ -20,7 +20,7 @@ const PhotoGridItem: React.FC<PhotoGridItemProps> = ({ photo, scrollPosition }) 
   if (!photo) return null;
 
   return (
-    <ItemContainer key={photo.id} landscape={photo.width > photo.height}>
+    <ItemContainer key={photo.id}>
       <Link to={`/photos/photo/${photo.id}`}>
         <ImageContainer>
           <Image
