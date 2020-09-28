@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
 import back1280 from '../../images/back_01_1280.jpg';
 import back1920 from '../../images/back_01_1920.jpg';

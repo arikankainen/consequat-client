@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useField } from 'formik';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { ReactComponent as ShowPasswordIcon } from '../../images/eye-solid.svg';
 import { ReactComponent as HidePasswordIcon } from '../../images/eye-slash-solid.svg';
 import { ReactComponent as InfoIcon } from '../../images/info-circle-solid.svg';

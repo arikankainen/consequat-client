@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { NotificationType } from '../../reducers/notificationReducer';
 
 export const Container = styled.div`
