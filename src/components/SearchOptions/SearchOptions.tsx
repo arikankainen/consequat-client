@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import Button from '../Buttons/Button';
-import { ButtonColor } from '../Buttons/style';
+import Button from '../Button/Button';
+import { ButtonColor } from '../Button/style';
 import * as Styled from './style';
 
 interface SearchOptionsProps {

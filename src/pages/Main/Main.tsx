@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Logo, H1, H2, H3, StyledLink } from './style';
 import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
-import Button from '../../components/Buttons/Button';
-import { ButtonColor } from '../../components/Buttons/style';
+import Button from '../../components/Button/Button';
+import { ButtonColor } from '../../components/Button/style';
 import { useHistory } from 'react-router-dom';
 
 const Main = () => {

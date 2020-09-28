@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../Buttons/Button';
-import { ButtonColor } from '../Buttons/style';
+import Button from '../Button/Button';
+import { ButtonColor } from '../Button/style';
 import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
 import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
 import { ReactComponent as UploadButton } from '../../images/upload-solid.svg';

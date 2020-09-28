@@ -12,8 +12,8 @@ import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
 import { ReactComponent as CheckButton } from '../../images/check-circle-regular.svg';
 import { ReactComponent as UncheckButton } from '../../images/check-circle-regular_modified.svg';
 import { ReactComponent as AddButton } from '../../images/plus-square-solid.svg';
-import Button from '../../components/Buttons/Button';
-import { ButtonColor } from '../../components/Buttons/style';
+import Button from '../../components/Button/Button';
+import { ButtonColor } from '../../components/Button/style';
 import PhotoAlbum from '../../components/PhotoAlbum/PhotoAlbum';
 import useUploadQueue, { QueueStatus } from '../../hooks/useUploadQueue';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Comment } from '../../utils/types';
 import formatDate from '../../utils/formatDate';
-import Button from '../Buttons/Button';
+import Button from '../Button/Button';
 import { ReactComponent as UserIcon } from '../../images/user-solid.svg';
 import * as Styled from './style';
 

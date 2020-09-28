@@ -8,7 +8,7 @@ import { setMessage, setError } from '../../reducers/notificationReducer';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, PasswordInput } from './Inputs';
-import Button from '../../components/Buttons/Button';
+import Button from '../../components/Button/Button';
 
 import {
   OuterContainer,

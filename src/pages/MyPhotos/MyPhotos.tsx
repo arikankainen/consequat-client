@@ -15,9 +15,10 @@ import Confirmation, {
 import { ReactComponent as AddButton } from '../../images/plus-square-solid.svg';
 import { ReactComponent as AlbumButton } from '../../images/folder-plus-solid.svg';
 import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
+
 import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
-import Button from '../../components/Buttons/Button';
-import { ButtonColor } from '../../components/Buttons/style';
+import Button from '../../components/Button/Button';
+import { ButtonColor } from '../../components/Button/style';
 import PhotoAlbum from '../../components/PhotoAlbum/PhotoAlbum';
 import { InitialUploadFileButton } from '../../components/InitialUpload/style';
 import { PictureListHeader } from '../../components/ListHeaderMyPhotos/ListHeaderMyPhotos';

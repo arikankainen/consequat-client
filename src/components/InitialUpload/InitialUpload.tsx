@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPicture } from '../../reducers/pictureReducer';
 import { ReactComponent as ImagesIcon } from '../../images/cloud-upload-alt-solid.svg';
-import Button from '../Buttons/Button';
+import Button from '../Button/Button';
 import * as Styled from './style';
 
 const InitialUpload = () => {
