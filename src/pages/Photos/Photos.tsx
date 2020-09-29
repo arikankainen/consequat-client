@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updatePhotos } from '../../reducers/photoListReducer';
 import { useLazyQuery } from '@apollo/client';
 import { LIST_PHOTOS } from '../../utils/queries';
 import { PhotoUserExtended } from '../../utils/types';
@@ -12,6 +14,7 @@ const Photos = () => {
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
   const [notFound, setNotFound] = useState(false);
   const url = useLocation();
+  const dispatch = useDispatch();
   const urlParams = new URLSearchParams(url.search);
 
   const keyword = urlParams.get('keyword');
@@ -42,6 +45,7 @@ const Photos = () => {
     else setNotFound(false);
 
     setPhotos(data.listPhotos);
+    dispatch(updatePhotos(data.listPhotos));
   }, [resultListPhotos.data]);
 
   return (
