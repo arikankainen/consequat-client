@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import breakPoints from '../../utils/breakPoints';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
@@ -72,4 +73,17 @@ export const TextArea = styled.textarea`
 
 export const NoComment = styled.div`
   font-size: 14px;
+`;
+
+export const NoCommentLink = styled(Link)`
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: var(--accent-color-2);
+  }
+
+  &:hover {
+    color: var(--accent-color-1);
+  }
 `;

@@ -63,7 +63,9 @@ const Comments: React.FC<CommentsProps> = ({
             />
           ) : (
             <Styled.NoComment>
-              You must be logged in to add new comment.
+              You must{' '}
+              <Styled.NoCommentLink to="/login">log in</Styled.NoCommentLink> to
+              add new comment.
             </Styled.NoComment>
           )}
         </Styled.InputContainer>
