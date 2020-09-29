@@ -13,21 +13,23 @@ const Main = () => {
       <Styled.Logo>
         <MenuIcon />
       </Styled.Logo>
-
-      <Styled.H1>Join the world of Consequat</Styled.H1>
-      <Styled.H2>and get started to share your photos!</Styled.H2>
-
+      <Styled.BigText>Join the world of Consequat</Styled.BigText>
+      <Styled.MediumText>
+        and get started to share your photos!
+      </Styled.MediumText>
       <Button
-        text="Join now"
+        text="Sign up"
         color={ButtonColor.whiteBig}
         onClick={() => history.push('/signup')}
-        margin={[30, 0, 30, 0]}
+        margin={[30, 0, 10, 0]}
       />
-
-      <Styled.H3>
-        Please check out <Styled.MainLink to="/about">About</Styled.MainLink>{' '}
-        page, to see what this all is about!
-      </Styled.H3>
+      <Styled.LoginText>
+        <Styled.Link to="/login">Log in</Styled.Link>
+      </Styled.LoginText>
+      <Styled.SmallText>
+        Please check out <Styled.Link to="/about">About</Styled.Link> page, to
+        see what this all is about!
+      </Styled.SmallText>
     </Styled.Container>
   );
 };

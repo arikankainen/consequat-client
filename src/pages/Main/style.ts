@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import breakPoints from '../../utils/breakPoints';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
@@ -42,49 +42,49 @@ export const Logo = styled.div`
   }
 `;
 
-export const H1 = styled.h1`
+const BaseText = styled.div`
+  padding: 0px 30px;
   font-family: var(--topic-font-family);
   font-weight: 400;
-  font-size: 36px;
   color: #fff;
-  text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
   text-align: center;
-  padding: 0px 30px;
   line-height: 1;
 `;
 
-export const H2 = styled.h1`
-  font-family: var(--topic-font-family);
-  font-weight: 400;
-  font-size: 24px;
-  color: #fff;
-  text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
-  text-align: center;
-  padding: 0px 30px;
-`;
-
-export const H3 = styled.h1`
-  font-family: var(--topic-font-family);
-  font-weight: 400;
-  font-size: 16px;
-  color: #fff;
-  text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
-  text-align: center;
-  padding: 0px 30px;
-`;
-
-export const MainLink = styled(Link)`
-  font-family: var(--topic-font-family);
+export const BigText = styled(BaseText)`
   font-weight: 800;
+  font-size: 36px;
+  margin-bottom: 5px;
+`;
+
+export const MediumText = styled(BaseText)`
+  font-size: 24px;
+  line-height: 1.2;
+`;
+
+export const SmallText = styled(BaseText)`
+  font-size: 16px;
+  line-height: 1.5;
+`;
+
+export const LoginText = styled(BaseText)`
+  margin-bottom: 30px;
+  font-size: 20px;
+`;
+
+export const Link = styled(RouterLink)`
+  font-family: inherit;
+  font-weight: inherit;
   text-decoration: none;
 
   &:link,
   &:visited {
     color: #fff;
+    border-bottom: 2px solid var(--accent-color-1);
   }
 
   &:hover {
-    color: var(--accent-color-2-hover);
+    border-bottom: 2px solid #fff;
   }
-  
 `;
