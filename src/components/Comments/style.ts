@@ -69,3 +69,7 @@ export const TextArea = styled.textarea`
     width: 100%;
   }
 `;
+
+export const NoComment = styled.div`
+  font-size: 14px;
+`;

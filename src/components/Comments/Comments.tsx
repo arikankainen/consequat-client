@@ -44,26 +44,30 @@ const Comments: React.FC<CommentsProps> = ({
           </div>
         </Styled.CommentContainer>
       ))}
-      {loggedIn && (
-        <form onSubmit={handleSubmit}>
-          <Styled.InputContainer>
-            <Styled.TextArea
-              onChange={handleInputChange}
-              value={inputComment}
-              disabled={loading}
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="Add your comment"
-            ></Styled.TextArea>
+      <form onSubmit={handleSubmit}>
+        <Styled.InputContainer>
+          <Styled.TextArea
+            onChange={handleInputChange}
+            value={inputComment}
+            disabled={loading || !loggedIn}
+            autoComplete="off"
+            spellCheck={false}
+            placeholder="Add your comment"
+          ></Styled.TextArea>
+          {loggedIn ? (
             <Button
               text="Comment"
               onClick={() => void 0}
               disabled={loading}
               margin={[10, 0, 0, 0]}
             />
-          </Styled.InputContainer>
-        </form>
-      )}
+          ) : (
+            <Styled.NoComment>
+              You must be logged in to add new comment.
+            </Styled.NoComment>
+          )}
+        </Styled.InputContainer>
+      </form>
     </Styled.Container>
   );
 };
