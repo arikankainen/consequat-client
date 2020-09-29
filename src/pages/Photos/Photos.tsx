@@ -46,7 +46,7 @@ const Photos = () => {
 
     setPhotos(data.listPhotos);
     dispatch(updatePhotos(data.listPhotos));
-  }, [resultListPhotos.data]);
+  }, [resultListPhotos.data, dispatch]);
 
   return (
     <PhotoGrid

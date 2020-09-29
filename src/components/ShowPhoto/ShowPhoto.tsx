@@ -9,32 +9,49 @@ import { ReactComponent as TagIcon } from '../../images/tag-solid.svg';
 import { ReactComponent as CalendarIcon } from '../../images/calendar-alt-solid.svg';
 import { ReactComponent as CameraIcon } from '../../images/camera-solid.svg';
 import { ReactComponent as CommentIcon } from '../../images/comment-solid.svg';
+import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
 import Tag from '../Tag/Tag';
 
 import * as Style from './style';
 
 interface ShowPhotoProps {
-  photo: PhotoUserExtended;
+  photo: PhotoUserExtended | null;
   commentCount: number;
+  prevPhoto: string | undefined;
+  nextPhoto: string | undefined;
   children: JSX.Element;
 }
 
 const ShowPhoto: React.FC<ShowPhotoProps> = ({
   photo,
   commentCount,
+  prevPhoto,
+  nextPhoto,
   children,
 }) => {
+  if (!photo)
+    return (
+      <Style.GridContainerLoading>
+        <CenteredSpinner dark={true} />
+      </Style.GridContainerLoading>
+    );
+
   return (
     <Style.GridContainer>
       <Style.PictureContainer>
         <Style.Image src={photo.mainUrl} alt={photo.name} effect="blur" />
-        <Style.LeftArrow>
-          <LeftIcon />
-        </Style.LeftArrow>
 
-        <Style.RightArrow>
-          <RightIcon />
-        </Style.RightArrow>
+        {prevPhoto && (
+          <Style.LeftArrow to={prevPhoto}>
+            <LeftIcon />
+          </Style.LeftArrow>
+        )}
+
+        {nextPhoto && (
+          <Style.RightArrow to={nextPhoto}>
+            <RightIcon />
+          </Style.RightArrow>
+        )}
       </Style.PictureContainer>
 
       <Style.InfoContainer>

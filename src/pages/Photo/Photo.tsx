@@ -12,16 +12,20 @@ import ShowPhoto from '../../components/ShowPhoto/ShowPhoto';
 import Comments from '../../components/Comments/Comments';
 
 const Photo = () => {
-  const loginState = useSelector((state: RootState) => state.system);
+  const systemState = useSelector((state: RootState) => state.system);
+  const photoListState = useSelector((state: RootState) => state.photoList);
   const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch();
   const [photo, setPhoto] = useState<PhotoUserExtended | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const dispatch = useDispatch();
+  const [prevPhoto, setPrevPhoto] = useState<string | undefined>(undefined);
+  const [nextPhoto, setNextPhoto] = useState<string | undefined>(undefined);
 
   const resultPhoto = useQuery(GET_PHOTO, {
     variables: { id },
     fetchPolicy: 'no-cache',
   });
+
   const resultComments = useQuery(LIST_COMMENTS, {
     variables: { photo: id },
     pollInterval: 5000,
@@ -79,6 +83,15 @@ const Photo = () => {
     //
   }, [resultAddComment.data]);
 
+  useEffect(() => {
+    if (!photoListState.photos || !photo) return;
+    const photos = photoListState.photos;
+
+    const index = photos.findIndex(item => item.id === photo.id);
+    if (index > 0) setPrevPhoto(photos[index - 1].id);
+    if (photos.length > index + 1) setNextPhoto(photos[index + 1].id);
+  }, [photoListState, photo]);
+
   const handleSubmit = (text: string) => {
     if (!photo) return;
 
@@ -87,16 +100,21 @@ const Photo = () => {
     });
   };
 
-  if (!photo) return null;
-  if (resultPhoto.loading) return <div>Loading...</div>;
+  //if (!photo) return <div>Loading...</div>;
+  //if (resultPhoto.loading) return <div>Loading...</div>;
 
   return (
-    <ShowPhoto photo={photo} commentCount={comments.length}>
+    <ShowPhoto
+      photo={photo}
+      commentCount={comments.length}
+      prevPhoto={prevPhoto}
+      nextPhoto={nextPhoto}
+    >
       <Comments
         comments={comments}
         onSubmit={handleSubmit}
         loading={resultAddComment.loading || resultComments.loading}
-        loggedIn={loginState.loggedIn}
+        loggedIn={systemState.loggedIn}
       />
     </ShowPhoto>
   );

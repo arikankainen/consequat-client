@@ -67,9 +67,16 @@ const App = () => {
           let timeout = { enter: 300, exit: 300 };
           let classNames = 'fade';
 
-          if (prevLocationRef.current === location.pathname) {
+          if (
+            prevLocationRef.current === location.pathname ||
+            location.pathname.toLowerCase().includes('/photos/photo')
+          ) {
             timeout = { enter: 0, exit: 0 };
             classNames = 'nofade';
+          }
+
+          if (location.pathname.toLowerCase().includes('/photos/photo')) {
+            window.scrollTo(0, 0);
           }
 
           return (

@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import breakPoints from '../../utils/breakPoints';
+import { Link } from 'react-router-dom';
 
 const spacing = '30px';
 
@@ -13,6 +14,18 @@ export const GridContainer = styled.div`
 
   ${breakPoints.custom(600)} {
     grid-template-rows: auto auto;
+  }
+`;
+
+export const GridContainerLoading = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: calc(100vh - var(--header-height)) 1fr;
+  width: 100%;
+  padding: 0px;
+
+  ${breakPoints.custom(600)} {
+    grid-template-rows: calc(100vh - var(--header-height)) 1fr;
   }
 `;
 
@@ -50,7 +63,7 @@ export const Image = styled(LazyLoadImage)`
   object-position: 50% 50%;
 `;
 
-const Arrow = styled.div`
+const Arrow = styled(Link)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

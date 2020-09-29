@@ -5,6 +5,11 @@ export const OuterContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
+`;
+
+export const OuterContainerDark = styled(OuterContainer)`
+  background-color: var(--bg-color-dark);
 `;
 
 export const Topic = styled.div`
@@ -14,10 +19,18 @@ export const Topic = styled.div`
   font-weight: 200;
 `;
 
+export const TopicDark = styled(Topic)`
+  color: #666;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   text-align: center;
   color: #000;
+`;
+
+export const ContainerDark = styled(Container)`
+  color: #666;
 `;

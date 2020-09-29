@@ -2,7 +2,28 @@ import React from 'react';
 import Spinner from '../Spinner/Spinner';
 import * as Styled from './style';
 
-const CenteredSpinner = () => {
+interface CenteredSpinnerProps {
+  dark?: boolean;
+}
+
+const CenteredSpinner: React.FC<CenteredSpinnerProps> = ({ dark }) => {
+  if (dark) {
+    return (
+      <Styled.OuterContainerDark>
+        <Styled.ContainerDark>
+          <Spinner
+            show={true}
+            color="100, 100, 100"
+            bgcolor="29, 29, 31"
+            size={100}
+            style={{ marginBottom: '20px' }}
+          />
+          <Styled.TopicDark>Loading...</Styled.TopicDark>
+        </Styled.ContainerDark>
+      </Styled.OuterContainerDark>
+    );
+  }
+
   return (
     <Styled.OuterContainer>
       <Styled.Container>
