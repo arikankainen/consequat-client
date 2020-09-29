@@ -4,7 +4,7 @@ import { setError } from '../../reducers/notificationReducer';
 import { updateSelected, removePicture } from '../../reducers/pictureReducer';
 import resizeImage from '../../utils/resizeImage';
 import placeholder from '../../images/placeholder.png';
-import Thumbnail from '../../components/Thumbnail/Thumbnail';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
 interface UploadThumbnailProps {
   file: File;

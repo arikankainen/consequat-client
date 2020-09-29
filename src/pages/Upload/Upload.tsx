@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
-import UploadThumbnail from './UploadThumbnail';
+import UploadThumbnail from '../../components/ThumbnailUpload/ThumbnailUpload';
 import UploadListHeader from '../../components/ListHeaderUpload/ListHeaderUpload';
 import Confirmation, {
   ConfirmationProps,
@@ -24,13 +24,7 @@ import {
   updateSelected,
 } from '../../reducers/pictureReducer';
 
-import {
-  PictureListContainer,
-  PictureListToolBar,
-  PictureListButtonGroups,
-  PictureListButtonGroup,
-  UploadFileButton,
-} from '../../components/MyPhotosListCommon/style';
+import * as Styled from '../../components/MyPhotosListCommon/style';
 
 const Upload = () => {
   const pictureState = useSelector((state: RootState) => state.picture);
@@ -241,9 +235,9 @@ const Upload = () => {
 
   return (
     <>
-      <PictureListToolBar>
-        <PictureListButtonGroups>
-          <PictureListButtonGroup>
+      <Styled.PictureListToolBar>
+        <Styled.PictureListButtonGroups>
+          <Styled.PictureListButtonGroup>
             <Button
               onClick={handleAddPictures}
               text="Add"
@@ -251,9 +245,9 @@ const Upload = () => {
               color={ButtonColor.black}
               breakPoint="280px"
             />
-          </PictureListButtonGroup>
+          </Styled.PictureListButtonGroup>
 
-          <PictureListButtonGroup>
+          <Styled.PictureListButtonGroup>
             {!allSelected ? (
               <Button
                 onClick={handleSelectAll}
@@ -271,9 +265,9 @@ const Upload = () => {
                 breakPoint="265px"
               />
             )}
-          </PictureListButtonGroup>
+          </Styled.PictureListButtonGroup>
 
-          <PictureListButtonGroup>
+          <Styled.PictureListButtonGroup>
             <Button
               onClick={handleRemovePictures}
               text="Remove"
@@ -282,17 +276,17 @@ const Upload = () => {
               color={ButtonColor.black}
               breakPoint="340px"
             />
-          </PictureListButtonGroup>
-        </PictureListButtonGroups>
+          </Styled.PictureListButtonGroup>
+        </Styled.PictureListButtonGroups>
 
         <UploadListHeader
           pictureCount={pictureCount}
           selectedCount={selectedCount}
           selectedFile={selectedFile}
         />
-      </PictureListToolBar>
+      </Styled.PictureListToolBar>
 
-      <PictureListContainer>
+      <Styled.PictureListContainer>
         <Confirmation {...confirmation} />
 
         <PhotoAlbum
@@ -314,7 +308,7 @@ const Upload = () => {
         </PhotoAlbum>
 
         <form onSubmit={handleSubmit}>
-          <UploadFileButton
+          <Styled.UploadFileButton
             type="file"
             ref={fileInput}
             onChange={handleFileChange}
@@ -322,7 +316,7 @@ const Upload = () => {
             accept="image/*"
           />
         </form>
-      </PictureListContainer>
+      </Styled.PictureListContainer>
     </>
   );
 };
