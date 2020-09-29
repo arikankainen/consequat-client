@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { ReactComponent as SearchIcon } from '../../images/search-solid.svg';
 import { useHistory } from 'react-router-dom';
 import * as Styled from './style';
+import getSearchString from '../../utils/getSearchString';
 
 const HeaderSearch = () => {
   const [focus, setFocus] = useState(false);
@@ -13,8 +14,15 @@ const HeaderSearch = () => {
     event.preventDefault();
     if (!keyWord.trim()) return;
 
-    const searchOptions = 'name=true&location=true&description=true&tags=true';
-    history.push(`/photos/?${searchOptions}&keyword=${keyWord}`);
+    const address = getSearchString({
+      name: true,
+      location: true,
+      description: true,
+      tags: true,
+      search: keyWord,
+    });
+    history.push(address);
+
     if (inputRef.current) inputRef.current.blur();
   };
 
