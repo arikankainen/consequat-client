@@ -5,23 +5,17 @@ import {
 } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { PhotoUserExtended } from '../../utils/types';
-import {
-  TopBar,
-  Text,
-  TopicContainer,
-  Keyword,
-  GridContainer,
-  ItemOuterContainer,
-} from './style';
-import PhotoGridItem from './PhotoGridItem';
-import DropDownMenu from '../../components/DropDownMenu/DropDownMenu';
-import { DropDownAlign } from '../../components/DropDownMenu/style';
-import NotFound from '../../components/NotFound/NotFound';
+import PhotoGridItem from '../PhotoGridItem/PhotoGridItem';
+import DropDownMenu from '../DropDownMenu/DropDownMenu';
+import { DropDownAlign } from '../DropDownMenu/style';
+import NotFound from '../NotFound/NotFound';
 import { ReactComponent as NotFoundIcon } from '../../images/tired-regular.svg';
-import SearchOptions from '../../components/SearchOptions/SearchOptions';
-import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
+import SearchOptions from '../SearchOptions/SearchOptions';
+import CenteredSpinner from '../SpinnerCentered/CenteredSpinner';
 import gridCalculator, { Dimension } from '../../utils/gridCalculator';
 import useContainerWidth from '../../hooks/useContainerWidth';
+
+import * as Styled from './style';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
@@ -62,29 +56,29 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
     <>
       {search ? (
         <>
-          <TopBar>
-            <Text>
+          <Styled.TopBar>
+            <Styled.Text>
               {loading ? (
                 <>Loading...</>
               ) : (
                 <>
-                  Found <Keyword>{photos.length}</Keyword> photos
+                  Found <Styled.Keyword>{photos.length}</Styled.Keyword> photos
                 </>
               )}
-            </Text>
+            </Styled.Text>
             <DropDownMenu
               buttonName="Search options"
               alignContent={DropDownAlign.right}
             >
               <SearchOptions />
             </DropDownMenu>
-          </TopBar>
-          <TopicContainer>
-            Browsing photos containing <Keyword>{search}</Keyword>
-          </TopicContainer>
+          </Styled.TopBar>
+          <Styled.TopicContainer>
+            Browsing photos containing <Styled.Keyword>{search}</Styled.Keyword>
+          </Styled.TopicContainer>
         </>
       ) : (
-        <TopicContainer>Browsing all photos</TopicContainer>
+        <Styled.TopicContainer>Browsing all photos</Styled.TopicContainer>
       )}
 
       {notFound && (
@@ -98,9 +92,12 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
       {!notFound && loading && <CenteredSpinner />}
 
       {!notFound && !loading && (
-        <GridContainer ref={containerRef} style={{ height: totalHeight }}>
+        <Styled.GridContainer
+          ref={containerRef}
+          style={{ height: totalHeight }}
+        >
           {dimensions.map(dimension => (
-            <ItemOuterContainer
+            <Styled.ItemOuterContainer
               key={dimension.index}
               style={{
                 top: dimension.top,
@@ -114,9 +111,9 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
                 photo={photos[dimension.index]}
                 scrollPosition={scrollPosition}
               />
-            </ItemOuterContainer>
+            </Styled.ItemOuterContainer>
           ))}
-        </GridContainer>
+        </Styled.GridContainer>
       )}
     </>
   );

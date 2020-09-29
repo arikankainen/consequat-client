@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useQuery } from '@apollo/client';
 import { ME } from '../../utils/queries';
 import { Photo, Album } from '../../utils/types';
-import TextSetting from './TextSetting';
+import AccountTextSetting from '../../components/AccountTextSetting/AccountTextSetting';
 import { ReactComponent as UsernameIcon } from '../../images/user-solid.svg';
 import { ReactComponent as EmailIcon } from '../../images/at-solid.svg';
 import { ReactComponent as FullnameIcon } from '../../images/signature-solid.svg';
@@ -20,16 +20,7 @@ import EditCustomFields, {
   Field,
 } from '../../components/Dialogs/EditCustomFields';
 
-import {
-  TopicAreaContainer,
-  TopicArea,
-  Container,
-  Topic,
-  SubTopic,
-  Box,
-  BoxTopic,
-  BoxContainer,
-} from './style';
+import * as Styled from './style';
 
 const Account = () => {
   const [editCustomFields, setEditCustomFields] = useState<
@@ -121,48 +112,50 @@ const Account = () => {
   return (
     <>
       <EditCustomFields {...editCustomFields} />
-      <TopicAreaContainer>
-        <TopicArea>
-          <Topic>Account settings</Topic>
-          <SubTopic>View and change settings related to your account</SubTopic>
-        </TopicArea>
-      </TopicAreaContainer>
+      <Styled.TopicAreaContainer>
+        <Styled.TopicArea>
+          <Styled.Topic>Account settings</Styled.Topic>
+          <Styled.SubTopic>
+            View and change settings related to your account
+          </Styled.SubTopic>
+        </Styled.TopicArea>
+      </Styled.TopicAreaContainer>
 
-      <Container>
-        <BoxContainer>
-          <Box>
-            <BoxTopic>Personal information</BoxTopic>
-            <TextSetting
+      <Styled.Container>
+        <Styled.BoxContainer>
+          <Styled.Box>
+            <Styled.BoxTopic>Personal information</Styled.BoxTopic>
+            <AccountTextSetting
               label="Username"
               value={loginState.loggedUser?.username || '...'}
               Icon={UsernameIcon}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Full name"
               value={loginState.loggedUser?.fullname || '...'}
               Icon={FullnameIcon}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Email"
               value={loginState.loggedUser?.email || '...'}
               Icon={EmailIcon}
               onClick={handleEmailChange}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Password"
               value="*****"
               Icon={PasswordIcon}
               onClick={handlePasswordChange}
             />
-          </Box>
-          <Box>
-            <BoxTopic>Statistics</BoxTopic>
-            <TextSetting
+          </Styled.Box>
+          <Styled.Box>
+            <Styled.BoxTopic>Statistics</Styled.BoxTopic>
+            <AccountTextSetting
               label="Uploaded photos"
               value={(fetched && String(photos.length)) || '...'}
               Icon={PhotoIcon}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Photos not in any albums"
               value={
                 (fetched &&
@@ -173,7 +166,7 @@ const Account = () => {
               }
               Icon={NotItAlbumIcon}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Hidden photos"
               value={
                 (fetched &&
@@ -184,14 +177,14 @@ const Account = () => {
               }
               Icon={HiddenIcon}
             />
-            <TextSetting
+            <AccountTextSetting
               label="Photo albums"
               value={(fetched && String(albums.length)) || '...'}
               Icon={AlbumIcon}
             />
-          </Box>
-        </BoxContainer>
-      </Container>
+          </Styled.Box>
+        </Styled.BoxContainer>
+      </Styled.Container>
     </>
   );
 };

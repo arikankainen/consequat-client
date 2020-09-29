@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { LIST_PHOTOS } from '../../utils/queries';
 import { PhotoUserExtended } from '../../utils/types';
-import PhotoGrid from './PhotoGrid';
+import PhotoGrid from '../../components/PhotoGrid/PhotoGrid';
 import { useLocation } from 'react-router-dom';
 
 const Photos = () => {

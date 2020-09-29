@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Styled from './style';
-import getSearchString from '../../../utils/getSearchString';
+import getSearchString from '../../utils/getSearchString';
 
 interface TagProps {
   tag: string;

@@ -73,7 +73,7 @@ export const H3 = styled.h1`
   padding: 0px 30px;
 `;
 
-export const StyledLink = styled(Link)`
+export const MainLink = styled(Link)`
   font-family: var(--topic-font-family);
   font-weight: 800;
   text-decoration: none;

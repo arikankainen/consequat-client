@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Logo, H1, H2, H3, StyledLink } from './style';
+import * as Styled from './style';
 import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
 import Button from '../../components/Button/Button';
 import { ButtonColor } from '../../components/Button/style';
@@ -9,13 +9,13 @@ const Main = () => {
   const history = useHistory();
 
   return (
-    <Container>
-      <Logo>
+    <Styled.Container>
+      <Styled.Logo>
         <MenuIcon />
-      </Logo>
+      </Styled.Logo>
 
-      <H1>Join the world of Consequat</H1>
-      <H2>and get started to share your photos!</H2>
+      <Styled.H1>Join the world of Consequat</Styled.H1>
+      <Styled.H2>and get started to share your photos!</Styled.H2>
 
       <Button
         text="Join now"
@@ -24,11 +24,11 @@ const Main = () => {
         margin={[30, 0, 30, 0]}
       />
 
-      <H3>
-        Please check out <StyledLink to="/about">About</StyledLink> page, to see
-        what this all is about!
-      </H3>
-    </Container>
+      <Styled.H3>
+        Please check out <Styled.MainLink to="/about">About</Styled.MainLink>{' '}
+        page, to see what this all is about!
+      </Styled.H3>
+    </Styled.Container>
   );
 };
 
