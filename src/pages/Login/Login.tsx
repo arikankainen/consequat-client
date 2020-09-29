@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useLazyQuery } from '@apollo/client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../reducers/rootReducer';
 import { updateLogin } from '../../reducers/systemReducer';
 import { setMessage, setError } from '../../reducers/notificationReducer';
 import storage from '../../utils/storage';
@@ -21,6 +22,7 @@ import {
 } from './style';
 
 const Login = () => {
+  const loginState = useSelector((state: RootState) => state.system);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>('Log in');
   const history = useHistory();
@@ -78,7 +80,7 @@ const Login = () => {
           `${resultMe.data.me.fullname} logged in successfully.`
         )
       );
-      history.replace('/');
+      history.replace(loginState.previousPage);
     }
   }, [resultMe.data]); // eslint-disable-line
 

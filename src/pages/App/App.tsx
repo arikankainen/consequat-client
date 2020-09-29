@@ -3,6 +3,8 @@ import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
+import { useDispatch } from 'react-redux';
+import { setPrevious } from '../../reducers/systemReducer';
 
 import * as Styled from './style';
 import Header from '../../components/Header/Header';
@@ -23,6 +25,7 @@ import NotFoundAddress from '../../components/NotFoundAddress/NotFoundAddress';
 
 const App = () => {
   const loginState = useSelector((state: RootState) => state.system);
+  const dispatch = useDispatch();
   const location = useLocation();
   const [back, setBack] = useState<boolean>(false);
   const prevLocationRef = useRef<string | undefined>();
@@ -30,6 +33,16 @@ const App = () => {
   useEffect(() => {
     prevLocationRef.current = location.pathname;
   });
+
+  useEffect(() => {
+    if (
+      location.pathname !== '/login' &&
+      location.pathname !== '/logout' &&
+      location.pathname !== '/signup'
+    ) {
+      dispatch(setPrevious(location.pathname));
+    }
+  }, [location.pathname, dispatch]);
 
   if (
     location.pathname === '/about' ||
