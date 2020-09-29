@@ -40,7 +40,9 @@ const App = () => {
       location.pathname !== '/logout' &&
       location.pathname !== '/signup'
     ) {
-      dispatch(setPrevious(location.pathname));
+      setTimeout(() => {
+        dispatch(setPrevious(location.pathname));
+      }, 500);
     }
   }, [location.pathname, dispatch]);
 
