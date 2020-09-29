@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { MenuItems } from '../MenuItems/MenuItems';
 import * as Styled from './style';
@@ -35,27 +35,28 @@ export interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ button, items, settings }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const refButton = useRef<HTMLDivElement>(null);
 
-  const closeMenu = () => {
-    document.removeEventListener('click', closeMenu);
-    setOpen(false);
-  };
-
-  const toggleMenu = () => {
-    if (!open) {
-      document.addEventListener('click', closeMenu);
-      setOpen(true);
-    } else {
-      document.removeEventListener('click', closeMenu);
-      setOpen(false);
+  const closeMenu = useCallback((event: MouseEvent) => {
+    if (event.target && event.target instanceof HTMLElement) {
+      if (refButton.current && refButton.current.contains(event.target)) return;
     }
-  };
+    setOpen(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', closeMenu);
+    return () => {
+      document.removeEventListener('click', closeMenu);
+    };
+  }, [closeMenu]);
 
   return (
     <Styled.MenuButtonContainer hideWhen={settings.hideWhen}>
       <Styled.MenuButton
-        onClick={() => toggleMenu()}
+        ref={refButton}
+        onClick={() => setOpen(!open)}
         iconColor={button.iconColor}
         iconColorHover={button.iconColorHover}
       >

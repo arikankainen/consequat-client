@@ -42,6 +42,7 @@ export const MenuButton = styled.div<MenuButtonProps>`
   & > svg {
     height: var(--icon-size);
     color: var(--icon-color);
+    pointer-events: none;
   }
 
   ${props =>
