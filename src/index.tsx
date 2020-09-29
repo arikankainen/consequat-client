@@ -66,6 +66,16 @@ const cache = new InMemoryCache({
         },
       },
     },
+    Query: {
+      fields: {
+        listPhotos: {
+          // eslint-disable-next-line
+          merge(_existing = [], incoming: any[]) {
+            return [...incoming];
+          },
+        },
+      },
+    },
   },
 });
 
