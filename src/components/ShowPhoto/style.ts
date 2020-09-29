@@ -3,8 +3,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import breakPoints from '../../utils/breakPoints';
 import { Link } from 'react-router-dom';
 
-const spacing = '30px';
-
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -68,7 +66,7 @@ const Arrow = styled(Link)`
   }
 
   ${breakPoints.custom(600)} {
-    transform: translateY(calc(-50% - (${spacing} / 2)));
+    transform: translateY(calc(-50%));
   }
 `;
 
@@ -124,7 +122,7 @@ export const Author = styled.div`
   display: flex;
   align-items: center;
   font-family: var(--alt-font-family);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 200;
   line-height: 1;
 
@@ -141,10 +139,10 @@ export const Author = styled.div`
 
 export const Name = styled.div`
   font-family: var(--alt-font-family);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1;
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 export const Description = styled.div`
@@ -152,7 +150,7 @@ export const Description = styled.div`
   font-size: 16px;
   font-weight: 300;
   line-height: 1.2;
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 export const PropertyWithIcon = styled.div`
@@ -162,7 +160,7 @@ export const PropertyWithIcon = styled.div`
   font-size: 16px;
   font-weight: 300;
   line-height: 1;
-  margin-top: 15px;
+  margin-top: 10px;
 
   & > svg {
     height: 16px;
