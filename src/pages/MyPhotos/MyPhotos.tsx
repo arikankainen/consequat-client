@@ -25,12 +25,7 @@ import { PictureListHeader } from '../../components/ListHeaderMyPhotos/ListHeade
 import Thumbnail from '../../components/Thumbnail/Thumbnail';
 import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
 
-import {
-  PictureListContainer,
-  PictureListToolBar,
-  PictureListButtonGroups,
-  PictureListButtonGroup,
-} from '../../components/MyPhotosListCommon/style';
+import * as Styled from '../../components/MyPhotosListCommon/style';
 
 const MyPhotos = () => {
   const resultMe = useQuery(ME, {
@@ -293,9 +288,9 @@ const MyPhotos = () => {
 
   return (
     <>
-      <PictureListToolBar>
-        <PictureListButtonGroups>
-          <PictureListButtonGroup>
+      <Styled.PictureListToolBar>
+        <Styled.PictureListButtonGroups>
+          <Styled.PictureListButtonGroup>
             <form onSubmit={handleSubmit}>
               <Button
                 onClick={handleAddPictures}
@@ -321,9 +316,9 @@ const MyPhotos = () => {
               color={ButtonColor.black}
               breakPoint="400px"
             />
-          </PictureListButtonGroup>
+          </Styled.PictureListButtonGroup>
 
-          <PictureListButtonGroup>
+          <Styled.PictureListButtonGroup>
             <Button
               onClick={handleCreateAlbum}
               text="Create album"
@@ -331,9 +326,9 @@ const MyPhotos = () => {
               color={ButtonColor.black}
               breakPoint="320px"
             />
-          </PictureListButtonGroup>
+          </Styled.PictureListButtonGroup>
 
-          <PictureListButtonGroup>
+          <Styled.PictureListButtonGroup>
             <Button
               onClick={handleDeletePhotos}
               text="Delete"
@@ -342,17 +337,17 @@ const MyPhotos = () => {
               color={ButtonColor.black}
               breakPoint="450px"
             />
-          </PictureListButtonGroup>
-        </PictureListButtonGroups>
+          </Styled.PictureListButtonGroup>
+        </Styled.PictureListButtonGroups>
 
         <PictureListHeader
           photos={photos}
           albums={albums}
           selection={selection}
         />
-      </PictureListToolBar>
+      </Styled.PictureListToolBar>
 
-      <PictureListContainer>
+      <Styled.PictureListContainer>
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
         <EditAlbum {...editAlbum} />
@@ -389,7 +384,7 @@ const MyPhotos = () => {
             </>
           </PhotoAlbum>
         ))}
-      </PictureListContainer>
+      </Styled.PictureListContainer>
     </>
   );
 };

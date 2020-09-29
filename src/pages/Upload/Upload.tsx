@@ -69,8 +69,6 @@ const Upload = () => {
     }
   }, [pictureState]); // eslint-disable-line
 
-  /* *************************** */
-
   const uploadDoneClosed = () => {
     setConfirmation({});
 
@@ -144,8 +142,6 @@ const Upload = () => {
     setUploadDialogOpen(true);
     uploadQueue.execute();
   };
-
-  /* *************************** */
 
   const handleUploadPictures = () => {
     const count = pictureState.pictures.length;
