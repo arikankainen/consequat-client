@@ -29,12 +29,18 @@ const ShowPhoto: React.FC<ShowPhotoProps> = ({
   nextPhoto,
   children,
 }) => {
-  if (!photo)
+  if (!photo) {
     return (
-      <Style.GridContainerLoading>
-        <CenteredSpinner dark={true} />
-      </Style.GridContainerLoading>
+      <Style.GridContainer>
+        <Style.PictureContainer>
+          <CenteredSpinner dark={true} />
+        </Style.PictureContainer>
+        <Style.InfoContainer
+          style={{ height: 'calc(40vh - var(--header-height))' }}
+        ></Style.InfoContainer>
+      </Style.GridContainer>
     );
+  }
 
   return (
     <Style.GridContainer>
