@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/macro';
+import breakPoints from '../../utils/breakPoints';
 
 interface SearchContainerProps {
   focus: boolean;
@@ -17,6 +18,7 @@ export const SearchContainer = styled.div<SearchContainerProps>`
   border-radius: var(--input-border-radius);
   background-color: var(--input-bg-color);
   cursor: text;
+  transition: all 200ms ease-in-out;
 
   & > form {
     width: 100%;
@@ -36,7 +38,9 @@ export const SearchContainer = styled.div<SearchContainerProps>`
       max-width: 400px;
   `}
 
-  transition: all 200ms ease-in-out;
+  ${breakPoints.custom(600)} {
+    max-width: 100%;
+  }
 `;
 
 export const Input = styled.input`
