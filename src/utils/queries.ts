@@ -200,6 +200,23 @@ export const EDIT_PHOTOS = gql`
   ${PHOTO_DETAILS}
 `;
 
+export const EDIT_TAGS = gql`
+  mutation editTags(
+    $addedTags: [String],
+    $deletedTags: [String],
+    $id: [ID!]!,
+  ) {
+      editTags(
+        addedTags: $addedTags,
+        deletedTags: $deletedTags,
+        id: $id,
+      ) {
+        ...PhotoDetails,
+      }
+    }
+  ${PHOTO_DETAILS}
+`;
+
 export const DELETE_PHOTO = gql`
   mutation deletePhoto(
     $id: ID!,

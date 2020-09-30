@@ -63,6 +63,27 @@ const EditTagsDialog: React.FC<EditTagsDialogProps> = ({
                   }
                   multi={multi}
                 />
+                <TextInput
+                  name="addedTags"
+                  label="Added tags"
+                  disabled={values.addedTagsLocked}
+                  onLockClick={() =>
+                    setFieldValue('addedTagsLocked', !values.addedTagsLocked)
+                  }
+                  multi={multi}
+                />
+                <TextInput
+                  name="deletedTags"
+                  label="Deleted tags"
+                  disabled={values.deletedTagsLocked}
+                  onLockClick={() =>
+                    setFieldValue(
+                      'deletedTagsLocked',
+                      !values.deletedTagsLocked
+                    )
+                  }
+                  multi={multi}
+                />
                 <div></div>
               </Styled.DialogContentGrid>
               <Styled.DialogButtonArea>

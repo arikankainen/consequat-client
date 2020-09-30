@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Photo } from '../../utils/types';
 import EditTagsDialog from './EditTagsDialog';
-import useSavePhoto, {
-  SavePhotoStatus,
-  SavePhoto,
-} from '../../hooks/useSavePhoto';
+import useSaveTags, { SaveTagsStatus } from '../../hooks/useSaveTags';
 import {
   getUniqueValue,
   multiValue,
@@ -13,12 +10,20 @@ import {
 
 export interface FormValues {
   tags: string;
+  addedTags: string;
+  deletedTags: string;
   tagsLocked?: boolean;
+  addedTagsLocked?: boolean;
+  deletedTagsLocked?: boolean;
 }
 
 const initialValues: FormValues = {
   tags: '',
+  addedTags: '',
+  deletedTags: '',
   tagsLocked: true,
+  addedTagsLocked: true,
+  deletedTagsLocked: true,
 };
 
 export interface EditTagsProps {
@@ -34,7 +39,7 @@ const EditTags: React.FC<EditTagsProps> = props => {
   const [saving, setSaving] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [multi, setMulti] = useState(false);
-  const savePhoto = useSavePhoto();
+  const saveTags = useSaveTags();
 
   useEffect(() => {
     if (props.open) {
@@ -55,7 +60,6 @@ const EditTags: React.FC<EditTagsProps> = props => {
       const photos = savedProps.photos;
       const tags = uniqueList(photos.map(photo => photo.tags.join(', ')));
       initialValues.tags = getUniqueValue(tags);
-
       initialValues.tagsLocked = multiValue(tags);
     }
   }, [savedProps]); // eslint-disable-line
@@ -69,30 +73,27 @@ const EditTags: React.FC<EditTagsProps> = props => {
     if (savedProps.photos) {
       const ids = savedProps.photos.map(photo => photo.id);
 
-      if (!multi) {
-        savePhoto.execute({
-          tags: values.tags.split(',').map(tag => tag.trim().toLowerCase()),
-          id: ids,
-        });
-      } else {
-        const unlockedValues: SavePhoto = { id: ids };
-        if (!values.tagsLocked)
-          unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
-
-        savePhoto.execute(unlockedValues);
-      }
+      saveTags.execute({
+        id: ids,
+        addedTags: values.addedTags
+          .split(',')
+          .map(tag => tag.trim().toLowerCase()),
+        deletedTags: values.deletedTags
+          .split(',')
+          .map(tag => tag.trim().toLowerCase()),
+      });
     }
   };
 
   useEffect(() => {
-    if (savePhoto.response.status === SavePhotoStatus.ready) {
+    if (saveTags.response.status === SaveTagsStatus.ready) {
       setMessage('');
       handleCancel();
-    } else if (savePhoto.response.status === SavePhotoStatus.error) {
+    } else if (saveTags.response.status === SaveTagsStatus.error) {
       setMessage('Error!');
       setSaving(false);
     }
-  }, [savePhoto.response.status]); // eslint-disable-line
+  }, [saveTags.response.status]); // eslint-disable-line
 
   return (
     <EditTagsDialog
