@@ -29,6 +29,7 @@ const EditTags: React.FC<EditTagsProps> = props => {
       setSharedTags([]);
       setAddedTags([]);
       setDeletedTags([]);
+      setTagFieldValue('');
       setSavedProps(props);
       setOpen(true);
       setSaving(false);
@@ -43,12 +44,12 @@ const EditTags: React.FC<EditTagsProps> = props => {
       const photos = savedProps.photos;
 
       const tags = Array.from(new Set(photos.map(photo => photo.tags).flat()));
-
-      const shared = tags.filter(tag => {
+      const emptyTagsCleared = tags.filter(tag => tag.length > 0);
+      const shared = emptyTagsCleared.filter(tag => {
         return photos.every(photo => photo.tags.includes(tag));
       });
 
-      const unique = tags.filter(tag => {
+      const unique = emptyTagsCleared.filter(tag => {
         return !photos.every(photo => photo.tags.includes(tag));
       });
 
@@ -94,8 +95,9 @@ const EditTags: React.FC<EditTagsProps> = props => {
       .map(tag => tag.trim().toLowerCase());
     const onlyUniqueTags = Array.from(new Set([...addedTags, ...allTags]));
     const onlyNewTags = onlyUniqueTags.filter(tag => !sharedTags.includes(tag));
+    const emptyTagsCleared = onlyNewTags.filter(tag => tag.length > 0);
 
-    setAddedTags(onlyNewTags);
+    setAddedTags(emptyTagsCleared);
     setTagFieldValue('');
   };
 

@@ -135,6 +135,8 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
     setSaving(true);
     if (savedProps.photos) {
       const ids = savedProps.photos.map(photo => photo.id);
+      let tags = values.tags.split(',').map(tag => tag.trim().toLowerCase());
+      if (tags && tags.length === 1 && tags[0] === '') tags = [];
 
       if (!multi) {
         savePhoto.execute({
@@ -144,7 +146,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
             values.album !== '0' && values.album !== '' ? values.album : null,
           description: values.description,
           hidden: values.hidden,
-          tags: values.tags.split(',').map(tag => tag.trim().toLowerCase()),
+          tags,
           id: ids,
         });
       } else {
@@ -154,10 +156,7 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
         if (!values.descriptionLocked)
           unlockedValues.description = values.description;
         if (!values.hiddenLocked) unlockedValues.hidden = values.hidden;
-        if (!values.tagsLocked)
-          unlockedValues.tags = values.tags
-            .split(',')
-            .map(tag => tag.trim().toLowerCase());
+        if (!values.tagsLocked) unlockedValues.tags = tags;
         if (!values.albumLocked)
           unlockedValues.album =
             values.album !== '0' && values.album !== '' ? values.album : null;

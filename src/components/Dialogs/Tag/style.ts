@@ -33,6 +33,12 @@ export const TagContainer = styled.div<TagContainerProps>`
     css`
         background-color: var(--tag-unique-color);
   `}
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  transition: all .2s ease;
 `;
 
 export const DeleteButton = styled.div`
