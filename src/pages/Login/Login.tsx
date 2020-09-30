@@ -102,8 +102,8 @@ const Login = () => {
   };
 
   const validation = Yup.object({
-    username: Yup.string().required('required'),
-    password: Yup.string().required('required'),
+    username: Yup.string().required('Required'),
+    password: Yup.string().required('Required'),
   });
 
   return (

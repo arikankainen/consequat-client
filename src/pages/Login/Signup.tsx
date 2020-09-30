@@ -92,17 +92,18 @@ const Signup = () => {
 
   const validation = Yup.object({
     username: Yup.string()
-      .min(3, 'must be at least 3 characters')
-      .required('required'),
-    email: Yup.string().email('must be valid e-mail').required('required'),
-    fullname: Yup.string().required('required'),
+      .min(3, 'Must be at least 3 characters')
+      .required('Username is required'),
+    email: Yup.string()
+      .email('Must be valid email')
+      .required('Email is required'),
+    fullname: Yup.string().required('Full name is required'),
     password: Yup.string()
-      .min(5, 'must be at least 5 characters')
-      .required('required'),
-    passwordConfirmation: Yup.string().oneOf(
-      [Yup.ref('password'), ''],
-      'Passwords must match'
-    ),
+      .min(5, 'Must be at least 5 characters')
+      .required('Password is required'),
+    passwordConfirmation: Yup.string()
+      .required('Passwords must match')
+      .oneOf([Yup.ref('password'), ''], 'Passwords must match'),
   });
 
   return (
@@ -117,7 +118,7 @@ const Signup = () => {
           <Form>
             <TextInput name="username" label="Username" />
             <TextInput name="fullname" label="Full name" />
-            <TextInput name="email" label="E-mail" />
+            <TextInput name="email" label="Email" />
             <PasswordInput name="password" label="Password" />
             <PasswordInput
               name="passwordConfirmation"

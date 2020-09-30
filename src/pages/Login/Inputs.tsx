@@ -5,15 +5,33 @@ import { ReactComponent as ShowPasswordIcon } from '../../images/eye-solid.svg';
 import { ReactComponent as HidePasswordIcon } from '../../images/eye-slash-solid.svg';
 import { ReactComponent as InfoIcon } from '../../images/info-circle-solid.svg';
 
-const Label = styled.label`
+interface LabelProps {
+  focus?: boolean;
+}
+
+const Label = styled.label<LabelProps>`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
   display: block;
   width: 100%;
   color: #666;
   color: var(--accent-color-2);
-  font-size: 13px;
+  font-size: 15px;
   text-align: left;
   font-weight: 500;
   line-height: 1;
+  pointer-events: none;
+  transition: .2s;
+  z-index: 1;
+
+  ${props =>
+    props.focus &&
+    css`
+      font-size: 13px;
+      top: 12px;
+  `}
 `;
 
 const Icon = styled.div`
@@ -21,11 +39,12 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 10px;
+  cursor: pointer;
 
   & > svg {
     height: 20px;
     width: 24px;
-    color: #444;
+    color: #555;
   }
 `;
 
@@ -35,17 +54,19 @@ interface InputContainerProps {
 }
 
 const InputContainer = styled.div<InputContainerProps>`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 50px;
-  margin-top: 20px;
+  margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
   background-color: #fff;
   border: 1px solid #eee;
   border-radius: var(--input-border-radius);
+  cursor: text;
 
   ${props =>
     props.error &&
@@ -70,6 +91,7 @@ const NameContainer = styled.div`
 const Input = styled.input`
   width: 100%;
   height: 25px;
+  margin-top: 12px;
   padding-top: 5px;
   background-color: #fff;
   border: none;
@@ -106,6 +128,7 @@ const Error = styled.div<ErrorProps>`
     props.error &&
     css`
     max-height: 20px;
+    margin-bottom: 15px;
     opacity: 1;
   `};
 
@@ -136,21 +159,36 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
     setFocused(inputRef.current === document.activeElement);
   };
 
+  const handleClick = () => {
+    if (!inputRef.current) return;
+
+    inputRef.current.focus();
+    handleFocus();
+  };
+
   useEffect(() => {
     handleFocus();
   }, [field, meta]);
 
   return (
     <>
-      <InputContainer focused={focused} error={meta.touched && !!meta.error}>
+      <InputContainer
+        focused={focused}
+        error={meta.touched && !!meta.error}
+        onClick={handleClick}
+      >
         <NameContainer>
-          <Label htmlFor={props.name}>{label}</Label>
+          <Label htmlFor={props.name} focus={focused || field.value !== ''}>
+            {label}
+          </Label>
           <Input
             type="text"
             {...field}
             {...props}
             ref={inputRef}
             onFocus={handleFocus}
+            autoComplete="off"
+            spellCheck={false}
           />
         </NameContainer>
       </InputContainer>
@@ -179,15 +217,28 @@ export const PasswordInput: React.FC<TextInputProps> = ({
     setFocused(inputRef.current === document.activeElement);
   };
 
+  const handleClick = () => {
+    if (!inputRef.current) return;
+
+    inputRef.current.focus();
+    handleFocus();
+  };
+
   useEffect(() => {
     handleFocus();
   }, [field, meta]);
 
   return (
     <>
-      <InputContainer focused={focused} error={meta.touched && !!meta.error}>
+      <InputContainer
+        focused={focused}
+        error={meta.touched && !!meta.error}
+        onClick={handleClick}
+      >
         <NameContainer>
-          <Label htmlFor={props.name}>{label}</Label>
+          <Label htmlFor={props.name} focus={focused || field.value !== ''}>
+            {label}
+          </Label>
           <Input
             type={show ? 'text' : 'password'}
             {...field}
