@@ -7,6 +7,7 @@ import { Photo, Album } from '../../utils/types';
 import { addPicture } from '../../reducers/pictureReducer';
 import EditPhoto, { EditPhotoProps } from '../../components/Dialogs/EditPhoto';
 import EditAlbum, { EditAlbumProps } from '../../components/Dialogs/EditAlbum';
+import EditTags, { EditTagsProps } from '../../components/Dialogs/EditTags';
 import useDeleteQueue, { QueueStatus } from '../../hooks/useDeleteQueue';
 import useDeleteAlbum, { DeleteAlbumStatus } from '../../hooks/useDeleteAlbum';
 import Confirmation, {
@@ -15,6 +16,7 @@ import Confirmation, {
 import { ReactComponent as AddButton } from '../../images/plus-square-solid.svg';
 import { ReactComponent as AlbumButton } from '../../images/folder-plus-solid.svg';
 import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
+import { ReactComponent as TagsButton } from '../../images/tag-solid.svg';
 
 import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
 import Button from '../../components/Button/Button';
@@ -37,6 +39,7 @@ const MyPhotos = () => {
   const [confirmation, setConfirmation] = useState<ConfirmationProps>({});
   const [editPhoto, setEditPhoto] = useState<EditPhotoProps>({});
   const [editAlbum, setEditAlbum] = useState<EditAlbumProps>({});
+  const [editTags, setEditTags] = useState<EditTagsProps>({});
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const [queueStarted, setQueueStarted] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
@@ -113,6 +116,15 @@ const MyPhotos = () => {
       albums: albums,
       handleOk: () => void 0,
       handleCancel: () => setEditPhoto({}),
+    });
+  };
+
+  const handleEditTags = () => {
+    setEditTags({
+      open: true,
+      photos: photos.filter(photo => selection.includes(photo.id)),
+      handleOk: () => void 0,
+      handleCancel: () => setEditTags({}),
     });
   };
 
@@ -297,7 +309,7 @@ const MyPhotos = () => {
                 text="Add"
                 icon={AddButton}
                 color={ButtonColor.black}
-                breakPoint="400px"
+                breakPoint="480px"
               />
               <InitialUploadFileButton
                 type="file"
@@ -314,7 +326,15 @@ const MyPhotos = () => {
               icon={EditButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
-              breakPoint="400px"
+              breakPoint="480px"
+            />
+            <Button
+              onClick={handleEditTags}
+              text="Tags"
+              icon={TagsButton}
+              disabled={selection.length === 0}
+              color={ButtonColor.black}
+              breakPoint="480px"
             />
           </Styled.PictureListButtonGroup>
 
@@ -324,7 +344,7 @@ const MyPhotos = () => {
               text="Create album"
               icon={AlbumButton}
               color={ButtonColor.black}
-              breakPoint="320px"
+              breakPoint="380px"
             />
           </Styled.PictureListButtonGroup>
 
@@ -335,7 +355,7 @@ const MyPhotos = () => {
               icon={DeleteButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
-              breakPoint="450px"
+              breakPoint="550px"
             />
           </Styled.PictureListButtonGroup>
         </Styled.PictureListButtonGroups>
@@ -350,6 +370,7 @@ const MyPhotos = () => {
       <Styled.PictureListContainer>
         <Confirmation {...confirmation} />
         <EditPhoto {...editPhoto} />
+        <EditTags {...editTags} />
         <EditAlbum {...editAlbum} />
         {resultMe.loading && <CenteredSpinner />}
 
