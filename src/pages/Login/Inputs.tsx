@@ -154,9 +154,16 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const [focused, setFocused] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [changed, setChanged] = useState(false);
+  const [blurred, setBlurred] = useState(false);
 
   const handleFocus = () => {
     setFocused(inputRef.current === document.activeElement);
+  };
+
+  const handleBlur = () => {
+    if (changed) setBlurred(true);
+    handleFocus();
   };
 
   const handleClick = () => {
@@ -170,11 +177,17 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
     handleFocus();
   }, [field, meta]);
 
+  useEffect(() => {
+    if (meta.value !== '') setChanged(true);
+  }, [meta.value]);
+
   return (
     <>
       <InputContainer
         focused={focused}
-        error={meta.touched && !!meta.error}
+        error={
+          (meta.touched && !!meta.error) || (changed && blurred && !!meta.error)
+        }
         onClick={handleClick}
       >
         <NameContainer>
@@ -187,12 +200,17 @@ export const TextInput: React.FC<TextInputProps> = ({ label, ...props }) => {
             {...props}
             ref={inputRef}
             onFocus={handleFocus}
+            onBlur={handleBlur}
             autoComplete="off"
             spellCheck={false}
           />
         </NameContainer>
       </InputContainer>
-      <Error error={meta.touched && !!meta.error}>
+      <Error
+        error={
+          (meta.touched && !!meta.error) || (changed && blurred && !!meta.error)
+        }
+      >
         <InfoIcon />
         {meta.error}
       </Error>
@@ -208,6 +226,8 @@ export const PasswordInput: React.FC<TextInputProps> = ({
   const [show, setShow] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [changed, setChanged] = useState(false);
+  const [blurred, setBlurred] = useState(false);
 
   const handlePasswordIconClick = () => {
     setShow(!show);
@@ -215,6 +235,11 @@ export const PasswordInput: React.FC<TextInputProps> = ({
 
   const handleFocus = () => {
     setFocused(inputRef.current === document.activeElement);
+  };
+
+  const handleBlur = () => {
+    if (changed) setBlurred(true);
+    handleFocus();
   };
 
   const handleClick = () => {
@@ -228,11 +253,17 @@ export const PasswordInput: React.FC<TextInputProps> = ({
     handleFocus();
   }, [field, meta]);
 
+  useEffect(() => {
+    if (meta.value !== '') setChanged(true);
+  }, [meta.value]);
+
   return (
     <>
       <InputContainer
         focused={focused}
-        error={meta.touched && !!meta.error}
+        error={
+          (meta.touched && !!meta.error) || (changed && blurred && !!meta.error)
+        }
         onClick={handleClick}
       >
         <NameContainer>
@@ -245,13 +276,18 @@ export const PasswordInput: React.FC<TextInputProps> = ({
             {...props}
             ref={inputRef}
             onFocus={handleFocus}
+            onBlur={handleBlur}
           />
         </NameContainer>
         <Icon onClick={handlePasswordIconClick}>
           <PasswordIcon show={show} />
         </Icon>
       </InputContainer>
-      <Error error={meta.touched && !!meta.error}>
+      <Error
+        error={
+          (meta.touched && !!meta.error) || (changed && blurred && !!meta.error)
+        }
+      >
         <InfoIcon />
         {meta.error}
       </Error>
