@@ -89,13 +89,13 @@ const Header = () => {
   const userMenuItems = [
     {
       text: 'Upload',
-      subText: 'Add new pictures',
+      subText: 'Add new photos',
       link: '/upload',
       Icon: UploadIcon,
     },
     {
       text: 'My photos',
-      subText: 'Browse your own photos',
+      subText: 'Manage your photos',
       link: '/myphotos',
       Icon: PicturesIcon,
     },

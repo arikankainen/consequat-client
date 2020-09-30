@@ -30,7 +30,7 @@ const InitialUpload = () => {
       <Styled.InitialUploadContainer>
         <ImagesIcon />
         <form onSubmit={handleSubmit}>
-          <Button onClick={handleClick} text="Select pictures to upload" />
+          <Button onClick={handleClick} text="Select photos to upload" />
           <Styled.InitialUploadFileButton
             type="file"
             ref={fileInput}
