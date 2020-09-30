@@ -1,114 +1,91 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
 import BaseDialog from './BaseDialog/BaseDialog';
 import Button from '../Button/Button';
 import { ButtonColor } from '../Button/style';
-import { FormValues } from './EditTags';
 import Spinner from '../Spinner/Spinner';
 import * as Styled from './style';
-
-import { TextInput } from './Inputs/Inputs';
+import TagInput from './TagInput/TagInput';
+import Tag, { TagType } from './Tag/Tag';
+import TagLegend from './TagLegend/TagLegend';
 
 export interface EditTagsDialogProps {
   open: boolean;
-  handleSubmit: (values: FormValues) => void;
-  handleCancel: () => void;
   message: string;
   saving: boolean;
-  initialValues: FormValues;
-  multi?: boolean;
+  handleSubmit: () => void;
+  handleCancel: () => void;
+  handleTagFieldChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleTagFieldKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleAddTag: () => void;
+  handleDeleteTag: (text: string, tagType: TagType) => void;
+  tagFieldValue: string;
+  sharedTags: string[];
+  uniqueTags: string[];
+  addedTags: string[];
 }
 
-const EditTagsDialog: React.FC<EditTagsDialogProps> = ({
-  open,
-  handleSubmit,
-  handleCancel,
-  message,
-  saving,
-  initialValues,
-  multi,
-}) => {
+const EditTagsDialog: React.FC<EditTagsDialogProps> = props => {
   return (
-    <BaseDialog open={open}>
+    <BaseDialog open={props.open}>
       <Styled.DialogContainer>
-        <Formik
-          initialValues={initialValues}
-          enableReinitialize={true}
-          onSubmit={handleSubmit}
-        >
-          {({ values, setFieldValue }) => (
-            <Form>
-              {multi ? (
-                <Styled.DialogTopic>
-                  Edit tags on multiple photos
-                </Styled.DialogTopic>
-              ) : (
-                <Styled.DialogTopic>Edit tags</Styled.DialogTopic>
-              )}
-              <Styled.DialogContentGrid>
-                {multi && (
-                  <Styled.Warning>
-                    Fields that are initially locked, contains unique values. By
-                    unlocking those fields, you overwrite existing values for
-                    all selected photos by values you enter. Only unlocked
-                    fields will be saved.
-                  </Styled.Warning>
-                )}
-                <TextInput
-                  name="tags"
-                  label="Tags"
-                  disabled={values.tagsLocked}
-                  onLockClick={() =>
-                    setFieldValue('tagsLocked', !values.tagsLocked)
-                  }
-                  multi={multi}
+        <Styled.DialogTopic>Edit tags</Styled.DialogTopic>
+
+        <Styled.DialogContentNormal>
+          <Styled.DialogPadding>
+            <TagLegend />
+            <TagInput
+              handleTagFieldChange={props.handleTagFieldChange}
+              handleTagFieldKeyUp={props.handleTagFieldKeyUp}
+              handleAddTag={props.handleAddTag}
+              tagFieldValue={props.tagFieldValue}
+            />
+            <Styled.TagsContainer>
+              {props.uniqueTags.map(tag => (
+                <Tag
+                  key={tag}
+                  text={tag}
+                  tagType={TagType.unique}
+                  onTagDeleteClick={props.handleDeleteTag}
                 />
-                <TextInput
-                  name="addedTags"
-                  label="Added tags"
-                  disabled={values.addedTagsLocked}
-                  onLockClick={() =>
-                    setFieldValue('addedTagsLocked', !values.addedTagsLocked)
-                  }
-                  multi={multi}
+              ))}
+              {props.sharedTags.map(tag => (
+                <Tag
+                  key={tag}
+                  text={tag}
+                  tagType={TagType.shared}
+                  onTagDeleteClick={props.handleDeleteTag}
                 />
-                <TextInput
-                  name="deletedTags"
-                  label="Deleted tags"
-                  disabled={values.deletedTagsLocked}
-                  onLockClick={() =>
-                    setFieldValue(
-                      'deletedTagsLocked',
-                      !values.deletedTagsLocked
-                    )
-                  }
-                  multi={multi}
+              ))}
+              {props.addedTags.map(tag => (
+                <Tag
+                  key={tag}
+                  text={tag}
+                  tagType={TagType.added}
+                  onTagDeleteClick={props.handleDeleteTag}
                 />
-                <div></div>
-              </Styled.DialogContentGrid>
-              <Styled.DialogButtonArea>
-                <Styled.SpinnerContainer>
-                  <Spinner show={saving} />
-                </Styled.SpinnerContainer>
-                <Styled.SavingIndicator>{message}</Styled.SavingIndicator>
-                <Button
-                  text="Cancel"
-                  type="button"
-                  width={75}
-                  color={ButtonColor.whiteWithBlueBorder}
-                  onClick={handleCancel}
-                />
-                <Button
-                  text={saving ? 'Saving...' : 'Save'}
-                  type="submit"
-                  width={75}
-                  disabled={saving}
-                  onClick={() => void 0}
-                />
-              </Styled.DialogButtonArea>
-            </Form>
-          )}
-        </Formik>
+              ))}
+            </Styled.TagsContainer>
+          </Styled.DialogPadding>
+        </Styled.DialogContentNormal>
+
+        <Styled.DialogButtonArea>
+          <Styled.SpinnerContainer>
+            <Spinner show={props.saving} />
+          </Styled.SpinnerContainer>
+          <Styled.SavingIndicator>{props.message}</Styled.SavingIndicator>
+          <Button
+            text="Cancel"
+            width={75}
+            color={ButtonColor.whiteWithBlueBorder}
+            onClick={props.handleCancel}
+          />
+          <Button
+            text={props.saving ? 'Saving...' : 'Save'}
+            width={75}
+            disabled={props.saving}
+            onClick={props.handleSubmit}
+          />
+        </Styled.DialogButtonArea>
       </Styled.DialogContainer>
     </BaseDialog>
   );

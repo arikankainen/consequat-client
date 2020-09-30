@@ -36,6 +36,16 @@ export const DialogContentNormal = styled.div`
   overflow: auto;
 `;
 
+export const DialogPadding = styled.div`
+  padding: 15px;
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px -5px;
+`;
+
 export const DialogContentGrid = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;

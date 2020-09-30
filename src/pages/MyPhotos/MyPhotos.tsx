@@ -298,6 +298,21 @@ const MyPhotos = () => {
     setSelection(currentSelection);
   };
 
+  // used to automatically open tag editor with 3 photos for testing TODO: remove!
+  // useEffect(() => {
+  //   if (!photos || photos.length < 3) return;
+  //   if (!photos[0].tags) return;
+  //   const selectedPhotos = [photos[0].id, photos[1].id, photos[3].id];
+  //   setSelection(selectedPhotos);
+
+  //   setEditTags({
+  //     open: true,
+  //     photos: photos.filter(photo => selectedPhotos.includes(photo.id)),
+  //     handleOk: () => void 0,
+  //     handleCancel: () => setEditTags({}),
+  //   });
+  // }, [photos]);
+
   return (
     <>
       <Styled.PictureListToolBar>

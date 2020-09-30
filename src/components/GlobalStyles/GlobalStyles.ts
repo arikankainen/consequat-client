@@ -56,6 +56,9 @@ const GlobalStyles = createGlobalStyle`
     --unlocked-color: var(--accent-color-2);
     --locked-color: #999;
     --header-height: 60px;
+    --tag-unique-color: #aaa;
+    --tag-shared-color: var(--accent-color-1);
+    --tag-added-color: var(--accent-color-2);
   }
 
   * {

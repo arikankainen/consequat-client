@@ -5,7 +5,6 @@ import { ReactComponent as LockedIcon } from '../../../images/lock-solid_modifie
 import { ReactComponent as UnlockedIcon } from '../../../images/unlock-solid.svg';
 import { ReactComponent as ShowPasswordIcon } from '../../../images/eye-solid.svg';
 import { ReactComponent as HidePasswordIcon } from '../../../images/eye-slash-solid.svg';
-
 import * as Styled from './style';
 
 interface UncontrolledInputProps {
