@@ -9,12 +9,18 @@ export const SearchContainer = styled.div<SearchContainerProps>`
   align-items: center;
   justify-content: flex-start;
   max-width: 300px;
+  /* max-width: 45px; */
   margin-left: 10px;
   margin-right: 10px;
   padding-left: 15px;
   height: 34px;
   border-radius: var(--input-border-radius);
   background-color: var(--input-bg-color);
+  cursor: text;
+
+  & > form {
+    width: 100%;
+  }
 
   & > svg {
     width: 16px;
@@ -35,8 +41,10 @@ export const SearchContainer = styled.div<SearchContainerProps>`
 
 export const Input = styled.input`
   width: 100%;
-  margin-left: 20px;
-  margin-right: 20px;
+  /* margin-left: 20px;
+  margin-right: 20px; */
+  padding-left: 15px;
+  padding-right: 5px;
   background-color: transparent;
   border: none;
   color: var(--input-color);

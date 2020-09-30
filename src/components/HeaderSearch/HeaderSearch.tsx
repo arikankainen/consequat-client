@@ -26,12 +26,16 @@ const HeaderSearch = () => {
     if (inputRef.current) inputRef.current.blur();
   };
 
+  const handleIconClick = () => {
+    if (inputRef.current) inputRef.current.focus();
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyWord(event.target.value);
   };
 
   return (
-    <Styled.SearchContainer focus={focus}>
+    <Styled.SearchContainer focus={focus} onClick={handleIconClick}>
       <SearchIcon />
       <form onSubmit={handleSubmit}>
         <Styled.Input
