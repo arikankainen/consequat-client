@@ -155,7 +155,9 @@ const EditPhoto: React.FC<EditPhotoProps> = props => {
           unlockedValues.description = values.description;
         if (!values.hiddenLocked) unlockedValues.hidden = values.hidden;
         if (!values.tagsLocked)
-          unlockedValues.tags = values.tags.split(',').map(tag => tag.trim());
+          unlockedValues.tags = values.tags
+            .split(',')
+            .map(tag => tag.trim().toLowerCase());
         if (!values.albumLocked)
           unlockedValues.album =
             values.album !== '0' && values.album !== '' ? values.album : null;
