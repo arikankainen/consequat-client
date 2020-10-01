@@ -16,6 +16,7 @@ import gridCalculator, { Dimension } from '../../utils/gridCalculator';
 import useContainerWidth from '../../hooks/useContainerWidth';
 
 import * as Styled from './style';
+import { useLocation } from 'react-router-dom';
 
 interface PhotoGridProps {
   photos: PhotoUserExtended[];
@@ -36,6 +37,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
   const [totalHeight, setTotalHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
+  const location = useLocation();
 
   useEffect(() => {
     const grid = gridCalculator({
@@ -110,6 +112,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
               <PhotoGridItem
                 photo={photos[dimension.index]}
                 scrollPosition={scrollPosition}
+                listAddress={`${location.pathname}${location.search}`}
               />
             </Styled.ItemOuterContainer>
           ))}

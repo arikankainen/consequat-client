@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from '../../utils/queries';
@@ -20,6 +20,8 @@ const Photo = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [prevPhoto, setPrevPhoto] = useState<string | undefined>(undefined);
   const [nextPhoto, setNextPhoto] = useState<string | undefined>(undefined);
+  const url = useLocation();
+  const prevAddress = url.search.replace('?prev=', '');
 
   const resultPhoto = useQuery(GET_PHOTO, {
     variables: { id },
@@ -88,9 +90,10 @@ const Photo = () => {
     const photos = photoListState.photos;
 
     const index = photos.findIndex(item => item.id === photo.id);
-    if (index > 0) setPrevPhoto(photos[index - 1].id);
-    if (photos.length > index + 1) setNextPhoto(photos[index + 1].id);
-  }, [photoListState, photo]);
+    if (index > 0) setPrevPhoto(photos[index - 1].id + url.search);
+    if (photos.length > index + 1)
+      setNextPhoto(photos[index + 1].id + url.search);
+  }, [photoListState, photo, url.search]);
 
   const handleSubmit = (text: string) => {
     if (!photo) return;
@@ -100,15 +103,13 @@ const Photo = () => {
     });
   };
 
-  //if (!photo) return <div>Loading...</div>;
-  //if (resultPhoto.loading) return <div>Loading...</div>;
-
   return (
     <ShowPhoto
       photo={photo}
       commentCount={comments.length}
       prevPhoto={prevPhoto}
       nextPhoto={nextPhoto}
+      prevAddress={prevAddress}
     >
       <Comments
         comments={comments}

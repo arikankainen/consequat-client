@@ -1,7 +1,7 @@
 import React from 'react';
 import { PhotoUserExtended } from '../../utils/types';
 import formatDate from '../../utils/formatDate';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { ReactComponent as LeftIcon } from '../../images/chevron-left-solid.svg';
 import { ReactComponent as RightIcon } from '../../images/chevron-right-solid.svg';
 import { ReactComponent as MapIcon } from '../../images/map-marker-alt-solid.svg';
@@ -9,6 +9,8 @@ import { ReactComponent as TagIcon } from '../../images/tag-solid.svg';
 import { ReactComponent as CalendarIcon } from '../../images/calendar-alt-solid.svg';
 import { ReactComponent as CameraIcon } from '../../images/camera-solid.svg';
 import { ReactComponent as CommentIcon } from '../../images/comment-solid.svg';
+import { ReactComponent as GalleryIcon } from '../../images/th-solid.svg';
+import { ReactComponent as ExpandIcon } from '../../images/expand-alt-solid.svg';
 import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
 import Tag from '../Tag/Tag';
 
@@ -19,6 +21,7 @@ interface ShowPhotoProps {
   commentCount: number;
   prevPhoto: string | undefined;
   nextPhoto: string | undefined;
+  prevAddress: string;
   children: JSX.Element;
 }
 
@@ -27,6 +30,7 @@ const ShowPhoto: React.FC<ShowPhotoProps> = ({
   commentCount,
   prevPhoto,
   nextPhoto,
+  prevAddress,
   children,
 }) => {
   if (!photo) {
@@ -45,7 +49,18 @@ const ShowPhoto: React.FC<ShowPhotoProps> = ({
   return (
     <Style.GridContainer>
       <Style.PictureContainer>
-        <Style.Image src={photo.mainUrl} alt={photo.name} effect="blur" />
+        <Style.Image src={photo.mainUrl} alt={photo.name} effect="opacity" />
+
+        {prevAddress && (
+          <Style.LeftAction to={prevAddress}>
+            <GalleryIcon />
+            Back to photos
+          </Style.LeftAction>
+        )}
+
+        <Style.RightAction to="">
+          <ExpandIcon />
+        </Style.RightAction>
 
         {prevPhoto && (
           <Style.LeftArrow to={prevPhoto}>

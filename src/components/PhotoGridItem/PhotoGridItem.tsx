@@ -7,17 +7,19 @@ import * as Styled from './style';
 interface PhotoGridItemProps {
   photo: PhotoUserExtended;
   scrollPosition: ScrollPosition;
+  listAddress: string;
 }
 
 const PhotoGridItem: React.FC<PhotoGridItemProps> = ({
   photo,
   scrollPosition,
+  listAddress,
 }) => {
   if (!photo) return null;
 
   return (
     <Styled.ItemContainer key={photo.id}>
-      <Link to={`/photos/photo/${photo.id}`}>
+      <Link to={`/photos/photo/${photo.id}?prev=${listAddress}`}>
         <Styled.ImageContainer>
           <Styled.Image
             src={photo.thumbUrl}
