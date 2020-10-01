@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { clearLogin } from '../../reducers/systemReducer';
-import storage from '../../utils/storage';
+import storageToken from '../../utils/storageToken';
 import { setMessage } from '../../reducers/notificationReducer';
 
 const Logout = () => {
@@ -21,7 +21,7 @@ const Logout = () => {
         )
       );
       dispatch(clearLogin());
-      storage.clearToken();
+      storageToken.removeToken();
     }
 
     history.replace('/');

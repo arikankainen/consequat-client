@@ -4,7 +4,7 @@ import { RootState } from '../../reducers/rootReducer';
 import { useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { updateLogin } from '../../reducers/systemReducer';
-import storage from '../../utils/storage';
+import storageToken from '../../utils/storageToken';
 import { ME } from '../../utils/queries';
 import Logo from '../HeaderLogo/Logo';
 import Menu, { Direction } from '../Menu/Menu';
@@ -29,7 +29,7 @@ const Header = () => {
   const [me, resultMe] = useLazyQuery(ME);
 
   useEffect(() => {
-    if (!loginState.loggedIn && storage.getToken()) {
+    if (!loginState.loggedIn && storageToken.getToken()) {
       me();
     }
   }, [loginState]); // eslint-disable-line
@@ -39,7 +39,7 @@ const Header = () => {
       dispatch(
         updateLogin({
           loggedIn: true,
-          loggedToken: storage.getToken(),
+          loggedToken: storageToken.getToken(),
           loggedUser: {
             username: resultMe.data.me.username,
             email: resultMe.data.me.email,

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import { updateLogin } from '../../reducers/systemReducer';
 import { setMessage, setError } from '../../reducers/notificationReducer';
-import storage from '../../utils/storage';
+import storageToken from '../../utils/storageToken';
 import { LOGIN, ME } from '../../utils/queries';
 
 import { Formik, Form } from 'formik';
@@ -53,7 +53,7 @@ const Login = () => {
   useEffect(() => {
     if (resultLogin.data) {
       const token = resultLogin.data.login.token;
-      storage.setToken(token);
+      storageToken.setToken(token);
       me();
     }
   }, [resultLogin.data, history]); // eslint-disable-line
@@ -63,7 +63,7 @@ const Login = () => {
       dispatch(
         updateLogin({
           loggedIn: true,
-          loggedToken: storage.getToken(),
+          loggedToken: storageToken.getToken(),
           loggedUser: {
             username: resultMe.data.me.username,
             email: resultMe.data.me.email,
