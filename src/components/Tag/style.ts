@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const TagLink = styled(Link)`
   text-decoration: none;
-  padding-right: 5px;
+  padding-right: 8px;
 
   &:link,
   &:visited {

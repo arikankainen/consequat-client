@@ -177,6 +177,11 @@ export const PropertyWithIcon = styled.div`
   }
 `;
 
+export const TextProperty = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const Line = styled.div`
   width: 100%;
   border-bottom: 1px solid #ddd;

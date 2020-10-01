@@ -75,28 +75,34 @@ const ShowPhoto: React.FC<ShowPhotoProps> = ({
             <Style.AuthorGridItem>
               <Style.PropertyWithIcon>
                 <CalendarIcon />
-                {formatDate(photo.dateAdded, true)}
+                <Style.TextProperty>
+                  {formatDate(photo.dateAdded, true)}
+                </Style.TextProperty>
               </Style.PropertyWithIcon>
 
               {photo.location && (
                 <Style.PropertyWithIcon>
                   <MapIcon />
-                  {photo.location}
+                  <Style.TextProperty>{photo.location}</Style.TextProperty>
                 </Style.PropertyWithIcon>
               )}
 
               {photo.tags && photo.tags.join().trim() !== '' && (
                 <Style.PropertyWithIcon>
                   <TagIcon />
-                  {photo.tags.map(tag => (
-                    <Tag key={tag} tag={tag} />
-                  ))}
+                  <Style.TextProperty>
+                    {photo.tags.map(tag => (
+                      <Tag key={tag} tag={tag} />
+                    ))}
+                  </Style.TextProperty>
                 </Style.PropertyWithIcon>
               )}
 
               <Style.PropertyWithIcon>
                 <CommentIcon />
-                {commentCount} comments
+                {commentCount === 0 && <>No comments</>}
+                {commentCount === 1 && <>1 comment</>}
+                {commentCount > 1 && <>{commentCount} comments</>}
               </Style.PropertyWithIcon>
             </Style.AuthorGridItem>
           </Style.AuthorGrid>
