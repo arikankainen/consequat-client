@@ -14,7 +14,7 @@ interface PictureState {
   pictures: PictureWithData[];
 }
 
-const initialState: PictureState = {
+export const initialState: PictureState = {
   pictures: [],
 };
 

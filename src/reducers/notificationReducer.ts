@@ -16,7 +16,7 @@ interface NotificationState {
   text: string | null;
 }
 
-const initialState: NotificationState = {
+export const initialState: NotificationState = {
   notificationType: NotificationType.Message,
   topic: null,
   text: null,

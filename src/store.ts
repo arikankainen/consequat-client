@@ -4,6 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootReducer } from './reducers/rootReducer';
 import storageState from './utils/storageState';
 import throttle from 'lodash/throttle';
+import { initialState as notificationInitialState } from './reducers/notificationReducer';
+import { initialState as pictureInitialState } from './reducers/pictureReducer';
 
 const persistedState = storageState.loadState();
 
@@ -15,7 +17,16 @@ const store = createStore(
 
 store.subscribe(
   throttle(() => {
-    storageState.saveState(store.getState());
+    const state = store.getState();
+
+    const stateToSave = {
+      system: state.system,
+      notification: notificationInitialState,
+      picture: pictureInitialState,
+      photoList: state.photoList,
+    };
+
+    storageState.saveState(stateToSave);
   }, 1000)
 );
 
