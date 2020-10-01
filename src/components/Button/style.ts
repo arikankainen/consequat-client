@@ -26,6 +26,7 @@ interface ContainerProps {
 export const Container = styled.button<ContainerProps>`
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
   margin: 10px 5px;
   padding: 6px 10px;
   border: 1px solid var(--accent-color-2);

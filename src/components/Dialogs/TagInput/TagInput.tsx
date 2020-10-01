@@ -21,7 +21,7 @@ const TagInput: React.FC<TagInputProps> = props => {
           onChange={props.handleTagFieldChange}
           onKeyUp={props.handleTagFieldKeyUp}
           value={props.tagFieldValue}
-          placeholder="Separate multiple new tags by comma"
+          placeholder="Separate tags by comma"
         />
         <Button
           text="Add new tags"

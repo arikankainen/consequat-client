@@ -6,10 +6,9 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input`
-  flex: 1;
   background-color: #fff;
   border: 1px solid #ccc;
-  max-width: 100%;
+  width: 100%;
   color: #000;
   font-size: 14px;
   padding: 2px 6px 2px 6px;

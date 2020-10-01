@@ -8,7 +8,7 @@ interface TagContainerProps {
 export const TagContainer = styled.div<TagContainerProps>`
   display: flex;
   align-items: center;
-  padding: 4px 6px 2px 6px;
+  padding: 4px 0px 2px 6px;
   margin: 5px;
   font-size: 14px;
   color: #fff;
@@ -44,12 +44,13 @@ export const TagContainer = styled.div<TagContainerProps>`
 export const DeleteButton = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   cursor: pointer;
 
   & > svg {
     width: 7px;
     color: #fff;
-    margin-left: 5px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
 `;

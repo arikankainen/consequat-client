@@ -43,7 +43,7 @@ export const DialogPadding = styled.div`
 export const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0px -5px;
+  margin: 25px -5px 0px -5px;
 `;
 
 export const DialogContentGrid = styled.div`
