@@ -63,7 +63,11 @@ const Footer = () => {
               Copyright
             </Styled.H1>
 
-            <Styled.P>Consequat &copy; 2020 Ari Kankainen</Styled.P>
+            <Styled.P>
+              Consequat app, all code (except external libraries), Consequat
+              logo, shutter icon and background photography.
+            </Styled.P>
+            <Styled.P>Copyright &copy; Ari Kankainen 2020</Styled.P>
             <Styled.P>
               <Styled.Link href="https://arik.fi">https://arik.fi</Styled.Link>
             </Styled.P>
