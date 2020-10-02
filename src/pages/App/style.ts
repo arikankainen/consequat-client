@@ -1,11 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 import back1920 from '../../images/back_01_1920.jpg';
 
-interface SiteContainerProps {
-  picture: boolean;
-}
-
-export const SiteContainer = styled.section<SiteContainerProps>`
+export const SiteContainer = styled.section`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -16,6 +12,20 @@ export const SiteContainer = styled.section<SiteContainerProps>`
     'footer';
   height: 100%;
   width: 100%;
+`;
+
+interface MainProps {
+  picture: boolean;
+}
+
+export const Main = styled.div<MainProps>`
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 60px);
 
   ${props =>
     props.picture &&
@@ -25,14 +35,4 @@ export const SiteContainer = styled.section<SiteContainerProps>`
       background-size: cover;
       background-image: url(${back1920});
   `}
-`;
-
-export const Main = styled.div`
-  grid-area: main;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: calc(100vh - 60px);
 `;

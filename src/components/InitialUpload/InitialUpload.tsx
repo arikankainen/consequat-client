@@ -29,8 +29,16 @@ const InitialUpload = () => {
     <Styled.InitialUploadOuterContainer>
       <Styled.InitialUploadContainer>
         <ImagesIcon />
+        <Styled.Topic>Select photos you want to upload</Styled.Topic>
+        You may select one or multiple photos. Photos that you upload, are
+        initially hidden from public galleries. If you wish, you can publish
+        them to public after they have been uploaded.
         <form onSubmit={handleSubmit}>
-          <Button onClick={handleClick} text="Select photos to upload" />
+          <Button
+            onClick={handleClick}
+            text="Select photos to upload"
+            margin={[20, 0, 0, 0]}
+          />
           <Styled.InitialUploadFileButton
             type="file"
             ref={fileInput}

@@ -55,6 +55,11 @@ export const P = styled.p`
   line-height: 1.2;
 `;
 
+export const BlockP = styled(P)`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const H1 = styled.h1`
   display: flex;
   align-items: center;
@@ -88,7 +93,7 @@ export const Link = styled.a`
 `;
 
 export const ListLink = styled(Link)`
-  display: block;
+  display: inline-block;
   margin-top: 3px;
   margin-left: 10px;
 `;

@@ -73,28 +73,28 @@ const Footer = () => {
           <Styled.Section>
             <Styled.Line />
             <Styled.H1>Application</Styled.H1>
-            <Styled.P>
+            <Styled.BlockP>
               <Styled.ListLink href="/">Starting point</Styled.ListLink>
               <Styled.ListLink href="/photos">Browse photos</Styled.ListLink>
               <Styled.ListLink href="/about">About</Styled.ListLink>
-            </Styled.P>
+            </Styled.BlockP>
           </Styled.Section>
 
           <Styled.Section>
             <Styled.H1>Join Consequat</Styled.H1>
-            <Styled.P>
+            <Styled.BlockP>
               <Styled.ListLink href="/signup">Sign up</Styled.ListLink>
               <Styled.ListLink href="/login">Log in</Styled.ListLink>
-            </Styled.P>
+            </Styled.BlockP>
           </Styled.Section>
 
           <Styled.Section>
             <Styled.H1>User</Styled.H1>
-            <Styled.P>
+            <Styled.BlockP>
               <Styled.ListLink href="/upload">Upload</Styled.ListLink>
               <Styled.ListLink href="/myphotos">My photos</Styled.ListLink>
               <Styled.ListLink href="/account">Account</Styled.ListLink>
-            </Styled.P>
+            </Styled.BlockP>
           </Styled.Section>
         </Styled.GridRight>
       </Styled.GridContainer>

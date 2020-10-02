@@ -31,6 +31,10 @@ const App = () => {
   const prevLocationRef = useRef<string | undefined>();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
     prevLocationRef.current = location.pathname;
   });
 
@@ -58,7 +62,7 @@ const App = () => {
   }
 
   return (
-    <Styled.SiteContainer picture={back}>
+    <Styled.SiteContainer>
       <Notification />
       <Header />
 
@@ -75,10 +79,6 @@ const App = () => {
             classNames = 'nofade';
           }
 
-          if (location.pathname.toLowerCase().includes('/photos/photo')) {
-            window.scrollTo(0, 0);
-          }
-
           return (
             <TransitionGroup component={null}>
               <CSSTransition
@@ -86,7 +86,7 @@ const App = () => {
                 timeout={timeout}
                 classNames={classNames}
               >
-                <Styled.Main>
+                <Styled.Main picture={back}>
                   <Switch location={location}>
                     <Route path="/login">
                       {loginState.loggedIn ? <Redirect to="/" /> : <Login />}
