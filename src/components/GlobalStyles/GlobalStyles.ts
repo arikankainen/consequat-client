@@ -26,7 +26,7 @@ const GlobalStyles = createGlobalStyle`
     --navigation-bg-color: rgba(38, 38, 40, 0.9);
     --navigation-bg-color: #111;
     --navigation-bg-color-hover: #303032;
-    --footer-bg-color: rgba(0, 0, 0, 0.8);
+    --footer-bg-color: rgb(29, 29, 31);
     --navigation-bg-color-hover: rgba(255, 255, 255, 0.2);
     --navigation-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     --input-border-radius: 3px;

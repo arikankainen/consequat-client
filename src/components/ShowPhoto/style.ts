@@ -23,7 +23,7 @@ export const PictureContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: #1d1d1f;
+  background-color: var(--footer-bg-color);
 
   & > span {
     display: flex !important;
@@ -57,10 +57,11 @@ const TopAction = styled(Link)`
   text-decoration: none;
   line-height: 1;
   transition: all .2s ease-in-out;
+  font-weight: 500;
 
   &:link,
   &:visited {
-    color: #aaa;
+    color: #ccc;
   }
 
   &:hover {

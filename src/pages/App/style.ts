@@ -9,7 +9,7 @@ export const SiteContainer = styled.section<SiteContainerProps>`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 1fr 50px;
+  grid-template-rows: 60px 1fr auto;
   grid-template-areas:
     'header'
     'main'
@@ -34,4 +34,5 @@ export const Main = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  min-height: calc(100vh - 60px);
 `;
