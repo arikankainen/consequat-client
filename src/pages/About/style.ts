@@ -3,16 +3,16 @@ import breakPoints from '../../utils/breakPoints';
 
 export const Container = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  max-width: ${breakPoints.laptopWidth};
-`;
+  max-width: ${breakPoints.laptopLWidth};
+  padding: 40px;
 
-export const TextBlock = styled.div`
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 1);
-  box-shadow: var(--default-box-shadow);
+  ${breakPoints.mobileXL} {
+    padding: 20px;
+  }
 `;
 
 export const H1 = styled.h1`
@@ -24,12 +24,21 @@ export const H1 = styled.h1`
 `;
 
 export const H2 = styled.h1`
+  display: flex;
+  align-items: center;
   margin-top: 20px;
   margin-bottom: 5px;
   font-family: var(--topic-font-family);
   font-weight: 200;
   font-size: 20px;
   color: #000;
+
+  & > svg {
+    height: 24px;
+    width: 24px;
+    color: #000;
+    margin-right: 10px;
+  }
 `;
 
 export const P = styled.p`
@@ -38,6 +47,7 @@ export const P = styled.p`
   font-size: 16px;
   color: #000;
   margin-bottom: 10px;
+  line-height: 1.4;
 `;
 
 export const Strong = styled.span`
@@ -46,12 +56,12 @@ export const Strong = styled.span`
 
 export const Warning = styled(P)`
   margin-top: 20px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 0px;
 `;
 
 export const Link = styled.a`
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
 
   &:link,
@@ -63,4 +73,11 @@ export const Link = styled.a`
     color: var(--accent-color-2-hover);
   }
   
+`;
+
+export const Code = styled.div`
+  margin-top: 4px;
+  font-family: var(--mono-font-family);
+  font-size: 13px;
+  font-weight: 300;
 `;

@@ -51,7 +51,6 @@ const App = () => {
   }, [location.pathname, dispatch]);
 
   if (
-    location.pathname === '/about' ||
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
     location.pathname === '/'
