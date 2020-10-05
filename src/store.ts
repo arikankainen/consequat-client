@@ -6,6 +6,7 @@ import storageState from './utils/storageState';
 import throttle from 'lodash/throttle';
 import { initialState as notificationInitialState } from './reducers/notificationReducer';
 import { initialState as pictureInitialState } from './reducers/pictureReducer';
+import { initialState as systemInitialState } from './reducers/systemReducer';
 
 const persistedState = storageState.loadState();
 
@@ -20,7 +21,7 @@ store.subscribe(
     const state = store.getState();
 
     const stateToSave = {
-      system: state.system,
+      system: systemInitialState,
       notification: notificationInitialState,
       picture: pictureInitialState,
       photoList: state.photoList,

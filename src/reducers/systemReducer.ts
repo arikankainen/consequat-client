@@ -16,7 +16,7 @@ interface UpdateData {
   loggedUser: LoggedUser | null;
 }
 
-const initialState: SystemState = {
+export const initialState: SystemState = {
   loggedIn: false,
   loggedToken: null,
   loggedUser: null,
