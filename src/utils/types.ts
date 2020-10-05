@@ -1,3 +1,14 @@
+export interface Exif {
+  dateTimeOriginal: string;
+  fNumber: string;
+  isoSpeedRatings: string;
+  shutterSpeedValue: string;
+  focalLength: string;
+  flash: string;
+  make: string;
+  model: string;
+}
+
 export interface LoggedUser {
   username: string;
   email: string;

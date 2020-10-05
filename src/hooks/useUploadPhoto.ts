@@ -7,6 +7,7 @@ import imageDimensions from '../utils/imageDimensions';
 import { v1 as uuid } from 'uuid';
 import useSavePhoto, { SavePhotoStatus } from './useSavePhoto';
 import { removePicture, updateProgress } from '../reducers/pictureReducer';
+import getExif from '../utils/getExif';
 
 export enum UploadPhotoStatus {
   idle,
@@ -126,6 +127,9 @@ const useUploadPhoto = (username?: string): Return => {
       const name = uuid();
       const filename = `images/${username}/${name}_p`;
       const thumbFilename = `images/${username}/${name}_t`;
+
+      const exif = await getExif(file);
+      console.log(exif);
 
       const { width, height } = await imageDimensions(file);
 
