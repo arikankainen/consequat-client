@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Photo } from '../utils/types';
+import { Exif, Photo } from '../utils/types';
 import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from '../utils/queries';
 import logger from '../utils/logger';
 
@@ -37,6 +37,7 @@ export interface SavePhoto {
   originalFilename?: string;
   width?: number;
   height?: number;
+  exif?: Exif;
 }
 
 const initialResponse = {
@@ -151,6 +152,7 @@ const useSavePhoto = (): Return => {
           width: photo.width,
           height: photo.height,
           name: photo.name,
+          exif: photo.exif,
         },
       });
     }

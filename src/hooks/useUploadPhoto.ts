@@ -129,7 +129,6 @@ const useUploadPhoto = (username?: string): Return => {
       const thumbFilename = `images/${username}/${name}_t`;
 
       const exif = await getExif(file);
-      console.log(exif);
 
       const { width, height } = await imageDimensions(file);
 
@@ -154,6 +153,7 @@ const useUploadPhoto = (username?: string): Return => {
         width,
         height,
         name: file.name,
+        exif,
       });
     } catch {
       setResponse({

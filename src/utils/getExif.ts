@@ -1,7 +1,7 @@
 import * as ExifReader from 'exifreader';
 import { Exif } from '../utils/types';
 
-const getExif = (file: File): Promise<Exif | null> => {
+const getExif = (file: File): Promise<Exif> => {
   return new Promise((resolve, reject) => {
     const fr = new FileReader();
 
@@ -17,7 +17,7 @@ const getExif = (file: File): Promise<Exif | null> => {
             : '',
           fNumber: tags.FNumber ? tags.FNumber.description : '',
           isoSpeedRatings: tags.ISOSpeedRatings
-            ? tags.ISOSpeedRatings.description
+            ? tags.ISOSpeedRatings.description.toString()
             : '',
           shutterSpeedValue: tags.ShutterSpeedValue
             ? tags.ShutterSpeedValue.description

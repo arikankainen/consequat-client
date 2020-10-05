@@ -80,6 +80,16 @@ const PHOTO_DETAILS = gql`
     tags,
     dateAdded,
     id,
+    exif {
+      dateTimeOriginal,
+      fNumber,
+      isoSpeedRatings,
+      shutterSpeedValue,
+      focalLength,
+      flash,
+      make,
+      model,
+    }
   }
 `;
 
@@ -129,6 +139,7 @@ export const ADD_PHOTO = gql`
     $description: String,
     $hidden: Boolean,
     $tags: [String],
+    $exif: ExifInput!,
   ) {
       addPhoto(
         mainUrl: $mainUrl,
@@ -143,6 +154,7 @@ export const ADD_PHOTO = gql`
         description: $description,
         hidden: $hidden,
         tags: $tags,
+        exif: $exif,
       ) {
         ...PhotoDetails,
       }

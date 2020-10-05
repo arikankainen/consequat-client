@@ -49,6 +49,7 @@ export interface Photo {
   dateAdded: Date;
   id: string;
   album: { id: string };
+  exif: Exif;
 }
 
 export interface PhotoUserExtended {
@@ -68,6 +69,7 @@ export interface PhotoUserExtended {
   id: string;
   album: { id: string };
   user: { fullname: string };
+  exif: Exif;
 }
 
 export interface Album {
