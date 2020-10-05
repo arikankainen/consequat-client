@@ -89,6 +89,8 @@ const PHOTO_DETAILS = gql`
       flash,
       make,
       model,
+      gpsLatitude,
+      gpsLongitude,
     }
   }
 `;

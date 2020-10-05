@@ -26,6 +26,12 @@ const getExif = (file: File): Promise<Exif> => {
           flash: tags.Flash ? tags.Flash.description : '',
           make: tags.Make ? tags.Make.description : '',
           model: tags.Model ? tags.Model.description : '',
+          gpsLatitude: tags.GPSLatitude
+            ? Number(tags.GPSLatitude.description)
+            : 0,
+          gpsLongitude: tags.GPSLongitude
+            ? Number(tags.GPSLongitude.description)
+            : 0,
         };
 
         resolve(exif);
