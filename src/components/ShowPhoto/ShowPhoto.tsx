@@ -10,7 +10,7 @@ import { ReactComponent as CalendarIcon } from '../../images/calendar-alt-solid.
 import { ReactComponent as CameraIcon } from '../../images/camera-solid.svg';
 import { ReactComponent as CommentIcon } from '../../images/comment-solid.svg';
 import { ReactComponent as GalleryIcon } from '../../images/th-solid.svg';
-import { ReactComponent as ExpandIcon } from '../../images/expand-alt-solid.svg';
+//import { ReactComponent as ExpandIcon } from '../../images/expand-alt-solid.svg';
 import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
 import Tag from '../Tag/Tag';
 
@@ -58,9 +58,9 @@ const ShowPhoto: React.FC<ShowPhotoProps> = ({
           </Style.LeftAction>
         )}
 
-        <Style.RightAction to="">
+        {/* <Style.RightAction to="">
           <ExpandIcon />
-        </Style.RightAction>
+        </Style.RightAction> */}
 
         {prevPhoto && (
           <Style.LeftArrow to={prevPhoto}>
