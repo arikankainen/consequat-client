@@ -75,7 +75,7 @@ export const Link = styled.a`
   
 `;
 
-export const Code = styled.div`
+export const Code = styled.span`
   margin-top: 4px;
   font-family: var(--mono-font-family);
   font-size: 13px;
