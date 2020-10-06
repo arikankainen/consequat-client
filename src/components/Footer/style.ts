@@ -6,7 +6,6 @@ export const FooterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /*height: 50px;*/
   min-height: 50px;
   background-color: #000;
   background-color: var(--footer-bg-color);
@@ -15,10 +14,19 @@ export const FooterContainer = styled.div`
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr auto;
   gap: 20px;
+  gap: 200px;
   width: 100%;
-  max-width: ${breakPoints.laptopWidth};
+  max-width: ${breakPoints.laptopLWidth};
+
+  ${breakPoints.custom(1000)} {
+    gap: 100px;
+  }
+
+  ${breakPoints.custom(800)} {
+    gap: 30px;
+  }
 
   ${breakPoints.custom(600)} {
     grid-template-columns: 100%;
