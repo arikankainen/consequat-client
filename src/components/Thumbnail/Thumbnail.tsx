@@ -1,6 +1,6 @@
 import React from 'react';
-import { ReactComponent as CheckedIcon } from '../../images/check-solid.svg';
-import { ReactComponent as HiddenIcon } from '../../images/lock-solid_modified_thumbnail.svg';
+import { ReactComponent as CheckedIcon } from 'images/check-solid.svg';
+import { ReactComponent as HiddenIcon } from 'images/lock-solid_modified_thumbnail.svg';
 
 import * as Styled from './style';
 

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Photo, Album } from '../../utils/types';
+import { Photo, Album } from 'utils/types';
 import EditPhotoDialog from './EditPhotoDialog';
-import useSavePhoto, {
-  SavePhotoStatus,
-  SavePhoto,
-} from '../../hooks/useSavePhoto';
+import useSavePhoto, { SavePhotoStatus, SavePhoto } from 'hooks/useSavePhoto';
 import {
   getUniqueValue,
   getUniqueBoolean,
@@ -12,7 +9,7 @@ import {
   multiBooleanValue,
   uniqueList,
   uniqueBooleanList,
-} from '../../utils/arrayHelpers';
+} from 'utils/arrayHelpers';
 
 export interface FormValues {
   name: string;

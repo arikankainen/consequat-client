@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Album } from '../../utils/types';
+import { Album } from 'utils/types';
 import EditAlbumDialog from './EditAlbumDialog';
-import useSaveAlbum, { SaveAlbumStatus } from '../../hooks/useSaveAlbum';
+import useSaveAlbum, { SaveAlbumStatus } from 'hooks/useSaveAlbum';
 
 export interface FormValues {
   name: string;

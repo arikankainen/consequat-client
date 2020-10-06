@@ -1,4 +1,4 @@
-import { Photo } from '../utils/types';
+import { Photo } from 'utils/types';
 
 export const UPDATE_PHOTOS = 'UPDATE_PHOTOS';
 

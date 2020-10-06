@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 import * as Yup from 'yup';
 import { useQuery } from '@apollo/client';
-import { ME } from '../../utils/queries';
-import { Photo, Album } from '../../utils/types';
-import AccountTextSetting from '../../components/AccountTextSetting/AccountTextSetting';
-import { ReactComponent as UsernameIcon } from '../../images/user-solid.svg';
-import { ReactComponent as EmailIcon } from '../../images/at-solid.svg';
-import { ReactComponent as FullnameIcon } from '../../images/signature-solid.svg';
-import { ReactComponent as PasswordIcon } from '../../images/key-solid.svg';
-import { ReactComponent as HiddenIcon } from '../../images/lock-solid_modified.svg';
-import { ReactComponent as AlbumIcon } from '../../images/folder-solid.svg';
-import { ReactComponent as NotItAlbumIcon } from '../../images/folder-open-solid.svg';
-import { ReactComponent as PhotoIcon } from '../../images/camera-solid.svg';
+import { ME } from 'utils/queries';
+import { Photo, Album } from 'utils/types';
+import AccountTextSetting from './components/AccountTextSetting/AccountTextSetting';
+import { ReactComponent as UsernameIcon } from 'images/user-solid.svg';
+import { ReactComponent as EmailIcon } from 'images/at-solid.svg';
+import { ReactComponent as FullnameIcon } from 'images/signature-solid.svg';
+import { ReactComponent as PasswordIcon } from 'images/key-solid.svg';
+import { ReactComponent as HiddenIcon } from 'images/lock-solid_modified.svg';
+import { ReactComponent as AlbumIcon } from 'images/folder-solid.svg';
+import { ReactComponent as NotItAlbumIcon } from 'images/folder-open-solid.svg';
+import { ReactComponent as PhotoIcon } from 'images/camera-solid.svg';
 
 import EditCustomFields, {
   EditCustomFieldsProps,
   Field,
-} from '../../components/Dialogs/EditCustomFields';
+} from 'components/Dialogs/EditCustomFields';
 
 import * as Styled from './style';
 

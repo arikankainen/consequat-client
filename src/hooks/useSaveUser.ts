@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { UserToSave } from '../utils/types';
-import { EDIT_USER, ME } from '../utils/queries';
-import logger from '../utils/logger';
+import { UserToSave } from 'utils/types';
+import { EDIT_USER, ME } from 'utils/queries';
+import logger from 'utils/logger';
 
 export enum SaveUserStatus {
   idle,

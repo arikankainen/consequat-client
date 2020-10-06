@@ -1,7 +1,7 @@
-import { LoggedUser } from '../utils/types';
+import { LoggedUser } from 'utils/types';
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
-import { RootState } from '../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 
 interface SystemState {
   loggedIn: boolean;

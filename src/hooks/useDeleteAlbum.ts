@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Album, User } from '../utils/types';
-import { DELETE_ALBUM, ME } from '../utils/queries';
-import logger from '../utils/logger';
+import { Album, User } from 'utils/types';
+import { DELETE_ALBUM, ME } from 'utils/queries';
+import logger from 'utils/logger';
 
 export enum DeleteAlbumStatus {
   idle,

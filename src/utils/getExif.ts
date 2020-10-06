@@ -1,5 +1,5 @@
 import * as ExifReader from 'exifreader';
-import { Exif } from '../utils/types';
+import { Exif } from 'utils/types';
 
 const getExif = (file: File): Promise<Exif> => {
   return new Promise((resolve, reject) => {

@@ -2,24 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
-import { updateLogin } from '../../reducers/systemReducer';
-import { setMessage, setError } from '../../reducers/notificationReducer';
-import storageToken from '../../utils/storageToken';
-import { LOGIN, ME } from '../../utils/queries';
-
+import { RootState } from 'reducers/rootReducer';
+import { updateLogin } from 'reducers/systemReducer';
+import { setMessage, setError } from 'reducers/notificationReducer';
+import storageToken from 'utils/storageToken';
+import { LOGIN, ME } from 'utils/queries';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, PasswordInput } from './Inputs';
-import Button from '../../components/Button/Button';
-
-import {
-  OuterContainer,
-  Container,
-  Topic,
-  QuestionArea,
-  QuestionLink,
-} from './style';
+import { TextInput, PasswordInput } from './components/Inputs/Inputs';
+import Button from 'components/Button/Button';
+import * as Styled from './style';
 
 const Login = () => {
   const loginState = useSelector((state: RootState) => state.system);
@@ -107,9 +99,9 @@ const Login = () => {
   });
 
   return (
-    <OuterContainer>
-      <Container>
-        <Topic>Log in</Topic>
+    <Styled.OuterContainer>
+      <Styled.Container>
+        <Styled.Topic>Log in</Styled.Topic>
         <Formik
           initialValues={initialValues}
           validationSchema={validation}
@@ -126,15 +118,15 @@ const Login = () => {
               margin={[20, 0, 0, 0]}
               fullWidth
             />
-            <QuestionArea>
-              <QuestionLink to="/signup">
+            <Styled.QuestionArea>
+              <Styled.QuestionLink to="/signup">
                 Not registered yet? Sign up!
-              </QuestionLink>
-            </QuestionArea>
+              </Styled.QuestionLink>
+            </Styled.QuestionArea>
           </Form>
         </Formik>
-      </Container>
-    </OuterContainer>
+      </Styled.Container>
+    </Styled.OuterContainer>
   );
 };
 

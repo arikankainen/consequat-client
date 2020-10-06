@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import breakPoints from '../../utils/breakPoints';
+import breakPoints from 'utils/breakPoints';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`

@@ -2,26 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 import { useDispatch } from 'react-redux';
-import { setPrevious } from '../../reducers/systemReducer';
-
+import { setPrevious } from 'reducers/systemReducer';
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
+import Notification from 'components/Notification/Notification';
+import Main from 'pages/Main/Main';
+import About from 'pages/About/About';
+import Login from 'pages/Login/Login';
+import Logout from 'pages/Login/Logout';
+import Signup from 'pages/Login/Signup';
+import UploadPage from 'pages/Upload/Upload';
+import MyPhotos from 'pages/MyPhotos/MyPhotos';
+import Account from 'pages/Account/Account';
+import Photos from 'pages/Photos/Photos';
+import Photo from 'pages/Photo/Photo';
+import NotFoundAddress from 'components/NotFoundAddress/NotFoundAddress';
 import * as Styled from './style';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-
-import Notification from '../../components/Notification/Notification';
-import Main from '../Main/Main';
-import About from '../About/About';
-import Login from '../Login/Login';
-import Logout from '../Login/Logout';
-import Signup from '../Login/Signup';
-import UploadPage from '../Upload/Upload';
-import MyPhotos from '../MyPhotos/MyPhotos';
-import Account from '../Account/Account';
-import Photos from '../Photos/Photos';
-import Photo from '../Photo/Photo';
-import NotFoundAddress from '../../components/NotFoundAddress/NotFoundAddress';
 
 const App = () => {
   const loginState = useSelector((state: RootState) => state.system);

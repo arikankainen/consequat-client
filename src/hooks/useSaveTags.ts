@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Photo } from '../utils/types';
-import { EDIT_TAGS, ME } from '../utils/queries';
-import logger from '../utils/logger';
+import { Photo } from 'utils/types';
+import { EDIT_TAGS, ME } from 'utils/queries';
+import logger from 'utils/logger';
 
 export enum SaveTagsStatus {
   idle,

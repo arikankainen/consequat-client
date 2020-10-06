@@ -1,9 +1,9 @@
 import React from 'react';
-import * as Styled from './style';
-import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
-import Button from '../../components/Button/Button';
-import { ButtonColor } from '../../components/Button/style';
+import { ReactComponent as MenuIcon } from 'images/consequat_o.svg';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
 import { useHistory } from 'react-router-dom';
+import * as Styled from './style';
 
 const Main = () => {
   const history = useHistory();

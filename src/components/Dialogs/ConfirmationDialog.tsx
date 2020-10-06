@@ -1,7 +1,7 @@
 import React from 'react';
-import BaseDialog from './BaseDialog/BaseDialog';
-import Button from '../Button/Button';
-import { ButtonColor } from '../Button/style';
+import BaseDialog from './components/BaseDialog/BaseDialog';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
 import { ConfirmationProps } from './Confirmation';
 import * as Styled from './style';
 

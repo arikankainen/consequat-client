@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { NotificationType } from '../../reducers/notificationReducer';
+import { NotificationType } from 'reducers/notificationReducer';
 
 export const Container = styled.div`
   display: flex;

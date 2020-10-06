@@ -1,12 +1,12 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { Album } from '../../utils/types';
-import BaseDialog from './BaseDialog/BaseDialog';
-import Button from '../Button/Button';
-import { ButtonColor } from '../Button/style';
+import { Album } from 'utils/types';
+import BaseDialog from './components/BaseDialog/BaseDialog';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
 import { FormValues, Errors } from './EditPhoto';
-import formatDate from '../../utils/formatDate';
-import Spinner from '../Spinner/Spinner';
+import formatDate from 'utils/formatDate';
+import Spinner from 'components/Spinner/Spinner';
 import * as Styled from './style';
 
 import {
@@ -15,7 +15,7 @@ import {
   TextAreaInput,
   SelectInput,
   CheckboxInput,
-} from './Inputs/Inputs';
+} from './components/Inputs/Inputs';
 
 export interface EditPhotoDialogProps {
   open: boolean;

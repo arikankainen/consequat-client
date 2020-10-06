@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
-import { RootState } from '../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 
 const TIMEOUT = 5000;
 let timeoutID: number | null = null;

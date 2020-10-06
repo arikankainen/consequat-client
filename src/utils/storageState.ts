@@ -1,4 +1,4 @@
-import { RootState } from '../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 
 const stateKey = 'app-state';
 

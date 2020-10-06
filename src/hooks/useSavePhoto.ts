@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Exif, Photo } from '../utils/types';
-import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from '../utils/queries';
-import logger from '../utils/logger';
+import { Exif, Photo } from 'utils/types';
+import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from 'utils/queries';
+import logger from 'utils/logger';
 
 export enum SavePhotoStatus {
   idle,

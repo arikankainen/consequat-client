@@ -2,32 +2,31 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { ME } from '../../utils/queries';
-import { Photo, Album } from '../../utils/types';
-import { addPicture } from '../../reducers/pictureReducer';
-import EditPhoto, { EditPhotoProps } from '../../components/Dialogs/EditPhoto';
-import EditAlbum, { EditAlbumProps } from '../../components/Dialogs/EditAlbum';
-import EditTags, { EditTagsProps } from '../../components/Dialogs/EditTags';
-import useDeleteQueue, { QueueStatus } from '../../hooks/useDeleteQueue';
-import useDeleteAlbum, { DeleteAlbumStatus } from '../../hooks/useDeleteAlbum';
+import { ME } from 'utils/queries';
+import { Photo, Album } from 'utils/types';
+import { addPicture } from 'reducers/pictureReducer';
+import EditPhoto, { EditPhotoProps } from 'components/Dialogs/EditPhoto';
+import EditAlbum, { EditAlbumProps } from 'components/Dialogs/EditAlbum';
+import EditTags, { EditTagsProps } from 'components/Dialogs/EditTags';
+import useDeleteQueue, { QueueStatus } from 'hooks/useDeleteQueue';
+import useDeleteAlbum, { DeleteAlbumStatus } from 'hooks/useDeleteAlbum';
 import Confirmation, {
   ConfirmationProps,
-} from '../../components/Dialogs/Confirmation';
-import { ReactComponent as AddButton } from '../../images/plus-square-solid.svg';
-import { ReactComponent as AlbumButton } from '../../images/folder-plus-solid.svg';
-import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
-import { ReactComponent as TagsButton } from '../../images/tag-solid.svg';
+} from 'components/Dialogs/Confirmation';
+import { ReactComponent as AddButton } from 'images/plus-square-solid.svg';
+import { ReactComponent as AlbumButton } from 'images/folder-plus-solid.svg';
+import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
+import { ReactComponent as TagsButton } from 'images/tag-solid.svg';
+import { ReactComponent as EditButton } from 'images/pen-solid.svg';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
+import PhotoAlbum from 'components/PhotoAlbum/PhotoAlbum';
+import { InitialUploadFileButton } from '../Upload/components/InitialUpload/style';
+import { MyPhotosListHeader } from './components/MyPhotosListHeader/MyPhotosListHeader';
+import Thumbnail from 'components/Thumbnail/Thumbnail';
+import SpinnerCentered from 'components/SpinnerCentered/SpinnerCentered';
 
-import { ReactComponent as EditButton } from '../../images/pen-solid.svg';
-import Button from '../../components/Button/Button';
-import { ButtonColor } from '../../components/Button/style';
-import PhotoAlbum from '../../components/PhotoAlbum/PhotoAlbum';
-import { InitialUploadFileButton } from '../../components/InitialUpload/style';
-import { PictureListHeader } from '../../components/ListHeaderMyPhotos/ListHeaderMyPhotos';
-import Thumbnail from '../../components/Thumbnail/Thumbnail';
-import CenteredSpinner from '../../components/SpinnerCentered/CenteredSpinner';
-
-import * as Styled from '../../components/MyPhotosListCommon/style';
+import * as Styled from 'components/PhotoList/style';
 
 const MyPhotos = () => {
   const resultMe = useQuery(ME, {
@@ -375,7 +374,7 @@ const MyPhotos = () => {
           </Styled.PictureListButtonGroup>
         </Styled.PictureListButtonGroups>
 
-        <PictureListHeader
+        <MyPhotosListHeader
           photos={photos}
           albums={albums}
           selection={selection}
@@ -387,7 +386,7 @@ const MyPhotos = () => {
         <EditPhoto {...editPhoto} />
         <EditTags {...editTags} />
         <EditAlbum {...editAlbum} />
-        {resultMe.loading && <CenteredSpinner />}
+        {resultMe.loading && <SpinnerCentered />}
 
         {albums.map(album => (
           <PhotoAlbum

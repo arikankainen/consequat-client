@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import storageToken from './utils/storageToken';
+import storageToken from 'utils/storageToken';
 
 import {
   ApolloClient,
@@ -11,10 +11,10 @@ import {
 
 import { setContext } from '@apollo/link-context';
 import { Provider } from 'react-redux';
-import App from './pages/App/App';
+import App from 'pages/App/App';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import GlobalStyles from './components/GlobalStyles/GlobalStyles';
+import GlobalStyles from 'components/GlobalStyles/GlobalStyles';
 
 const authLink = setContext((_, { headers }) => {
   const token = storageToken.getToken();

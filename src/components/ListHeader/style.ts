@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import breakPoints from '../../utils/breakPoints';
+import breakPoints from 'utils/breakPoints';
 
 export const Container = styled.div`
   position: relative;

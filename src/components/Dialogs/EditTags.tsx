@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Photo } from '../../utils/types';
+import { Photo } from 'utils/types';
 import EditTagsDialog from './EditTagsDialog';
-import useSaveTags, { SaveTagsStatus } from '../../hooks/useSaveTags';
-import { TagType } from './Tag/Tag';
+import useSaveTags, { SaveTagsStatus } from 'hooks/useSaveTags';
+import { TagType } from './components/Tag/Tag';
 
 export interface EditTagsProps {
   open?: boolean;

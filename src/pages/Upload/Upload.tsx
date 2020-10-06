@@ -1,30 +1,30 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
-import UploadThumbnail from '../../components/ThumbnailUpload/ThumbnailUpload';
-import UploadListHeader from '../../components/ListHeaderUpload/ListHeaderUpload';
+import { RootState } from 'reducers/rootReducer';
+import UploadThumbnail from './components/UploadThumbnail/UploadThumbnail';
+import UploadListHeader from './components/UploadListHeader/UploadListHeader';
 import Confirmation, {
   ConfirmationProps,
-} from '../../components/Dialogs/Confirmation';
-import InitialUpload from '../../components/InitialUpload/InitialUpload';
-import { ReactComponent as DeleteButton } from '../../images/trash-solid.svg';
-import { ReactComponent as CheckButton } from '../../images/check-circle-regular.svg';
-import { ReactComponent as UncheckButton } from '../../images/check-circle-regular_modified.svg';
-import { ReactComponent as AddButton } from '../../images/plus-square-solid.svg';
-import Button from '../../components/Button/Button';
-import { ButtonColor } from '../../components/Button/style';
-import PhotoAlbum from '../../components/PhotoAlbum/PhotoAlbum';
-import useUploadQueue, { QueueStatus } from '../../hooks/useUploadQueue';
+} from 'components/Dialogs/Confirmation';
+import InitialUpload from './components/InitialUpload/InitialUpload';
+import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
+import { ReactComponent as CheckButton } from 'images/check-circle-regular.svg';
+import { ReactComponent as UncheckButton } from 'images/check-circle-regular_modified.svg';
+import { ReactComponent as AddButton } from 'images/plus-square-solid.svg';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
+import PhotoAlbum from 'components/PhotoAlbum/PhotoAlbum';
+import useUploadQueue, { QueueStatus } from 'hooks/useUploadQueue';
 
 import {
   addPicture,
   removePicture,
   removePictures,
   updateSelected,
-} from '../../reducers/pictureReducer';
+} from 'reducers/pictureReducer';
 
-import * as Styled from '../../components/MyPhotosListCommon/style';
+import * as Styled from 'components/PhotoList/style';
 
 const Upload = () => {
   const pictureState = useSelector((state: RootState) => state.picture);

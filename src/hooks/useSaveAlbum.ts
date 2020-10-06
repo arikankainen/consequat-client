@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Album } from '../utils/types';
-import { EDIT_ALBUM, CREATE_ALBUM, ME } from '../utils/queries';
-import logger from '../utils/logger';
+import { Album } from 'utils/types';
+import { EDIT_ALBUM, CREATE_ALBUM, ME } from 'utils/queries';
+import logger from 'utils/logger';
 
 export enum SaveAlbumStatus {
   idle,

@@ -2,21 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { SIGNUP } from '../../utils/queries';
-import { setMessage, setError } from '../../reducers/notificationReducer';
-
+import { SIGNUP } from 'utils/queries';
+import { setMessage, setError } from 'reducers/notificationReducer';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, PasswordInput } from './Inputs';
-import Button from '../../components/Button/Button';
-
-import {
-  OuterContainer,
-  Container,
-  Topic,
-  QuestionArea,
-  QuestionLink,
-} from './style';
+import { TextInput, PasswordInput } from './components/Inputs/Inputs';
+import Button from 'components/Button/Button';
+import * as Styled from './style';
 
 const Signup = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -107,9 +99,9 @@ const Signup = () => {
   });
 
   return (
-    <OuterContainer>
-      <Container>
-        <Topic>Sign up</Topic>
+    <Styled.OuterContainer>
+      <Styled.Container>
+        <Styled.Topic>Sign up</Styled.Topic>
         <Formik
           initialValues={initialValues}
           validationSchema={validation}
@@ -132,15 +124,15 @@ const Signup = () => {
               margin={[20, 0, 0, 0]}
               fullWidth
             />
-            <QuestionArea>
-              <QuestionLink to="/login">
+            <Styled.QuestionArea>
+              <Styled.QuestionLink to="/login">
                 Already registered? Log in.
-              </QuestionLink>
-            </QuestionArea>
+              </Styled.QuestionLink>
+            </Styled.QuestionArea>
           </Form>
         </Formik>
-      </Container>
-    </OuterContainer>
+      </Styled.Container>
+    </Styled.OuterContainer>
   );
 };
 

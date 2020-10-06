@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import EditCustomFieldsDialog from './EditCustomFieldsDialog';
-import useSaveUser, { SaveUserStatus, SaveUser } from '../../hooks/useSaveUser';
+import useSaveUser, { SaveUserStatus, SaveUser } from 'hooks/useSaveUser';
 
 export interface Field {
   separator?: boolean;

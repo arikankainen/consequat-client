@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Button from '../Button/Button';
-import { ButtonColor } from '../Button/style';
-import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
+import { ReactComponent as ExpandIcon } from 'images/chevron-down-solid_modified.svg';
 import * as Styled from './style';
 
 interface DropDownMenuProps {

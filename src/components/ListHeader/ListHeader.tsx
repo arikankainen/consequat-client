@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Items, ListHeaderBlock } from '../ListHeaderBlock/ListHeaderBlock';
+import {
+  Items,
+  ListHeaderBlock,
+} from './components/ListHeaderBlock/ListHeaderBlock';
 import * as Styled from './style';
-import { ReactComponent as ExpandIcon } from '../../images/chevron-down-solid_modified.svg';
-import { ReactComponent as CollapseIcon } from '../../images/chevron-up-solid_modified.svg';
+import { ReactComponent as ExpandIcon } from 'images/chevron-down-solid_modified.svg';
+import { ReactComponent as CollapseIcon } from 'images/chevron-up-solid_modified.svg';
 
 const ListHeader: React.FC<Items> = ({ items, hiddenItems }) => {
   const [hide, setHide] = useState(true);

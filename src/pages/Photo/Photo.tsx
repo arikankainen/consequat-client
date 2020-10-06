@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from '../../utils/queries';
-import { setError } from '../../reducers/notificationReducer';
-import { PhotoUserExtended, Comment } from '../../utils/types';
-import logger from '../../utils/logger';
-import ShowPhoto from '../../components/ShowPhoto/ShowPhoto';
-import Comments from '../../components/Comments/Comments';
+import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from 'utils/queries';
+import { setError } from 'reducers/notificationReducer';
+import { PhotoUserExtended, Comment } from 'utils/types';
+import logger from 'utils/logger';
+import ShowPhoto from './components/ShowPhoto/ShowPhoto';
+import Comments from './components/Comments/Comments';
 
 const Photo = () => {
   const systemState = useSelector((state: RootState) => state.system);

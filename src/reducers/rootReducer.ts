@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { systemReducer } from '../reducers/systemReducer';
-import { notificationReducer } from '../reducers/notificationReducer';
-import { pictureReducer } from '../reducers/pictureReducer';
-import { photoListReducer } from '../reducers/photoListReducer';
+import { systemReducer } from 'reducers/systemReducer';
+import { notificationReducer } from 'reducers/notificationReducer';
+import { pictureReducer } from 'reducers/pictureReducer';
+import { photoListReducer } from 'reducers/photoListReducer';
 
 export const rootReducer = combineReducers({
   system: systemReducer,

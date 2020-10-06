@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updatePhotos } from '../../reducers/photoListReducer';
+import { updatePhotos } from 'reducers/photoListReducer';
 import { useLazyQuery } from '@apollo/client';
-import { LIST_PHOTOS } from '../../utils/queries';
-import { PhotoUserExtended } from '../../utils/types';
-import PhotoGrid from '../../components/PhotoGrid/PhotoGrid';
+import { LIST_PHOTOS } from 'utils/queries';
+import { PhotoUserExtended } from 'utils/types';
+import PhotoGrid from './components/PhotoGrid/PhotoGrid';
 import { useLocation } from 'react-router-dom';
 
 const Photos = () => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import breakPoints from '../../utils/breakPoints';
+import breakPoints from 'utils/breakPoints';
 import { Link } from 'react-router-dom';
 
 export const OuterContainer = styled.div`
@@ -82,15 +82,4 @@ export const QuestionLink = styled(Link)`
     color: var(--accent-color-2);
   }
 
-`;
-
-export const ErrorNotification = styled.div`
-  margin-top: 5px;
-  height: 25px;
-  margin-bottom: -10px;
-  color: #cc5555;
-`;
-
-export const SuccessNotification = styled(ErrorNotification)`
-  color: #55cc55;
 `;

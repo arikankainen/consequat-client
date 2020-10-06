@@ -1,12 +1,12 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import BaseDialog from './BaseDialog/BaseDialog';
-import Button from '../Button/Button';
-import { ButtonColor } from '../Button/style';
+import BaseDialog from './components/BaseDialog/BaseDialog';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
 import { FormValues } from './EditAlbum';
-import { TextInput, TextAreaInput } from './Inputs/Inputs';
-import Spinner from '../Spinner/Spinner';
+import { TextInput, TextAreaInput } from './components/Inputs/Inputs';
+import Spinner from 'components/Spinner/Spinner';
 import * as Styled from './style';
 
 export interface Props {

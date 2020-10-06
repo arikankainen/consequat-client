@@ -3,8 +3,8 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react';
 import Button from './Button';
 import { ButtonContentAlign } from './style';
-import { ReactComponent as Icon } from '../../images/trash-solid.svg';
-import { wildClass } from '../../utils/testHelpers';
+import { ReactComponent as Icon } from 'images/trash-solid.svg';
+import { wildClass } from 'utils/testHelpers';
 
 const icon = 'trash-solid.svg';
 const text = 'Button text test';

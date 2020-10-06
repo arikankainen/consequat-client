@@ -1,9 +1,9 @@
 import React from 'react';
+import { ReactComponent as CourseIcon } from 'images/graduation-cap-solid.svg';
+import { ReactComponent as PurposeIcon } from 'images/cubes-solid.svg';
+import { ReactComponent as RegistrationIcon } from 'images/handshake-solid.svg';
+import { ReactComponent as CodeIcon } from 'images/code-solid.svg';
 import * as Styled from './style';
-import { ReactComponent as CourseIcon } from '../../images/graduation-cap-solid.svg';
-import { ReactComponent as PurposeIcon } from '../../images/cubes-solid.svg';
-import { ReactComponent as RegistrationIcon } from '../../images/handshake-solid.svg';
-import { ReactComponent as CodeIcon } from '../../images/code-solid.svg';
 
 const About = () => {
   return (

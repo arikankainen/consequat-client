@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import back1920 from '../../images/back_01_1920.jpg';
+import back1920 from 'images/back_01_1920.jpg';
 
 export const SiteContainer = styled.section`
   position: relative;

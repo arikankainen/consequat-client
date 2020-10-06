@@ -1,6 +1,6 @@
 import React from 'react';
 import NotFound from '../NotFound/NotFound';
-import { ReactComponent as Icon } from '../../images/frown-regular.svg';
+import { ReactComponent as Icon } from 'images/frown-regular.svg';
 
 const NotFoundAddress = () => {
   return (

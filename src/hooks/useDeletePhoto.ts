@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Photo, User } from '../utils/types';
-import { DELETE_PHOTO, ME } from '../utils/queries';
-import logger from '../utils/logger';
-import { storage } from '../firebase/firebase';
+import { Photo, User } from 'utils/types';
+import { DELETE_PHOTO, ME } from 'utils/queries';
+import logger from 'utils/logger';
+import { storage } from 'firebase/firebase';
 
 export enum DeletePhotoStatus {
   idle,

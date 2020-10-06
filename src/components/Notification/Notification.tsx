@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
-import { NotificationType } from '../../reducers/notificationReducer';
+import { RootState } from 'reducers/rootReducer';
+import { NotificationType } from 'reducers/notificationReducer';
 import { CSSTransition } from 'react-transition-group';
-import { clearNotification } from '../../reducers/notificationReducer';
+import { clearNotification } from 'reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as MessageIcon } from '../../images/exclamation-circle-solid.svg';
-import { ReactComponent as ErrorIcon } from '../../images/exclamation-triangle-solid.svg';
+import { ReactComponent as MessageIcon } from 'images/exclamation-circle-solid.svg';
+import { ReactComponent as ErrorIcon } from 'images/exclamation-triangle-solid.svg';
 import * as Styled from './style';
 
 const Notification = () => {

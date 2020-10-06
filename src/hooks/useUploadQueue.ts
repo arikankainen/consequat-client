@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import useUploadPhoto, { UploadPhotoStatus } from './useUploadPhoto';
+import useUploadPhoto, { UploadPhotoStatus } from 'hooks/useUploadPhoto';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
-import { removePicture } from '../reducers/pictureReducer';
+import { RootState } from 'reducers/rootReducer';
+import { removePicture } from 'reducers/pictureReducer';
 
 export enum QueueStatus {
   idle,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { MenuItems } from '../MenuItems/MenuItems';
+import { MenuItems } from './components/MenuItems/MenuItems';
 import * as Styled from './style';
 
 export enum Direction {

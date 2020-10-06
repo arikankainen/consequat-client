@@ -1,12 +1,12 @@
 import React from 'react';
-import BaseDialog from './BaseDialog/BaseDialog';
-import Button from '../Button/Button';
-import { ButtonColor } from '../Button/style';
-import Spinner from '../Spinner/Spinner';
+import BaseDialog from './components/BaseDialog/BaseDialog';
+import Button from 'components/Button/Button';
+import { ButtonColor } from 'components/Button/style';
+import Spinner from 'components/Spinner/Spinner';
 import * as Styled from './style';
-import TagInput from './TagInput/TagInput';
-import Tag, { TagType } from './Tag/Tag';
-import TagLegend from './TagLegend/TagLegend';
+import TagInput from './components/TagInput/TagInput';
+import Tag, { TagType } from './components/Tag/Tag';
+import TagLegend from './components/TagLegend/TagLegend';
 
 export interface EditTagsDialogProps {
   open: boolean;

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from 'reducers/rootReducer';
 import { useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { updateLogin } from '../../reducers/systemReducer';
-import storageToken from '../../utils/storageToken';
-import { ME } from '../../utils/queries';
-import Logo from '../HeaderLogo/Logo';
-import Menu, { Direction } from '../Menu/Menu';
-import HeaderSearch from '../HeaderSearch/HeaderSearch';
-import MenuButton from '../MenuButton/MenuButton';
+import { updateLogin } from 'reducers/systemReducer';
+import storageToken from 'utils/storageToken';
+import { ME } from 'utils/queries';
+import Logo from './components/HeaderLogo/Logo';
+import Menu, { Direction } from 'components/Menu/Menu';
+import HeaderSearch from './components/HeaderSearch/HeaderSearch';
+import MenuButton from './components/MenuButton/MenuButton';
 import * as Styled from './style';
 
 import { ReactComponent as UserIcon } from '../../images/user-solid.svg';

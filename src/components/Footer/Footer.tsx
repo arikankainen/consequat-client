@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Styled from './style';
-import { ReactComponent as CopyrightIcon } from '../../images/copyright-solid.svg';
-import { ReactComponent as AwesomeIcon } from '../../images/font-awesome-flag-brands.svg';
-import { ReactComponent as ConsequatIcon } from '../../images/consequat_o.svg';
+import { ReactComponent as CopyrightIcon } from 'images/copyright-solid.svg';
+import { ReactComponent as AwesomeIcon } from 'images/font-awesome-flag-brands.svg';
+import { ReactComponent as ConsequatIcon } from 'images/consequat_o.svg';
 
 const Footer = () => {
   return (

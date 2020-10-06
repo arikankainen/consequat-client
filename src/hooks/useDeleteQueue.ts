@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import useDeletePhoto, { DeletePhotoStatus } from './useDeletePhoto';
-import { Photo } from '../utils/types';
+import useDeletePhoto, { DeletePhotoStatus } from 'hooks/useDeletePhoto';
+import { Photo } from 'utils/types';
 
 export enum QueueStatus {
   idle,

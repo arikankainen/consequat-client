@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Photo } from '../utils/types';
-import { storage } from '../firebase/firebase';
+import { Photo } from 'utils/types';
+import { storage } from 'firebase/firebase';
 import { useDispatch } from 'react-redux';
-import resizeImage from '../utils/resizeImage';
-import imageDimensions from '../utils/imageDimensions';
+import resizeImage from 'utils/resizeImage';
+import imageDimensions from 'utils/imageDimensions';
 import { v1 as uuid } from 'uuid';
-import useSavePhoto, { SavePhotoStatus } from './useSavePhoto';
-import { removePicture, updateProgress } from '../reducers/pictureReducer';
-import getExif from '../utils/getExif';
+import useSavePhoto, { SavePhotoStatus } from 'hooks/useSavePhoto';
+import { removePicture, updateProgress } from 'reducers/pictureReducer';
+import getExif from 'utils/getExif';
 
 export enum UploadPhotoStatus {
   idle,
