@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Photo } from 'utils/types';
-import { storage } from 'firebase/firebase';
+import { storage } from 'utils/firebase/firebase';
 import { useDispatch } from 'react-redux';
 import resizeImage from 'utils/resizeImage';
 import imageDimensions from 'utils/imageDimensions';

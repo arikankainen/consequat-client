@@ -10,6 +10,7 @@ const getExif = (file: File): Promise<Exif> => {
 
       if (data instanceof ArrayBuffer) {
         const tags = ExifReader.load(data);
+        console.log(tags);
 
         const exif: Exif = {
           dateTimeOriginal: tags.DateTimeOriginal
@@ -19,8 +20,8 @@ const getExif = (file: File): Promise<Exif> => {
           isoSpeedRatings: tags.ISOSpeedRatings
             ? tags.ISOSpeedRatings.description.toString()
             : '',
-          shutterSpeedValue: tags.ShutterSpeedValue
-            ? tags.ShutterSpeedValue.description
+          shutterSpeedValue: tags.ExposureTime
+            ? tags.ExposureTime.description
             : '',
           focalLength: tags.FocalLength ? tags.FocalLength.description : '',
           flash: tags.Flash ? tags.Flash.description : '',

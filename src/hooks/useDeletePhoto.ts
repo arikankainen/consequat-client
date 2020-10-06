@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { Photo, User } from 'utils/types';
 import { DELETE_PHOTO, ME } from 'utils/queries';
 import logger from 'utils/logger';
-import { storage } from 'firebase/firebase';
+import { storage } from 'utils/firebase/firebase';
 
 export enum DeletePhotoStatus {
   idle,
