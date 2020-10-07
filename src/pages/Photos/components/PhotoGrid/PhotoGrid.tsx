@@ -93,7 +93,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
         />
       )}
 
-      {!notFound && !loading && (
+      {!notFound && (
         <Styled.GridContainer
           ref={containerRef}
           style={{ height: totalHeight }}

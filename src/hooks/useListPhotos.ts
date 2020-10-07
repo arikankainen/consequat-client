@@ -23,8 +23,6 @@ const useListPhotos = (
 
   useEffect(() => {
     setLoading(true);
-    //setPhotos([]);
-    console.log('effect');
 
     listPhotos({
       variables: { type, keyword, offset, limit: photosPerPage },
