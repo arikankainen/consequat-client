@@ -83,7 +83,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
         <Styled.TopicContainer>Browsing all photos</Styled.TopicContainer>
       )}
 
-      {loading && <SpinnerCentered />}
+      {loading && photos.length === 0 && <SpinnerCentered />}
 
       {notFound && !loading && (
         <NotFound

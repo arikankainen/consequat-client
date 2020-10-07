@@ -8,21 +8,29 @@ import useListPhotos from 'hooks/useListPhotos';
 const Photos = () => {
   const [keyword, setKeyword] = useState<string | null>('');
   const [type, setType] = useState<string[]>([]);
-  const listPhotos = useListPhotos(type, keyword);
+  const [page, setPage] = useState(0);
+  const listPhotos = useListPhotos(type, keyword, page);
   const observer = useRef<IntersectionObserver | null>(null);
   const url = useLocation();
   const dispatch = useDispatch();
   const urlParams = new URLSearchParams(url.search);
 
-  const lastElementRef = useCallback(node => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        console.log('load more');
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, []);
+  const lastElementRef = useCallback(
+    node => {
+      if (listPhotos.loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && listPhotos.hasMore) {
+          console.log('new page');
+          setPage(prevPage => prevPage + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [listPhotos.loading, listPhotos.hasMore]
+  );
 
   const paramKeyword = urlParams.get('keyword');
   const paramName = urlParams.get('name') === 'true';
