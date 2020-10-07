@@ -83,15 +83,15 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
         <Styled.TopicContainer>Browsing all photos</Styled.TopicContainer>
       )}
 
-      {notFound && (
+      {loading && <SpinnerCentered />}
+
+      {notFound && !loading && (
         <NotFound
           topic="No photos found"
           text="Try different search terms"
           Icon={NotFoundIcon}
         />
       )}
-
-      {!notFound && loading && <SpinnerCentered />}
 
       {!notFound && !loading && (
         <Styled.GridContainer

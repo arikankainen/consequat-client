@@ -10,7 +10,6 @@ const getExif = (file: File): Promise<Exif> => {
 
       if (data instanceof ArrayBuffer) {
         const tags = ExifReader.load(data);
-        console.log(tags);
 
         const exif: Exif = {
           dateTimeOriginal: tags.DateTimeOriginal

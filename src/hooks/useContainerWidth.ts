@@ -14,7 +14,7 @@ const useContainerWidth = (ref: React.RefObject<HTMLDivElement>) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [ref]);
+  }, [ref.current]); // eslint-disable-line
 
   return containerWidth;
 };

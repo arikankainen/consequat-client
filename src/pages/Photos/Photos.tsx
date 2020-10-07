@@ -1,60 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { updatePhotos } from 'reducers/photoListReducer';
-import { useLazyQuery } from '@apollo/client';
-import { LIST_PHOTOS } from 'utils/queries';
-import { PhotoUserExtended } from 'utils/types';
 import PhotoGrid from './components/PhotoGrid/PhotoGrid';
 import { useLocation } from 'react-router-dom';
+import useListPhotos from 'hooks/useListPhotos';
 
 const Photos = () => {
-  const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
-    fetchPolicy: 'network-only',
-  });
-  const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
-  const [notFound, setNotFound] = useState(false);
+  const [keyword, setKeyword] = useState<string | null>('');
+  const [type, setType] = useState<string[]>([]);
+  const listPhotos = useListPhotos(type, keyword);
+  const observer = useRef<IntersectionObserver | null>(null);
   const url = useLocation();
   const dispatch = useDispatch();
   const urlParams = new URLSearchParams(url.search);
 
-  const keyword = urlParams.get('keyword');
-  const name = urlParams.get('name') === 'true';
-  const location = urlParams.get('location') === 'true';
-  const description = urlParams.get('description') === 'true';
-  const tags = urlParams.get('tags') === 'true';
-
-  useEffect(() => {
-    const type: string[] = [];
-    if (name) type.push('name');
-    if (location) type.push('location');
-    if (description) type.push('description');
-    if (tags) type.push('tags');
-
-    setPhotos([]);
-    listPhotos({
-      variables: { type, keyword },
+  const lastElementRef = useCallback(node => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        console.log('load more');
+      }
     });
-  }, [keyword, name, location, description, tags, listPhotos]);
+    if (node) observer.current.observe(node);
+  }, []);
+
+  const paramKeyword = urlParams.get('keyword');
+  const paramName = urlParams.get('name') === 'true';
+  const paramLocation = urlParams.get('location') === 'true';
+  const paramDescription = urlParams.get('description') === 'true';
+  const paramTags = urlParams.get('tags') === 'true';
 
   useEffect(() => {
-    const data = resultListPhotos.data;
+    const paramType: string[] = [];
+    if (paramName) paramType.push('name');
+    if (paramLocation) paramType.push('location');
+    if (paramDescription) paramType.push('description');
+    if (paramTags) paramType.push('tags');
 
-    if (!data || !data.listPhotos) return;
+    setType(paramType);
+    setKeyword(paramKeyword);
+  }, [paramKeyword, paramName, paramLocation, paramDescription, paramTags]);
 
-    if (data.listPhotos.length === 0) setNotFound(true);
-    else setNotFound(false);
-
-    setPhotos(data.listPhotos);
-    dispatch(updatePhotos(data.listPhotos));
-  }, [resultListPhotos.data, dispatch]);
+  useEffect(() => {
+    dispatch(updatePhotos(listPhotos.photos));
+  }, [listPhotos.photos, dispatch]);
 
   return (
-    <PhotoGrid
-      photos={photos}
-      search={keyword}
-      notFound={notFound}
-      loading={resultListPhotos.loading}
-    />
+    <>
+      <PhotoGrid
+        photos={listPhotos.photos}
+        search={keyword}
+        notFound={listPhotos.photos.length === 0}
+        loading={listPhotos.loading}
+      />
+      <div ref={lastElementRef}></div>
+    </>
   );
 };
 

@@ -23,9 +23,9 @@ export const parseShutter = (input: string) => {
     return null;
   }
   if (input.toLowerCase().includes('1/0')) {
-    return '';
+    return null;
   }
-  return input;
+  return `${input}s`;
 };
 
 export const parseFocal = (input: string) => {
