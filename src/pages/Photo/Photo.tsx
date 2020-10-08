@@ -21,7 +21,14 @@ const Photo = () => {
   const [prevPhoto, setPrevPhoto] = useState<string | undefined>(undefined);
   const [nextPhoto, setNextPhoto] = useState<string | undefined>(undefined);
   const url = useLocation();
-  const prevAddress = url.search.replace('?prev=', '');
+
+  let prevAddress = url.search
+    .replace('?prev=', '')
+    .replace('?back=true', '')
+    .replace('&back=true', '');
+  prevAddress = prevAddress.includes('?')
+    ? `${prevAddress}&back=true`
+    : `${prevAddress}?back=true`;
 
   const resultPhoto = useQuery(GET_PHOTO, {
     variables: { id },

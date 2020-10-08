@@ -1,25 +1,36 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updatePhotos } from 'reducers/photoListReducer';
 import { useLazyQuery } from '@apollo/client';
 import { LIST_PHOTOS } from 'utils/queries';
 import { PhotoUserExtended } from 'utils/types';
 
-const useListPhotos = (
-  type: string[],
-  keyword: string | null,
-  page: number
-) => {
+interface InputProps {
+  type: string[];
+  keyword: string | null;
+  page: number;
+  photosPerPage: number;
+  preferCached: boolean;
+}
+
+const useListPhotos = ({
+  type,
+  keyword,
+  page,
+  photosPerPage,
+  preferCached,
+}: InputProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [offset, setOffset] = useState(0);
+  const dispatch = useDispatch();
 
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
     fetchPolicy: 'network-only',
   });
-
-  const photosPerPage = 10;
 
   useEffect(() => {
     setLoading(true);
@@ -27,11 +38,15 @@ const useListPhotos = (
     listPhotos({
       variables: { type, keyword, offset, limit: photosPerPage },
     });
-  }, [type, keyword, offset, listPhotos]);
+  }, [type, keyword, offset, photosPerPage, listPhotos]);
 
   useEffect(() => {
     setOffset(page * photosPerPage);
-  }, [page]);
+  }, [page, photosPerPage]);
+
+  useEffect(() => {
+    dispatch(updatePhotos(photos));
+  }, [photos, dispatch]);
 
   useEffect(() => {
     const data = resultListPhotos.data;
@@ -43,7 +58,7 @@ const useListPhotos = (
     });
 
     setLoading(false);
-  }, [resultListPhotos.data]);
+  }, [resultListPhotos.data, photosPerPage]);
 
   useEffect(() => {
     const error = resultListPhotos.error;
