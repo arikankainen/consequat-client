@@ -26,6 +26,7 @@ const useListPhotos = ({
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const dispatch = useDispatch();
 
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
@@ -51,14 +52,18 @@ const useListPhotos = ({
   useEffect(() => {
     const data = resultListPhotos.data;
     if (!data || !data.listPhotos) return;
-    setHasMore(data.listPhotos.length === photosPerPage);
 
+    setTotalCount(data.listPhotos.totalCount);
     setPhotos(prevPhotos => {
-      return [...prevPhotos, ...data.listPhotos];
+      return [...prevPhotos, ...data.listPhotos.photos];
     });
 
     setLoading(false);
   }, [resultListPhotos.data, photosPerPage]);
+
+  useEffect(() => {
+    setHasMore(photos.length < totalCount);
+  }, [photos, totalCount]);
 
   useEffect(() => {
     const error = resultListPhotos.error;

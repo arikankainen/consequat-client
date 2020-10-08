@@ -292,8 +292,11 @@ export const DELETE_ALBUM = gql`
 export const LIST_PHOTOS = gql`
   query ($type: [String], $keyword: String, $offset: Int, $limit: Int) {
     listPhotos (type: $type, keyword: $keyword, offset: $offset, limit: $limit) {
-    ...PhotoDetails,
-    user { fullname },
+      totalCount,
+      photos {
+        ...PhotoDetails,
+        user { fullname },
+      }
     }
   }
   ${PHOTO_DETAILS}
