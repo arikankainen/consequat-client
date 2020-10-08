@@ -11,7 +11,7 @@ const Photos = () => {
   const url = useLocation();
   const urlParams = new URLSearchParams(url.search);
 
-  const [keyword, setKeyword] = useState<string | null>('');
+  const [keyword, setKeyword] = useState<string | null>(null);
   const [type, setType] = useState<string[]>([]);
   const [page, setPage] = useState(0);
 
@@ -19,7 +19,7 @@ const Photos = () => {
     type,
     keyword,
     page,
-    photosPerPage,
+    limit: photosPerPage,
     preferCached: url.search.includes('back=true'),
   });
 
