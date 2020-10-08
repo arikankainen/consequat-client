@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import PhotoGrid from './components/PhotoGrid/PhotoGrid';
+import LoadingMore from './components/LoadingMore/LoadingMore';
 import { useLocation } from 'react-router-dom';
 import useListPhotos from 'hooks/useListPhotos';
 
@@ -23,7 +24,7 @@ const Photos = () => {
   });
 
   const lastElementRef = useCallback(
-    node => {
+    (node: HTMLDivElement) => {
       if (listPhotos.loading) return;
       if (observer.current) observer.current.disconnect();
 
@@ -64,7 +65,7 @@ const Photos = () => {
         notFound={listPhotos.photos.length === 0}
         loading={listPhotos.loading}
       />
-      <div ref={lastElementRef}></div>
+      <LoadingMore refProp={lastElementRef} loading={listPhotos.loading} />
     </>
   );
 };
