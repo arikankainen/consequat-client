@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
 import { useDispatch } from 'react-redux';
-import { updatePhotos } from 'reducers/photoListReducer';
+import { updatePhotos, updateTotalCount } from 'reducers/photoListReducer';
 import { useLazyQuery } from '@apollo/client';
 import { LIST_PHOTOS } from 'utils/queries';
 import { PhotoUserExtended } from 'utils/types';
@@ -29,15 +29,14 @@ const useListPhotos = ({
   limit,
   preferCached,
 }: InputProps) => {
-  const store = useSelector((state: RootState) => state.photoList);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
-  const [hasMore, setHasMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [fetchedFromCache, setFetchedFromCache] = useState(false);
-  const dispatch = useDispatch();
+
   const [lastQuery, setLastQuery] = useState<LastQuery>({
     type: [],
     keyword: '',
@@ -48,6 +47,9 @@ const useListPhotos = ({
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
     fetchPolicy: 'network-only',
   });
+
+  const store = useSelector((state: RootState) => state.photoList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (preferCached && store.photos.length > offset) return;
@@ -80,7 +82,8 @@ const useListPhotos = ({
 
     setFetchedFromCache(true);
     setPhotos(store.photos);
-  }, [store.photos, fetchedFromCache]);
+    setTotalCount(store.totalCount);
+  }, [store.photos, store.totalCount, fetchedFromCache]);
 
   useEffect(() => {
     if (preferCached) fetchFromCache();
@@ -106,10 +109,11 @@ const useListPhotos = ({
     if (!data || !data.listPhotos) return;
 
     setTotalCount(data.listPhotos.totalCount);
+    dispatch(updateTotalCount(data.listPhotos.totalCount));
     setPhotos(prevPhotos => {
       return [...prevPhotos, ...data.listPhotos.photos];
     });
-  }, [resultListPhotos.data, limit]);
+  }, [resultListPhotos.data, limit, dispatch]);
 
   useEffect(() => {
     const error = resultListPhotos.error;
