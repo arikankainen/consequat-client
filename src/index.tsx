@@ -15,6 +15,7 @@ import App from 'pages/App/App';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from 'components/GlobalStyles/GlobalStyles';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 const authLink = setContext((_, { headers }) => {
   const token = storageToken.getToken();
@@ -89,6 +90,7 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <Router>
         <GlobalStyles />
+        <ScrollToTop />
         <App />
       </Router>
     </ApolloProvider>

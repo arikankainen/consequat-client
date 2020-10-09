@@ -29,10 +29,6 @@ const App = () => {
   const prevLocationRef = useRef<string | undefined>();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-
-  useEffect(() => {
     prevLocationRef.current = location.pathname;
   });
 
