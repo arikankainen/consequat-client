@@ -8,6 +8,7 @@ interface SystemState {
   loggedToken: string | null;
   loggedUser: LoggedUser | null;
   previousPage: string;
+  previousPhotoId: string;
 }
 
 interface UpdateData {
@@ -21,10 +22,12 @@ export const initialState: SystemState = {
   loggedToken: null,
   loggedUser: null,
   previousPage: '/',
+  previousPhotoId: '',
 };
 
 export const UPDATE_LOGIN = 'UPDATE_LOGIN';
 export const SET_PREVIOUS = 'SET_PREVIOUS';
+export const SET_PREVIOUS_PHOTO = 'SET_PREVIOUS_PHOTO';
 
 export interface UpdateLogin {
   type: typeof UPDATE_LOGIN;
@@ -36,7 +39,12 @@ export interface SetPrevious {
   data: string;
 }
 
-type Actions = UpdateLogin | SetPrevious;
+export interface SetPreviousPhoto {
+  type: typeof SET_PREVIOUS_PHOTO;
+  data: string;
+}
+
+type Actions = UpdateLogin | SetPrevious | SetPreviousPhoto;
 
 export const updateLogin = (data: UpdateData): UpdateLogin => {
   return {
@@ -65,6 +73,13 @@ export const setPrevious = (data: string): SetPrevious => {
   };
 };
 
+export const setPreviousPhoto = (data: string): SetPreviousPhoto => {
+  return {
+    type: SET_PREVIOUS_PHOTO,
+    data,
+  };
+};
+
 export const systemReducer = (
   state = initialState,
   action: Actions
@@ -79,6 +94,11 @@ export const systemReducer = (
       return {
         ...state,
         previousPage: action.data,
+      };
+    case SET_PREVIOUS_PHOTO:
+      return {
+        ...state,
+        previousPhotoId: action.data,
       };
     default:
       return state;

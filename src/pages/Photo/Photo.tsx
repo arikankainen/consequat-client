@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { GET_PHOTO, LIST_COMMENTS, CREATE_COMMENT } from 'utils/queries';
 import { setError } from 'reducers/notificationReducer';
+import { setPreviousPhoto } from 'reducers/systemReducer';
 import { PhotoUserExtended, Comment } from 'utils/types';
 import logger from 'utils/logger';
 import ShowPhoto from './components/ShowPhoto/ShowPhoto';
@@ -22,13 +23,7 @@ const Photo = () => {
   const [nextPhoto, setNextPhoto] = useState<string | undefined>(undefined);
   const url = useLocation();
 
-  let prevAddress = url.search
-    .replace('?prev=', '')
-    .replace('?back=true', '')
-    .replace('&back=true', '');
-  prevAddress = prevAddress.includes('?')
-    ? `${prevAddress}&back=true`
-    : `${prevAddress}?back=true`;
+  const prevAddress = url.search.replace('?prev=', '');
 
   const resultPhoto = useQuery(GET_PHOTO, {
     variables: { id },
@@ -75,6 +70,10 @@ const Photo = () => {
       }
     },
   });
+
+  useEffect(() => {
+    dispatch(setPreviousPhoto(id));
+  }, [id, dispatch]);
 
   useEffect(() => {
     if (resultPhoto.data) {

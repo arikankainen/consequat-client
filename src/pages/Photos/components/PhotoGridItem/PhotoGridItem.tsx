@@ -8,17 +8,19 @@ interface PhotoGridItemProps {
   photo: PhotoUserExtended;
   scrollPosition: ScrollPosition;
   listAddress: string;
+  scrollRef?: React.RefObject<HTMLDivElement> | null | undefined;
 }
 
 const PhotoGridItem: React.FC<PhotoGridItemProps> = ({
   photo,
   scrollPosition,
   listAddress,
+  scrollRef,
 }) => {
   if (!photo) return null;
 
   return (
-    <Styled.ItemContainer key={photo.id}>
+    <Styled.ItemContainer key={photo.id} ref={scrollRef}>
       <Link to={`/photos/photo/${photo.id}?prev=${listAddress}`}>
         <Styled.ImageContainer>
           <Styled.Image

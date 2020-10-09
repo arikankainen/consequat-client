@@ -24,6 +24,9 @@ interface PhotoGridProps {
   scrollPosition: ScrollPosition;
   notFound: boolean;
   loading: boolean;
+  scrollId: string | null;
+  scrollRef: React.RefObject<HTMLDivElement>;
+  loaded: () => void;
 }
 
 const PhotoGrid: React.FC<PhotoGridProps> = ({
@@ -32,6 +35,9 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
   scrollPosition,
   notFound,
   loading,
+  scrollId,
+  scrollRef,
+  loaded,
 }) => {
   const [dimensions, setDimensions] = useState<Dimension[]>([]);
   const [totalHeight, setTotalHeight] = useState(0);
@@ -50,8 +56,9 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
     if (grid) {
       setDimensions(grid.dimensions);
       setTotalHeight(grid.totalHeight);
+      loaded();
     }
-  }, [photos, containerWidth]);
+  }, [photos, containerWidth, loaded]);
 
   if (!photos) return null;
   return (
@@ -110,6 +117,9 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
               }}
             >
               <PhotoGridItem
+                scrollRef={
+                  photos[dimension.index].id === scrollId ? scrollRef : null
+                }
                 photo={photos[dimension.index]}
                 scrollPosition={scrollPosition}
                 listAddress={`${location.pathname}${location.search}`}
