@@ -10,6 +10,10 @@ export const Container = styled.div`
   height: 100%;
   padding: 20px 0px;
   max-width: ${breakPoints.laptopLWidth};
+  
+  ${breakPoints.mobileXL} {
+    justify-content: flex-start;
+  }
 `;
 
 export const Logo = styled.div`
@@ -29,6 +33,11 @@ export const Logo = styled.div`
       100% {
         transform: rotate(360deg);
       }
+    }
+
+    ${breakPoints.mobileXL} {
+      width: 100px;
+      height: 100px;
     }
   }
 

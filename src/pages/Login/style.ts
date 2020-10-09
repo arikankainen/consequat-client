@@ -6,8 +6,9 @@ export const OuterContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+  width: 100%;
 
-  ${breakPoints.mobileL} {
+  ${breakPoints.mobileXL} {
     align-items: flex-start;
   }
 `;
@@ -26,9 +27,12 @@ export const Container = styled.div`
   text-align: center;
   box-shadow: var(--default-box-shadow);
 
-  ${breakPoints.mobileL} {
+  ${breakPoints.mobileXL} {
     width: 100%;
-    margin: 20px;
+    height: 100%;
+    margin: 0px;
+    border-radius: 0px;
+    box-shadow: none;
   }
 `;
 
