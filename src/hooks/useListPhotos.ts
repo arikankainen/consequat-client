@@ -28,6 +28,8 @@ const useListPhotos = ({
   const [totalCount, setTotalCount] = useState(0);
   const dispatch = useDispatch();
 
+  //console.log(preferCached);
+
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
     fetchPolicy: 'network-only',
   });
@@ -47,8 +49,8 @@ const useListPhotos = ({
 
   useEffect(() => {
     const data = resultListPhotos.data;
-    if (!data || !data.listPhotos) return;
-    if (resultListPhotos.loading) return;
+    const loading = resultListPhotos.loading;
+    if (!data || !data.listPhotos || loading) return;
 
     setTotalCount(data.listPhotos.totalCount);
     setPhotos(prevPhotos => {
@@ -70,7 +72,7 @@ const useListPhotos = ({
     setLoading(resultListPhotos.loading);
   }, [resultListPhotos.loading]);
 
-  return { loading, error, photos, hasMore };
+  return { loading, totalCount, error, photos, hasMore };
 };
 
 export default useListPhotos;

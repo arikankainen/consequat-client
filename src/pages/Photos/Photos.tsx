@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { setPreviousPhoto } from 'reducers/systemReducer';
 import PhotoGrid from './components/PhotoGrid/PhotoGrid';
 import LoadingMore from './components/LoadingMore/LoadingMore';
-import { useLocation } from 'react-router-dom';
 import useListPhotos from 'hooks/useListPhotos';
 
 const photosPerPage = 70;
@@ -13,24 +13,25 @@ const photosPerPage = 70;
 const Photos = () => {
   const systemState = useSelector((state: RootState) => state.system);
   const observer = useRef<IntersectionObserver | null>(null);
+  const previousPhotoRef = useRef<HTMLDivElement>(null);
   const url = useLocation();
-  const urlParams = new URLSearchParams(url.search);
   const dispatch = useDispatch();
+  const urlParams = new URLSearchParams(url.search);
 
   const [keyword, setKeyword] = useState<string | null>(null);
   const [type, setType] = useState<string[]>([]);
   const [page, setPage] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollId, setScrollId] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
-  const [prevPhotoCleared, setPrevPhotoCleared] = useState(false);
+  const [previousPhotoId, setPreviousPhotoId] = useState<string | null>(null);
+  const [scrolledIntoView, setScrolledIntoView] = useState(false);
+  const [previousPhotoCleared, setPreviousPhotoCleared] = useState(false);
+  const [preferCachedPhotoList] = useState(!!systemState.previousPhotoId);
 
   const listPhotos = useListPhotos({
     type,
     keyword,
     page,
     limit: photosPerPage,
-    preferCached: url.search.includes('back=true'),
+    preferCached: preferCachedPhotoList,
   });
 
   const lastElementRef = useCallback(
@@ -54,12 +55,12 @@ const Photos = () => {
   );
 
   useEffect(() => {
-    if (prevPhotoCleared) return;
+    if (previousPhotoCleared) return;
 
-    setScrollId(systemState.previousPhotoId);
+    setPreviousPhotoId(systemState.previousPhotoId);
     dispatch(setPreviousPhoto(''));
-    setPrevPhotoCleared(true);
-  }, [systemState.previousPhotoId, dispatch, prevPhotoCleared]);
+    setPreviousPhotoCleared(true);
+  }, [systemState.previousPhotoId, dispatch, previousPhotoCleared]);
 
   const paramKeyword = urlParams.get('keyword');
   const paramName = urlParams.get('name') === 'true';
@@ -78,17 +79,20 @@ const Photos = () => {
     setKeyword(paramKeyword);
   }, [paramKeyword, paramName, paramLocation, paramDescription, paramTags]);
 
-  const photoListLoaded = () => {
-    if (scrolled) return;
+  const handlePhotoListLoaded = () => {
+    if (scrolledIntoView) return;
 
     setTimeout(() => {
-      if (scrollRef.current && scrollRef.current instanceof HTMLDivElement) {
-        scrollRef.current.scrollIntoView({
+      if (
+        previousPhotoRef.current &&
+        previousPhotoRef.current instanceof HTMLDivElement
+      ) {
+        previousPhotoRef.current.scrollIntoView({
           behavior: 'auto',
           block: 'center',
           inline: 'center',
         });
-        setScrolled(true);
+        setScrolledIntoView(true);
       }
     }, 1000);
   };
@@ -100,11 +104,15 @@ const Photos = () => {
         search={keyword}
         notFound={listPhotos.photos.length === 0}
         loading={listPhotos.loading}
-        scrollId={scrollId}
-        scrollRef={scrollRef}
-        loaded={photoListLoaded}
+        previousPhotoId={previousPhotoId}
+        previousPhotoRef={previousPhotoRef}
+        totalPhotos={listPhotos.totalCount}
+        photoListLoaded={handlePhotoListLoaded}
       />
-      <LoadingMore refProp={lastElementRef} loading={listPhotos.loading} />
+      <LoadingMore
+        refProp={lastElementRef}
+        loading={listPhotos.loading && listPhotos.photos.length > 0}
+      />
     </>
   );
 };
