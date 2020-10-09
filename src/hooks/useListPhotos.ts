@@ -20,10 +20,7 @@ const useListPhotos = ({
   limit,
   preferCached,
 }: InputProps) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
-  const [hasMore, setHasMore] = useState(false);
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const dispatch = useDispatch();
@@ -58,21 +55,13 @@ const useListPhotos = ({
     });
   }, [resultListPhotos.data, resultListPhotos.loading]);
 
-  useEffect(() => {
-    setHasMore(photos.length < totalCount);
-  }, [photos, totalCount]);
-
-  useEffect(() => {
-    const error = resultListPhotos.error;
-    if (!error) return;
-    setError(true);
-  }, [resultListPhotos.error]);
-
-  useEffect(() => {
-    setLoading(resultListPhotos.loading);
-  }, [resultListPhotos.loading]);
-
-  return { loading, totalCount, error, photos, hasMore };
+  return {
+    loading: resultListPhotos.loading,
+    error: !!resultListPhotos.error,
+    hasMore: photos.length < totalCount,
+    photos,
+    totalCount,
+  };
 };
 
 export default useListPhotos;
