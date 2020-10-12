@@ -129,23 +129,27 @@ const Account = () => {
               label="Username"
               value={loginState.loggedUser?.username || '...'}
               Icon={UsernameIcon}
+              loading={!loginState.loggedUser}
             />
             <AccountTextSetting
               label="Full name"
               value={loginState.loggedUser?.fullname || '...'}
               Icon={FullnameIcon}
+              loading={!loginState.loggedUser}
             />
             <AccountTextSetting
               label="Email"
               value={loginState.loggedUser?.email || '...'}
               Icon={EmailIcon}
               onClick={handleEmailChange}
+              loading={!loginState.loggedUser}
             />
             <AccountTextSetting
               label="Password"
               value="*****"
               Icon={PasswordIcon}
               onClick={handlePasswordChange}
+              loading={!loginState.loggedUser}
             />
           </Styled.Box>
           <Styled.Box>
@@ -154,6 +158,7 @@ const Account = () => {
               label="Uploaded photos"
               value={(fetched && String(photos.length)) || '...'}
               Icon={PhotoIcon}
+              loading={resultMe.loading}
             />
             <AccountTextSetting
               label="Photos not in any albums"
@@ -165,6 +170,7 @@ const Account = () => {
                 '...'
               }
               Icon={NotItAlbumIcon}
+              loading={resultMe.loading}
             />
             <AccountTextSetting
               label="Hidden photos"
@@ -176,11 +182,13 @@ const Account = () => {
                 '...'
               }
               Icon={HiddenIcon}
+              loading={resultMe.loading}
             />
             <AccountTextSetting
               label="Photo albums"
               value={(fetched && String(albums.length)) || '...'}
               Icon={AlbumIcon}
+              loading={resultMe.loading}
             />
           </Styled.Box>
         </Styled.BoxContainer>

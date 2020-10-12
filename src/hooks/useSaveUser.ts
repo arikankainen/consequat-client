@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { UserToSave } from 'utils/types';
-import { EDIT_USER, ME } from 'utils/queries';
+import { EDIT_USER } from 'utils/queries';
 import logger from 'utils/logger';
 
 export enum SaveUserStatus {
@@ -40,7 +40,6 @@ const useSaveUser = (): Return => {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   useEffect(() => {

@@ -29,9 +29,6 @@ import SpinnerCentered from 'components/SpinnerCentered/SpinnerCentered';
 import * as Styled from 'components/PhotoList/style';
 
 const MyPhotos = () => {
-  const resultMe = useQuery(ME, {
-    fetchPolicy: 'no-cache',
-  });
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [selection, setSelection] = useState<string[]>([]);
@@ -47,7 +44,12 @@ const MyPhotos = () => {
   const deleteQueue = useDeleteQueue();
   const deleteAlbum = useDeleteAlbum();
 
+  const resultMe = useQuery(ME, {
+    fetchPolicy: 'cache-first',
+  });
+
   useEffect(() => {
+    console.log('MYPHOTOS ME result', resultMe.data); // TODO: remove line
     if (resultMe.data) {
       const allPhotos: Photo[] = resultMe.data.me.photos;
       const allAlbums: Album[] = resultMe.data.me.albums;

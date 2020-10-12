@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Exif, Photo } from 'utils/types';
+import { Exif, Photo, User } from 'utils/types';
 import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from 'utils/queries';
 import logger from 'utils/logger';
 
@@ -52,21 +52,46 @@ const useSavePhoto = (): Return => {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   const [editPhotos, editPhotosResponse] = useMutation(EDIT_PHOTOS, {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   const [addPhoto, addPhotoResponse] = useMutation(ADD_PHOTO, {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
+        if (existingCache) {
+          const newPhoto = response.data.addPhoto;
+
+          const existingPhotos = existingCache.me.photos;
+          const updatedPhotos = existingPhotos.concat(newPhoto);
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              photos: updatedPhotos,
+            },
+          };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache,
+          });
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    },
   });
 
   useEffect(() => {

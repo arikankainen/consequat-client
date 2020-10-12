@@ -26,16 +26,19 @@ import { ReactComponent as AboutIcon } from '../../images/question-circle-solid.
 const Header = () => {
   const loginState = useSelector((state: RootState) => state.system);
   const dispatch = useDispatch();
-  const [me, resultMe] = useLazyQuery(ME);
+  const [me, resultMe] = useLazyQuery(ME, { fetchPolicy: 'cache-first' });
 
   useEffect(() => {
     if (!loginState.loggedIn && storageToken.getToken()) {
+      console.log('HEADER ME query'); // TODO: remove line
       me();
     }
-  }, [loginState]); // eslint-disable-line
+  }, [loginState, me]);
 
   useEffect(() => {
-    if (resultMe.data) {
+    console.log('HEADER ME result', resultMe.loading, resultMe.data); // TODO: remove line
+
+    if (resultMe.data && !resultMe.loading) {
       dispatch(
         updateLogin({
           loggedIn: true,
@@ -50,7 +53,7 @@ const Header = () => {
         })
       );
     }
-  }, [resultMe.data]); // eslint-disable-line
+  }, [resultMe.data, resultMe.loading, dispatch]);
 
   const mainMenuItems = [
     {

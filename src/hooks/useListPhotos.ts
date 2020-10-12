@@ -13,19 +13,11 @@ interface InputProps {
   preferCached: boolean;
 }
 
-const useListPhotos = ({
-  type,
-  keyword,
-  page,
-  limit,
-  preferCached,
-}: InputProps) => {
+const useListPhotos = ({ type, keyword, page, limit }: InputProps) => {
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const dispatch = useDispatch();
-
-  //console.log(preferCached);
 
   const [listPhotos, resultListPhotos] = useLazyQuery(LIST_PHOTOS, {
     fetchPolicy: 'network-only',

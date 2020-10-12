@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Album } from 'utils/types';
+import { Album, User } from 'utils/types';
 import { EDIT_ALBUM, CREATE_ALBUM, ME } from 'utils/queries';
 import logger from 'utils/logger';
 
@@ -40,14 +40,40 @@ const useSaveAlbum = (): Return => {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   const [createAlbum, createAlbumResponse] = useMutation(CREATE_ALBUM, {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
+        if (existingCache) {
+          const newAlbum = response.data.createAlbum;
+
+          const existingAlbums = existingCache.me.albums;
+          const updatedAlbums = existingAlbums.concat(newAlbum);
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              albums: updatedAlbums,
+            },
+          };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache,
+          });
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    },
   });
 
   useEffect(() => {

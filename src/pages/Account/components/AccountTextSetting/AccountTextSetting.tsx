@@ -1,11 +1,13 @@
 import React from 'react';
 import * as Styled from './style';
+import Spinner from 'components/Spinner/Spinner';
 
 interface AccountTextSettingProps {
   label: string;
   value: string;
   Icon?: React.FunctionComponent;
   onClick?: () => void;
+  loading?: boolean;
 }
 
 const AccountTextSetting: React.FC<AccountTextSettingProps> = ({
@@ -13,7 +15,12 @@ const AccountTextSetting: React.FC<AccountTextSettingProps> = ({
   value,
   Icon,
   onClick: onValueClick,
+  loading,
 }) => {
+  const customizedSpinner = (
+    <Spinner size={20} show={true} color="150, 150, 150" />
+  );
+
   return (
     <Styled.SettingContainer>
       {Icon && (
@@ -25,10 +32,14 @@ const AccountTextSetting: React.FC<AccountTextSettingProps> = ({
         <Styled.Label>{label}</Styled.Label>
         {onValueClick ? (
           <Styled.SettingValue>
-            <Styled.Link onClick={onValueClick}>{value}</Styled.Link>
+            <Styled.Link onClick={onValueClick}>
+              {loading ? customizedSpinner : value}
+            </Styled.Link>
           </Styled.SettingValue>
         ) : (
-          <Styled.SettingValue>{value}</Styled.SettingValue>
+          <Styled.SettingValue>
+            {loading ? customizedSpinner : value}
+          </Styled.SettingValue>
         )}
       </Styled.SettingTextContainer>
     </Styled.SettingContainer>

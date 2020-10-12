@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Photo } from 'utils/types';
-import { EDIT_TAGS, ME } from 'utils/queries';
+import { EDIT_TAGS } from 'utils/queries';
 import logger from 'utils/logger';
 
 export enum SaveTagsStatus {
@@ -40,7 +40,6 @@ const useSaveTags = (): Return => {
     onError: error => {
       logger.error(error);
     },
-    refetchQueries: [{ query: ME }], // TODO: update cache manually
   });
 
   useEffect(() => {
