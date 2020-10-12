@@ -49,7 +49,6 @@ const MyPhotos = () => {
   });
 
   useEffect(() => {
-    console.log('MYPHOTOS ME result', resultMe.data); // TODO: remove line
     if (resultMe.data) {
       const allPhotos: Photo[] = resultMe.data.me.photos;
       const allAlbums: Album[] = resultMe.data.me.albums;

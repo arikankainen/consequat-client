@@ -37,13 +37,13 @@ export const MyPhotosListHeader: React.FC<MyPhotosListHeaderProps> = ({
           name: 'Selected',
           value: `${selection.length} of ${photos.length} ${selectedAlbumsText}`,
         },
+      ]}
+      hiddenItems={[
         {
           name: 'Name',
           value: getUniqueValue(names, notUnique, noValues),
           grayed: !getUniqueValue(names),
         },
-      ]}
-      hiddenItems={[
         {
           name: 'Location',
           value: getUniqueValue(locations, notUnique, noValues),

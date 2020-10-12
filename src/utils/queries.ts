@@ -184,9 +184,13 @@ export const EDIT_PHOTO = gql`
         id: $id,
       ) {
         ...PhotoDetails,
+        album {
+          ...AlbumDetails,
+        }
       }
     }
   ${PHOTO_DETAILS}
+  ${ALBUM_DETAILS}
 `;
 
 export const EDIT_PHOTOS = gql`
@@ -209,9 +213,13 @@ export const EDIT_PHOTOS = gql`
         id: $id,
       ) {
         ...PhotoDetails,
+        album {
+          ...AlbumDetails,
+        }
       }
     }
   ${PHOTO_DETAILS}
+  ${ALBUM_DETAILS}
 `;
 
 export const EDIT_TAGS = gql`

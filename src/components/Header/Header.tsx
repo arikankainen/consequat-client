@@ -30,14 +30,11 @@ const Header = () => {
 
   useEffect(() => {
     if (!loginState.loggedIn && storageToken.getToken()) {
-      console.log('HEADER ME query'); // TODO: remove line
       me();
     }
   }, [loginState, me]);
 
   useEffect(() => {
-    console.log('HEADER ME result', resultMe.loading, resultMe.data); // TODO: remove line
-
     if (resultMe.data && !resultMe.loading) {
       dispatch(
         updateLogin({

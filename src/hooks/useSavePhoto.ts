@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Exif, Photo, User } from 'utils/types';
+import { Album, Exif, Photo, User } from 'utils/types';
 import { EDIT_PHOTO, EDIT_PHOTOS, ADD_PHOTO, ME } from 'utils/queries';
 import logger from 'utils/logger';
 
@@ -52,11 +52,134 @@ const useSavePhoto = (): Return => {
     onError: error => {
       logger.error(error);
     },
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
+        if (existingCache) {
+          const updatedPhoto = response.data.editPhoto;
+          const existingPhotos = existingCache.me.photos;
+          const existingAlbums = existingCache.me.albums;
+          let albumHasChanged = false;
+
+          const updatedPhotos = existingPhotos.map(photo =>
+            photo.id === updatedPhoto.id ? updatedPhoto : photo
+          );
+
+          const oldAlbum = existingAlbums.find(album =>
+            album.photos.find(photo => photo.id === updatedPhoto.id)
+          );
+          const newAlbum = updatedPhoto.album;
+
+          const oldAlbumId = oldAlbum ? oldAlbum.id : null;
+          const newAlbumId = newAlbum ? newAlbum.id : null;
+
+          let updatedAlbums: Album[] = [];
+
+          if (oldAlbumId !== newAlbumId) {
+            albumHasChanged = true;
+
+            updatedAlbums = existingAlbums.map(album => {
+              const oldAlbumRemovedPhotos = album.photos.filter(
+                photo => photo.id !== updatedPhoto.id
+              );
+
+              const updatedAlbumPhotos =
+                album.id !== newAlbumId
+                  ? oldAlbumRemovedPhotos
+                  : oldAlbumRemovedPhotos.concat(updatedPhoto);
+
+              return { ...album, photos: updatedAlbumPhotos };
+            });
+          }
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              photos: updatedPhotos,
+              albums: albumHasChanged ? updatedAlbums : existingAlbums,
+            },
+          };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache,
+          });
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    },
   });
 
   const [editPhotos, editPhotosResponse] = useMutation(EDIT_PHOTOS, {
     onError: error => {
       logger.error(error);
+    },
+    update: (cache, response) => {
+      try {
+        const existingCache: { me: User } | null = cache.readQuery({
+          query: ME,
+        });
+        if (existingCache) {
+          const updatedAlbum = (album: Album, photos: Photo[]) => {
+            const filteredPhotos = album.photos.filter(albumPhoto => {
+              let belongsToAlbum = true;
+
+              photos.forEach(photo => {
+                if (
+                  photo.id === albumPhoto.id &&
+                  (!photo.album || photo.album.id !== album.id)
+                ) {
+                  belongsToAlbum = false;
+                }
+              });
+
+              return belongsToAlbum;
+            });
+
+            const photosToAdd = photos.filter(photo => {
+              const alreadyInAlbum = album.photos.find(p => p.id === photo.id);
+              return (
+                photo.album && photo.album.id === album.id && !alreadyInAlbum
+              );
+            });
+
+            return { ...album, photos: filteredPhotos.concat(photosToAdd) };
+          };
+
+          const responsePhotos: Photo[] = response.data.editPhotos;
+          const existingPhotos = existingCache.me.photos;
+          const existingAlbums = existingCache.me.albums;
+
+          const updatedPhotos = existingPhotos.map(photo => {
+            const updatedPhoto = responsePhotos.find(p => p.id === photo.id);
+            return updatedPhoto ? updatedPhoto : photo;
+          });
+
+          const updatedAlbums = existingAlbums.map(album =>
+            updatedAlbum(album, responsePhotos)
+          );
+
+          const updatedCache = {
+            ...existingCache,
+            me: {
+              ...existingCache.me,
+              photos: updatedPhotos,
+              albums: updatedAlbums,
+            },
+          };
+
+          cache.writeQuery({
+            query: ME,
+            data: updatedCache,
+          });
+        }
+      } catch (error) {
+        logger.error(error);
+      }
     },
   });
 
