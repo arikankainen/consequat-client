@@ -26,7 +26,7 @@ import { InitialUploadFileButton } from '../Upload/components/InitialUpload/styl
 import { MyPhotosListHeader } from './components/MyPhotosListHeader/MyPhotosListHeader';
 import Thumbnail from 'components/Thumbnail/Thumbnail';
 import SpinnerCentered from 'components/SpinnerCentered/SpinnerCentered';
-
+import { compareAlbums, comparePhotos } from 'utils/compare';
 import * as Styled from 'components/PhotoList/style';
 
 const MyPhotos = () => {
@@ -61,10 +61,11 @@ const MyPhotos = () => {
         id: '0',
       };
 
+      const sortedAlbums = allAlbums.slice().sort(compareAlbums);
       initialAlbum.photos = allPhotos.filter(photo => photo.album === null);
 
       setPhotos(allPhotos);
-      setAlbums([initialAlbum, ...allAlbums]);
+      setAlbums([initialAlbum, ...sortedAlbums]);
     }
   }, [resultMe.data]);
 
@@ -399,17 +400,20 @@ const MyPhotos = () => {
             selected={isAllSelected(album)}
           >
             <>
-              {album.photos.map(photo => (
-                <Thumbnail
-                  key={photo.id}
-                  src={photo.thumbUrl}
-                  name={photo.name}
-                  hidden={photo.hidden}
-                  selected={selection.includes(photo.id)}
-                  handleThumbnailClick={() => handleThumbnailClick(photo.id)}
-                  handleIconClick={() => handleCheckClick(photo.id)}
-                />
-              ))}
+              {album.photos
+                .slice()
+                .sort(comparePhotos)
+                .map(photo => (
+                  <Thumbnail
+                    key={photo.id}
+                    src={photo.thumbUrl}
+                    name={photo.name}
+                    hidden={photo.hidden}
+                    selected={selection.includes(photo.id)}
+                    handleThumbnailClick={() => handleThumbnailClick(photo.id)}
+                    handleIconClick={() => handleCheckClick(photo.id)}
+                  />
+                ))}
             </>
           </PhotoAlbum>
         ))}

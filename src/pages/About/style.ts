@@ -4,7 +4,7 @@ import breakPoints from 'utils/breakPoints';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   width: 100%;
   height: 100%;
   max-width: ${breakPoints.laptopLWidth};
