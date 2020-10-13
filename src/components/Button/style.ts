@@ -59,7 +59,7 @@ export const Container = styled.button<ContainerProps>`
   &:disabled {
     border: 1px solid var(--accent-color-2-disabled);
     background-color: var(--accent-color-2-disabled);
-    cursor: progress;
+    cursor: default;
 
     & > svg {
       color: #111155;

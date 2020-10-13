@@ -18,6 +18,7 @@ import { ReactComponent as AlbumButton } from 'images/folder-plus-solid.svg';
 import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
 import { ReactComponent as TagsButton } from 'images/tag-solid.svg';
 import { ReactComponent as EditButton } from 'images/pen-solid.svg';
+import { ReactComponent as DeselectButton } from 'images/times-circle-regular.svg';
 import Button from 'components/Button/Button';
 import { ButtonColor } from 'components/Button/style';
 import PhotoAlbum from 'components/PhotoAlbum/PhotoAlbum';
@@ -298,21 +299,6 @@ const MyPhotos = () => {
     setSelection(currentSelection);
   };
 
-  // used to automatically open tag editor with 3 photos for testing TODO: remove!
-  // useEffect(() => {
-  //   if (!photos || photos.length < 3) return;
-  //   if (!photos[0].tags) return;
-  //   const selectedPhotos = [photos[0].id, photos[1].id, photos[3].id];
-  //   setSelection(selectedPhotos);
-
-  //   setEditTags({
-  //     open: true,
-  //     photos: photos.filter(photo => selectedPhotos.includes(photo.id)),
-  //     handleOk: () => void 0,
-  //     handleCancel: () => setEditTags({}),
-  //   });
-  // }, [photos]);
-
   return (
     <>
       <Styled.PictureListToolBar>
@@ -324,7 +310,7 @@ const MyPhotos = () => {
                 text="Add"
                 icon={AddButton}
                 color={ButtonColor.black}
-                breakPoint="480px"
+                breakPoint="540px"
               />
               <InitialUploadFileButton
                 type="file"
@@ -341,7 +327,7 @@ const MyPhotos = () => {
               icon={EditButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
-              breakPoint="480px"
+              breakPoint="540px"
             />
             <Button
               onClick={handleEditTags}
@@ -349,7 +335,7 @@ const MyPhotos = () => {
               icon={TagsButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
-              breakPoint="480px"
+              breakPoint="540px"
             />
           </Styled.PictureListButtonGroup>
 
@@ -359,18 +345,26 @@ const MyPhotos = () => {
               text="Create album"
               icon={AlbumButton}
               color={ButtonColor.black}
-              breakPoint="380px"
+              breakPoint="420px"
             />
           </Styled.PictureListButtonGroup>
 
           <Styled.PictureListButtonGroup>
+            <Button
+              onClick={() => setSelection([])}
+              text="Deselect"
+              icon={DeselectButton}
+              disabled={selection.length === 0}
+              color={ButtonColor.black}
+              breakPoint="650px"
+            />
             <Button
               onClick={handleDeletePhotos}
               text="Delete"
               icon={DeleteButton}
               disabled={selection.length === 0}
               color={ButtonColor.black}
-              breakPoint="550px"
+              breakPoint="650px"
             />
           </Styled.PictureListButtonGroup>
         </Styled.PictureListButtonGroups>
@@ -402,7 +396,6 @@ const MyPhotos = () => {
             onEditClick={() => handleEditAlbum(album.id)}
             onDeleteClick={() => handleDeleteAlbum(album)}
             onSelectClick={() => handleSelectClick(album)}
-            onOutsideClick={() => setSelection([])}
             selected={isAllSelected(album)}
           >
             <>

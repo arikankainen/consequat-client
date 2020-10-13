@@ -29,8 +29,10 @@ const UploadListHeader: React.FC<UploadListHeaderProps> = ({
           name: 'Selected',
           value: `${selectedCount} of ${pictureCount}`,
         },
+      ]}
+      hiddenItems={[
         {
-          name: 'Photo',
+          name: 'Name',
           value: filenameValue,
         },
       ]}

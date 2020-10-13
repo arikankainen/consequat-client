@@ -5,7 +5,7 @@ import { ReactComponent as EditButton } from 'images/pen-solid.svg';
 import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
 import { ReactComponent as UploadButton } from 'images/upload-solid.svg';
 import { ReactComponent as CheckButton } from 'images/check-circle-regular.svg';
-import { ReactComponent as UncheckButton } from 'images/check-circle-regular_modified.svg';
+import { ReactComponent as UncheckButton } from 'images/times-circle-regular.svg';
 import * as Styled from './style';
 
 interface PhotoAlbumProps {
@@ -93,7 +93,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
             <Button
               onClick={onSelectClick || (() => void 0)}
               color={ButtonColor.whiteWithBlueBorder}
-              icon={selected ? CheckButton : UncheckButton}
+              icon={selected ? UncheckButton : CheckButton}
               breakPoint="600px"
             />
           )}

@@ -10,7 +10,7 @@ import Confirmation, {
 import InitialUpload from './components/InitialUpload/InitialUpload';
 import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
 import { ReactComponent as CheckButton } from 'images/check-circle-regular.svg';
-import { ReactComponent as UncheckButton } from 'images/check-circle-regular_modified.svg';
+import { ReactComponent as UncheckButton } from 'images/times-circle-regular.svg';
 import { ReactComponent as AddButton } from 'images/plus-square-solid.svg';
 import Button from 'components/Button/Button';
 import { ButtonColor } from 'components/Button/style';
@@ -220,15 +220,6 @@ const Upload = () => {
     }
   };
 
-  const handleSelectNone = () => {
-    pictureState.pictures.forEach(element => {
-      if (element.selected) {
-        dispatch(updateSelected(element.picture.name, false));
-      }
-    });
-    setAllSelected(false);
-  };
-
   return (
     <>
       <Styled.PictureListToolBar>
@@ -248,7 +239,7 @@ const Upload = () => {
               <Button
                 onClick={handleSelectAll}
                 text="Select all"
-                icon={UncheckButton}
+                icon={CheckButton}
                 color={ButtonColor.black}
                 breakPoint="265px"
               />
@@ -256,7 +247,7 @@ const Upload = () => {
               <Button
                 onClick={handleSelectAll}
                 text="Deselect all"
-                icon={CheckButton}
+                icon={UncheckButton}
                 color={ButtonColor.black}
                 breakPoint="265px"
               />
@@ -290,7 +281,6 @@ const Upload = () => {
           description="Photos to be uploaded"
           uploadButtonVisible={true}
           onUploadClick={handleUploadPictures}
-          onOutsideClick={handleSelectNone}
         >
           <>
             {pictureState.pictures.map(file => (
