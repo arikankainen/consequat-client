@@ -22,6 +22,7 @@ const HeaderSearch = () => {
       search: keyWord,
     });
     history.push(address);
+    setKeyWord('');
 
     if (inputRef.current) inputRef.current.blur();
   };
