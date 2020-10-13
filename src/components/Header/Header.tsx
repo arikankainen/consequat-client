@@ -35,7 +35,7 @@ const Header = () => {
   }, [loginState, me]);
 
   useEffect(() => {
-    if (resultMe.data && !resultMe.loading) {
+    if (!resultMe.loading && resultMe.data && resultMe.data.me) {
       dispatch(
         updateLogin({
           loggedIn: true,

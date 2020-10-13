@@ -39,19 +39,19 @@ const Login = () => {
   });
 
   const [me, resultMe] = useLazyQuery(ME, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
-    if (resultLogin.data) {
+    if (!resultLogin.loading && resultLogin.data && resultLogin.data.login) {
       const token = resultLogin.data.login.token;
       storageToken.setToken(token);
       me();
     }
-  }, [resultLogin.data, history]); // eslint-disable-line
+  }, [resultLogin.data, resultLogin.loading, history]); // eslint-disable-line
 
   useEffect(() => {
-    if (resultMe.data) {
+    if (!resultMe.loading && resultMe.data && resultMe.data.me) {
       dispatch(
         updateLogin({
           loggedIn: true,
@@ -74,7 +74,7 @@ const Login = () => {
       );
       history.replace(loginState.previousPage);
     }
-  }, [resultMe.data]); // eslint-disable-line
+  }, [resultMe.data, resultMe.loading]); // eslint-disable-line
 
   const handleSubmit = (values: FormValues) => {
     loggingProgress(true);

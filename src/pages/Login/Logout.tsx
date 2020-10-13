@@ -6,11 +6,13 @@ import { RootState } from 'reducers/rootReducer';
 import { clearLogin } from 'reducers/systemReducer';
 import storageToken from 'utils/storageToken';
 import { setMessage } from 'reducers/notificationReducer';
+import { useApolloClient } from '@apollo/client';
 
 const Logout = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loginStatus = useSelector((state: RootState) => state.system);
+  const apollo = useApolloClient();
 
   useEffect(() => {
     if (loginStatus && loginStatus.loggedIn) {
@@ -22,6 +24,7 @@ const Logout = () => {
       );
       dispatch(clearLogin());
       storageToken.removeToken();
+      apollo.resetStore();
     }
 
     history.replace('/');
