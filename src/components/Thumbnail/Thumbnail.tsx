@@ -33,7 +33,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
           onClick={handleThumbnailClick}
           src={src}
           onError={(e: React.InvalidEvent<HTMLImageElement>) => {
-            e.target.style.display = 'none';
+            e.target.style.opacity = '0';
           }}
         />
       </Styled.ThumbnailPlaceholder>
