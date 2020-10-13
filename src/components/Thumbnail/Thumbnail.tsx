@@ -26,7 +26,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnailRef,
 }) => {
   return (
-    <Styled.ThumbnailContainer ref={containerRef}>
+    <Styled.ThumbnailContainer ref={containerRef} selected={selected}>
       <Styled.ThumbnailPlaceholder>
         <Styled.ThumbnailPicture
           ref={thumbnailRef}

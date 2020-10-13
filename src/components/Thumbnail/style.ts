@@ -1,11 +1,23 @@
 import styled, { css } from 'styled-components/macro';
 
-export const ThumbnailContainer = styled.div`
+interface ThumbnailContainerProps {
+  selected: boolean;
+}
+
+export const ThumbnailContainer = styled.div<ThumbnailContainerProps>`
   position: relative;
   display: flex;
   flex-direction: column;
 	cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.5);
+
+  ${props =>
+    props.selected &&
+    css`
+      border: 5px solid var(--icon-color-hover);
+      border-radius: 4px;
+      /* padding: 1px; */
+  `}
 `;
 
 export const ThumbnailPlaceholder = styled.div`
