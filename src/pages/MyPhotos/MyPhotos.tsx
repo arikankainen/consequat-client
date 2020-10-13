@@ -164,6 +164,7 @@ const MyPhotos = () => {
           text,
           progress,
           handleCancel: () => deleteQueue.abort(),
+          processing: true,
         });
         break;
 
@@ -176,6 +177,7 @@ const MyPhotos = () => {
           text: 'All selected photos deleted.',
           progress: 100,
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
 
@@ -187,6 +189,7 @@ const MyPhotos = () => {
           topic: 'Delete failed',
           text: 'An error occurred while deleting.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
 
@@ -198,6 +201,7 @@ const MyPhotos = () => {
           topic: 'Delete aborted',
           text: 'Deletion was aborted. Some photos may have been deleted.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
     }
@@ -234,6 +238,7 @@ const MyPhotos = () => {
           topic: 'Delete completed',
           text: 'Album deleted.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
 
@@ -243,6 +248,7 @@ const MyPhotos = () => {
           topic: 'Delete failed',
           text: 'An error occurred while deleting.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
     }
@@ -255,6 +261,7 @@ const MyPhotos = () => {
       text: album.name,
       handleOk: () => void 0,
       disableOk: true,
+      processing: true,
     });
 
     deleteAlbum.execute(album);

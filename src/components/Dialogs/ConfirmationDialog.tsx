@@ -3,6 +3,7 @@ import BaseDialog from './components/BaseDialog/BaseDialog';
 import Button from 'components/Button/Button';
 import { ButtonColor } from 'components/Button/style';
 import { ConfirmationProps } from './Confirmation';
+import Spinner from 'components/Spinner/Spinner';
 import * as Styled from './style';
 
 const ConfirmationDialog: React.FC<ConfirmationProps> = ({
@@ -16,6 +17,7 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
   disableCancel,
   handleOk,
   handleCancel,
+  processing,
 }) => {
   return (
     <BaseDialog open={open}>
@@ -41,6 +43,10 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
         </Styled.DialogContentNormal>
 
         <Styled.DialogButtonArea>
+          <Styled.SpinnerContainer>
+            <Spinner show={processing} />
+          </Styled.SpinnerContainer>
+          <Styled.SavingIndicator></Styled.SavingIndicator>
           {handleCancel && handleOk && (
             <>
               <Button

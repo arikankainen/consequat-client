@@ -98,6 +98,7 @@ const Upload = () => {
           text2,
           progress2,
           handleCancel: () => uploadQueue.abort(),
+          processing: true,
         });
         break;
 
@@ -111,6 +112,7 @@ const Upload = () => {
           text2,
           progress2,
           handleOk: uploadDoneClosed,
+          processing: false,
         });
         break;
 
@@ -121,6 +123,7 @@ const Upload = () => {
           topic: 'Upload failed',
           text: 'An error occurred while uploading.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
 
@@ -131,6 +134,7 @@ const Upload = () => {
           topic: 'Upload aborted',
           text: 'Upload was aborted. Some photos may not have been uploaded.',
           handleOk: () => setConfirmation({}),
+          processing: false,
         });
         break;
     }

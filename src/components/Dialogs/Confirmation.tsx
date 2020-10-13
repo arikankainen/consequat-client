@@ -12,6 +12,7 @@ export interface ConfirmationProps {
   disableCancel?: boolean;
   handleOk?: () => void;
   handleCancel?: () => void;
+  processing?: boolean;
 }
 
 const Confirmation: React.FC<ConfirmationProps> = props => {
@@ -39,6 +40,7 @@ const Confirmation: React.FC<ConfirmationProps> = props => {
       disableCancel={savedProps.disableCancel}
       handleOk={savedProps.handleOk}
       handleCancel={savedProps.handleCancel}
+      processing={savedProps.processing}
     />
   );
 };
