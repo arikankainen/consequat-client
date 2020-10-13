@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
-export const Container = styled(Link)`
+interface ContainerProps {
+  disabled: boolean;
+}
+
+export const Container = styled(Link)<ContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,4 +27,10 @@ export const Container = styled(Link)`
     height: var(--icon-size);
     color: var(--icon-color);
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      pointer-events: none;
+  `}
 `;

@@ -147,7 +147,12 @@ const Header = () => {
               settings={userMenuSettings}
             />
           ) : (
-            <MenuButton to="/login" text="Login" Icon={LoginIcon} />
+            <MenuButton
+              to="/login"
+              text="Login"
+              Icon={LoginIcon}
+              loading={resultMe.loading}
+            />
           )}
         </Styled.RightContainer>
       </Styled.HeaderInnerContainer>
