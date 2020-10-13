@@ -15,6 +15,7 @@ interface InputProps {
 
 const useListPhotos = ({ type, keyword, page, limit }: InputProps) => {
   const [photos, setPhotos] = useState<PhotoUserExtended[]>([]);
+  const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const dispatch = useDispatch();
@@ -39,16 +40,18 @@ const useListPhotos = ({ type, keyword, page, limit }: InputProps) => {
   useEffect(() => {
     const data = resultListPhotos.data;
     const loading = resultListPhotos.loading;
+    if (loading) setLoading(true);
     if (!data || !data.listPhotos || loading) return;
 
     setTotalCount(data.listPhotos.totalCount);
     setPhotos(prevPhotos => {
       return [...prevPhotos, ...data.listPhotos.photos];
     });
+    setLoading(false);
   }, [resultListPhotos.data, resultListPhotos.loading]);
 
   return {
-    loading: resultListPhotos.loading,
+    loading: loading,
     error: !!resultListPhotos.error,
     hasMore: photos.length < totalCount,
     photos,

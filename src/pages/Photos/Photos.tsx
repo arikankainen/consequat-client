@@ -102,7 +102,6 @@ const Photos = () => {
       <PhotoGrid
         photos={listPhotos.photos}
         search={keyword}
-        notFound={listPhotos.photos.length === 0}
         loading={listPhotos.loading}
         previousPhotoId={previousPhotoId}
         previousPhotoRef={previousPhotoRef}

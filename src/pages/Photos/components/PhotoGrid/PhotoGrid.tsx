@@ -22,7 +22,6 @@ interface PhotoGridProps {
   photos: PhotoUserExtended[];
   search: string | undefined | null;
   scrollPosition: ScrollPosition;
-  notFound: boolean;
   loading: boolean;
   previousPhotoId: string | null;
   previousPhotoRef: React.RefObject<HTMLDivElement>;
@@ -34,7 +33,6 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
   photos,
   search,
   scrollPosition,
-  notFound,
   loading,
   previousPhotoId,
   previousPhotoRef,
@@ -94,7 +92,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
 
       {loading && photos.length === 0 && <SpinnerCentered />}
 
-      {notFound && !loading && (
+      {!loading && photos.length === 0 && (
         <NotFound
           topic="No photos found"
           text="Try different search terms"
@@ -102,7 +100,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({
         />
       )}
 
-      {!notFound && (
+      {photos.length > 0 && (
         <Styled.GridContainer
           ref={containerRef}
           style={{ height: totalHeight }}
