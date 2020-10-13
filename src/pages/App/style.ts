@@ -14,11 +14,7 @@ export const SiteContainer = styled.section`
   width: 100%;
 `;
 
-interface MainProps {
-  picture: boolean;
-}
-
-export const Main = styled.div<MainProps>`
+export const Main = styled.div`
   grid-area: main;
   display: flex;
   flex-direction: column;
@@ -26,7 +22,13 @@ export const Main = styled.div<MainProps>`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 60px);
+`;
 
+interface MainBackProps {
+  picture: boolean;
+}
+
+export const MainBack = styled(Main)<MainBackProps>`
   ${props =>
     props.picture &&
     css`

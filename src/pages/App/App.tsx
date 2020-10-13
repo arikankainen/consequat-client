@@ -58,6 +58,7 @@ const App = () => {
     <Styled.SiteContainer>
       <Notification />
       <Header />
+      <Styled.MainBack picture={back} />
 
       <Route
         render={({ location }) => {
@@ -79,7 +80,7 @@ const App = () => {
                 timeout={timeout}
                 classNames={classNames}
               >
-                <Styled.Main picture={back}>
+                <Styled.Main>
                   <Switch location={location}>
                     <Route path="/login">
                       {loginState.loggedIn ? <Redirect to="/" /> : <Login />}

@@ -38,15 +38,7 @@ export const Logo = styled.div`
     ${breakPoints.mobileXL} {
       width: 100px;
       height: 100px;
-    }
-  }
-
-  ${breakPoints.mobileM} {
-    margin-bottom: 10px;
-
-    & > svg {
-      width: 100px;
-      height: 100px;
+      margin-top: 20px;
     }
   }
 `;
