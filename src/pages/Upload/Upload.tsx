@@ -283,6 +283,7 @@ const Upload = () => {
         <PhotoAlbum
           name="Upload list"
           description="Photos to be uploaded"
+          id="upload"
           photoCount={pictureState.pictures.length}
           uploadButtonVisible={true}
           onUploadClick={handleUploadPictures}

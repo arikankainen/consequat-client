@@ -397,6 +397,7 @@ const MyPhotos = () => {
             key={album.id}
             name={album.name}
             description={album.description}
+            id={album.id}
             photoCount={album.photos.length}
             isNotRealAlbum={album.id === '0'}
             isEmpty={album.photos.length === 0}

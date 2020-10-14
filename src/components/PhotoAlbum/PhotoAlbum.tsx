@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'reducers/rootReducer';
+import { expandAlbum, collapseAlbum } from 'reducers/myPhotosReducer';
 import Button from 'components/Button/Button';
 import { ButtonColor } from 'components/Button/style';
 import { ReactComponent as EditButton } from 'images/pen-solid.svg';
@@ -13,6 +16,7 @@ import * as Styled from './style';
 interface PhotoAlbumProps {
   name: string;
   description?: string;
+  id: string;
   photoCount: number;
   isNotRealAlbum?: boolean;
   isEmpty?: boolean;
@@ -31,6 +35,7 @@ interface PhotoAlbumProps {
 const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   name,
   description,
+  id,
   photoCount,
   isNotRealAlbum,
   isEmpty,
@@ -45,7 +50,22 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   selected,
   children,
 }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const myPhotosState = useSelector((state: RootState) => state.myPhotos);
+  const dispatch = useDispatch();
+
+  const [collapsed, setCollapsed] = useState(
+    myPhotosState.collapsed.includes(id)
+  );
+
+  const handleCollapse = (collapse: boolean) => {
+    if (collapse) {
+      setCollapsed(true);
+      dispatch(collapseAlbum(id));
+    } else {
+      setCollapsed(false);
+      dispatch(expandAlbum(id));
+    }
+  };
 
   if (isEmpty && isNotRealAlbum) return null;
   return (
@@ -54,9 +74,9 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
         <Styled.NameAndDescription>
           <Styled.Name>
             {collapsed ? (
-              <ExpandIcon onClick={() => setCollapsed(false)} />
+              <ExpandIcon onClick={() => handleCollapse(false)} />
             ) : (
-              <CollapseIcon onClick={() => setCollapsed(true)} />
+              <CollapseIcon onClick={() => handleCollapse(true)} />
             )}
             {name}
           </Styled.Name>

@@ -25,6 +25,7 @@ store.subscribe(
       notification: notificationInitialState,
       picture: pictureInitialState,
       photoList: state.photoList,
+      myPhotos: state.myPhotos,
     };
 
     storageState.saveState(stateToSave);
