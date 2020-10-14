@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom';
 import * as Styled from './style';
 import getSearchString from 'utils/getSearchString';
 
-const HeaderSearch = () => {
+interface HeaderSearchProps {
+  useInPage?: boolean;
+}
+
+const HeaderSearch: React.FC<HeaderSearchProps> = ({ useInPage }) => {
   const [focus, setFocus] = useState(false);
   const [keyWord, setKeyWord] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,11 +40,12 @@ const HeaderSearch = () => {
   };
 
   return (
-    <Styled.SearchContainer focus={focus} onClick={handleIconClick}>
+    <Styled.SearchContainer focus={focus} useInPage={useInPage} onClick={handleIconClick}>
       <SearchIcon />
       <form onSubmit={handleSubmit}>
         <Styled.Input
-          placeholder="Search photos"
+          useInPage={useInPage}
+          placeholder={useInPage ? '' : 'Search photos'}
           autoComplete="off"
           spellCheck={false}
           onFocus={() => setFocus(true)}
