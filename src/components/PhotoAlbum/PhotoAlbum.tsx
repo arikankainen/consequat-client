@@ -73,10 +73,10 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
       <Styled.TopicContainer collapsed={collapsed}>
         <Styled.NameAndDescription>
           <Styled.Name>
-            {collapsed ? (
-              <ExpandIcon onClick={() => handleCollapse(false)} />
+            {!collapsed ? (
+              <ExpandIcon onClick={() => handleCollapse(true)} />
             ) : (
-              <CollapseIcon onClick={() => handleCollapse(true)} />
+              <CollapseIcon onClick={() => handleCollapse(false)} />
             )}
             {name}
           </Styled.Name>

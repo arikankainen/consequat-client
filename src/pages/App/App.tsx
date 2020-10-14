@@ -8,6 +8,7 @@ import { setPrevious } from 'reducers/systemReducer';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Notification from 'components/Notification/Notification';
+import MainNotLogged from 'pages/MainNotLogged/MainNotLogged';
 import Main from 'pages/Main/Main';
 import About from 'pages/About/About';
 import Login from 'pages/Login/Login';
@@ -75,27 +76,42 @@ const App = () => {
 
           return (
             <TransitionGroup component={null}>
-              <CSSTransition
-                key={location.key}
-                timeout={timeout}
-                classNames={classNames}
-              >
+              <CSSTransition key={location.key} timeout={timeout} classNames={classNames}>
                 <Styled.Main>
                   <Switch location={location}>
-                    <Route path="/login">
-                      {loginState.loggedIn ? <Redirect to="/" /> : <Login />}
-                    </Route>
-                    <Route path="/signup">
-                      {loginState.loggedIn ? <Redirect to="/" /> : <Signup />}
-                    </Route>
-                    <Route path="/logout" component={Logout} />
-                    <Route path="/upload" component={UploadPage} />
-                    <Route path="/myphotos" component={MyPhotos} />
-                    <Route path="/account" component={Account} />
                     <Route path="/photos/photo/:id" component={Photo} />
                     <Route path="/photos" component={Photos} />
                     <Route path="/about" component={About} />
-                    <Route exact path="/" component={Main} />
+                    <Route path="/main" component={Main} />
+
+                    <Route path="/login">
+                      {loginState.loggedIn ? <Redirect to="/" /> : <Login />}
+                    </Route>
+
+                    <Route path="/signup">
+                      {loginState.loggedIn ? <Redirect to="/" /> : <Signup />}
+                    </Route>
+
+                    <Route path="/logout">
+                      {loginState.loggedIn ? <Logout /> : <Redirect to="/" />}
+                    </Route>
+
+                    <Route path="/upload">
+                      {loginState.loggedIn ? <UploadPage /> : <Redirect to="/" />}
+                    </Route>
+
+                    <Route path="/myphotos">
+                      {loginState.loggedIn ? <MyPhotos /> : <Redirect to="/" />}
+                    </Route>
+
+                    <Route path="/account">
+                      {loginState.loggedIn ? <Account /> : <Redirect to="/" />}
+                    </Route>
+
+                    <Route exact path="/">
+                      {loginState.loggedIn ? <Redirect to="/main" /> : <MainNotLogged />}
+                    </Route>
+
                     <Route path="/" component={NotFoundAddress} />
                   </Switch>
                 </Styled.Main>
