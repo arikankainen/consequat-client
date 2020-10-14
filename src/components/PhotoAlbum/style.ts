@@ -53,6 +53,11 @@ export const TopicContainer = styled.div<CollapseProps>`
     css`
       padding-top: 10px;
       padding-bottom: 10px;
+
+      ${breakPoints.tablet} {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
   `}
 
   transition: padding .3s ease;
@@ -74,9 +79,15 @@ export const Name = styled.div`
   color: #222;
   line-height: 1;
 
+  ${breakPoints.mobileM} {
+    font-size: 20px;
+  }
+
   & > svg {
     width: 20px;
     height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     color: #555;
     margin-right: 5px;
     cursor: pointer;
@@ -137,6 +148,7 @@ export const Stats = styled.div<CollapseProps>`
   opacity: 0;
   margin-right: 5px;
   color: #888;
+  white-space: nowrap;
 
   ${props =>
     props.collapsed &&
@@ -170,6 +182,11 @@ export const PictureListArea = styled.div<CollapseProps>`
       padding-top: 0;
       padding-bottom: 0;
       overflow: hidden;
+
+      ${breakPoints.tablet} {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
   `}
 
   transition: opacity .5s ease, padding .3s ease;

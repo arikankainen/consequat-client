@@ -98,7 +98,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onUploadClick || (() => void 0)}
               color={ButtonColor.whiteWithBlueBorder}
               icon={UploadButton}
-              breakPoint="290px"
+              breakPoint="300px"
             />
           )}
           {editButtonVisible && (
@@ -107,7 +107,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onEditClick || (() => void 0)}
               color={ButtonColor.whiteWithBlueBorder}
               icon={EditButton}
-              breakPoint="400px"
+              breakPoint="600px"
             />
           )}
           {deleteButtonVisible && (
@@ -116,7 +116,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
               onClick={onDeleteClick || (() => void 0)}
               color={ButtonColor.whiteWithBlueBorder}
               icon={DeleteButton}
-              breakPoint="400px"
+              breakPoint="600px"
             />
           )}
           {selectButtonVisible && (
