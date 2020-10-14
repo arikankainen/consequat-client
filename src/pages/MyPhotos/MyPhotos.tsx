@@ -384,11 +384,12 @@ const MyPhotos = () => {
         />
       </Styled.PictureListToolBar>
 
+      <Confirmation {...confirmation} />
+      <EditPhoto {...editPhoto} />
+      <EditTags {...editTags} />
+      <EditAlbum {...editAlbum} />
+
       <Styled.PictureListContainer>
-        <Confirmation {...confirmation} />
-        <EditPhoto {...editPhoto} />
-        <EditTags {...editTags} />
-        <EditAlbum {...editAlbum} />
         {resultMe.loading && <SpinnerCentered />}
 
         {albums.map(album => (
@@ -396,6 +397,7 @@ const MyPhotos = () => {
             key={album.id}
             name={album.name}
             description={album.description}
+            photoCount={album.photos.length}
             isNotRealAlbum={album.id === '0'}
             isEmpty={album.photos.length === 0}
             editButtonVisible={album.id !== '0'}

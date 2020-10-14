@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'components/Button/Button';
 import { ButtonColor } from 'components/Button/style';
 import { ReactComponent as EditButton } from 'images/pen-solid.svg';
@@ -6,18 +6,20 @@ import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
 import { ReactComponent as UploadButton } from 'images/upload-solid.svg';
 import { ReactComponent as CheckButton } from 'images/check-circle-regular.svg';
 import { ReactComponent as UncheckButton } from 'images/times-circle-regular.svg';
+import { ReactComponent as CollapseIcon } from 'images/chevron-down-solid_modified.svg';
+import { ReactComponent as ExpandIcon } from 'images/chevron-up-solid_modified.svg';
 import * as Styled from './style';
 
 interface PhotoAlbumProps {
   name: string;
   description?: string;
+  photoCount: number;
   isNotRealAlbum?: boolean;
   isEmpty?: boolean;
   onUploadClick?: () => void;
   onEditClick?: () => void;
   onDeleteClick?: () => void;
   onSelectClick?: () => void;
-  onOutsideClick?: () => void;
   uploadButtonVisible?: boolean;
   deleteButtonVisible?: boolean;
   editButtonVisible?: boolean;
@@ -29,13 +31,13 @@ interface PhotoAlbumProps {
 const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   name,
   description,
+  photoCount,
   isNotRealAlbum,
   isEmpty,
   onUploadClick,
   onEditClick,
   onDeleteClick,
   onSelectClick,
-  onOutsideClick,
   uploadButtonVisible,
   deleteButtonVisible,
   editButtonVisible,
@@ -43,25 +45,33 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   selected,
   children,
 }) => {
-  const handleContainerClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    if ((event.target as HTMLDivElement).hasAttribute('data-outside')) {
-      if (onOutsideClick) onOutsideClick();
-    }
-  };
+  const [collapsed, setCollapsed] = useState(false);
 
   if (isEmpty && isNotRealAlbum) return null;
   return (
-    <Styled.AlbumContainer onClick={handleContainerClick}>
-      <Styled.TopicContainer data-outside>
-        <Styled.NameAndDescription data-outside>
-          <Styled.Name data-outside>{name}</Styled.Name>
+    <Styled.AlbumContainer collapsed={collapsed}>
+      <Styled.TopicContainer collapsed={collapsed}>
+        <Styled.NameAndDescription>
+          <Styled.Name>
+            {collapsed ? (
+              <ExpandIcon onClick={() => setCollapsed(false)} />
+            ) : (
+              <CollapseIcon onClick={() => setCollapsed(true)} />
+            )}
+            {name}
+          </Styled.Name>
           {description && (
-            <Styled.Description data-outside>{description}</Styled.Description>
+            <Styled.Description collapsed={collapsed}>
+              {description}
+            </Styled.Description>
           )}
         </Styled.NameAndDescription>
-        <Styled.Edit data-outside>
+        <Styled.Stats collapsed={collapsed}>
+          {photoCount === 0 && <>No photos</>}
+          {photoCount === 1 && <>1 photo</>}
+          {photoCount > 1 && <>{photoCount} photos</>}
+        </Styled.Stats>
+        <Styled.Edit collapsed={collapsed}>
           {uploadButtonVisible && (
             <Button
               text="Upload"
@@ -99,7 +109,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
           )}
         </Styled.Edit>
       </Styled.TopicContainer>
-      <Styled.PictureListArea data-outside>
+      <Styled.PictureListArea collapsed={collapsed}>
         {!isEmpty ? children : <Styled.EmptyText>No photos</Styled.EmptyText>}
       </Styled.PictureListArea>
     </Styled.AlbumContainer>

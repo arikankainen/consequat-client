@@ -277,12 +277,13 @@ const Upload = () => {
         />
       </Styled.PictureListToolBar>
 
-      <Styled.PictureListContainer>
-        <Confirmation {...confirmation} />
+      <Confirmation {...confirmation} />
 
+      <Styled.PictureListContainer>
         <PhotoAlbum
           name="Upload list"
           description="Photos to be uploaded"
+          photoCount={pictureState.pictures.length}
           uploadButtonVisible={true}
           onUploadClick={handleUploadPictures}
         >
