@@ -1,38 +1,19 @@
 import styled from 'styled-components/macro';
 import breakPoints from '../../utils/breakPoints';
 import { Link } from 'react-router-dom';
-import back from 'images/back_main.jpg';
 
 export const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(${back});
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  padding: 30px 0px;
-  width: 100%;
-  max-width: ${breakPoints.laptopLWidth};
-  
-  ${breakPoints.mobileXL} {
-    justify-content: flex-start;
-  }
+  background-color: #212123;
 `;
 
 export const ConsequatImage = styled.img`
   width: 100%;
   max-width: 750px;
   margin: 50px 0px;
-  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, .8));
 
   ${breakPoints.custom(900)} {
     width: 80vw;
@@ -40,15 +21,17 @@ export const ConsequatImage = styled.img`
   }
 `;
 
-export const SearchContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  padding: 30px 40px;
   width: 100%;
-  max-width: 750px;
-  height: 400px;
-
-  ${breakPoints.custom(900)} {
-    width: 80vw;
+  max-width: ${breakPoints.laptopLWidth};
+  
+  ${breakPoints.mobileXL} {
+    justify-content: flex-start;
+    padding: 20px 20px;
   }
 `;
 
@@ -57,6 +40,10 @@ export const H1 = styled.h1`
   font-family: var(--topic-font-family);
   font-size: 36px;
   font-weight: 900;
+
+  ${breakPoints.mobileXL} {
+    font-size: 28px;
+  }
 `;
 
 export const P = styled.p`
@@ -65,7 +52,7 @@ export const P = styled.p`
 `;
 
 export const Suggested = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   font-family: var(--normal-font-family);
   font-size: 16px;
   font-weight: 300;
