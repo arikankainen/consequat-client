@@ -4,7 +4,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
 import { useDispatch } from 'react-redux';
-import { setPrevious } from 'reducers/systemReducer';
+import { setPrevious, setPreviousPhoto } from 'reducers/systemReducer';
+import { updatePhotos } from 'reducers/photoListReducer';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Notification from 'components/Notification/Notification';
@@ -41,6 +42,13 @@ const App = () => {
     ) {
       setTimeout(() => {
         dispatch(setPrevious(location.pathname));
+      }, 500);
+    }
+
+    if (!location.pathname.includes('/photos')) {
+      setTimeout(() => {
+        dispatch(updatePhotos([]));
+        dispatch(setPreviousPhoto(''));
       }, 500);
     }
   }, [location.pathname, dispatch]);
