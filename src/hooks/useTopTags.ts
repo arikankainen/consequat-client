@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { TOP_TAGS } from 'utils/queries';
 import { PhotoUserExtended } from 'utils/types';
 
-interface TopTags {
+export interface TopTags {
   tag: string;
   photos: PhotoUserExtended[];
 }
@@ -18,7 +18,7 @@ const useTopTags = ({ tags, photosPerTag }: Input) => {
 
   const resultTopTags = useQuery(TOP_TAGS, {
     variables: { tags, photosPerTag },
-    fetchPolicy: 'network-only',
+    // fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

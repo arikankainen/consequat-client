@@ -56,7 +56,7 @@ const Header = () => {
     {
       text: 'Consequat',
       subText: 'Back to the starting point',
-      link: '/',
+      link: loginState.loggedIn ? '/main' : '/main',
       Icon: ConsequatIcon,
     },
     {
@@ -127,12 +127,8 @@ const Header = () => {
     <Styled.HeaderContainer>
       <Styled.HeaderInnerContainer>
         <Styled.LeftContainer>
-          <Menu
-            button={mainMenuButton}
-            items={mainMenuItems}
-            settings={mainMenuSettings}
-          />
-          <Logo />
+          <Menu button={mainMenuButton} items={mainMenuItems} settings={mainMenuSettings} />
+          <Logo link={loginState.loggedIn ? '/main' : '/main'} />
         </Styled.LeftContainer>
         <HeaderSearch />
         <Styled.RightContainer>
@@ -141,18 +137,9 @@ const Header = () => {
             About
           </Styled.HeaderLink>
           {loginState.loggedIn ? (
-            <Menu
-              button={userMenuButton}
-              items={userMenuItems}
-              settings={userMenuSettings}
-            />
+            <Menu button={userMenuButton} items={userMenuItems} settings={userMenuSettings} />
           ) : (
-            <MenuButton
-              to="/login"
-              text="Login"
-              Icon={LoginIcon}
-              loading={resultMe.loading}
-            />
+            <MenuButton to="/login" text="Login" Icon={LoginIcon} loading={resultMe.loading} />
           )}
         </Styled.RightContainer>
       </Styled.HeaderInnerContainer>

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import breakPoints from '../../utils/breakPoints';
+import breakPoints from 'utils/breakPoints';
 import { Link } from 'react-router-dom';
 
 export const ImageContainer = styled.div`
@@ -36,6 +36,7 @@ export const Container = styled.div`
 `;
 
 export const H1 = styled.h1`
+  margin-top: 40px;
   margin-bottom: 10px;
   font-family: var(--topic-font-family);
   font-size: 36px;
@@ -43,6 +44,10 @@ export const H1 = styled.h1`
 
   ${breakPoints.mobileXL} {
     font-size: 28px;
+  }
+
+  &:first-of-type {
+    margin-top: 0px;
   }
 `;
 

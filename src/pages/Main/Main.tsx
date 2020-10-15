@@ -3,12 +3,10 @@ import * as Styled from './style';
 import consequatImage from 'images/consequat.png';
 import HeaderSearch from 'components/Header/components/HeaderSearch/HeaderSearch';
 import getSearchString from 'utils/getSearchString';
-import useTopTags from 'hooks/useTopTags';
+import TopTags from './components/TopTags/TopTags';
 
 const Main = () => {
-  const topTags = useTopTags({ tags: 6, photosPerTag: 4 });
   const tags = ['kissa', 'koira', 'meri', 'majakka', 'joutsa'];
-
   return (
     <>
       <Styled.ImageContainer>
@@ -28,6 +26,8 @@ const Main = () => {
             </span>
           ))}
         </Styled.Suggested>
+        <Styled.H1>Top #10 tags</Styled.H1>
+        <TopTags />
       </Styled.Container>
     </>
   );

@@ -53,6 +53,7 @@ export const SearchContainer = styled.div<SearchContainerProps>`
     props.useInPage &&
     css`
       height: 45px;
+      min-height: 45px;
       width: 100%;
       background-color: #eee;
   `}

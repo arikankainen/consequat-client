@@ -38,8 +38,10 @@ export const ThumbnailPicture = styled.img`
   height: 100%;
 
   &:hover {
-    filter: brightness(1.2);
+    filter: brightness(1.15);
   }
+
+  transition: all .2s ease-in-out;
 `;
 
 interface ThumbnailSelectIconAreaProps {
