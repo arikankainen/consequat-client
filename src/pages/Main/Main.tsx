@@ -3,8 +3,10 @@ import * as Styled from './style';
 import consequatImage from 'images/consequat.png';
 import HeaderSearch from 'components/Header/components/HeaderSearch/HeaderSearch';
 import getSearchString from 'utils/getSearchString';
+import useTopTags from 'hooks/useTopTags';
 
 const Main = () => {
+  const topTags = useTopTags({ tags: 6, photosPerTag: 4 });
   const tags = ['kissa', 'koira', 'meri', 'majakka', 'joutsa'];
 
   return (

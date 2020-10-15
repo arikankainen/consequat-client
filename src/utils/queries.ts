@@ -354,3 +354,16 @@ export const CREATE_COMMENT = gql`
     }
   }
 `;
+
+export const TOP_TAGS = gql`
+  query topTags($tags: Int!, $photosPerTag: Int!) {
+    topTags(tags: $tags, photosPerTag: $photosPerTag) {
+      tag,
+      photos {
+        ...PhotoDetails,
+        user { fullname },
+      }
+    }
+  }
+  ${PHOTO_DETAILS}
+`;
