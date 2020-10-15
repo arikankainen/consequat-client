@@ -30,7 +30,7 @@ const Account = () => {
   const [fetched, setFetched] = useState(false);
 
   const resultMe = useQuery(ME, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-first',
   });
 
   useEffect(() => {

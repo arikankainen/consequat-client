@@ -17,9 +17,7 @@ const AccountTextSetting: React.FC<AccountTextSettingProps> = ({
   onClick: onValueClick,
   loading,
 }) => {
-  const customizedSpinner = (
-    <Spinner size={20} show={true} color="150, 150, 150" />
-  );
+  const customizedSpinner = <Spinner size={20} show={true} color="150, 150, 150" />;
 
   return (
     <Styled.SettingContainer>
@@ -29,18 +27,13 @@ const AccountTextSetting: React.FC<AccountTextSettingProps> = ({
         </Styled.IconContainer>
       )}
       <Styled.SettingTextContainer>
-        <Styled.Label>{label}</Styled.Label>
-        {onValueClick ? (
-          <Styled.SettingValue>
-            <Styled.Link onClick={onValueClick}>
-              {loading ? customizedSpinner : value}
-            </Styled.Link>
-          </Styled.SettingValue>
-        ) : (
-          <Styled.SettingValue>
-            {loading ? customizedSpinner : value}
-          </Styled.SettingValue>
-        )}
+        <Styled.Label>
+          {label}
+          {onValueClick && (
+            <Styled.Link onClick={onValueClick}>{!loading && <>change</>}</Styled.Link>
+          )}
+        </Styled.Label>
+        <Styled.SettingValue>{loading ? customizedSpinner : value}</Styled.SettingValue>
       </Styled.SettingTextContainer>
     </Styled.SettingContainer>
   );

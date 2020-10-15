@@ -21,9 +21,12 @@ export const IconContainer = styled.div`
 export const SettingTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const Label = styled.label`
+  display: flex;
+  justify-content: space-between;
   color: #000;
   font-weight: 400;
   font-size: 16px;
