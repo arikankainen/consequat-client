@@ -96,17 +96,9 @@ const App = () => {
                       {loginState.loggedIn ? <Logout /> : <Redirect to="/" />}
                     </Route>
 
-                    <Route path="/upload">
-                      {loginState.loggedIn ? <UploadPage /> : <Redirect to="/" />}
-                    </Route>
-
-                    <Route path="/myphotos">
-                      {loginState.loggedIn ? <MyPhotos /> : <Redirect to="/" />}
-                    </Route>
-
-                    <Route path="/account">
-                      {loginState.loggedIn ? <Account /> : <Redirect to="/" />}
-                    </Route>
+                    <Route path="/upload" component={UploadPage} />
+                    <Route path="/myphotos" component={MyPhotos} />
+                    <Route path="/account" component={Account} />
 
                     <Route exact path="/">
                       {loginState.loggedIn ? <Redirect to="/main" /> : <MainNotLogged />}

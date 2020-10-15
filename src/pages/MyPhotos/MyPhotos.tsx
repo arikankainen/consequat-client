@@ -10,9 +10,7 @@ import EditAlbum, { EditAlbumProps } from 'components/Dialogs/EditAlbum';
 import EditTags, { EditTagsProps } from 'components/Dialogs/EditTags';
 import useDeleteQueue, { QueueStatus } from 'hooks/useDeleteQueue';
 import useDeleteAlbum, { DeleteAlbumStatus } from 'hooks/useDeleteAlbum';
-import Confirmation, {
-  ConfirmationProps,
-} from 'components/Dialogs/Confirmation';
+import Confirmation, { ConfirmationProps } from 'components/Dialogs/Confirmation';
 import { ReactComponent as AddButton } from 'images/plus-square-solid.svg';
 import { ReactComponent as AlbumButton } from 'images/folder-plus-solid.svg';
 import { ReactComponent as DeleteButton } from 'images/trash-solid.svg';
@@ -50,7 +48,7 @@ const MyPhotos = () => {
   });
 
   useEffect(() => {
-    if (resultMe.data) {
+    if (resultMe.data && resultMe.data.me) {
       const allPhotos: Photo[] = resultMe.data.me.photos;
       const allAlbums: Album[] = resultMe.data.me.albums;
 
@@ -70,10 +68,8 @@ const MyPhotos = () => {
   }, [resultMe.data]);
 
   useEffect(() => {
-    if (selection.length === photos.length && !allSelected)
-      setAllSelected(true);
-    else if (selection.length !== photos.length && allSelected)
-      setAllSelected(false);
+    if (selection.length === photos.length && !allSelected) setAllSelected(true);
+    else if (selection.length !== photos.length && allSelected) setAllSelected(false);
   }, [photos, selection, allSelected]);
 
   const handleCheckClick = (id: string) => {
@@ -136,9 +132,7 @@ const MyPhotos = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      Array.from(event.target.files).forEach(file =>
-        dispatch(addPicture(file))
-      );
+      Array.from(event.target.files).forEach(file => dispatch(addPicture(file)));
 
       history.push('/upload');
     }
@@ -291,9 +285,7 @@ const MyPhotos = () => {
     if (isAllSelected(album)) {
       album.photos.forEach(photo => {
         if (selection.includes(photo.id)) {
-          currentSelection = currentSelection.filter(
-            value => value !== photo.id
-          );
+          currentSelection = currentSelection.filter(value => value !== photo.id);
         }
       });
     } else {
@@ -377,11 +369,7 @@ const MyPhotos = () => {
           </Styled.PictureListButtonGroup>
         </Styled.PictureListButtonGroups>
 
-        <MyPhotosListHeader
-          photos={photos}
-          albums={albums}
-          selection={selection}
-        />
+        <MyPhotosListHeader photos={photos} albums={albums} selection={selection} />
       </Styled.PictureListToolBar>
 
       <Confirmation {...confirmation} />

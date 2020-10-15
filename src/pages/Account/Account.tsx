@@ -23,9 +23,7 @@ import EditCustomFields, {
 import * as Styled from './style';
 
 const Account = () => {
-  const [editCustomFields, setEditCustomFields] = useState<
-    EditCustomFieldsProps
-  >({});
+  const [editCustomFields, setEditCustomFields] = useState<EditCustomFieldsProps>({});
   const loginState = useSelector((state: RootState) => state.system);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -36,7 +34,7 @@ const Account = () => {
   });
 
   useEffect(() => {
-    if (resultMe.data) {
+    if (resultMe.data && resultMe.data.me) {
       const allPhotos: Photo[] = resultMe.data.me.photos;
       const allAlbums: Album[] = resultMe.data.me.albums;
 
@@ -53,9 +51,7 @@ const Account = () => {
         name: 'email',
         label: 'Email',
         initialValue: loginState.loggedUser?.email,
-        validation: Yup.string()
-          .email('Must be valid email')
-          .required('Email cannot be empty'),
+        validation: Yup.string().email('Must be valid email').required('Email cannot be empty'),
       },
     ];
 
@@ -75,9 +71,7 @@ const Account = () => {
         name: 'oldPassword',
         label: 'Old password',
         initialValue: '',
-        validation: Yup.string()
-          .min(5, 'Must be at least 5 characters')
-          .required('Required'),
+        validation: Yup.string().min(5, 'Must be at least 5 characters').required('Required'),
       },
       {
         separator: true,
@@ -85,19 +79,14 @@ const Account = () => {
         name: 'newPassword',
         label: 'New password',
         initialValue: '',
-        validation: Yup.string()
-          .min(5, 'Must be at least 5 characters')
-          .required('Required'),
+        validation: Yup.string().min(5, 'Must be at least 5 characters').required('Required'),
       },
       {
         type: 'password',
         name: 'confirmPassword',
         label: 'Confirm',
         initialValue: '',
-        validation: Yup.string().oneOf(
-          [Yup.ref('newPassword'), ''],
-          'Passwords must match'
-        ),
+        validation: Yup.string().oneOf([Yup.ref('newPassword'), ''], 'Passwords must match'),
       },
     ];
     setEditCustomFields({
@@ -115,9 +104,7 @@ const Account = () => {
       <Styled.TopicAreaContainer>
         <Styled.TopicArea>
           <Styled.Topic>Account settings</Styled.Topic>
-          <Styled.SubTopic>
-            View and change settings related to your account
-          </Styled.SubTopic>
+          <Styled.SubTopic>View and change settings related to your account</Styled.SubTopic>
         </Styled.TopicArea>
       </Styled.TopicAreaContainer>
 
@@ -163,11 +150,7 @@ const Account = () => {
             <AccountTextSetting
               label="Photos not in any albums"
               value={
-                (fetched &&
-                  String(
-                    photos.filter(photo => photo.album === null).length
-                  )) ||
-                '...'
+                (fetched && String(photos.filter(photo => photo.album === null).length)) || '...'
               }
               Icon={NotItAlbumIcon}
               loading={resultMe.loading}
@@ -175,11 +158,7 @@ const Account = () => {
             <AccountTextSetting
               label="Hidden photos"
               value={
-                (fetched &&
-                  String(
-                    photos.filter(photo => photo.hidden === true).length
-                  )) ||
-                '...'
+                (fetched && String(photos.filter(photo => photo.hidden === true).length)) || '...'
               }
               Icon={HiddenIcon}
               loading={resultMe.loading}
