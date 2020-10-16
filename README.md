@@ -40,7 +40,7 @@ https://github.com/arikankainen/consequat-server
 
 Sovellus on kirjoitettu kokonaisuudessaan TypeScriptillä. Frontend-puolella käytössä on React, ja kommunikointi backendin kanssa tapahtuu GraphQL:n kautta (Apollo Client). Backend käyttää Apollo Serveriä, ja tietokantana toimii MongoDB Atlas. Valokuvat lähetetään suoraan frontendista Google Firebase Storageen, ja Firebasen palauttamat kuvien osoitetiedot tallennetaan backendin kautta tietokantaan.
 
-Sovelluksen ulkoasu on täysin itse suunniteltu ja toteutettu, eikä se käytä mitään valmiita tyylejä. Ainoastaan valtaosa käyttöliittymän kuvakkeista on lainattu [Font Awesome](https://fontawesome.com/):n kuvakekatalogista.
+Sovelluksen käyttöliittymä, logo ja ulkoasu on täysin itse suunniteltu ja toteutettu, eikä se käytä mitään valmiita tyylejä. Ainoastaan valtaosa käyttöliittymän kuvakkeista on lainattu [Font Awesome](https://fontawesome.com/):n kuvakekatalogista.
 
 ## Ominaisuudet
 
@@ -79,7 +79,7 @@ Kuvia voidaan lisätä käyttäjävalikon _Upload_-sivulta. Valita voi yhden tai
 
 <img src="/docs/upload.png" width="520">
 
-Kun kuvat on valittu, avautuu näkymä joka näyttää lähetettäväksi valitut kuvat. Kuvia ei siis ole vielä lähetetty mihinkään, vaan ne ovat vasta omalla laitteella. Lähetettäväksi voidaan lisätä lisää kuvia _Add_-napilla, tai kuvia voidaan poistaa lähetyslistalta _Remove_-napilla. _Select all_-nappi valitsee tai poistaa kaikkien kuvien valinnan. _Upload_-nappi lähettää palveluun kaikki listalla olevat kuvat, riippumatta kuvien valinnasta. Kuvien päällä olevat lukonkuvat tarkoittaa, että kuvat on piilotettu muilta käyttäjiltä, kunnes kuvat päätetään julkaista kaikkien nähtäville.
+Kun kuvat on valittu, avautuu näkymä joka näyttää lähetettäväksi valitut kuvat. Kuvia ei siis ole vielä lähetetty mihinkään, vaan ne ovat vasta omalla laitteella. Lähetettäväksi voidaan lisätä lisää kuvia _Add_-napilla, tai kuvia voidaan poistaa lähetyslistalta _Remove_-napilla. _Select all_-nappi valitsee tai poistaa kaikkien kuvien valinnan. _Upload_-nappi lähettää palveluun kaikki listalla olevat kuvat, riippumatta kuvien valinnasta. Kuvien päällä olevat lukonkuvat tarkoitavat, että kuvat on piilotettu muilta käyttäjiltä, kunnes kuvat päätetään julkaista kaikkien nähtäville.
 
 <img src="/docs/upload2.png" width="686">
 
@@ -119,13 +119,13 @@ Kuvan tietoja voidaan muokata _Edit_-napista. Dialogi näyttää kuvan lisäysp�
 
 <img src="/docs/edit_photo.png" width="520">
 
-Mikäli valittuna on useampi kuin yksi kuva, voidaan muokata kaikkien kuvien tietoja samalla kertaa. Tällöin jokaisen kentän perässä on lukonkuva, joka lukittuna ollessaan kertoo, että kyseisellä kentällä on eri tiedot eri kuvissa. Tällöin kenttää ei kannata muokata, koska sama muokkaus kohdistuisi kaikkien kuvien kenttään, ja aiemmat tiedot menetetään. Mikäli kenttä kuitenkin halutaan muokata samaksi jokaiseen valittuun kuvaan, voidaan lukko avata klikkaamalla. Mikäli lukko on alusta saakka auki, on kyseinen kenttä jo alunperin sama kaikilla valituilla kuvilla, joten sitä voi huoletta muokata. Tallennettaessa tallennetaan ainoastaan kentät, joissa lukko on auki.
+Mikäli valittuna on useampi kuin yksi kuva, voidaan muokata kaikkien kuvien tietoja samalla kertaa. Tällöin jokaisen kentän perässä on lukonkuva, joka lukittuna ollessaan kertoo, että kyseisellä kentällä on eri tiedot eri kuvissa. Tällöin kenttää ei kannata muokata, koska sama muokkaus kohdistuisi kaikkiin kuviin, ja aiemmat tiedot menetetään. Mikäli kenttä kuitenkin halutaan muokata samaksi jokaiseen valittuun kuvaan, voidaan lukko avata sitä klikkaamalla. Jos lukko on alusta saakka auki, on kyseinen kenttä jo alunperin sama kaikilla valituilla kuvilla, joten sitä voi huoletta muokata. Tallennettaessa tallennetaan ainoastaan ne kentät, joissa lukko on auki.
 
 <img src="/docs/edit_photos.png" width="520">
 
 #### Kuvien tagien muokkaus
 
-Kuvan avainsanojen eli tagien muokkaukseen löytyy _Tags_-napista myös oma dialogi, jolla on kätevä muokata usean kuvan tageja kerralla. Tekstikenttään voidaan pilkulla eroteltuna kirjoittaa useita tageja kerralla, ja ne lisätään tagilistaan painamalla _enter_ tai _Add new tags_-napilla. Tagilistalla voi näkyä tageja eri väreillä. Jos listalla on harmaita tageja, tarkoittaa se, että kyseinen tagi löytyy vain joistain valituista kuvista, mutta ei kaikista. Oranssit tagit löytyy jokaisesta valitusta kuvasta. Juuri tagilistalle lisätyt, mutta vielä tallentamattomat tagit näkyvät sinisellä. Tageja voi poistaa tagin _x_-merkkiä klikkaamalla, ja tagi poistuu kaikista valituista kuvista, joissa se on. Vasta tallennus _Save_-napista tallentaa muutokset oikeasti.
+Kuvan avainsanojen eli tagien muokkaukseen löytyy _Tags_-napista myös oma dialogi, jolla on kätevä muokata usean kuvan tageja kerralla. Tekstikenttään voidaan pilkulla eroteltuna kirjoittaa useita tageja kerralla, ja ne lisätään tagilistaan painamalla _enter_ tai _Add new tags_-napilla. Tagilistalla voi näkyä tageja eri väreillä. Jos listalla on harmaita tageja, tarkoittaa se, että kyseinen tagi löytyy vain joistain valituista kuvista, mutta ei kaikista. Oranssit tagit löytyy jokaisesta valitusta kuvasta. Juuri tagilistalle lisätyt, mutta vielä tallentamattomat tagit näkyvät sinisellä. Tageja voi poistaa tagin _x_-merkkiä klikkaamalla, ja tagi poistuu kaikista valituista kuvista, joissa se on. Vasta tallennus _Save_-napista tallentaa muutokset kuviin.
 
 <img src="/docs/edit_tags.png" width="520">
 
@@ -151,22 +151,24 @@ Käyttäjän on mahdollista muuttaa sähköpostiosoitetta ja salasanaa. Kyseiste
 
 Kuvia voidaan selata joko navigaatiopalkin _Browse_-linkistä (mobiilinäkymässä ko. linkki löytyy valikosta), jolloin selataan kaikkia tietokannasta löytyviä kuvia, tai kirjoittamalla hakukenttään hakusanan, jolloin näytetään vain hakuun täsmäävät kuvat. Kun haku on suoritettu ja haun tulokset näytetään, voidaan _Search options_-napista valita mihin kuvan tietokenttiin haku kohdistetaan. Oletuksena kaikki kentät ovat valittuna, mutta haku voidaan kohdistaa esimerkiksi pelkästään tageihin. Valintojen jälkeen _Apply_-nappi ottaa valinnat käyttöön ja haku suoritetaan uudelleen.
 
-Kuvien tietoja ladataan kuvalistalle tietokannasta kerrallaan 70 kappaletta, ja itse kuva ladataan vasta kun se on käyttäjän näkyvissä listalla. Kun kuvalista on skrollattu alas saakka, aloitetaan lataamaan listalle tiedot seuraavista 70 kuvasta.
+Kuvien tietoja ladataan kuvalistalle tietokannasta kerrallaan 70 kappaletta, ja itse kuva ladataan vasta kun se on käyttäjän näkyvissä listalla. Kun kuvalista on skrollattu alas asti, ladataan listalle tiedot seuraavista 70 kuvasta.
 
 <img src="/docs/browsing_photos.png" width="686">
 
 ### Kuvan näyttäminen
 
-Kuvalistalta kuvaa klikattaessa se avataan näkymään, jossa kuva näytetään tummalla taustalla. Työpöytänäkymässä tumma alue täyttää koko näytön, mobiilinäkymässä ei. Mobiiliselainten "koko näytön korkeus" ei pidä sisällään esim. skrollatessa piiloutuvia selaimen valikoita, joten näkymä on hankala tehdä niin, että se kattaisi koko näytön ilman mahdollisten valikoiden taakse jäämistä. Näkymässä on ylhäällä linkki, jolla voi palata kuvalistaan tai hakutuloksiin. Mikäli kuva on avattu kuvalistalta, on kuvan sivuilla nuolet, joilla voidaan liikkua eteen/taakse kuvalistalla. Kuvan alta löytyy kameran ja kuvausasetuksien tiedot (mikäli kuva sisältää exif-tiedot).
+Kuvalistalta kuvaa klikattaessa se avataan näkymään, jossa se näytetään tummalla taustalla. Työpöytänäkymässä tumma alue täyttää koko näytön, mobiilinäkymässä vain osan. Mobiiliselaimelle koko näyttöalueen peittävän elementin teko on haastavaa, koska mobiiliselaimissa selaimen omat valikot joko on tai ei ole näkyvissä, riippuen vähän mihin suuntaan ruutua skrollataan. Näkymässä on ylhäällä linkki, jolla voi palata kuvalistaan tai hakutuloksiin. Mikäli kuva on avattu kuvalistalta, on kuvan sivuilla nuolet, joilla voidaan liikkua eteen/taakse kuvalistalla. Kuvan alta löytyy kameran ja kuvausasetuksien tiedot (mikäli kuva sisältää exif-tiedot).
 
 <img src="/docs/photo.png" width="686">
 
 ### Kuvan tiedot ja kommentointi
 
-Kuvaa alaspäin skrollaamalla, saa näkyviin kuvalle annetut tiedot ja kuvauspäiväyksen. Kuvatietoihin mahdollisesti lisätyistä tageista muodostetaan linkit, joita klikkaamalla voidaan näyttää tietokannan kaikki kuvat, joissa on kyseinen tagi. Tietojen alapuolella näytetään käyttäjien kuvaan lisäämät kommentit. Mikäli ollaan kirjautuneena, voidaan omakin kommentti lisätä.
+Kuvaa alaspäin skrollaamalla saa näkyviin kuvalle annetut tiedot ja kuvauspäiväyksen. Kuvatietoihin mahdollisesti lisätyistä tageista muodostetaan linkit, joita klikkaamalla voidaan listata tietokannan kaikki kuvat, joissa on kyseinen tagi. Tietojen alapuolella näytetään käyttäjien kuvaan lisäämät kommentit. Mikäli ollaan kirjautuneena, voidaan omakin kommentti lisätä mukaan.
 
 <img src="/docs/photo_info.png" width="686">
 
 ## Mitä jäi puuttumaan?
 
 Ihan kaikkea suunniteltua ei rajoitetun ajan puitteissa ehditty tekemään. Nykyisellään albumeita ei voi lainkaan selata, eikä esimerkiksi tietyn käyttäjän kuvia ja albumeita näe. Kuvalistan latausta ja edellisen näkymän tallennusta muistiin pitäisi parantaa, jotta valokuvasta pääsisi palaamaan samaan näkymään, josta sinne mentiin. Nyt kuvalistaan palattaessa haku tehdään uudelleen, jolloin kuvalistalla on vain se aluksi ladattu maksimissaan 70 kuvaa. Myös valokuvan mahdollisten GPS-tietojen näyttö kartalla jäi puuttumaan.
+
+Mikäli sovellus olisi oikeassa käytössä, pitäisi toki ottaa huomioon myös tietosuoja-asetus (GDPR), koska sovellus kerää käyttäjän nimen sekä sähköpostiosoitteen tietokantaan. Rekisteröinti pitäisi myös varmistaa vähintään sähköpostiin lähetettävällä varmisteella, ja mukaan tarvittaisiin unohtuneen salasanan resetointimahdollisuus. Myös käyttäjien lisäämän sisällön ja kommenttien suhteen tulisi olla jonkinlaista valvontaa.
