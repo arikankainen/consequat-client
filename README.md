@@ -34,6 +34,7 @@ https://github.com/arikankainen/consequat-server
     - [Kuvien selaaminen](#kuvien-selaaminen)
     - [Kuvan näyttäminen](#kuvan-näyttäminen)
     - [Kuvan tiedot ja kommentointi](#kuvan-tiedot-ja-kommentointi)
+  - [Mitä jäi puuttumaan?](#mitä-jäi-puuttumaan)
 
 ## Toteutus
 
@@ -164,6 +165,6 @@ Kuvaa alaspäin skrollaamalla, saa näkyviin kuvalle annetut tiedot ja kuvauspä
 
 <img src="/docs/photo_info.png" width="686">
 
-## Mitä jäi puttumaan?
+## Mitä jäi puuttumaan?
 
 Ihan kaikkea suunniteltua ei rajoitetun ajan puitteissa ehditty tekemään. Nykyisellään albumeita ei voi lainkaan selata, eikä esimerkiksi tietyn käyttäjän kuvia ja albumeita näe. Kuvalistan latausta ja edellisen näkymän tallennusta muistiin pitäisi parantaa, jotta valokuvasta pääsisi palaamaan samaan näkymään, josta sinne mentiin. Nyt kuvalistaan palattaessa haku tehdään uudelleen, jolloin kuvalistalla on vain se aluksi ladattu maksimissaan 70 kuvaa. Myös valokuvan mahdollisten GPS-tietojen näyttö kartalla jäi puuttumaan.
