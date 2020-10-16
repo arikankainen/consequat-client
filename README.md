@@ -40,6 +40,8 @@ https://github.com/arikankainen/consequat-server
 
 Sovellus on kirjoitettu kokonaisuudessaan TypeScriptillä. Frontend-puolella käytössä on React, ja kommunikointi backendin kanssa tapahtuu GraphQL:n kautta (Apollo Client). Backend käyttää Apollo Serveriä, ja tietokantana toimii MongoDB Atlas. Valokuvat lähetetään suoraan frontendista Google Firebase Storageen, ja Firebasen palauttamat kuvien osoitetiedot tallennetaan backendin kautta tietokantaan.
 
+Sovelluksen ulkoasu on täysin itse suunniteltu ja toteutettu, eikä se käytä mitään valmiita tyylejä. Ainoastaan valtaosa käyttöliittymän kuvakkeista on lainattu [Font Awesome](https://fontawesome.com/):n kuvakekatalogista.
+
 ## Ominaisuudet
 
 Palveluun voidaan lähettää kuvia ja jaotella niitä omiin albumeihin. Niille voidaan lisätä metatietoja kuten nimi, paikka, kuvaus, sekä lista erilaisia avainsanoja eli tageja helpottamaan kuvien löytymistä haulla. Kuvista tallennetaan myös tärkeimmät exif-tiedot, kuten kameran merkki ja malli, aukko, valotusaika, herkkyys, polttoväli, salama, sekä kuvausaika. Kuvia voidaan myös kommentoida, jos ollaan kirjautuneena. Pääsivulla näytetään hakupalkin lisäksi top-10 käytetyimmät tagit, sekä neljä valokuvaa liittyen kyseiseen tagiin.
