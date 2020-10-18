@@ -5,10 +5,13 @@ Consequat (latinasta suomennettuna _valokuvaus_) on kuvitteellinen kuvanjakopalv
 Palvelua voi kokeilla osoitteessa:
 https://arik.fi/consequat
 
-Selain ohjataan automaattisesti Heroku-palvelun sivuille, jossa sovellus pyörii. Huomaa, että sovelluksen käynnistäminen voi kestää parikymmentä sekuntia, sillä Herokun ilmainen palvelin "sammutetaan" mikäli käyttäjiä ei ole ollut puoleen tuntiin, ja uudelleenkäynnistyminen ottaa aikansa.
+Selain ohjataan automaattisesti Heroku-palvelun sivuille, jossa sovellus pyörii. Huomaa, että sovelluksen käynnistyminen voi kestää parikymmentä sekuntia, sillä Herokun ilmainen palvelin "sammutetaan" mikäli käyttäjiä ei ole ollut puoleen tuntiin, ja uudelleenkäynnistyminen ottaa aikansa.
 
 Sovelluksen backend löytyy GitHub-repositoriosta:
 https://github.com/arikankainen/consequat-server
+
+Projektin työaikakirjanpito löytyy:
+https://arik.fi/consequat/tyoaikakirjanpito.html
 
 <img src="/docs/main.png" width="686">
 
