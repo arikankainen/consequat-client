@@ -21,6 +21,7 @@ import Account from 'pages/Account/Account';
 import Photos from 'pages/Photos/Photos';
 import Photo from 'pages/Photo/Photo';
 import NotFoundAddress from 'components/NotFoundAddress/NotFoundAddress';
+import storageToken from 'utils/storageToken';
 import * as Styled from './style';
 
 const App = () => {
@@ -109,7 +110,7 @@ const App = () => {
                     <Route path="/account" component={Account} />
 
                     <Route exact path="/">
-                      {loginState.loggedIn ? <Redirect to="/main" /> : <MainNotLogged />}
+                      {storageToken.getToken() ? <Redirect to="/main" /> : <MainNotLogged />}
                     </Route>
 
                     <Route path="/" component={NotFoundAddress} />

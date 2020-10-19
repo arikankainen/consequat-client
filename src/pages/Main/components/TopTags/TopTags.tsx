@@ -12,7 +12,13 @@ const TopTags = () => {
   return (
     <Styled.TopTagsContainer>
       {topTags.topTags.map((topTag, index) => (
-        <TopTag key={topTag.tag} tag={topTag.tag} photos={topTag.photos} topNumber={index} />
+        <TopTag
+          key={topTag.tag}
+          tag={topTag.tag}
+          photos={topTag.photos}
+          topNumber={index}
+          refetching={topTags.refetching}
+        />
       ))}
     </Styled.TopTagsContainer>
   );

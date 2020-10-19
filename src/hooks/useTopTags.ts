@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, NetworkStatus } from '@apollo/client';
 import { TOP_TAGS } from 'utils/queries';
 import { PhotoUserExtended } from 'utils/types';
 
@@ -15,23 +15,29 @@ interface Input {
 
 const useTopTags = ({ tags, photosPerTag }: Input) => {
   const [topTags, setTopTags] = useState<TopTags[]>([]);
+  const [refetched, setRefetched] = useState(false);
+  const [notYetCached, setNotYetCached] = useState(false);
 
-  const resultTopTags = useQuery(TOP_TAGS, {
+  const { loading, error, data, refetch, networkStatus } = useQuery(TOP_TAGS, {
     variables: { tags, photosPerTag },
-    // fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
   });
 
   useEffect(() => {
-    const data = resultTopTags.data;
-    const loading = resultTopTags.loading;
+    if (!data && loading && !refetched) setNotYetCached(true);
     if (!data || !data.topTags || loading) return;
 
     setTopTags(data.topTags);
-  }, [resultTopTags.data, resultTopTags.loading]);
+    if (!refetched && !notYetCached) {
+      refetch();
+      setRefetched(true);
+    }
+  }, [data, loading, refetched, notYetCached, refetch]);
 
   return {
-    loading: resultTopTags.loading,
-    error: !!resultTopTags.error,
+    refetching: networkStatus === NetworkStatus.refetch,
+    loading: networkStatus === NetworkStatus.loading,
+    error: !!error,
     topTags,
   };
 };

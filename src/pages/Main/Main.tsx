@@ -18,7 +18,7 @@ const Main = () => {
           After you have performed the search, you can refine the search options by using the{' '}
           <Styled.Strong>Search options</Styled.Strong> button.
         </Styled.Suggested>
-        <Styled.H1>Top #10 tags</Styled.H1>
+        <Styled.H1>Top 10 tags</Styled.H1>
         <TopTags />
       </Styled.Container>
     </>

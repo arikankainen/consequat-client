@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
 export const TopTagContainer = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto auto;
@@ -17,6 +18,7 @@ export const TopTagContainer = styled.div`
 `;
 
 export const TopicArea = styled.div`
+  position: relative;
   grid-area: topic;
   text-align: center;
 `;
@@ -25,7 +27,7 @@ export const TagLink = styled(Link)`
   line-height: 1;
   font-family: var(--topic-font-family);
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 5px;
   text-decoration: none;
 
@@ -73,4 +75,10 @@ export const ThumbnailPicture = styled.img`
   }
 
   transition: all .2s ease-in-out;
+`;
+
+export const Loading = styled.div`
+  position: absolute;
+  top: 5px;
+  left: 5px;
 `;

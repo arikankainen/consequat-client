@@ -12,12 +12,12 @@ export const ImageContainer = styled.div`
 
 export const ConsequatImage = styled.img`
   width: 100%;
-  max-width: 750px;
-  margin: 50px 0px;
+  max-width: 600px;
+  margin: 20px 0px;
 
   ${breakPoints.custom(900)} {
     width: 80vw;
-    margin: 5vw 0px;
+    margin: 2.2vw 0px;
   }
 `;
 
@@ -41,6 +41,9 @@ export const H1 = styled.h1`
   font-family: var(--topic-font-family);
   font-size: 36px;
   font-weight: 900;
+
+  font-size: 24px;
+  font-weight: 200;
 
   ${breakPoints.mobileXL} {
     font-size: 28px;

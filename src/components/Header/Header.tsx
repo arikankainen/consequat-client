@@ -18,7 +18,8 @@ import { ReactComponent as LogoutIcon } from '../../images/sign-out-alt-solid.sv
 import { ReactComponent as PicturesIcon } from '../../images/camera-solid.svg';
 import { ReactComponent as UploadIcon } from '../../images/upload-solid.svg';
 import { ReactComponent as LoginIcon } from '../../images/sign-in-alt-solid.svg';
-import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
+//import { ReactComponent as MenuIcon } from '../../images/consequat_o.svg';
+import { ReactComponent as MenuIcon } from '../../images/bars-solid.svg';
 import { ReactComponent as ConsequatIcon } from '../../images/consequat_o.svg';
 import { ReactComponent as BrowseIcon } from '../../images/globe-solid.svg';
 import { ReactComponent as AboutIcon } from '../../images/question-circle-solid.svg';
@@ -55,7 +56,7 @@ const Header = () => {
   const mainMenuItems = [
     {
       text: 'Consequat',
-      subText: 'Back to the starting point',
+      subText: 'What\'s new', // prettier-ignore
       link: loginState.loggedIn ? '/main' : '/main',
       Icon: ConsequatIcon,
     },
@@ -67,7 +68,7 @@ const Header = () => {
     },
     {
       text: 'About',
-      subText: 'What Consequat is?',
+      subText: 'What is Consequat?',
       link: '/about',
       Icon: AboutIcon,
     },
