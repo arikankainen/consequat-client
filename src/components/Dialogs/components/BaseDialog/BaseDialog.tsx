@@ -10,13 +10,7 @@ interface BaseDialogProps {
 const BaseDialog: React.FC<BaseDialogProps> = ({ open, children }) => {
   return (
     <>
-      <CSSTransition
-        in={open}
-        timeout={300}
-        mountOnEnter
-        unmountOnExit
-        classNames="backdrop"
-      >
+      <CSSTransition in={open} timeout={300} mountOnEnter unmountOnExit classNames="backdrop">
         <Styled.BackDrop />
       </CSSTransition>
 
@@ -26,8 +20,9 @@ const BaseDialog: React.FC<BaseDialogProps> = ({ open, children }) => {
         mountOnEnter
         unmountOnExit
         classNames="dialog"
+        data-testid="transition-dialog"
       >
-        <Styled.FloatingDialogContainer>
+        <Styled.FloatingDialogContainer data-testid="floating-dialog">
           {children}
         </Styled.FloatingDialogContainer>
       </CSSTransition>

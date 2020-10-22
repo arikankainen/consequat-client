@@ -95,7 +95,7 @@ const useSaveAlbum = (): Return => {
   useEffect(() => {
     if (createAlbumResponse.data && !createAlbumResponse.error) {
       setResponse({
-        data: createAlbumResponse.data.editAlbum,
+        data: createAlbumResponse.data.createAlbum,
         status: SaveAlbumStatus.ready,
       });
     } else if (createAlbumResponse.error) {

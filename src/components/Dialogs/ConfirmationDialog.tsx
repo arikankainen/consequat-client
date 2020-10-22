@@ -21,30 +21,30 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
 }) => {
   return (
     <BaseDialog open={open}>
-      <Styled.DialogContainer>
+      <Styled.DialogContainer data-testid="dialog-container">
         <Styled.DialogTopic>{topic || <>Confirmation</>}</Styled.DialogTopic>
 
         <Styled.DialogContentNormal>
-          {text && <Styled.Text>{text}</Styled.Text>}
+          {text && <Styled.Text data-testid="dialog-text1">{text}</Styled.Text>}
 
           {typeof progress !== 'undefined' && (
             <Styled.ProgressContainer>
-              <Styled.Progress progress={progress} />
+              <Styled.Progress progress={progress} data-testid="dialog-progress1" />
             </Styled.ProgressContainer>
           )}
 
-          {text2 && <Styled.Text>{text2}</Styled.Text>}
+          {text2 && <Styled.Text data-testid="dialog-text2">{text2}</Styled.Text>}
 
           {typeof progress2 !== 'undefined' && (
             <Styled.ProgressContainer>
-              <Styled.Progress progress={progress2} />
+              <Styled.Progress progress={progress2} data-testid="dialog-progress2" />
             </Styled.ProgressContainer>
           )}
         </Styled.DialogContentNormal>
 
         <Styled.DialogButtonArea>
           <Styled.SpinnerContainer>
-            <Spinner show={processing} />
+            <Spinner show={processing} data-testid="dialog-spinner" />
           </Styled.SpinnerContainer>
           <Styled.SavingIndicator></Styled.SavingIndicator>
           {handleCancel && handleOk && (
@@ -56,31 +56,16 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = ({
                 color={ButtonColor.whiteWithBlueBorder}
                 width={75}
               />
-              <Button
-                onClick={handleOk}
-                text="OK"
-                disabled={disableOk}
-                width={75}
-              />
+              <Button onClick={handleOk} text="OK" disabled={disableOk} width={75} />
             </>
           )}
 
           {!handleCancel && handleOk && (
-            <Button
-              onClick={handleOk}
-              text="OK"
-              disabled={disableOk}
-              width={75}
-            />
+            <Button onClick={handleOk} text="OK" disabled={disableOk} width={75} />
           )}
 
           {handleCancel && !handleOk && (
-            <Button
-              onClick={handleCancel}
-              text="Cancel"
-              disabled={disableCancel}
-              width={75}
-            />
+            <Button onClick={handleCancel} text="Cancel" disabled={disableCancel} width={75} />
           )}
         </Styled.DialogButtonArea>
       </Styled.DialogContainer>
