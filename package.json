@@ -16,7 +16,7 @@
     "@types/react-lazy-load-image-component": "^1.5.1",
     "@types/uuid": "^8.3.0",
     "@types/yup": "^0.29.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "exifreader": "^3.12.2",
     "firebase": "^7.16.0",
     "formik": "^2.1.5",
